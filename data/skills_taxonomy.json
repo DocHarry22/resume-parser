@@ -1,0 +1,75 @@
+{
+  "programming_languages": [
+    "python", "java", "javascript", "typescript", "c++", "c#", "go", "rust",
+    "php", "ruby", "swift", "kotlin", "scala", "r", "matlab", "sql", "bash",
+    "shell scripting", "powershell", "perl", "objective-c", "dart", "lua"
+  ],
+  "web_development": [
+    "html", "css", "react", "angular", "vue", "vue.js", "react.js", "next.js",
+    "node.js", "express", "django", "flask", "fastapi", "spring boot",
+    "asp.net", ".net", "laravel", "rails", "jquery", "bootstrap", "tailwind",
+    "sass", "less", "webpack", "vite", "rest api", "graphql", "websockets"
+  ],
+  "mobile_development": [
+    "android", "ios", "react native", "flutter", "xamarin", "ionic",
+    "swift", "kotlin", "objective-c", "mobile app development"
+  ],
+  "databases": [
+    "mysql", "postgresql", "mongodb", "redis", "elasticsearch", "oracle",
+    "sql server", "sqlite", "cassandra", "dynamodb", "firestore", "neo4j",
+    "mariadb", "couchdb", "database design", "sql", "nosql"
+  ],
+  "cloud_devops": [
+    "aws", "azure", "google cloud", "gcp", "docker", "kubernetes", "jenkins",
+    "gitlab ci", "github actions", "terraform", "ansible", "chef", "puppet",
+    "circleci", "travis ci", "ci/cd", "devops", "cloud computing", "serverless",
+    "lambda", "ec2", "s3", "microservices", "containerization"
+  ],
+  "data_science_ml": [
+    "machine learning", "deep learning", "data science", "data analysis",
+    "artificial intelligence", "ai", "ml", "nlp", "computer vision",
+    "tensorflow", "pytorch", "keras", "scikit-learn", "pandas", "numpy",
+    "matplotlib", "seaborn", "jupyter", "statistical analysis", "predictive modeling",
+    "neural networks", "cnn", "rnn", "transformers", "llm", "data visualization"
+  ],
+  "general_tech": [
+    "git", "github", "gitlab", "bitbucket", "version control", "agile", "scrum",
+    "jira", "confluence", "linux", "unix", "windows server", "networking",
+    "security", "cybersecurity", "testing", "unit testing", "integration testing",
+    "test automation", "selenium", "pytest", "jest", "debugging", "problem solving",
+    "algorithms", "data structures", "system design", "architecture", "api design"
+  ],
+  "mining_resources": [
+    "mine planning", "ore processing", "mineral exploration", "geotechnical engineering",
+    "metallurgy", "mine surveying", "blasting", "drilling", "ventilation systems",
+    "resource estimation", "geological modeling", "mining software", "autocad mining",
+    "surpac", "datamine", "minex", "deswik", "mine safety", "hse", "environmental compliance"
+  ],
+  "engineering": [
+    "mechanical engineering", "electrical engineering", "civil engineering",
+    "chemical engineering", "structural engineering", "project management",
+    "autocad", "solidworks", "revit", "cad", "fem analysis", "plc programming",
+    "scada", "control systems", "instrumentation", "maintenance", "quality assurance",
+    "iso standards", "lean manufacturing", "six sigma"
+  ],
+  "water_sanitation": [
+    "water treatment", "wastewater treatment", "water quality monitoring",
+    "sanitation", "hydraulic engineering", "pipeline design", "pump systems",
+    "water resources management", "environmental engineering", "effluent treatment",
+    "desalination", "water purification", "sewage systems", "hydrology"
+  ],
+  "business_management": [
+    "project management", "product management", "business analysis", "stakeholder management",
+    "budgeting", "financial analysis", "strategic planning", "risk management",
+    "operations management", "supply chain", "procurement", "contract management",
+    "team leadership", "change management", "business development", "sales",
+    "marketing", "customer relationship management", "crm", "excel", "powerpoint",
+    "microsoft office", "google workspace", "tableau", "power bi", "reporting"
+  ],
+  "soft_skills": [
+    "communication", "teamwork", "leadership", "problem solving", "critical thinking",
+    "time management", "organizational skills", "adaptability", "collaboration",
+    "presentation skills", "negotiation", "conflict resolution", "mentoring",
+    "coaching", "stakeholder engagement", "client relations"
+  ]
+}
