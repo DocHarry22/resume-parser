@@ -4,6 +4,8 @@ import { useState } from "react";
 import ResumeUploadForm from "../components/ResumeUploadForm";
 import ResumeResultCard from "../components/ResumeResultCard";
 import ScoreBreakdown from "../components/ScoreBreakdown";
+import TemplateGallery from "../components/TemplateGallery";
+import ProductHeroHeader from "../components/ProductHeroHeader";
 import { ParseAndScoreResponse } from "@/lib/types";
 
 export default function ResumeScannerPage() {
@@ -22,8 +24,23 @@ export default function ResumeScannerPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const handleImportClick = () => {
+    console.log("Import resume clicked");
+    // TODO: Implement import resume functionality
+  };
+
+  const handleBuildClick = () => {
+    console.log("Build resume clicked");
+    window.scrollTo({ top: 600, behavior: "smooth" });
+  };
+
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+    <main className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 pt-16">
+      {/* Product Hero Header */}
+      <ProductHeroHeader 
+        onImportClick={handleImportClick}
+        onBuildClick={handleBuildClick}
+      />
       {/* Header */}
       <div className="bg-white shadow-sm">
         <div className="max-w-6xl mx-auto px-4 py-6">
@@ -48,6 +65,9 @@ export default function ResumeScannerPage() {
           </p>
         </div>
       </div>
+
+      {/* Template Gallery Section */}
+      <TemplateGallery />
 
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-4 py-8">

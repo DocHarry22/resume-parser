@@ -1,7 +1,15 @@
-"""Data models for resume scoring."""
+"""Data models for resume scoring with multi-tier scan modes."""
 
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Optional, List
+from enum import Enum
+
+
+class ScanMode(str, Enum):
+    """Scan mode tiers with different analysis depth."""
+    BASIC = "basic"
+    ATS = "ats"
+    EXPERT = "expert"
 
 
 class ReadabilityMetrics(BaseModel):
@@ -51,59 +59,113 @@ class LengthMetrics(BaseModel):
 
 
 class ResumeScore(BaseModel):
-    """Complete resume quality score."""
+    """Complete resume quality score with multi-tier analysis."""
     overall: float = Field(..., description="Overall resume score (0-100)")
-    readability: ReadabilityMetrics = Field(..., description="Readability analysis")
-    structure: StructureMetrics = Field(..., description="Structure completeness")
-    experience: ExperienceMetrics = Field(..., description="Experience quality")
-    skills: SkillsMetrics = Field(..., description="Skills richness")
-    length: LengthMetrics = Field(..., description="Length and layout")
-    comments: list[str] = Field(default_factory=list, description="Improvement suggestions")
+    
+    # Primary metrics (always present)
+    ats_compliance: float = Field(..., description="ATS compatibility score (0-100)")
+    readability: float = Field(..., description="Readability score (0-100)")
+    layout: float = Field(..., description="Layout and formatting score (0-100)")
+    
+    # Tier-dependent metrics (None for BASIC mode)
+    experience: Optional[float] = Field(None, description="Experience quality score (0-100)")
+    skills: Optional[float] = Field(None, description="Skills relevance score (0-100)")
+    
+    # Job match (only if job description provided)
+    job_match: Optional[float] = Field(None, description="Job match score (0-100)")
+    
+    # Feedback
+    comments: List[str] = Field(default_factory=list, description="Improvement suggestions")
+    flags: List[str] = Field(default_factory=list, description="Warning flags and issues")
+    
+    # Mode info
+    mode: ScanMode = Field(default=ScanMode.BASIC, description="Scan mode used")
+    
+    # Detailed metrics (for internal use / advanced display)
+    detailed_metrics: Optional[dict] = Field(None, description="Detailed breakdown metrics")
     
     class Config:
         json_schema_extra = {
             "example": {
                 "overall": 78.5,
-                "readability": {
-                    "flesch_reading_ease": 65.0,
-                    "flesch_kincaid_grade": 10.2,
-                    "avg_words_per_sentence": 15.3,
-                    "avg_syllables_per_word": 1.6,
-                    "readability_score": 82.0
-                },
-                "structure": {
-                    "has_contact": True,
-                    "has_summary": True,
-                    "has_experience": True,
-                    "has_education": True,
-                    "has_skills": True,
-                    "section_count": 6,
-                    "structure_score": 95.0
-                },
-                "experience": {
-                    "total_roles": 3,
-                    "avg_bullets_per_role": 4.3,
-                    "quantified_achievements": 5,
-                    "quantification_rate": 38.5,
-                    "experience_score": 75.0
-                },
-                "skills": {
-                    "total_skills": 18,
-                    "categorized_skills": 15,
-                    "unique_categories": 4,
-                    "skills_score": 80.0
-                },
-                "length": {
-                    "word_count": 650,
-                    "estimated_pages": 1.4,
-                    "is_too_short": False,
-                    "is_too_long": False,
-                    "length_score": 90.0
-                },
+                "ats_compliance": 85.0,
+                "readability": 72.0,
+                "layout": 88.0,
+                "experience": 75.0,
+                "skills": 80.0,
+                "job_match": None,
                 "comments": [
-                    "Great structure with all key sections present",
-                    "Consider adding more quantified achievements (numbers, percentages, KPIs)",
-                    "Resume length is appropriate for most roles"
-                ]
+                    "Add metrics to show real impact (e.g., 'Increased efficiency by 20%')",
+                    "Improve readability by shortening long sentences"
+                ],
+                "flags": [
+                    "⚠️ No achievements quantified",
+                    "⚠️ Missing professional summary"
+                ],
+                "mode": "ats",
+                "detailed_metrics": {
+                    "readability_metrics": {
+                        "flesch_reading_ease": 65.0,
+                        "flesch_kincaid_grade": 10.2
+                    }
+                }
             }
         }
+
+
+# Legacy models for backward compatibility
+class LegacyReadabilityMetrics(BaseModel):
+    """Readability analysis metrics (legacy)."""
+    flesch_reading_ease: float
+    flesch_kincaid_grade: float
+    avg_words_per_sentence: float
+    avg_syllables_per_word: float
+    readability_score: float
+
+
+class LegacyStructureMetrics(BaseModel):
+    """Resume structure completeness metrics (legacy)."""
+    has_contact: bool
+    has_summary: bool
+    has_experience: bool
+    has_education: bool
+    has_skills: bool
+    section_count: int
+    structure_score: float
+
+
+class LegacyExperienceMetrics(BaseModel):
+    """Work experience quality metrics (legacy)."""
+    total_roles: int
+    avg_bullets_per_role: float
+    quantified_achievements: int
+    quantification_rate: float
+    experience_score: float
+
+
+class LegacySkillsMetrics(BaseModel):
+    """Skills analysis metrics (legacy)."""
+    total_skills: int
+    categorized_skills: int
+    unique_categories: int
+    skills_score: float
+
+
+class LegacyLengthMetrics(BaseModel):
+    """Resume length and layout metrics (legacy)."""
+    word_count: int
+    estimated_pages: float
+    is_too_short: bool
+    is_too_long: bool
+    length_score: float
+
+
+class LegacyResumeScore(BaseModel):
+    """Complete resume quality score (legacy format for backward compatibility)."""
+    overall: float
+    readability: LegacyReadabilityMetrics
+    structure: LegacyStructureMetrics
+    experience: LegacyExperienceMetrics
+    skills: LegacySkillsMetrics
+    length: LegacyLengthMetrics
+    comments: List[str] = Field(default_factory=list)
