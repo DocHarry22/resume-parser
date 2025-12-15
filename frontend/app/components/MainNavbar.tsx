@@ -45,7 +45,8 @@ const navItems: NavItem[] = [
     children: [
       {
         items: [
-          { label: "Resume Builder", href: "/tools?view=builder", description: "Create ATS-optimized resumes with AI", icon: <FiEdit3 size={20} /> },
+          { label: "Resume Builder", href: "/builder", description: "Create & edit resumes with auto-fix", icon: <FiEdit3 size={20} />, badge: "New" },
+          { label: "ATS Scanner", href: "/tools?view=scanner", description: "Analyze resume quality", icon: <FiCheckCircle size={20} /> },
           { label: "Cover Letter Builder", href: "/tools?view=cover-builder", description: "Write compelling cover letters", icon: <FiFileText size={20} /> },
           { label: "CV Builder", href: "/tools?view=cv-builder", description: "Build academic CVs with ease", icon: <FiBriefcase size={20} /> },
         ]
@@ -58,7 +59,7 @@ const navItems: NavItem[] = [
       {
         title: "Tools",
         items: [
-          { label: "AI Resume Builder", href: "/tools?view=builder", description: "Create with AI assistance", icon: <FiZap size={20} />, badge: "Popular" },
+          { label: "Resume Builder", href: "/builder", description: "Create & edit with auto-fix", icon: <FiZap size={20} />, badge: "Popular" },
           { label: "Resume Templates", href: "/tools?view=templates", description: "Browse professional designs", icon: <FiLayout size={20} /> },
           { label: "ATS Resume Checker", href: "/tools?view=scanner", description: "Scan and optimize", icon: <FiCheckCircle size={20} /> },
           { label: "Resume Writing Guide", href: "/tools?view=guide_resume", description: "Expert tips & advice", icon: <FiBookOpen size={20} /> },
