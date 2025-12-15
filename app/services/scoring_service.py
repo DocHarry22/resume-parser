@@ -59,6 +59,77 @@ WEIGHTS = {
     }
 }
 
+# ============================================
+# INDUSTRY-SPECIFIC KEYWORDS & SCORING
+# ============================================
+
+INDUSTRY_KEYWORDS = {
+    'engineering': {
+        'technical_skills': [
+            'cad', 'solidworks', 'autocad', 'matlab', 'finite element', 'fea',
+            'design', 'prototype', 'testing', 'quality assurance', 'iso',
+            'lean manufacturing', 'six sigma', 'process improvement', 'r&d',
+            'mechanical', 'electrical', 'civil', 'chemical', 'industrial'
+        ],
+        'certifications': [
+            'pe', 'professional engineer', 'eit', 'pmp', 'six sigma',
+            'leed', 'autocad certification', 'solidworks certification'
+        ],
+        'action_verbs': [
+            'designed', 'engineered', 'optimized', 'analyzed', 'tested',
+            'prototyped', 'developed', 'improved', 'automated'
+        ]
+    },
+    'it-software': {
+        'technical_skills': [
+            'python', 'java', 'javascript', 'react', 'node', 'angular', 'vue',
+            'sql', 'mongodb', 'postgresql', 'aws', 'azure', 'gcp', 'docker',
+            'kubernetes', 'ci/cd', 'git', 'agile', 'scrum', 'devops',
+            'machine learning', 'ai', 'data science', 'api', 'microservices'
+        ],
+        'certifications': [
+            'aws certified', 'azure certified', 'gcp certified', 'cissp',
+            'comptia', 'certified scrum', 'pmp', 'ckad', 'cka'
+        ],
+        'action_verbs': [
+            'developed', 'built', 'deployed', 'architected', 'implemented',
+            'optimized', 'automated', 'integrated', 'migrated', 'scaled'
+        ]
+    },
+    'finance': {
+        'technical_skills': [
+            'financial modeling', 'excel', 'bloomberg', 'financial analysis',
+            'budgeting', 'forecasting', 'valuation', 'risk management',
+            'portfolio management', 'gaap', 'ifrs', 'sox', 'compliance',
+            'audit', 'tax', 'accounting', 'quickbooks', 'sap', 'oracle'
+        ],
+        'certifications': [
+            'cpa', 'cfa', 'frm', 'cma', 'cia', 'cfp', 'series 7',
+            'series 63', 'series 65', 'prm'
+        ],
+        'action_verbs': [
+            'analyzed', 'forecasted', 'budgeted', 'audited', 'reconciled',
+            'managed', 'optimized', 'evaluated', 'assessed', 'reported'
+        ]
+    },
+    'healthcare': {
+        'technical_skills': [
+            'patient care', 'clinical', 'diagnosis', 'treatment', 'emr', 'ehr',
+            'epic', 'cerner', 'meditech', 'hipaa', 'medical coding', 'icd-10',
+            'cpt', 'nursing', 'pharmacy', 'laboratory', 'radiology',
+            'case management', 'quality improvement', 'infection control'
+        ],
+        'certifications': [
+            'rn', 'lpn', 'md', 'do', 'np', 'pa', 'cna', 'cma', 'rrt',
+            'bls', 'acls', 'pals', 'ccrn', 'cnor', 'rnfa', 'cnp'
+        ],
+        'action_verbs': [
+            'treated', 'diagnosed', 'assessed', 'administered', 'monitored',
+            'coordinated', 'educated', 'documented', 'evaluated', 'managed'
+        ]
+    }
+}
+
 
 # ============================================
 # STRUCTURE FLAGS
@@ -90,7 +161,8 @@ class ScoringService:
         self, 
         resume: Resume, 
         mode: ScanMode = ScanMode.BASIC,
-        job_description: Optional[str] = None
+        job_description: Optional[str] = None,
+        industry: Optional[str] = None
     ) -> ResumeScore:
         """
         Calculate comprehensive quality score for a resume.
@@ -99,6 +171,8 @@ class ScoringService:
             resume: Parsed resume object
             mode: Scan mode (BASIC, ATS, EXPERT)
             job_description: Optional job description for match scoring
+            industry: Optional industry for targeted keyword optimization
+                     (engineering, it-software, finance, healthcare)
         
         Returns:
             ResumeScore with metrics based on scan mode
@@ -118,8 +192,8 @@ class ScoringService:
         skills_metrics = None
         
         if mode in (ScanMode.ATS, ScanMode.EXPERT):
-            experience_score, experience_metrics = self._experience_score(resume)
-            skills_score, skills_metrics = self._skills_score(resume)
+            experience_score, experience_metrics = self._experience_score(resume, industry)
+            skills_score, skills_metrics = self._skills_score(resume, industry)
         
         # Calculate weighted overall score
         weights = WEIGHTS[mode]
@@ -136,7 +210,7 @@ class ScoringService:
         # Expert mode adjustments
         expert_bonus = 0.0
         if mode == ScanMode.EXPERT:
-            expert_bonus = self._apply_expert_rules(resume)
+            expert_bonus = self._apply_expert_rules(resume, industry)
             overall = min(100.0, max(0.0, overall + expert_bonus))
         
         # Job match scoring
@@ -154,7 +228,8 @@ class ScoringService:
             experience_score=experience_score,
             skills_score=skills_score,
             flags=flags,
-            resume=resume
+            resume=resume,
+            industry=industry
         )
         
         # Build detailed metrics dict
@@ -203,6 +278,7 @@ class ScoringService:
             comments=comments,
             flags=flags,
             mode=mode,
+            industry=industry,
             detailed_metrics=detailed_metrics
         )
     
@@ -389,7 +465,7 @@ class ScoringService:
     # EXPERIENCE SCORING (ATS/EXPERT modes)
     # ============================================
     
-    def _experience_score(self, resume: Resume) -> Tuple[float, ExperienceMetrics]:
+    def _experience_score(self, resume: Resume, industry: Optional[str] = None) -> Tuple[float, ExperienceMetrics]:
         """
         Score work experience quality.
         
@@ -398,6 +474,7 @@ class ScoringService:
         - Bullet density (ideal 3-5 per role)
         - Quantified achievements (%, $, numbers)
         - Career progression indicators
+        - Industry-specific action verbs (if industry specified)
         
         Returns:
             Tuple of (experience score 0-100, ExperienceMetrics)
@@ -460,6 +537,26 @@ class ScoringService:
         elif quantification_rate > 0:
             score += 10
         
+        # Industry-specific bonus for relevant action verbs
+        if industry and industry in INDUSTRY_KEYWORDS:
+            action_verbs = INDUSTRY_KEYWORDS[industry]['action_verbs']
+            verb_matches = 0
+            for exp in resume.experience:
+                for bullet in exp.bullets:
+                    bullet_lower = bullet.lower()
+                    for verb in action_verbs:
+                        if verb in bullet_lower:
+                            verb_matches += 1
+                            break  # Count once per bullet
+            
+            # Bonus up to 10 points for industry-relevant language
+            if verb_matches >= 5:
+                score += 10
+            elif verb_matches >= 3:
+                score += 5
+            elif verb_matches > 0:
+                score += 2
+        
         score = min(100.0, score)
         
         metrics = ExperienceMetrics(
@@ -497,7 +594,7 @@ class ScoringService:
     # SKILLS SCORING (ATS/EXPERT modes)
     # ============================================
     
-    def _skills_score(self, resume: Resume) -> Tuple[float, SkillsMetrics]:
+    def _skills_score(self, resume: Resume, industry: Optional[str] = None) -> Tuple[float, SkillsMetrics]:
         """
         Score skills richness and diversity.
         
@@ -505,6 +602,7 @@ class ScoringService:
         - Total skill count
         - Category diversity
         - Recognition rate (matched to taxonomy)
+        - Industry-specific skills match (if industry specified)
         
         Returns:
             Tuple of (skills score 0-100, SkillsMetrics)
@@ -555,6 +653,28 @@ class ScoringService:
         elif unique_categories >= 2:
             score += 10
         
+        # Industry-specific bonus for relevant technical skills
+        if industry and industry in INDUSTRY_KEYWORDS:
+            industry_skills = INDUSTRY_KEYWORDS[industry]['technical_skills']
+            skill_names_lower = [skill.name.lower() for skill in resume.skills]
+            
+            # Check for industry keyword matches in skills and experience
+            all_text = ' '.join(skill_names_lower + [resume.raw_text.lower()])
+            
+            matched_industry_skills = 0
+            for ind_skill in industry_skills:
+                if ind_skill in all_text:
+                    matched_industry_skills += 1
+            
+            # Bonus up to 15 points for industry-relevant skills
+            match_rate = (matched_industry_skills / len(industry_skills) * 100) if industry_skills else 0
+            if match_rate >= 40:
+                score += 15
+            elif match_rate >= 25:
+                score += 10
+            elif match_rate >= 15:
+                score += 5
+        
         score = min(100.0, score)
         
         metrics = SkillsMetrics(
@@ -570,7 +690,7 @@ class ScoringService:
     # EXPERT MODE RULES
     # ============================================
     
-    def _apply_expert_rules(self, resume: Resume) -> float:
+    def _apply_expert_rules(self, resume: Resume, industry: Optional[str] = None) -> float:
         """
         Apply expert recruiter scoring adjustments (EXPERT mode only).
         
@@ -578,6 +698,7 @@ class ScoringService:
         - Quantified impact with % or metrics
         - Proper section ordering (summary → experience)
         - Certifications present
+        - Industry-specific certifications (if industry specified)
         - Awards/achievements section
         
         Penalties:
@@ -611,6 +732,16 @@ class ScoringService:
         # BONUS: Has certifications
         if len(resume.certifications) > 0:
             adjustment += 3
+            
+            # Extra bonus for industry-specific certifications
+            if industry and industry in INDUSTRY_KEYWORDS:
+                industry_certs = INDUSTRY_KEYWORDS[industry]['certifications']
+                cert_text = ' '.join([c.name.lower() if c.name else '' for c in resume.certifications])
+                
+                for cert in industry_certs:
+                    if cert in cert_text:
+                        adjustment += 4  # Significant bonus for relevant certification
+                        break
         
         # BONUS: Proper section ordering (summary at top)
         if resume.summary:
@@ -859,7 +990,8 @@ class ScoringService:
         experience_score: Optional[float],
         skills_score: Optional[float],
         flags: List[str],
-        resume: Resume
+        resume: Resume,
+        industry: Optional[str] = None
     ) -> List[str]:
         """Generate actionable improvement suggestions."""
         comments = []
@@ -885,6 +1017,29 @@ class ScoringService:
                 comments.append("Resume is too short - add more detail to experience")
             elif word_count > 1500:
                 comments.append("Consider condensing resume to 1-2 pages")
+        
+        # Industry-specific comments
+        if industry and industry in INDUSTRY_KEYWORDS:
+            industry_data = INDUSTRY_KEYWORDS[industry]
+            
+            # Check for industry-specific skills
+            skill_names_lower = [skill.name.lower() for skill in resume.skills]
+            all_text_lower = resume.raw_text.lower()
+            
+            matched_skills = sum(1 for skill in industry_data['technical_skills'] 
+                               if skill in all_text_lower)
+            
+            if matched_skills < 3:
+                industry_name = industry.replace('-', '/').title()
+                comments.append(f"Add more {industry_name}-specific technical skills to match industry standards")
+            
+            # Check for industry-specific certifications
+            cert_text = ' '.join([c.name.lower() if c.name else '' for c in resume.certifications])
+            has_industry_cert = any(cert in cert_text for cert in industry_data['certifications'])
+            
+            if not has_industry_cert and len(resume.certifications) == 0:
+                industry_name = industry.replace('-', '/').title()
+                comments.append(f"Consider adding {industry_name}-relevant certifications to boost credibility")
         
         # Experience comments (ATS/EXPERT modes)
         if mode in (ScanMode.ATS, ScanMode.EXPERT) and experience_score is not None:

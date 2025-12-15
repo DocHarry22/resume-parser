@@ -100,7 +100,12 @@ function ATSScannerView() {
     }, 150);
 
     try {
-      const data = await parseAndScoreResume(file, mode, jobDescription || undefined);
+      const data = await parseAndScoreResume(
+        file, 
+        mode, 
+        jobDescription || undefined,
+        industry !== 'default' ? industry : undefined
+      );
       clearInterval(progressInterval);
       setProgress(100);
       

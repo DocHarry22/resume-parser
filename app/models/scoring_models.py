@@ -78,8 +78,9 @@ class ResumeScore(BaseModel):
     comments: List[str] = Field(default_factory=list, description="Improvement suggestions")
     flags: List[str] = Field(default_factory=list, description="Warning flags and issues")
     
-    # Mode info
+    # Mode and industry info
     mode: ScanMode = Field(default=ScanMode.BASIC, description="Scan mode used")
+    industry: Optional[str] = Field(None, description="Industry optimization applied (engineering, it-software, finance, healthcare)")
     
     # Detailed metrics (for internal use / advanced display)
     detailed_metrics: Optional[dict] = Field(None, description="Detailed breakdown metrics")

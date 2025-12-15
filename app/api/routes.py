@@ -37,6 +37,13 @@ async def root():
             "basic": "Format check + key sections (fastest)",
             "ats": "Keywords + readability + ATS simulation",
             "expert": "Full analysis + achievement scoring + recruiter insights"
+        },
+        "industries": {
+            "default": "All Industries (no specific optimization)",
+            "engineering": "Engineering (CAD, design, testing, certifications)",
+            "it-software": "IT/Software (Python, Java, cloud, DevOps)",
+            "finance": "Finance (financial modeling, CPA, CFA, compliance)",
+            "healthcare": "Healthcare (patient care, EMR, clinical certifications)"
         }
     }
 
@@ -80,7 +87,8 @@ async def parse_resume(file: UploadFile = File(...)):
 async def score_resume(
     file: UploadFile = File(...),
     mode: ScanMode = Query(default=ScanMode.BASIC, description="Scan mode: basic, ats, or expert"),
-    job_description: Optional[str] = Form(default=None, description="Optional job description for match scoring")
+    job_description: Optional[str] = Form(default=None, description="Optional job description for match scoring"),
+    industry: Optional[str] = Form(default=None, description="Optional industry for targeted optimization (engineering, it-software, finance, healthcare)")
 ):
     """
     Score a resume and provide quality metrics.
@@ -92,6 +100,8 @@ async def score_resume(
         
     Form Data:
         - job_description: Optional job description for match scoring
+        - industry: Optional industry for targeted keyword optimization
+          Options: engineering, it-software, finance, healthcare
     
     Scan Modes:
         - BASIC: ATS compliance (50%), layout (30%), readability (20%)
@@ -114,7 +124,8 @@ async def score_resume(
         score = scoring_service.score_resume(
             resume=resume,
             mode=mode,
-            job_description=job_description
+            job_description=job_description,
+            industry=industry
         )
         
         logger.info(f"Successfully scored resume: {file.filename} (Score: {score.overall}, Mode: {mode.value})")
@@ -143,7 +154,8 @@ async def score_resume(
 async def parse_and_score(
     file: UploadFile = File(...),
     mode: ScanMode = Query(default=ScanMode.BASIC, description="Scan mode: basic, ats, or expert"),
-    job_description: Optional[str] = Form(default=None, description="Optional job description for match scoring")
+    job_description: Optional[str] = Form(default=None, description="Optional job description for match scoring"),
+    industry: Optional[str] = Form(default=None, description="Optional industry for targeted optimization (engineering, it-software, finance, healthcare)")
 ):
     """
     Parse and score a resume in one request.
@@ -155,6 +167,8 @@ async def parse_and_score(
         
     Form Data:
         - job_description: Optional job description for match scoring
+        - industry: Optional industry for targeted keyword optimization
+          Options: engineering, it-software, finance, healthcare
     
     Scan Modes:
         - BASIC: ATS compliance (50%), layout (30%), readability (20%)
@@ -170,6 +184,7 @@ async def parse_and_score(
           - Section ordering analysis
           - Certification/award bonuses
           - Bias risk penalties (photo, DOB, gender)
+          - Industry-specific keyword optimization (if industry specified)
     
     Returns:
         Both full Resume object and ResumeScore
@@ -188,7 +203,8 @@ async def parse_and_score(
         score = scoring_service.score_resume(
             resume=resume,
             mode=mode,
-            job_description=job_description
+            job_description=job_description,
+            industry=industry
         )
         
         logger.info(f"Successfully processed resume: {file.filename} (Score: {score.overall}, Mode: {mode.value})")
