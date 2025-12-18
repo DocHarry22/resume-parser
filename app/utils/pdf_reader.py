@@ -65,6 +65,7 @@ def read_pdf(file: bytes) -> dict:
         all_blocks = []
         full_text_parts = []
         page_count = doc.page_count
+        raw_text_found = False  # Track if we found any text at all
         
         # Process each page
         for page in doc:
@@ -94,13 +95,16 @@ def read_pdf(file: bytes) -> dict:
                 if not text:
                     continue
                 
-                # Filter out page numbers (standalone numbers)
+                # We found some text
+                raw_text_found = True
+                
+                # Filter out page numbers (standalone numbers) - be lenient
                 if _is_page_number(text):
                     continue
                 
-                # Filter out tiny text (likely headers/footers)
+                # Filter out very tiny text (likely headers/footers) - only if we have other content
                 block_height = y1 - y0
-                if block_height < 8:  # Very small text
+                if block_height < 5:  # Very small text (reduced from 8)
                     continue
                 
                 # Clean the text
@@ -121,8 +125,39 @@ def read_pdf(file: bytes) -> dict:
         # Build final document
         full_text = "\n\n".join(full_text_parts)
         
+        # If block extraction failed but we found raw text, try simple text extraction
+        if (not full_text or not all_blocks) and raw_text_found:
+            # Reopen and try simple extraction
+            stream = BytesIO(file)
+            doc = fitz.open(stream=stream, filetype="pdf")
+            simple_text_parts = []
+            for page in doc:
+                text = page.get_text("text")
+                if text and text.strip():
+                    simple_text_parts.append(text.strip())
+            doc.close()
+            
+            if simple_text_parts:
+                full_text = "\n\n".join(simple_text_parts)
+                all_blocks = simple_text_parts
+        
+        # If still no text, try one more fallback without any filtering
         if not full_text or not all_blocks:
-            raise ValueError("Unable to extract text from PDF")
+            stream = BytesIO(file)
+            doc = fitz.open(stream=stream, filetype="pdf")
+            fallback_parts = []
+            for page in doc:
+                text = page.get_text()
+                if text and text.strip():
+                    fallback_parts.append(text.strip())
+            doc.close()
+            
+            if fallback_parts:
+                full_text = "\n\n".join(fallback_parts)
+                all_blocks = fallback_parts
+        
+        if not full_text or not all_blocks:
+            raise ValueError("Unable to extract text from PDF. This may be a scanned/image-based PDF that requires OCR.")
         
         return {
             'full_text': full_text,
