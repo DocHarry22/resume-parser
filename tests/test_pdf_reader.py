@@ -2,7 +2,7 @@
 
 import pytest
 from pathlib import Path
-from app.utils.pdf_reader import PDFReader
+from app.utils.pdf_reader import PDFReader, _is_page_number, _clean_text
 
 
 def test_pdf_reader_initialization():
@@ -13,48 +13,34 @@ def test_pdf_reader_initialization():
 
 def test_is_page_number():
     """Test page number detection."""
+    # Should detect page numbers (short text with numbers)
+    assert _is_page_number("1") == True
+    assert _is_page_number("12") == True
+    assert _is_page_number("Page 2") == True
+    
+    # Should not detect as page numbers (longer text)
+    assert _is_page_number("Section 1: Introduction") == False
+    assert _is_page_number("Experience") == False
+    assert _is_page_number("John Doe has 15 years experience") == False
+
+
+def test_clean_text():
+    """Test text cleaning function."""
+    # Test multiple spaces
+    text = "Hello    world"
+    cleaned = _clean_text(text)
+    assert "    " not in cleaned
+    
+    # Test stripping
+    text = "  test  "
+    cleaned = _clean_text(text)
+    assert cleaned == "test"
+
+
+def test_pdf_reader_read_method():
+    """Test that PDFReader.read() works with valid PDF bytes."""
     reader = PDFReader()
     
-    # Should detect page numbers
-    assert reader._is_page_number("Page 1", 1, 3) == True
-    assert reader._is_page_number("1", 1, 3) == True
-    assert reader._is_page_number("1 of 3", 1, 3) == True
-    assert reader._is_page_number("- 2 -", 2, 3) == True
-    
-    # Should not detect as page numbers
-    assert reader._is_page_number("Section 1", 1, 3) == False
-    assert reader._is_page_number("Experience", 1, 3) == False
-
-
-def test_is_decorative_line():
-    """Test decorative line detection."""
-    reader = PDFReader()
-    
-    # Should detect decorative lines
-    assert reader._is_decorative_line("===") == True
-    assert reader._is_decorative_line("---") == True
-    assert reader._is_decorative_line("***") == True
-    assert reader._is_decorative_line("______") == True
-    
-    # Should not detect as decorative
-    assert reader._is_decorative_line("Summary") == False
-    assert reader._is_decorative_line("John Doe") == False
-
-
-def test_split_into_blocks():
-    """Test text splitting into blocks."""
-    reader = PDFReader()
-    
-    text = """First paragraph here.
-
-Second paragraph here.
-
-
-Third paragraph after double newline."""
-    
-    blocks = reader._split_into_blocks(text)
-    
-    assert len(blocks) == 3
-    assert "First paragraph" in blocks[0]
-    assert "Second paragraph" in blocks[1]
-    assert "Third paragraph" in blocks[2]
+    # Test with invalid input
+    with pytest.raises(ValueError):
+        reader.read(b"not a valid pdf")

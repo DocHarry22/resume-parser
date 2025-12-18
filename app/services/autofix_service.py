@@ -185,7 +185,7 @@ class AutoFixService:
         # Extract job title from experience if available
         job_title = "Professional"
         if resume.experience and len(resume.experience) > 0:
-            job_title = resume.experience[0].get("position", "Professional")
+            job_title = resume.experience[0].job_title or "Professional"
         
         # Generate template summary
         suggested_summary = (
@@ -238,14 +238,14 @@ class AutoFixService:
     
     def _fix_contact(self, resume: Resume, feedback: str) -> Optional[AutoFix]:
         """Fix missing contact information."""
-        contact = resume.contact or {}
+        contact = resume.contact
         missing = []
         
-        if not contact.get("email"):
+        if not contact or not contact.email:
             missing.append("email")
-        if not contact.get("phone"):
+        if not contact or not contact.phone:
             missing.append("phone")
-        if not contact.get("location"):
+        if not contact or not contact.location:
             missing.append("location")
         
         if missing:
@@ -254,7 +254,7 @@ class AutoFixService:
                 action=FixAction.ADD,
                 section="contact",
                 description=f"Add missing contact information: {', '.join(missing)}",
-                original_value=contact,
+                original_value=contact.model_dump() if contact else {},
                 suggested_value={
                     "email": "your.email@example.com",
                     "phone": "+1-XXX-XXX-XXXX",
@@ -274,7 +274,8 @@ class AutoFixService:
         
         # Check experience entries for missing metrics
         for i, exp in enumerate(resume.experience or []):
-            description = " ".join(exp.get("description", []))
+            bullets = exp.bullets or []
+            description = " ".join(bullets)
             
             # Look for statements without numbers
             if not re.search(r'\d+[%$]?|\$\d+|[0-9,]+', description):
@@ -282,13 +283,13 @@ class AutoFixService:
                     fix_type=FixType.QUANTIFICATION,
                     action=FixAction.MODIFY,
                     section=f"experience[{i}]",
-                    description=f"Add metrics to {exp.get('position', 'position')} at {exp.get('company', 'company')}",
+                    description=f"Add metrics to {exp.job_title or 'position'} at {exp.company or 'company'}",
                     original_value=description[:100] + "...",
                     suggested_value="Add specific numbers: % improved, $ saved, # managed, etc.",
                     auto_applicable=False,
                     metadata={
-                        "company": exp.get("company"),
-                        "position": exp.get("position"),
+                        "company": exp.company,
+                        "position": exp.job_title,
                         "examples": [
                             "Increased sales by 25%",
                             "Managed team of 8 developers",
@@ -307,13 +308,14 @@ class AutoFixService:
         strong_verbs = ["Led", "Developed", "Implemented", "Optimized", "Achieved", "Designed"]
         
         for i, exp in enumerate(resume.experience or []):
-            for j, bullet in enumerate(exp.get("description", [])):
+            bullets = exp.bullets or []
+            for j, bullet in enumerate(bullets):
                 # Check for weak action verbs
                 if any(weak in bullet.lower() for weak in weak_verbs):
                     fixes.append(AutoFix(
                         fix_type=FixType.BULLETS,
                         action=FixAction.MODIFY,
-                        section=f"experience[{i}].description[{j}]",
+                        section=f"experience[{i}].bullets[{j}]",
                         description="Replace weak verb with strong action verb",
                         original_value=bullet,
                         suggested_value=f"Start with: {', '.join(strong_verbs[:3])}...",
@@ -321,7 +323,7 @@ class AutoFixService:
                         metadata={
                             "weak_verb_found": True,
                             "suggested_verbs": strong_verbs,
-                            "company": exp.get("company")
+                            "company": exp.company
                         }
                     ))
         

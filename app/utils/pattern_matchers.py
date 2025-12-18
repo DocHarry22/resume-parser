@@ -192,14 +192,16 @@ class DateRangeMatcher:
                     if groups[1].lower() in ('present', 'current'):
                         # Format: Year - Present
                         return (groups[0], "Present")
-                    else:
-                        # Format: Year - Year
+                    elif groups[0].isdigit() and groups[1].isdigit():
+                        # Format: Year - Year (both are numbers)
                         return (groups[0], groups[1])
-                
-                elif len(groups) == 2 and groups[0].isalpha():
-                    # Format: Month Year (single date)
-                    date = cls._format_date(groups[0], groups[1])
-                    return (date, None)
+                    elif groups[0].isalpha() and groups[1].isdigit():
+                        # Format: Month Year (single date like "Jan 2020")
+                        date = cls._format_date(groups[0], groups[1])
+                        return (date, None)
+                    else:
+                        # Fallback for Year - Year
+                        return (groups[0], groups[1])
                 
                 elif len(groups) == 1:
                     # Just a year

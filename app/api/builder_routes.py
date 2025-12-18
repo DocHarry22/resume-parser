@@ -16,8 +16,9 @@ from app.models.builder_models import (
 )
 from app.services.builder_service import get_builder_service
 from app.services.autofix_service import get_auto_fix_service
-from app.services.parsing_service import get_parsing_service
+from app.services.parsing_service import ParsingService
 from app.services.scoring_service import get_scoring_service
+from app.utils.document_loader import load_document
 from app.models.scoring_models import ScanMode
 
 
@@ -66,9 +67,12 @@ async def import_resume(
         BuilderResponse with populated resume builder
     """
     try:
+        # Load document first
+        document = await load_document(file)
+        
         # Parse the uploaded resume
-        parsing_service = get_parsing_service()
-        parsed_resume = await parsing_service.parse_resume(file)
+        parsing_service = ParsingService()
+        parsed_resume = parsing_service.parse_resume(document)
         
         # Convert to builder format
         builder_service = get_builder_service()
@@ -323,15 +327,82 @@ async def analyze_for_fixes(
         resume_text = builder_service.export_to_text(resume_builder)
         
         # Create a minimal Resume object for scoring
-        from app.models.resume_models import Resume
+        # Import the correct models from resume_models
+        from app.models.resume_models import (
+            Resume, ContactInfo as ResumeContactInfo, 
+            ExperienceItem, EducationItem, SkillItem, CertificationItem
+        )
+        
+        # Convert builder contact to resume contact format
+        contact_data = {}
+        if resume_builder.contact:
+            contact_data = {
+                "email": resume_builder.contact.email,
+                "phone": resume_builder.contact.phone,
+                "linkedin": resume_builder.contact.linkedin,
+                "github": resume_builder.contact.github,
+                "website": resume_builder.contact.website,
+                "location": resume_builder.contact.location,
+            }
+        
+        # Convert experience entries
+        experience_items = []
+        for exp in resume_builder.experience:
+            experience_items.append(ExperienceItem(
+                job_title=exp.position,
+                company=exp.company,
+                location=exp.location,
+                start_date=exp.start_date,
+                end_date=exp.end_date,
+                is_current=exp.current,
+                bullets=exp.description + exp.achievements,
+                raw_text=""
+            ))
+        
+        # Convert education entries
+        education_items = []
+        for edu in resume_builder.education:
+            education_items.append(EducationItem(
+                degree=edu.degree,
+                field_of_study=edu.field_of_study,
+                institution=edu.institution,
+                location=edu.location,
+                graduation_year=edu.end_date,
+                gpa=str(edu.gpa) if edu.gpa else None,
+                honors=", ".join(edu.honors) if edu.honors else None,
+                raw_text=""
+            ))
+        
+        # Convert skills
+        skill_items = []
+        for skill_cat in resume_builder.skills:
+            for skill in skill_cat.skills:
+                skill_items.append(SkillItem(
+                    name=skill,
+                    category=skill_cat.category,
+                    normalized_name=skill.lower()
+                ))
+        
+        # Convert certifications
+        cert_items = []
+        for cert in resume_builder.certifications:
+            cert_items.append(CertificationItem(
+                name=cert.name,
+                issuer=cert.issuer,
+                date=cert.date,
+                credential_id=cert.credential_id,
+                raw_text=""
+            ))
+        
         resume = Resume(
+            name=resume_builder.contact.full_name if resume_builder.contact else None,
             raw_text=resume_text,
-            contact=resume_builder.contact.model_dump() if resume_builder.contact else None,
+            contact=ResumeContactInfo(**contact_data),
             summary=resume_builder.summary.summary if resume_builder.summary else None,
-            experience=[exp.model_dump() for exp in resume_builder.experience],
-            education=[edu.model_dump() for edu in resume_builder.education],
-            skills=[skill for skill_cat in resume_builder.skills for skill in skill_cat.skills],
-            certifications=[cert.name for cert in resume_builder.certifications]
+            experience=experience_items,
+            education=education_items,
+            skills=skill_items,
+            certifications=cert_items
         )
         
         # Score the resume

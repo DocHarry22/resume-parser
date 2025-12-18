@@ -1,6 +1,6 @@
 """Data models for resume parsing."""
 
-from pydantic import BaseModel, Field, EmailStr
+from pydantic import BaseModel, Field, EmailStr, ConfigDict
 from typing import Optional
 from datetime import date
 from enum import Enum
@@ -108,5 +108,4 @@ class Resume(BaseModel):
     languages: list[str] = Field(default_factory=list, description="Languages spoken")
     raw_text: str = Field("", description="Original resume text")
     
-    class Config:
-        use_enum_values = True
+    model_config = ConfigDict(use_enum_values=True)

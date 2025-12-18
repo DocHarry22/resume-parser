@@ -84,13 +84,14 @@ class ResumeBuilderService:
         
         # Contact information
         if parsed_resume.contact:
+            contact = parsed_resume.contact
             builder_data["contact"] = ContactInfo(
-                full_name=parsed_resume.contact.get("name", ""),
-                email=parsed_resume.contact.get("email", "") or "email@example.com",
-                phone=parsed_resume.contact.get("phone"),
-                location=parsed_resume.contact.get("location"),
-                linkedin=parsed_resume.contact.get("linkedin"),
-                github=parsed_resume.contact.get("github")
+                full_name=parsed_resume.name or "",
+                email=contact.email or "email@example.com",
+                phone=contact.phone,
+                location=contact.location,
+                linkedin=contact.linkedin,
+                github=contact.github
             )
         
         # Summary
@@ -103,13 +104,13 @@ class ResumeBuilderService:
         if parsed_resume.experience:
             builder_data["experience"] = [
                 ExperienceEntry(
-                    company=exp.get("company", ""),
-                    position=exp.get("position", ""),
-                    location=exp.get("location"),
-                    start_date=exp.get("start_date", ""),
-                    end_date=exp.get("end_date"),
-                    current="present" in str(exp.get("end_date", "")).lower(),
-                    description=exp.get("description", []),
+                    company=exp.company or "",
+                    position=exp.job_title or "",
+                    location=exp.location,
+                    start_date=exp.start_date or "",
+                    end_date=exp.end_date,
+                    current="present" in str(exp.end_date or "").lower(),
+                    description=exp.bullets or [],
                     achievements=[]
                 )
                 for exp in parsed_resume.experience
@@ -119,11 +120,11 @@ class ResumeBuilderService:
         if parsed_resume.education:
             builder_data["education"] = [
                 EducationEntry(
-                    institution=edu.get("institution", ""),
-                    degree=edu.get("degree", ""),
-                    field_of_study=edu.get("field_of_study"),
-                    location=edu.get("location"),
-                    end_date=edu.get("end_date"),
+                    institution=edu.institution or "",
+                    degree=edu.degree or "",
+                    field_of_study=edu.field_of_study,
+                    location=edu.location,
+                    end_date=edu.graduation_year,
                     honors=[]
                 )
                 for edu in parsed_resume.education
@@ -131,10 +132,11 @@ class ResumeBuilderService:
         
         # Skills
         if parsed_resume.skills:
+            skill_names = [skill.name for skill in parsed_resume.skills]
             builder_data["skills"] = [
                 SkillCategory(
                     category="Technical Skills",
-                    skills=parsed_resume.skills
+                    skills=skill_names
                 )
             ]
         
@@ -142,8 +144,8 @@ class ResumeBuilderService:
         if parsed_resume.certifications:
             builder_data["certifications"] = [
                 CertificationEntry(
-                    name=cert,
-                    issuer="",
+                    name=cert.name,
+                    issuer=cert.issuer or "",
                 )
                 for cert in parsed_resume.certifications
             ]
@@ -197,9 +199,12 @@ class ResumeBuilderService:
         if not resume:
             return None
         
-        # Apply updates
+        # Apply updates using exclude_unset to only update provided fields
         update_dict = update_data.model_dump(exclude_unset=True)
         for key, value in update_dict.items():
+            # Handle nested models - convert dicts back to model instances
+            if key == 'contact' and isinstance(value, dict):
+                value = ContactInfo(**value)
             setattr(resume, key, value)
         
         # Update timestamp
@@ -220,17 +225,20 @@ class ResumeBuilderService:
         Returns:
             True if deleted, False if not found
         """
+        deleted = False
+        
         # Remove from cache
         if resume_id in self._in_memory_cache:
             del self._in_memory_cache[resume_id]
+            deleted = True
         
         # Remove from disk
         resume_path = self.storage_path / f"{resume_id}.json"
         if resume_path.exists():
             resume_path.unlink()
-            return True
+            deleted = True
         
-        return False
+        return deleted
     
     def save_resume(self, resume: ResumeBuilder) -> bool:
         """

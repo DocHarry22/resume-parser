@@ -26,6 +26,7 @@ export interface ContactInfo {
   linkedin?: string;
   github?: string;
   website?: string;
+  photo?: string; // Base64 encoded image or URL
 }
 
 export interface ProfessionalSummary {

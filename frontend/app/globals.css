@@ -49,3 +49,155 @@ body {
 .no-transition {
   transition: none !important;
 }
+
+/* Custom Animations for Builder */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.3s ease-out forwards;
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft 0.3s ease-out forwards;
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.2s ease-out forwards;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Builder-specific styles */
+@layer components {
+  .builder-section-card {
+    @apply bg-white rounded-xl border border-gray-200 shadow-sm;
+    @apply hover:shadow-md hover:border-gray-300;
+    @apply transition-all duration-200;
+  }
+
+  .builder-input {
+    @apply w-full px-4 py-3 text-sm border border-gray-200 rounded-xl;
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+    @apply placeholder:text-gray-400;
+    @apply transition-all duration-200;
+  }
+
+  .builder-button-primary {
+    @apply px-4 py-2 text-sm font-medium text-white;
+    @apply bg-gradient-to-r from-blue-600 to-indigo-600;
+    @apply rounded-xl shadow-sm;
+    @apply hover:shadow-lg hover:scale-105;
+    @apply transition-all duration-200;
+  }
+
+  .builder-button-secondary {
+    @apply px-4 py-2 text-sm font-medium text-gray-700;
+    @apply bg-gray-100 rounded-xl;
+    @apply hover:bg-gray-200;
+    @apply transition-all duration-200;
+  }
+
+  .builder-dropdown {
+    @apply absolute top-full left-0 mt-2;
+    @apply bg-white border border-gray-200 rounded-xl shadow-xl;
+    @apply py-2 z-50;
+    @apply animate-fadeIn;
+  }
+
+  .builder-dropdown-item {
+    @apply w-full flex items-center justify-between px-3 py-2.5 text-sm;
+    @apply transition-all duration-200;
+  }
+
+  .builder-dropdown-item:hover {
+    @apply bg-gray-50;
+  }
+
+  .builder-dropdown-item.active {
+    @apply bg-blue-50 text-blue-700;
+  }
+}
+
+/* Glass morphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Focus visible for accessibility */
+.focus-visible:focus-visible {
+  @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+}

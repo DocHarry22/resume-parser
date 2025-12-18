@@ -126,7 +126,7 @@ class EducationEntry(BaseModel):
 class SkillCategory(BaseModel):
     """Categorized skills."""
     category: str = Field(..., min_length=1, max_length=50)
-    skills: List[str] = Field(..., min_items=1, max_items=20)
+    skills: List[str] = Field(..., min_length=1, max_length=20)
     
     model_config = ConfigDict(
         json_schema_extra={
@@ -164,12 +164,12 @@ class ProjectEntry(BaseModel):
     """Single project entry."""
     name: str = Field(..., min_length=1, max_length=100)
     description: str = Field(..., min_length=10, max_length=300)
-    technologies: List[str] = Field(default_factory=list, max_items=10)
+    technologies: List[str] = Field(default_factory=list, max_length=10)
     url: Optional[str] = Field(None, max_length=200)
     github: Optional[str] = Field(None, max_length=200)
     start_date: Optional[str] = Field(None, description="Format: YYYY-MM")
     end_date: Optional[str] = Field(None, description="Format: YYYY-MM")
-    highlights: List[str] = Field(default_factory=list, max_items=5)
+    highlights: List[str] = Field(default_factory=list, max_length=5)
     
     model_config = ConfigDict(
         json_schema_extra={
@@ -210,7 +210,7 @@ class ResumeBuilder(BaseModel):
     projects: List[ProjectEntry] = Field(default_factory=list)
     
     # Optional sections
-    achievements: List[str] = Field(default_factory=list, max_items=10)
+    achievements: List[str] = Field(default_factory=list, max_length=10)
     languages: List[Dict[str, str]] = Field(
         default_factory=list,
         description="Format: [{'language': 'English', 'proficiency': 'Native'}]"

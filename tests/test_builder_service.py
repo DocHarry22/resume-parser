@@ -13,7 +13,10 @@ from app.models.builder_models import (
     ExperienceEntry, EducationEntry, SkillCategory,
     SectionType
 )
-from app.models.resume_models import Resume
+from app.models.resume_models import (
+    Resume, ContactInfo as ParsedContactInfo, 
+    ExperienceItem, EducationItem, SkillItem
+)
 
 
 @pytest.fixture
@@ -208,31 +211,35 @@ def test_export_to_text(builder_service, sample_contact, sample_experience):
 
 def test_create_from_parsed_resume(builder_service):
     """Test creating builder from parsed resume."""
-    # Create a mock parsed resume
+    # Create a mock parsed resume using proper Pydantic models
     parsed_resume = Resume(
         raw_text="Sample resume text",
-        contact={
-            "name": "John Smith",
-            "email": "john@example.com",
-            "phone": "+1-555-9999"
-        },
-        summary="Experienced developer",
+        name="John Smith",
+        contact=ParsedContactInfo(
+            email="john@example.com",
+            phone="+1-555-9999"
+        ),
+        summary="Experienced developer with over 10 years of expertise in building scalable web applications and leading engineering teams.",
         experience=[
-            {
-                "company": "ABC Inc",
-                "position": "Developer",
-                "start_date": "2018-01",
-                "end_date": "2020-12",
-                "description": ["Built web apps"]
-            }
+            ExperienceItem(
+                company="ABC Inc",
+                job_title="Developer",
+                start_date="2018-01",
+                end_date="2020-12",
+                bullets=["Built web apps"]
+            )
         ],
         education=[
-            {
-                "institution": "MIT",
-                "degree": "BS Computer Science"
-            }
+            EducationItem(
+                institution="MIT",
+                degree="BS Computer Science"
+            )
         ],
-        skills=["Python", "React", "AWS"]
+        skills=[
+            SkillItem(name="Python"),
+            SkillItem(name="React"),
+            SkillItem(name="AWS")
+        ]
     )
     
     resume_builder = builder_service.create_from_parsed(parsed_resume)
@@ -241,7 +248,7 @@ def test_create_from_parsed_resume(builder_service):
     assert resume_builder.contact.full_name == "John Smith"
     assert resume_builder.contact.email == "john@example.com"
     assert resume_builder.summary is not None
-    assert resume_builder.summary.summary == "Experienced developer"
+    assert "Experienced developer" in resume_builder.summary.summary
     assert len(resume_builder.experience) == 1
     assert resume_builder.experience[0].company == "ABC Inc"
     assert len(resume_builder.education) == 1

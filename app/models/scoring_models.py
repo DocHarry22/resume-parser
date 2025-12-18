@@ -1,6 +1,6 @@
 """Data models for resume scoring with multi-tier scan modes."""
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from typing import Optional, List
 from enum import Enum
 
@@ -85,33 +85,32 @@ class ResumeScore(BaseModel):
     # Detailed metrics (for internal use / advanced display)
     detailed_metrics: Optional[dict] = Field(None, description="Detailed breakdown metrics")
     
-    class Config:
-        json_schema_extra = {
-            "example": {
-                "overall": 78.5,
-                "ats_compliance": 85.0,
-                "readability": 72.0,
-                "layout": 88.0,
-                "experience": 75.0,
-                "skills": 80.0,
-                "job_match": None,
-                "comments": [
-                    "Add metrics to show real impact (e.g., 'Increased efficiency by 20%')",
-                    "Improve readability by shortening long sentences"
-                ],
-                "flags": [
-                    "⚠️ No achievements quantified",
-                    "⚠️ Missing professional summary"
-                ],
-                "mode": "ats",
-                "detailed_metrics": {
-                    "readability_metrics": {
-                        "flesch_reading_ease": 65.0,
-                        "flesch_kincaid_grade": 10.2
-                    }
+    model_config = ConfigDict(json_schema_extra={
+        "example": {
+            "overall": 78.5,
+            "ats_compliance": 85.0,
+            "readability": 72.0,
+            "layout": 88.0,
+            "experience": 75.0,
+            "skills": 80.0,
+            "job_match": None,
+            "comments": [
+                "Add metrics to show real impact (e.g., 'Increased efficiency by 20%')",
+                "Improve readability by shortening long sentences"
+            ],
+            "flags": [
+                "⚠️ No achievements quantified",
+                "⚠️ Missing professional summary"
+            ],
+            "mode": "ats",
+            "detailed_metrics": {
+                "readability_metrics": {
+                    "flesch_reading_ease": 65.0,
+                    "flesch_kincaid_grade": 10.2
                 }
             }
         }
+    })
 
 
 # Legacy models for backward compatibility

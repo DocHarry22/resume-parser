@@ -1,5 +1,5 @@
-import ResumeBuilder from '@/components/ResumeBuilder';
+import { ResumeIOBuilder } from '@/components/resumeio';
 
 export default function BuilderPage() {
-  return <ResumeBuilder />;
+  return <ResumeIOBuilder />;
 }

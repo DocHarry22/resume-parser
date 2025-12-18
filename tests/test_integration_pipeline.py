@@ -50,19 +50,16 @@ def test_end_to_end_pipeline_pdf():
     assert score, "Score should be generated"
     assert 0 <= score.overall <= 100, "Overall score should be 0-100"
     
-    # Verify all scoring dimensions
-    assert score.readability, "Should have readability metrics"
-    assert score.structure, "Should have structure metrics"
-    assert score.experience, "Should have experience metrics"
-    assert score.skills, "Should have skills metrics"
-    assert score.length, "Should have length metrics"
+    # Verify all scoring dimensions (using new API)
+    assert score.readability is not None, "Should have readability score"
+    assert score.ats_compliance is not None, "Should have ATS compliance score"
+    assert score.layout is not None, "Should have layout score"
     
-    # Verify score components
-    assert 0 <= score.readability.readability_score <= 100
-    assert 0 <= score.structure.structure_score <= 100
-    assert 0 <= score.experience.experience_score <= 100
-    assert 0 <= score.skills.skills_score <= 100
-    assert 0 <= score.length.length_score <= 100
+    # Optional tier-dependent metrics
+    if score.experience is not None:
+        assert 0 <= score.experience <= 100
+    if score.skills is not None:
+        assert 0 <= score.skills <= 100
     
     # Verify comments are generated
     assert isinstance(score.comments, list), "Should have comments list"

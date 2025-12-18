@@ -100,7 +100,9 @@ class TestDateRangeMatcher:
     
     def test_single_date(self):
         text = "Jan 2020"
-        start, end = DateRangeMatcher.extract(text)
+        result = DateRangeMatcher.extract(text)
+        assert result is not None
+        start, end = result
         assert start == "2020-01"
         assert end is None
     

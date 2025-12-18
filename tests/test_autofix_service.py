@@ -7,7 +7,7 @@ Tests for generating and applying resume auto-fixes.
 import pytest
 
 from app.services.autofix_service import AutoFixService, FixType, FixAction
-from app.models.resume_models import Resume
+from app.models.resume_models import Resume, ContactInfo, ExperienceItem, SkillItem
 from app.models.builder_models import ResumeBuilder, ProfessionalSummary
 
 
@@ -22,23 +22,20 @@ def resume_with_issues():
     """Create a resume with common issues."""
     return Resume(
         raw_text=" ".join(["word"] * 1200),  # Too long
-        contact={
-            "name": "John Doe"
-            # Missing email, phone
-        },
+        contact=ContactInfo(),  # Missing email, phone
         summary=None,  # Missing summary
         experience=[
-            {
-                "company": "ABC Corp",
-                "position": "Developer",
-                "description": [
+            ExperienceItem(
+                company="ABC Corp",
+                job_title="Developer",
+                bullets=[
                     "Responsible for building applications",  # Weak verb
                     "Worked on various projects"  # No quantification
                 ]
-            }
+            )
         ],
         education=[],
-        skills=["Python"]
+        skills=[SkillItem(name="Python")]
     )
 
 
@@ -46,7 +43,7 @@ def test_generate_fixes_for_length(autofix_service):
     """Test generating fix for resume length."""
     resume = Resume(
         raw_text=" ".join(["word"] * 1200),  # ~1200 words (too long)
-        contact={"name": "John"},
+        contact=ContactInfo(),
         experience=[]
     )
     
@@ -70,10 +67,10 @@ def test_generate_fixes_for_missing_summary(autofix_service):
     """Test generating fix for missing summary."""
     resume = Resume(
         raw_text="Some text",
-        contact={"name": "Jane"},
+        contact=ContactInfo(),
         summary=None,  # Missing
         experience=[
-            {"company": "Tech", "position": "Engineer"}
+            ExperienceItem(company="Tech", job_title="Engineer")
         ]
     )
     
@@ -99,7 +96,7 @@ def test_generate_fixes_for_readability(autofix_service):
     long_sentence = " ".join(["word"] * 30)  # 30-word sentence
     resume = Resume(
         raw_text=f"{long_sentence}. Short sentence.",
-        contact={"name": "John"}
+        contact=ContactInfo()
     )
     
     fixes = autofix_service.generate_fixes(
@@ -121,10 +118,7 @@ def test_generate_fixes_for_missing_contact(autofix_service):
     """Test generating fixes for missing contact info."""
     resume = Resume(
         raw_text="Text",
-        contact={
-            "name": "John Doe"
-            # Missing email, phone, location
-        }
+        contact=ContactInfo()  # Missing email, phone, location
     )
     
     fixes = autofix_service.generate_fixes(
@@ -147,15 +141,15 @@ def test_generate_fixes_for_quantification(autofix_service):
     """Test generating fixes for missing metrics."""
     resume = Resume(
         raw_text="Text",
-        contact={"name": "Jane"},
+        contact=ContactInfo(),
         experience=[
-            {
-                "company": "Tech Co",
-                "position": "Manager",
-                "description": [
+            ExperienceItem(
+                company="Tech Co",
+                job_title="Manager",
+                bullets=[
                     "Led team and improved processes"  # No numbers
                 ]
-            }
+            )
         ]
     )
     
@@ -178,16 +172,16 @@ def test_generate_fixes_for_weak_bullets(autofix_service):
     """Test generating fixes for weak action verbs."""
     resume = Resume(
         raw_text="Text",
-        contact={"name": "John"},
+        contact=ContactInfo(),
         experience=[
-            {
-                "company": "ABC",
-                "position": "Developer",
-                "description": [
+            ExperienceItem(
+                company="ABC",
+                job_title="Developer",
+                bullets=[
                     "Responsible for building features",  # Weak
                     "Helped with testing"  # Weak
                 ]
-            }
+            )
         ]
     )
     
@@ -220,7 +214,7 @@ def test_apply_summary_fix(autofix_service):
         action=FixAction.ADD,
         section="summary",
         description="Add professional summary",
-        suggested_value="Experienced software engineer with 5 years...",
+        suggested_value="Experienced software engineer with 5 years of expertise building scalable web applications and leading cross-functional teams.",
         auto_applicable=True
     )
     
