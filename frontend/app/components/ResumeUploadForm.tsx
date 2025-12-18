@@ -3,6 +3,13 @@
 import { useState, useRef } from "react";
 import { ParseAndScoreResponse } from "@/lib/types";
 import { parseAndScoreResume } from "@/lib/apiClient";
+import { 
+  compressFile, 
+  formatFileSize, 
+  isCompressionSupported,
+  CompressionProgress,
+  CompressionResult
+} from "@/lib/fileCompression";
 
 interface ResumeUploadFormProps {
   onResult: (data: ParseAndScoreResponse) => void;
@@ -14,6 +21,11 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
   const [error, setError] = useState<string | null>(null);
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  // Compression states
+  const [isCompressing, setIsCompressing] = useState(false);
+  const [compressionProgress, setCompressionProgress] = useState<CompressionProgress | null>(null);
+  const [compressionResult, setCompressionResult] = useState<CompressionResult | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
@@ -22,8 +34,9 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
     }
   };
 
-  const validateAndSetFile = (selectedFile: File) => {
+  const validateAndSetFile = async (selectedFile: File) => {
     setError(null);
+    setCompressionResult(null);
     
     // Validate file type
     const validTypes = [
@@ -44,12 +57,37 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
 
     // Validate file size (10MB limit)
     const maxSize = 10 * 1024 * 1024;
-    if (selectedFile.size > maxSize) {
-      setError('File size must be less than 10MB');
+    
+    if (selectedFile.size > maxSize && isCompressionSupported(selectedFile)) {
+      // Try to compress
+      setIsCompressing(true);
+      setCompressionProgress({ stage: 'reading', progress: 0, message: 'Preparing compression...' });
+      
+      try {
+        const result = await compressFile(selectedFile, setCompressionProgress);
+        setCompressionResult(result);
+        
+        if (result.wasCompressed && result.compressedFile.size <= maxSize) {
+          setFile(result.compressedFile);
+        } else if (result.compressedFile.size > maxSize) {
+          setError(`File is still too large after compression (${formatFileSize(result.compressedFile.size)}). Please use a smaller file.`);
+          setFile(null);
+        } else {
+          setFile(result.compressedFile);
+        }
+      } catch (err) {
+        setError('Failed to compress file. Please try a smaller file.');
+        setFile(null);
+      } finally {
+        setIsCompressing(false);
+        setCompressionProgress(null);
+      }
+    } else if (selectedFile.size > maxSize) {
+      setError(`File size must be less than 10MB. Your file is ${formatFileSize(selectedFile.size)}`);
       return;
+    } else {
+      setFile(selectedFile);
     }
-
-    setFile(selectedFile);
   };
 
   const handleDrag = (e: React.DragEvent) => {
@@ -98,6 +136,8 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
   const handleReset = () => {
     setFile(null);
     setError(null);
+    setCompressionResult(null);
+    setCompressionProgress(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -108,11 +148,13 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
       <div
         className={`
           relative border-2 border-dashed rounded-lg p-8 text-center transition-colors
-          ${dragActive 
-            ? 'border-blue-500 bg-blue-50' 
-            : file 
-              ? 'border-green-400 bg-green-50' 
-              : 'border-gray-300 hover:border-gray-400 bg-white'
+          ${isCompressing
+            ? 'border-purple-500 bg-purple-50'
+            : dragActive 
+              ? 'border-blue-500 bg-blue-50' 
+              : file 
+                ? 'border-green-400 bg-green-50' 
+                : 'border-gray-300 hover:border-gray-400 bg-white'
           }
         `}
         onDragEnter={handleDrag}
@@ -126,13 +168,17 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
           accept=".pdf,.docx,.doc"
           onChange={handleFileChange}
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-          disabled={loading}
+          disabled={loading || isCompressing}
         />
         
         <div className="space-y-4">
           {/* Icon */}
           <div className="flex justify-center">
-            {file ? (
+            {isCompressing ? (
+              <svg className="w-12 h-12 text-purple-500 animate-pulse" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7c-2 0-3 1-3 3zM9 12h6M12 9v6" />
+              </svg>
+            ) : file ? (
               <svg className="w-12 h-12 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -144,12 +190,29 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
           </div>
 
           {/* Text */}
-          {file ? (
+          {isCompressing ? (
+            <div>
+              <p className="text-lg font-medium text-purple-700">Compressing file...</p>
+              <p className="text-sm text-purple-500">{compressionProgress?.message || 'Please wait...'}</p>
+              <div className="mt-3 w-48 mx-auto bg-purple-200 rounded-full h-2 overflow-hidden">
+                <div
+                  className="h-full bg-purple-500 transition-all duration-300 rounded-full"
+                  style={{ width: `${compressionProgress?.progress || 0}%` }}
+                />
+              </div>
+            </div>
+          ) : file ? (
             <div>
               <p className="text-lg font-medium text-gray-900">{file.name}</p>
               <p className="text-sm text-gray-500">
-                {(file.size / 1024).toFixed(1)} KB
+                {formatFileSize(file.size)}
               </p>
+              {compressionResult?.wasCompressed && (
+                <p className="text-xs text-purple-600 mt-1">
+                  ✓ Compressed {compressionResult.compressionRatio.toFixed(0)}% 
+                  (from {formatFileSize(compressionResult.originalSize)})
+                </p>
+              )}
               <button
                 type="button"
                 onClick={handleReset}
@@ -166,6 +229,9 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
               </p>
               <p className="text-sm text-gray-500 mt-1">
                 Supported formats: PDF, DOCX
+              </p>
+              <p className="text-xs text-gray-400 mt-1">
+                Large files will be automatically compressed
               </p>
             </div>
           )}

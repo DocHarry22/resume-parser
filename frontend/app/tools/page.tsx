@@ -5,10 +5,19 @@ import { useSearchParams } from "next/navigation";
 import { 
   FiUpload, FiFile, FiCheck, FiAlertCircle, FiChevronDown, FiChevronUp, 
   FiZap, FiTarget, FiAward, FiInfo, FiX, FiRefreshCw, FiTrendingUp,
-  FiStar, FiShield, FiLayers, FiGrid, FiCpu, FiActivity, FiEye
+  FiStar, FiShield, FiLayers, FiGrid, FiCpu, FiActivity, FiEye,
+  FiMinimize2
 } from "react-icons/fi";
 import { parseAndScoreResume } from "@/lib/apiClient";
 import { ParseAndScoreResponse, ScanMode as ScanModeType } from "@/lib/types";
+import { 
+  compressFile, 
+  needsCompression, 
+  formatFileSize, 
+  isCompressionSupported,
+  CompressionProgress,
+  CompressionResult
+} from "@/lib/fileCompression";
 
 type ScanMode = ScanModeType;
 type Industry = "default" | "engineering" | "it-software" | "finance" | "healthcare";
@@ -43,6 +52,58 @@ function ATSScannerView() {
   const [error, setError] = useState<string | null>(null);
   const [dragActive, setDragActive] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  // Compression states
+  const [isCompressing, setIsCompressing] = useState(false);
+  const [compressionProgress, setCompressionProgress] = useState<CompressionProgress | null>(null);
+  const [compressionResult, setCompressionResult] = useState<CompressionResult | null>(null);
+
+  // Process and optionally compress file
+  const processFile = useCallback(async (selectedFile: File) => {
+    const fileExtension = selectedFile.name.split(".").pop()?.toLowerCase();
+    if (fileExtension !== "pdf" && fileExtension !== "docx") {
+      setError("Please upload a PDF or DOCX file");
+      setFile(null);
+      return;
+    }
+
+    setError(null);
+    setResult(null);
+    setCompressionResult(null);
+
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    
+    // Check if file needs compression
+    if (selectedFile.size > maxSize && isCompressionSupported(selectedFile)) {
+      setIsCompressing(true);
+      setCompressionProgress({ stage: 'reading', progress: 0, message: 'Preparing compression...' });
+      
+      try {
+        const result = await compressFile(selectedFile, setCompressionProgress);
+        setCompressionResult(result);
+        
+        if (result.wasCompressed && result.compressedFile.size <= maxSize) {
+          setFile(result.compressedFile);
+        } else if (result.compressedFile.size > maxSize) {
+          setError(`File is still too large after compression (${formatFileSize(result.compressedFile.size)}). Please use a smaller file.`);
+          setFile(null);
+        } else {
+          setFile(result.compressedFile);
+        }
+      } catch (err) {
+        setError("Failed to compress file. Please try a smaller file.");
+        setFile(null);
+      } finally {
+        setIsCompressing(false);
+        setCompressionProgress(null);
+      }
+    } else if (selectedFile.size > maxSize) {
+      setError(`File too large (${formatFileSize(selectedFile.size)}). Maximum size is 10MB.`);
+      setFile(null);
+    } else {
+      setFile(selectedFile);
+    }
+  }, []);
 
   const handleDrag = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -61,29 +122,14 @@ function ATSScannerView() {
     
     const droppedFile = e.dataTransfer.files?.[0];
     if (droppedFile) {
-      const fileExtension = droppedFile.name.split(".").pop()?.toLowerCase();
-      if (fileExtension === "pdf" || fileExtension === "docx") {
-        setFile(droppedFile);
-        setError(null);
-        setResult(null);
-      } else {
-        setError("Please upload a PDF or DOCX file");
-      }
+      processFile(droppedFile);
     }
-  }, []);
+  }, [processFile]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
-      const fileExtension = selectedFile.name.split(".").pop()?.toLowerCase();
-      if (fileExtension === "pdf" || fileExtension === "docx") {
-        setFile(selectedFile);
-        setError(null);
-        setResult(null);
-      } else {
-        setError("Please upload a PDF or DOCX file");
-        setFile(null);
-      }
+      processFile(selectedFile);
     }
   };
 
@@ -129,6 +175,8 @@ function ATSScannerView() {
     setProgress(0);
     setScanMode(null);
     setJobDescription("");
+    setCompressionResult(null);
+    setCompressionProgress(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -193,7 +241,7 @@ function ATSScannerView() {
                   id="resume-upload"
                 />
 
-                {!file ? (
+                {!file && !isCompressing ? (
                   <label
                     htmlFor="resume-upload"
                     onDragEnter={handleDrag}
@@ -213,8 +261,29 @@ function ATSScannerView() {
                     </div>
                     <p className="text-gray-300 font-semibold mb-1">Drop your resume here</p>
                     <p className="text-sm text-gray-500">or click to browse</p>
+                    <p className="text-xs text-gray-600 mt-2">Large files will be automatically compressed</p>
                   </label>
-                ) : (
+                ) : isCompressing ? (
+                  <div className="relative bg-gradient-to-r from-purple-500/10 to-[#2BC4A8]/10 rounded-2xl p-6 border border-purple-500/30">
+                    <div className="flex items-center gap-4">
+                      <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center border border-white/10 animate-pulse">
+                        <FiMinimize2 className="text-white" size={28} />
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-semibold text-white">Compressing file...</p>
+                        <p className="text-sm text-gray-400">{compressionProgress?.message || 'Please wait...'}</p>
+                        <div className="mt-3">
+                          <div className="w-full bg-gray-700/50 rounded-full h-2 overflow-hidden">
+                            <div
+                              className="h-full bg-gradient-to-r from-purple-500 to-[#2BC4A8] transition-all duration-300 rounded-full"
+                              style={{ width: `${compressionProgress?.progress || 0}%` }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : file ? (
                   <div className="relative bg-gradient-to-r from-[#2BC4A8]/10 to-purple-500/10 rounded-2xl p-6 border border-[#2BC4A8]/30">
                     <div className="flex items-start gap-4">
                       <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center border border-white/10">
@@ -222,13 +291,24 @@ function ATSScannerView() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="font-semibold text-white truncate">{file.name}</p>
-                        <p className="text-sm text-gray-400">{(file.size / 1024).toFixed(1)} KB</p>
-                        <div className="flex items-center gap-2 mt-2">
+                        <p className="text-sm text-gray-400">{formatFileSize(file.size)}</p>
+                        <div className="flex items-center gap-2 mt-2 flex-wrap">
                           <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-green-500/20 text-green-400 text-xs font-medium">
                             <FiCheck size={12} />
                             Ready
                           </span>
+                          {compressionResult?.wasCompressed && (
+                            <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-purple-500/20 text-purple-400 text-xs font-medium">
+                              <FiMinimize2 size={12} />
+                              Compressed {compressionResult.compressionRatio.toFixed(0)}%
+                            </span>
+                          )}
                         </div>
+                        {compressionResult?.wasCompressed && (
+                          <p className="text-xs text-gray-500 mt-2">
+                            Original: {formatFileSize(compressionResult.originalSize)} → {formatFileSize(compressionResult.compressedSize)}
+                          </p>
+                        )}
                       </div>
                       <button
                         onClick={resetScan}
@@ -255,7 +335,7 @@ function ATSScannerView() {
                       </div>
                     )}
                   </div>
-                )}
+                ) : null}
 
                 {error && (
                   <div className="mt-6 p-4 bg-red-500/10 border border-red-500/30 rounded-xl flex items-start gap-3">

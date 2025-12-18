@@ -12,6 +12,12 @@ import {
   createResume,
   saveResume,
 } from '@/lib/apiClient';
+import { 
+  compressFile, 
+  formatFileSize, 
+  isCompressionSupported,
+  CompressionResult
+} from '@/lib/fileCompression';
 import { AutoFixPanel } from './AutoFixPanel';
 import { ContactEditor, ExperienceEditor, SkillsEditor, SummaryEditor, EducationEditor } from './SectionEditors';
 import ResumePreview from './ResumePreview';
@@ -28,6 +34,8 @@ export default function ResumeBuilder({ initialResume, onSave }: ResumeBuilderPr
   const [overallScore, setOverallScore] = useState<number>(0);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
+  const [isCompressing, setIsCompressing] = useState(false);
+  const [compressionResult, setCompressionResult] = useState<CompressionResult | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [isApplyingAll, setIsApplyingAll] = useState(false);
   const [activeTab, setActiveTab] = useState<'edit' | 'preview' | 'fixes'>('edit');
@@ -37,13 +45,33 @@ export default function ResumeBuilder({ initialResume, onSave }: ResumeBuilderPr
   const [success, setSuccess] = useState<string | null>(null);
 
   const handleFileImport = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+    let file = event.target.files?.[0];
     if (!file) return;
 
     setIsImporting(true);
     setError(null);
+    setCompressionResult(null);
 
     try {
+      const maxSize = 10 * 1024 * 1024; // 10MB
+      
+      // Check if file needs compression
+      if (file.size > maxSize && isCompressionSupported(file)) {
+        setIsCompressing(true);
+        const result = await compressFile(file);
+        setCompressionResult(result);
+        
+        if (result.wasCompressed && result.compressedFile.size <= maxSize) {
+          file = result.compressedFile;
+          setSuccess(`File compressed by ${result.compressionRatio.toFixed(0)}%`);
+        } else if (result.compressedFile.size > maxSize) {
+          throw new Error(`File is still too large after compression (${formatFileSize(result.compressedFile.size)})`);
+        }
+        setIsCompressing(false);
+      } else if (file.size > maxSize) {
+        throw new Error(`File too large (${formatFileSize(file.size)}). Maximum size is 10MB.`);
+      }
+
       const response = await importResume(file);
       if (response.success && response.resume) {
         setResume(response.resume);
@@ -52,6 +80,7 @@ export default function ResumeBuilder({ initialResume, onSave }: ResumeBuilderPr
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to import resume');
+      setIsCompressing(false);
     } finally {
       setIsImporting(false);
     }
