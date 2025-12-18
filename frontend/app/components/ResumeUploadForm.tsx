@@ -55,10 +55,11 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
       return;
     }
 
-    // Validate file size (10MB limit)
-    const maxSize = 10 * 1024 * 1024;
+    // Validate file size (25MB limit)
+    const maxSize = 25 * 1024 * 1024;
+    const targetSize = 15 * 1024 * 1024; // Target size for compression
     
-    if (selectedFile.size > maxSize && isCompressionSupported(selectedFile)) {
+    if (selectedFile.size > targetSize && isCompressionSupported(selectedFile)) {
       // Try to compress
       setIsCompressing(true);
       setCompressionProgress({ stage: 'reading', progress: 0, message: 'Preparing compression...' });
@@ -70,7 +71,7 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
         if (result.wasCompressed && result.compressedFile.size <= maxSize) {
           setFile(result.compressedFile);
         } else if (result.compressedFile.size > maxSize) {
-          setError(`File is still too large after compression (${formatFileSize(result.compressedFile.size)}). Please use a smaller file.`);
+          setError(`File is still too large after compression (${formatFileSize(result.compressedFile.size)}). Maximum is 25MB.`);
           setFile(null);
         } else {
           setFile(result.compressedFile);
@@ -83,7 +84,7 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
         setCompressionProgress(null);
       }
     } else if (selectedFile.size > maxSize) {
-      setError(`File size must be less than 10MB. Your file is ${formatFileSize(selectedFile.size)}`);
+      setError(`File size must be less than 25MB. Your file is ${formatFileSize(selectedFile.size)}`);
       return;
     } else {
       setFile(selectedFile);

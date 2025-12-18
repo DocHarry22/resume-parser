@@ -13,8 +13,8 @@ from app.models.resume_models import RawDocument
 
 logger = logging.getLogger(__name__)
 
-# Maximum file size: 10MB
-MAX_FILE_SIZE = 10 * 1024 * 1024
+# Maximum file size: 25MB
+MAX_FILE_SIZE = 25 * 1024 * 1024
 
 ALLOWED_EXTENSIONS = {".pdf", ".docx", ".doc"}
 

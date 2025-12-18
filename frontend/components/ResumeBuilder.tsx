@@ -53,10 +53,11 @@ export default function ResumeBuilder({ initialResume, onSave }: ResumeBuilderPr
     setCompressionResult(null);
 
     try {
-      const maxSize = 10 * 1024 * 1024; // 10MB
+      const maxSize = 25 * 1024 * 1024; // 25MB (backend limit)
+      const targetSize = 15 * 1024 * 1024; // 15MB target for compression
       
       // Check if file needs compression
-      if (file.size > maxSize && isCompressionSupported(file)) {
+      if (file.size > targetSize && isCompressionSupported(file)) {
         setIsCompressing(true);
         const result = await compressFile(file);
         setCompressionResult(result);
@@ -65,11 +66,11 @@ export default function ResumeBuilder({ initialResume, onSave }: ResumeBuilderPr
           file = result.compressedFile;
           setSuccess(`File compressed by ${result.compressionRatio.toFixed(0)}%`);
         } else if (result.compressedFile.size > maxSize) {
-          throw new Error(`File is still too large after compression (${formatFileSize(result.compressedFile.size)})`);
+          throw new Error(`File is still too large after compression (${formatFileSize(result.compressedFile.size)}). Maximum is 25MB.`);
         }
         setIsCompressing(false);
       } else if (file.size > maxSize) {
-        throw new Error(`File too large (${formatFileSize(file.size)}). Maximum size is 10MB.`);
+        throw new Error(`File too large (${formatFileSize(file.size)}). Maximum size is 25MB.`);
       }
 
       const response = await importResume(file);

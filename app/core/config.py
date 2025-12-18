@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     port: int = 8000
     
     # File Upload Settings
-    max_file_size_mb: int = 10
+    max_file_size_mb: int = 25
     allowed_extensions: list[str] = [".pdf", ".docx"]
     
     # NLP Settings

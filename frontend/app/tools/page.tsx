@@ -71,10 +71,11 @@ function ATSScannerView() {
     setResult(null);
     setCompressionResult(null);
 
-    const maxSize = 10 * 1024 * 1024; // 10MB
+    const maxSize = 25 * 1024 * 1024; // 25MB (backend limit)
+    const targetSize = 15 * 1024 * 1024; // 15MB target for compression
     
     // Check if file needs compression
-    if (selectedFile.size > maxSize && isCompressionSupported(selectedFile)) {
+    if (selectedFile.size > targetSize && isCompressionSupported(selectedFile)) {
       setIsCompressing(true);
       setCompressionProgress({ stage: 'reading', progress: 0, message: 'Preparing compression...' });
       
@@ -85,7 +86,7 @@ function ATSScannerView() {
         if (result.wasCompressed && result.compressedFile.size <= maxSize) {
           setFile(result.compressedFile);
         } else if (result.compressedFile.size > maxSize) {
-          setError(`File is still too large after compression (${formatFileSize(result.compressedFile.size)}). Please use a smaller file.`);
+          setError(`File is still too large after compression (${formatFileSize(result.compressedFile.size)}). Maximum size is 25MB. Please use a smaller file.`);
           setFile(null);
         } else {
           setFile(result.compressedFile);
@@ -98,7 +99,7 @@ function ATSScannerView() {
         setCompressionProgress(null);
       }
     } else if (selectedFile.size > maxSize) {
-      setError(`File too large (${formatFileSize(selectedFile.size)}). Maximum size is 10MB.`);
+      setError(`File too large (${formatFileSize(selectedFile.size)}). Maximum size is 25MB.`);
       setFile(null);
     } else {
       setFile(selectedFile);
@@ -228,7 +229,7 @@ function ATSScannerView() {
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold text-white">Upload Resume</h2>
-                    <p className="text-sm text-gray-400">PDF or DOCX • Max 10MB</p>
+                    <p className="text-sm text-gray-400">PDF or DOCX • Max 25MB</p>
                   </div>
                 </div>
 
