@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FiZap, FiCheckCircle, FiLayout, FiArrowRight, FiUpload } from "react-icons/fi";
+import { FiZap, FiCheckCircle, FiLayout, FiArrowRight, FiUpload, FiFileText } from "react-icons/fi";
 import TemplateGallery from "./components/TemplateGallery";
 import ProductHeroHeader from "./components/ProductHeroHeader";
 
@@ -65,7 +65,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Feature 1 */}
             <Link
               href="/tools?view=scanner"
@@ -106,7 +106,27 @@ export default function Home() {
               </div>
             </Link>
 
-            {/* Feature 3 */}
+            {/* Feature 3 - Cover Letter Builder */}
+            <Link
+              href="/cover-letter"
+              className="group bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:border-purple-500 hover:shadow-xl transition-all duration-300"
+            >
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-100 to-purple-50 flex items-center justify-center mb-6 group-hover:from-purple-500 group-hover:to-purple-600 transition-all duration-300">
+                <FiFileText className="text-purple-500 group-hover:text-white transition-colors" size={32} />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-purple-500 transition-colors">
+                Cover Letter Builder
+              </h3>
+              <p className="text-gray-600 mb-4 leading-relaxed">
+                Create compelling cover letters with AI-powered suggestions tailored to each job application
+              </p>
+              <div className="flex items-center text-purple-500 font-semibold group-hover:gap-2 transition-all">
+                Create letter
+                <FiArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+              </div>
+            </Link>
+
+            {/* Feature 4 */}
             <Link
               href="/tools?view=templates"
               className="group bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:border-[#2BC4A8] hover:shadow-xl transition-all duration-300"

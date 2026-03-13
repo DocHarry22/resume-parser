@@ -149,5 +149,5 @@ def test_allowed_extensions():
 
 def test_max_file_size():
     """Test that max file size is reasonable."""
-    assert MAX_FILE_SIZE == 10 * 1024 * 1024  # 10MB
+    assert MAX_FILE_SIZE == 25 * 1024 * 1024  # 25MB
     assert MAX_FILE_SIZE > 0

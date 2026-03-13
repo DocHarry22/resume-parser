@@ -8,6 +8,7 @@ from contextlib import asynccontextmanager
 from app.core.config import settings
 from app.api.routes import router
 from app.api.builder_routes import router as builder_router
+from app.routers.cover_letter_router import router as cover_letter_router
 from app.services.nlp_service import get_nlp_service
 
 
@@ -97,6 +98,7 @@ app.add_middleware(
 # Include API routes
 app.include_router(router, prefix="/api", tags=["Resume Processing"])
 app.include_router(builder_router, prefix="/api", tags=["Resume Builder"])
+app.include_router(cover_letter_router, prefix="/api", tags=["Cover Letter Builder"])
 
 # Root endpoint
 @app.get("/")

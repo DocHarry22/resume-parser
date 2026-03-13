@@ -47,22 +47,128 @@ const SECTIONS: SectionConfig[] = [
 const defaultResume: ResumeData = {
   title: 'My Resume',
   contact: {
-    full_name: '',
-    email: '',
-    phone: '',
-    location: '',
-    linkedin: '',
-    github: '',
-    website: '',
+    full_name: 'Alexandra Chen',
+    email: 'alexandra.chen@email.com',
+    phone: '+1 (555) 123-4567',
+    location: 'San Francisco, CA',
+    linkedin: 'linkedin.com/in/alexandrachen',
+    github: 'github.com/alexchen',
+    website: 'alexandrachen.dev',
   },
-  summary: { summary: '' },
-  experience: [],
-  education: [],
-  skills: [],
-  certifications: [],
-  projects: [],
-  achievements: [],
-  languages: [],
+  summary: { 
+    summary: 'Results-driven Senior Software Engineer with 8+ years of experience designing and implementing scalable web applications. Expert in React, Node.js, and cloud architecture with a proven track record of leading cross-functional teams and delivering high-impact projects. Passionate about mentoring junior developers and driving engineering excellence through best practices and innovative solutions.' 
+  },
+  experience: [
+    {
+      company: 'TechCorp Inc.',
+      position: 'Senior Software Engineer',
+      location: 'San Francisco, CA',
+      start_date: '2021-03',
+      end_date: '',
+      current: true,
+      description: [
+        'Led development of microservices architecture serving 2M+ daily active users',
+        'Architected and implemented real-time data processing pipeline reducing latency by 60%',
+        'Mentored team of 5 junior engineers, conducting code reviews and establishing coding standards',
+        'Spearheaded migration from monolithic architecture to microservices, reducing deployment time by 75%',
+      ],
+      achievements: ['Improved system reliability to 99.9%', 'Reduced infrastructure costs by 40%'],
+    },
+    {
+      company: 'StartupXYZ',
+      position: 'Full Stack Developer',
+      location: 'Oakland, CA',
+      start_date: '2018-06',
+      end_date: '2021-02',
+      current: false,
+      description: [
+        'Built responsive web applications using React, TypeScript, and Node.js serving 500K+ users',
+        'Implemented CI/CD pipelines using GitHub Actions, reducing deployment errors by 80%',
+        'Designed RESTful APIs and GraphQL endpoints for mobile and web clients',
+        'Collaborated with product team to define technical requirements and sprint planning',
+      ],
+      achievements: ['Increased user engagement by 35%', 'Reduced page load time by 50%'],
+    },
+    {
+      company: 'Digital Agency Pro',
+      position: 'Junior Developer',
+      location: 'Berkeley, CA',
+      start_date: '2016-08',
+      end_date: '2018-05',
+      current: false,
+      description: [
+        'Developed and maintained client websites using JavaScript, HTML5, and CSS3',
+        'Created reusable component libraries reducing development time by 40%',
+        'Participated in agile ceremonies and contributed to sprint deliverables',
+      ],
+      achievements: [],
+    },
+  ],
+  education: [
+    {
+      institution: 'University of California, Berkeley',
+      degree: 'Bachelor of Science',
+      field_of_study: 'Computer Science',
+      location: 'Berkeley, CA',
+      start_date: '2012-08',
+      end_date: '2016-05',
+      gpa: 3.8,
+      honors: ['Dean\'s List', 'Computer Science Honor Society', 'Hackathon Winner 2015'],
+    },
+  ],
+  skills: [
+    { category: 'Programming Languages', skills: ['JavaScript', 'TypeScript', 'Python', 'Go', 'SQL'] },
+    { category: 'Frontend', skills: ['React', 'Next.js', 'Vue.js', 'TailwindCSS', 'HTML5/CSS3'] },
+    { category: 'Backend', skills: ['Node.js', 'Express', 'Django', 'FastAPI', 'GraphQL'] },
+    { category: 'Cloud & DevOps', skills: ['AWS', 'GCP', 'Docker', 'Kubernetes', 'CI/CD'] },
+    { category: 'Databases', skills: ['PostgreSQL', 'MongoDB', 'Redis', 'Elasticsearch'] },
+  ],
+  certifications: [
+    {
+      name: 'AWS Solutions Architect Professional',
+      issuer: 'Amazon Web Services',
+      issue_date: '2023-06',
+      expiry_date: '2026-06',
+      credential_id: 'AWS-SAP-12345',
+    },
+    {
+      name: 'Google Cloud Professional Developer',
+      issuer: 'Google Cloud',
+      issue_date: '2022-09',
+      expiry_date: '2024-09',
+      credential_id: 'GCP-PD-67890',
+    },
+  ],
+  projects: [
+    {
+      name: 'E-Commerce Platform',
+      description: 'Built a full-stack e-commerce platform with React, Node.js, and Stripe integration featuring real-time inventory management and analytics dashboard.',
+      technologies: ['React', 'Node.js', 'PostgreSQL', 'Stripe', 'Redis'],
+      url: 'github.com/alexchen/ecommerce',
+      start_date: '2023-01',
+      end_date: '2023-06',
+      highlights: ['Processed $2M+ in transactions', '10K+ active users'],
+    },
+    {
+      name: 'AI Chat Assistant',
+      description: 'Developed an AI-powered customer service chatbot using OpenAI GPT-4 API with context-aware responses and multi-language support.',
+      technologies: ['Python', 'FastAPI', 'OpenAI', 'Redis', 'Docker'],
+      github: 'github.com/alexchen/ai-chat',
+      start_date: '2022-08',
+      end_date: '2022-12',
+      highlights: ['Reduced support tickets by 40%', 'Handles 5K+ queries/day'],
+    },
+  ],
+  achievements: [
+    'Speaker at React Conference 2023',
+    'Open source contributor with 1000+ GitHub stars',
+    'Published technical articles with 50K+ views',
+  ],
+  languages: [
+    { language: 'English', proficiency: 'Native' },
+    { language: 'Mandarin Chinese', proficiency: 'Native' },
+    { language: 'Spanish', proficiency: 'Intermediate' },
+  ],
   volunteer: [],
   publications: [],
   custom_sections: {},
@@ -581,26 +687,28 @@ export function ResumeIOBuilder() {
       )}
 
       {/* Header */}
-      <ProgressHeader
-        title={resume.title || 'My Resume'}
-        progress={overallCompletion}
-        isSaving={isSaving}
-        lastSaved={lastSaved}
-        onSave={handleSave}
-        onExport={handleExportPDF}
-        isExporting={isExporting}
-        onPrint={handlePrint}
-        onExportJSON={handleExportJSON}
-        onDuplicate={handleDuplicate}
-        onDelete={handleDelete}
-        onSettings={handleSettings}
-        onHelp={handleHelp}
-      />
+      <div className="no-print">
+        <ProgressHeader
+          title={resume.title || 'My Resume'}
+          progress={overallCompletion}
+          isSaving={isSaving}
+          lastSaved={lastSaved}
+          onSave={handleSave}
+          onExport={handleExportPDF}
+          isExporting={isExporting}
+          onPrint={handlePrint}
+          onExportJSON={handleExportJSON}
+          onDuplicate={handleDuplicate}
+          onDelete={handleDelete}
+          onSettings={handleSettings}
+          onHelp={handleHelp}
+        />
+      </div>
 
       {/* Main Content */}
       <div className="flex-1 flex overflow-hidden">
         {/* Left Panel - Form Editor */}
-        <div className="w-[500px] flex-shrink-0 bg-white border-r border-gray-200 overflow-y-auto">
+        <div className="no-print w-[500px] flex-shrink-0 bg-white border-r border-gray-200 overflow-y-auto">
           <div className="p-6 space-y-3">
             {SECTIONS.map((section) => (
               <CollapsibleSection
@@ -622,7 +730,7 @@ export function ResumeIOBuilder() {
         <div className="flex-1 bg-gray-100 overflow-hidden relative">
           {/* Template Panel Overlay */}
           {showTemplatePanel && (
-            <div className="absolute inset-0 z-20 bg-white/95 backdrop-blur-sm overflow-y-auto">
+            <div className="no-print absolute inset-0 z-20 bg-white/95 backdrop-blur-sm overflow-y-auto">
               <TemplateSelector
                 selectedTemplate={template}
                 selectedColor={colorTheme}
@@ -634,7 +742,7 @@ export function ResumeIOBuilder() {
           )}
 
           {/* Preview Header */}
-          <div className="absolute top-4 left-4 right-4 z-10 flex items-center justify-between">
+          <div className="no-print absolute top-4 left-4 right-4 z-10 flex items-center justify-between">
             {/* Template Button */}
             <button
               onClick={() => setShowTemplatePanel(!showTemplatePanel)}

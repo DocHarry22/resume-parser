@@ -44,17 +44,18 @@ export function LiveResumePreview({ resume, template, colorTheme, scale = 0.55 }
 
   return (
     <div
-      className="bg-white shadow-2xl overflow-hidden rounded-sm"
+      className="print-content bg-white shadow-2xl overflow-auto rounded-sm"
       style={{
         width: A4_WIDTH * scale,
-        height: A4_HEIGHT * scale,
+        maxHeight: A4_HEIGHT * scale * 1.5,
         boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
       }}
     >
       <div
+        className="print-inner"
         style={{
           width: A4_WIDTH,
-          height: A4_HEIGHT,
+          minHeight: A4_HEIGHT,
           transform: `scale(${scale})`,
           transformOrigin: 'top left',
           ...styles,
@@ -444,7 +445,7 @@ function ClassicTemplate({ resume, colors }: TemplateProps) {
 
       {/* Skills */}
       {resume.skills.length > 0 && (
-        <section>
+        <section className="mb-6">
           <h2 className="text-lg font-bold uppercase tracking-wider mb-3" style={{ color: colors.primary }}>
             Skills
           </h2>
@@ -459,6 +460,46 @@ function ClassicTemplate({ resume, colors }: TemplateProps) {
               </span>
             ))}
           </div>
+        </section>
+      )}
+
+      {/* Projects */}
+      {resume.projects.length > 0 && (
+        <section className="mb-6">
+          <h2 className="text-lg font-bold uppercase tracking-wider mb-3" style={{ color: colors.primary }}>
+            Projects
+          </h2>
+          {resume.projects.map((project, i) => (
+            <div key={i} className="mb-3">
+              <h3 className="font-bold text-gray-900">{project.name}</h3>
+              <p className="text-sm text-gray-600 mt-1">{project.description}</p>
+              {project.technologies.length > 0 && (
+                <div className="flex flex-wrap gap-1 mt-2">
+                  {project.technologies.map((tech, j) => (
+                    <span key={j} className="px-2 py-0.5 text-xs rounded" style={{ backgroundColor: colors.accent + '20', color: colors.text }}>
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </section>
+      )}
+
+      {/* Certifications */}
+      {resume.certifications.length > 0 && (
+        <section>
+          <h2 className="text-lg font-bold uppercase tracking-wider mb-3" style={{ color: colors.primary }}>
+            Certifications
+          </h2>
+          {resume.certifications.map((cert, i) => (
+            <div key={i} className="mb-2">
+              <span className="font-medium text-gray-900">{cert.name}</span>
+              <span className="text-gray-500"> - {cert.issuer}</span>
+              {cert.issue_date && <span className="text-sm text-gray-400 ml-2">({formatDate(cert.issue_date)})</span>}
+            </div>
+          ))}
         </section>
       )}
     </div>
@@ -545,13 +586,46 @@ function MinimalTemplate({ resume, colors }: TemplateProps) {
 
       {/* Skills */}
       {resume.skills.length > 0 && (
-        <section>
+        <section className="mb-8">
           <h2 className="text-xs font-medium uppercase tracking-widest mb-4" style={{ color: colors.primary }}>
             Skills
           </h2>
           <p className="text-sm text-gray-600">
             {resume.skills.flatMap(cat => cat.skills).join(' • ')}
           </p>
+        </section>
+      )}
+
+      {/* Projects */}
+      {resume.projects.length > 0 && (
+        <section className="mb-8">
+          <h2 className="text-xs font-medium uppercase tracking-widest mb-4" style={{ color: colors.primary }}>
+            Projects
+          </h2>
+          {resume.projects.map((project, i) => (
+            <div key={i} className="mb-4 pl-4 border-l-2" style={{ borderColor: colors.accent }}>
+              <h3 className="font-medium text-gray-900">{project.name}</h3>
+              <p className="text-sm text-gray-600 mt-1">{project.description}</p>
+              {project.technologies.length > 0 && (
+                <p className="text-xs text-gray-500 mt-1">{project.technologies.join(' • ')}</p>
+              )}
+            </div>
+          ))}
+        </section>
+      )}
+
+      {/* Certifications */}
+      {resume.certifications.length > 0 && (
+        <section>
+          <h2 className="text-xs font-medium uppercase tracking-widest mb-4" style={{ color: colors.primary }}>
+            Certifications
+          </h2>
+          {resume.certifications.map((cert, i) => (
+            <div key={i} className="mb-2 pl-4 border-l-2" style={{ borderColor: colors.accent }}>
+              <span className="font-medium text-gray-900">{cert.name}</span>
+              <span className="text-sm text-gray-500"> — {cert.issuer}</span>
+            </div>
+          ))}
         </section>
       )}
     </div>
@@ -665,6 +739,51 @@ function ProfessionalTemplate({ resume, colors }: TemplateProps) {
                   >
                     {skill}
                   </span>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Projects */}
+          {resume.projects.length > 0 && (
+            <section className="flex-1 mt-4">
+              <h2 className="text-sm font-bold uppercase tracking-wider mb-3 flex items-center gap-2" style={{ color: colors.primary }}>
+                <span className="w-8 h-0.5" style={{ backgroundColor: colors.primary }}></span>
+                Projects
+              </h2>
+              <div className="pl-10 space-y-3">
+                {resume.projects.map((project, i) => (
+                  <div key={i}>
+                    <h3 className="font-semibold text-gray-900">{project.name}</h3>
+                    <p className="text-sm text-gray-600 mt-1">{project.description}</p>
+                    {project.technologies.length > 0 && (
+                      <div className="flex flex-wrap gap-1 mt-2">
+                        {project.technologies.map((tech, j) => (
+                          <span key={j} className="px-2 py-0.5 text-xs rounded" style={{ backgroundColor: colors.accent + '20', color: colors.text }}>
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Certifications */}
+          {resume.certifications.length > 0 && (
+            <section className="flex-1 mt-4">
+              <h2 className="text-sm font-bold uppercase tracking-wider mb-3 flex items-center gap-2" style={{ color: colors.primary }}>
+                <span className="w-8 h-0.5" style={{ backgroundColor: colors.primary }}></span>
+                Certifications
+              </h2>
+              <div className="pl-10 space-y-2">
+                {resume.certifications.map((cert, i) => (
+                  <div key={i}>
+                    <span className="font-medium text-gray-900">{cert.name}</span>
+                    <span className="text-gray-500"> — {cert.issuer}</span>
+                  </div>
                 ))}
               </div>
             </section>
@@ -810,6 +929,35 @@ function CreativeTemplate({ resume, colors }: TemplateProps) {
               </div>
             </section>
           )}
+
+          {/* Projects */}
+          {resume.projects.length > 0 && (
+            <section className="mt-6">
+              <h2 className="text-sm font-bold uppercase tracking-wider mb-3" style={{ color: colors.primary }}>
+                🚀 Projects
+              </h2>
+              {resume.projects.map((project, i) => (
+                <div key={i} className="mb-3 p-2 bg-white/60 rounded-lg">
+                  <h3 className="font-bold text-xs text-gray-900">{project.name}</h3>
+                  <p className="text-xs text-gray-600 mt-1">{project.description.substring(0, 80)}...</p>
+                </div>
+              ))}
+            </section>
+          )}
+
+          {/* Certifications */}
+          {resume.certifications.length > 0 && (
+            <section className="mt-6">
+              <h2 className="text-sm font-bold uppercase tracking-wider mb-3" style={{ color: colors.primary }}>
+                🏆 Certifications
+              </h2>
+              {resume.certifications.map((cert, i) => (
+                <div key={i} className="mb-2 text-xs text-gray-600">
+                  <span className="font-medium">{cert.name}</span>
+                </div>
+              ))}
+            </section>
+          )}
         </div>
       </div>
     </div>
@@ -905,13 +1053,46 @@ function ElegantTemplate({ resume, colors }: TemplateProps) {
 
             {/* Skills */}
             {resume.skills.length > 0 && (
-              <section>
+              <section className="mb-6">
                 <h2 className="text-xs font-medium uppercase tracking-[0.2em] mb-3 text-center" style={{ color: colors.primary }}>
                   — Skills —
                 </h2>
                 <div className="text-center text-sm text-gray-600">
                   {resume.skills.flatMap(cat => cat.skills).join(' • ')}
                 </div>
+              </section>
+            )}
+
+            {/* Projects */}
+            {resume.projects.length > 0 && (
+              <section className="mb-6">
+                <h2 className="text-xs font-medium uppercase tracking-[0.2em] mb-3 text-center" style={{ color: colors.primary }}>
+                  — Projects —
+                </h2>
+                {resume.projects.map((project, i) => (
+                  <div key={i} className="mb-3 text-center">
+                    <h3 className="font-medium text-sm text-gray-900">{project.name}</h3>
+                    <p className="text-xs text-gray-600 mt-1">{project.description}</p>
+                    {project.technologies.length > 0 && (
+                      <p className="text-xs text-gray-400 mt-1 italic">{project.technologies.join(' • ')}</p>
+                    )}
+                  </div>
+                ))}
+              </section>
+            )}
+
+            {/* Certifications */}
+            {resume.certifications.length > 0 && (
+              <section>
+                <h2 className="text-xs font-medium uppercase tracking-[0.2em] mb-3 text-center" style={{ color: colors.primary }}>
+                  — Certifications —
+                </h2>
+                {resume.certifications.map((cert, i) => (
+                  <div key={i} className="mb-2 text-center">
+                    <span className="font-medium text-sm text-gray-900">{cert.name}</span>
+                    <p className="text-xs text-gray-500">{cert.issuer}</p>
+                  </div>
+                ))}
               </section>
             )}
           </div>

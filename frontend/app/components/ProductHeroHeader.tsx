@@ -1,5 +1,7 @@
 "use client";
 
+import { useState, useEffect } from "react";
+
 interface ProductHeroHeaderProps {
   onImportClick: () => void;
   onBuildClick: () => void;
@@ -9,11 +11,15 @@ export default function ProductHeroHeader({
   onImportClick,
   onBuildClick,
 }: ProductHeroHeaderProps) {
-  const currentDate = new Date().toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  const [currentDate, setCurrentDate] = useState<string>("");
+  
+  useEffect(() => {
+    setCurrentDate(new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }));
+  }, []);
 
   const employerLogos = [
     { name: "Boeing", width: "120" },

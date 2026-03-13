@@ -47,7 +47,7 @@ const navItems: NavItem[] = [
         items: [
           { label: "Resume Builder", href: "/builder", description: "Create & edit resumes with auto-fix", icon: <FiEdit3 size={20} />, badge: "New" },
           { label: "ATS Scanner", href: "/tools?view=scanner", description: "Analyze resume quality", icon: <FiCheckCircle size={20} /> },
-          { label: "Cover Letter Builder", href: "/tools?view=cover-builder", description: "Write compelling cover letters", icon: <FiFileText size={20} /> },
+          { label: "Cover Letter Builder", href: "/cover-letter", description: "Write compelling cover letters", icon: <FiFileText size={20} />, badge: "New" },
           { label: "CV Builder", href: "/tools?view=cv-builder", description: "Build academic CVs with ease", icon: <FiBriefcase size={20} /> },
         ]
       }
@@ -90,7 +90,7 @@ const navItems: NavItem[] = [
     children: [
       {
         items: [
-          { label: "Cover Letter Builder", href: "/tools?view=cover-builder", description: "AI-powered writing assistant", icon: <FiEdit3 size={20} /> },
+          { label: "Cover Letter Builder", href: "/cover-letter", description: "AI-powered writing assistant", icon: <FiEdit3 size={20} />, badge: "New" },
           { label: "Cover Letter Templates", href: "/tools?view=cover-templates", description: "Professional templates", icon: <FiLayout size={20} /> },
           { label: "Writing Guide", href: "/tools?view=cover-guide", description: "Step-by-step instructions", icon: <FiBookOpen size={20} /> },
         ]

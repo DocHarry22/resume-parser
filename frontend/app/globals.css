@@ -201,3 +201,71 @@ body {
 .focus-visible:focus-visible {
   @apply outline-none ring-2 ring-blue-500 ring-offset-2;
 }
+
+/* Print Styles - Only show resume/cover letter preview when printing */
+@media print {
+  /* Hide everything by default */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Reset body styles for print */
+  body {
+    background: white !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Show only printable content */
+  .print-content,
+  .print-content * {
+    visibility: visible !important;
+  }
+
+  .print-content {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 8.5in !important;
+    height: auto !important;
+    min-height: 11in !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* Reset the inner preview scaling for print */
+  .print-content .print-inner {
+    transform: none !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 11in !important;
+  }
+
+  /* Hide UI elements when printing */
+  .no-print,
+  nav,
+  header,
+  .print-hide,
+  [role="menu"],
+  [role="menuitem"] {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Page setup */
+  @page {
+    size: letter;
+    margin: 0.25in;
+  }
+
+  /* Ensure proper sizing for resume */
+  .resume-preview-container {
+    width: 8.5in !important;
+    min-height: 11in !important;
+    page-break-after: always;
+  }
+}
