@@ -3,7 +3,7 @@
 import re
 import json
 from pathlib import Path
-from typing import Optional, List, Dict, Tuple
+from typing import Optional, List, Dict, Tuple, Any
 from fastapi import UploadFile
 
 from app.models.resume_models import (
@@ -13,7 +13,15 @@ from app.models.resume_models import (
 )
 from app.utils.pdf_reader import PDFReader
 from app.utils.docx_reader import DOCXReader
-from app.utils.text_cleaner import normalize_whitespace, extract_bullet_points
+from app.utils.text_cleaner import extract_bullet_points
+from app.utils.pattern_matchers import (
+    DateRangeMatcher,
+    EmailMatcher,
+    LocationMatcher,
+    NameMatcher,
+    PhoneMatcher,
+    URLMatcher,
+)
 from app.services.nlp_service import get_nlp_service
 from app.core.config import settings
 
@@ -46,9 +54,49 @@ class ParsingService:
         
         # Create reverse mapping: skill -> category
         self.skill_to_category = {}
+        self.skill_aliases = {
+            "nodejs": "node.js",
+            "reactjs": "react.js",
+            "vuejs": "vue.js",
+            "nextjs": "next.js",
+            "cplusplus": "c++",
+            "csharp": "c#",
+            "dotnet": ".net",
+        }
         for category, skills in self.skills_taxonomy.items():
             for skill in skills:
-                self.skill_to_category[skill.lower()] = category
+                self.skill_to_category[self._normalize_skill_token(skill)] = category
+
+    def _normalize_skill_token(self, skill: str) -> str:
+        """Normalize skill names for taxonomy matching."""
+        normalized = re.sub(r'[^a-z0-9#+.]', '', skill.lower())
+        return self.skill_aliases.get(normalized, normalized)
+
+    @staticmethod
+    def _is_heading_candidate(text: str) -> bool:
+        """Check whether a block looks like a section heading."""
+        stripped = text.strip()
+        if not stripped or len(stripped) > 60:
+            return False
+        if "\n" in stripped:
+            return False
+        word_count = len(stripped.split())
+        return 1 <= word_count <= 4
+
+    @staticmethod
+    def _looks_like_date_line(text: str) -> bool:
+        """Detect lines that primarily contain a date or date range."""
+        return DateRangeMatcher.extract(text) is not None
+
+    @staticmethod
+    def _looks_like_company_name(text: str) -> bool:
+        """Heuristic for organization/institution lines."""
+        keywords = (
+            "inc", "llc", "ltd", "corp", "company", "technologies", "solutions",
+            "university", "college", "school", "institute", "academy"
+        )
+        lowered = text.lower()
+        return any(keyword in lowered for keyword in keywords)
     
     async def load_document(self, file: UploadFile) -> RawDocument:
         """
@@ -93,8 +141,12 @@ class ParsingService:
         current_section: Optional[SectionType] = None
         
         for block in document.blocks:
+            block = block.strip()
+            if not block:
+                continue
+
             # Check if this block is a section heading
-            detected_section = self._detect_section_heading(block)
+            detected_section = self._detect_section_heading(block) if self._is_heading_candidate(block) else None
             
             if detected_section:
                 current_section = detected_section
@@ -118,12 +170,24 @@ class ParsingService:
         """
         # Normalize text for matching
         normalized = text.lower().strip()
-        normalized = re.sub(r'[^\w\s]', '', normalized)  # Remove punctuation
+        normalized = re.sub(r'\s+', ' ', normalized)
+        normalized = re.sub(r'\s*\(\d+\)?\s*$', '', normalized)
+        normalized = re.sub(r'^[\W_]+|[\W_]+$', '', normalized)
+        normalized_compact = re.sub(r'[\W_]+', '', normalized)
         
         # Check against known headings
         for section_key, synonyms in self.section_headings.items():
             for synonym in synonyms:
-                if normalized == synonym or normalized == synonym.replace(' ', ''):
+                synonym_normalized = synonym.lower().strip()
+                synonym_compact = re.sub(r'[\W_]+', '', synonym_normalized)
+                if (
+                    normalized == synonym_normalized
+                    or normalized_compact == synonym_compact
+                    or re.fullmatch(
+                        rf"{re.escape(synonym_normalized)}(?:\s*[:\-–—]\s*|\s*\(\d+\)\s*)?",
+                        normalized
+                    )
+                ):
                     # Map to SectionType enum
                     try:
                         return SectionType(section_key)
@@ -185,48 +249,38 @@ class ParsingService:
     
     def _extract_contact_info(self, text: str) -> ContactInfo:
         """Extract contact information from resume text."""
-        # Email regex
-        email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-        emails = re.findall(email_pattern, text)
-        email = emails[0] if emails else None
-        
-        # Phone regex (international formats)
-        phone_pattern = r'[\+]?[(]?[0-9]{1,4}[)]?[-\s\.]?[(]?[0-9]{1,4}[)]?[-\s\.]?[0-9]{1,4}[-\s\.]?[0-9]{1,9}'
-        phones = re.findall(phone_pattern, text)
-        # Filter out likely false positives (too short)
-        phones = [p for p in phones if len(re.sub(r'[^\d]', '', p)) >= 9]
-        phone = phones[0] if phones else None
-        
-        # LinkedIn URL
-        linkedin_pattern = r'(?:https?://)?(?:www\.)?linkedin\.com/in/[\w-]+'
-        linkedin_matches = re.findall(linkedin_pattern, text, re.IGNORECASE)
-        linkedin = linkedin_matches[0] if linkedin_matches else None
-        
-        # GitHub URL
-        github_pattern = r'(?:https?://)?(?:www\.)?github\.com/[\w-]+'
-        github_matches = re.findall(github_pattern, text, re.IGNORECASE)
-        github = github_matches[0] if github_matches else None
-        
-        # Website URL (generic)
-        website_pattern = r'(?:https?://)?(?:www\.)?[\w-]+\.[\w.]+/?\S*'
-        website_matches = re.findall(website_pattern, text)
-        # Exclude LinkedIn/GitHub from generic website
+        top_text = '\n'.join(text.splitlines()[:8])
+        email = EmailMatcher.extract(top_text) or EmailMatcher.extract(text)
+        phone = PhoneMatcher.extract(top_text) or PhoneMatcher.extract(text)
+        linkedin = URLMatcher.extract_linkedin(top_text) or URLMatcher.extract_linkedin(text)
+        github = URLMatcher.extract_github(top_text) or URLMatcher.extract_github(text)
+
         website = None
-        for url in website_matches:
-            if 'linkedin' not in url.lower() and 'github' not in url.lower():
-                website = url
-                break
-        
+        portfolio_match = re.search(
+            r'(?<![@\w])(?:https?://)?(?:www\.)?([a-zA-Z0-9\-]+\.(?:com|io|dev|me|co)(?:/\S*)?)',
+            text,
+            re.IGNORECASE
+        )
+        if portfolio_match:
+            candidate = portfolio_match.group(1)
+            if 'linkedin.com' not in candidate.lower() and 'github.com' not in candidate.lower():
+                website = candidate
+
         return ContactInfo(
             email=email,
             phone=phone,
             linkedin=linkedin,
             github=github,
-            website=website
+            website=website,
+            location=LocationMatcher.extract(top_text)
         )
     
     def _extract_name(self, text: str) -> Optional[str]:
         """Extract candidate name from resume."""
+        heuristic_name = NameMatcher.extract_from_top(text)
+        if heuristic_name:
+            return heuristic_name
+
         # Use NER to find PERSON entities in the first few lines
         first_lines = '\n'.join(text.split('\n')[:10])
         persons = self.nlp_service.extract_persons(first_lines, limit=5)
@@ -279,8 +333,14 @@ class ParsingService:
             if not block:
                 continue
             
-            # Check if block starts with a date pattern (likely new role)
-            if re.match(r'^\d{4}|^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)', block, re.IGNORECASE):
+            lines = [line.strip() for line in block.split('\n') if line.strip()]
+            starts_new_role = (
+                any(self._looks_like_date_line(line) for line in lines[:2])
+                or any(' at ' in line.lower() for line in lines[:1])
+                or (len(lines) >= 2 and self._looks_like_company_name(lines[1]))
+            )
+
+            if starts_new_role:
                 if current:
                     merged.append('\n\n'.join(current))
                 current = [block]
@@ -308,12 +368,23 @@ class ParsingService:
         # Extract organization names using NER
         orgs = self.nlp_service.extract_organizations(block, limit=3)
         company = orgs[0] if orgs else None
-        
-        # Infer job title (usually first line)
-        job_title = lines[0] if lines else None
+
+        header_lines = lines[:3]
+        if header_lines and self._looks_like_date_line(header_lines[0]) and len(header_lines) > 1:
+            header_lines = header_lines[1:]
+
+        job_title = header_lines[0] if header_lines else None
+        if job_title and ' at ' in job_title.lower():
+            title_part, company_part = re.split(r'\bat\b', job_title, maxsplit=1, flags=re.IGNORECASE)
+            job_title = title_part.strip(" ,-–—")
+            company = company or company_part.strip(" ,-–—")
+        elif len(header_lines) > 1 and not self._looks_like_date_line(header_lines[1]):
+            company = company or header_lines[1]
         
         # Extract bullet points
         bullets = extract_bullet_points(block)
+        if not bullets and len(lines) > 2:
+            bullets = [line for line in lines[2:] if not self._looks_like_date_line(line)]
         
         return ExperienceItem(
             job_title=job_title,
@@ -325,24 +396,17 @@ class ParsingService:
             raw_text=block
         )
     
-    def _extract_date_range(self, text: str) -> Dict[str, any]:
+    def _extract_date_range(self, text: str) -> Dict[str, Any]:
         """Extract date range from text."""
-        # Pattern: "Jan 2021 - Mar 2023", "2020 - Present", "2019-2021"
-        date_range_pattern = r'(\w+\s+\d{4}|\d{4})\s*[-–—to]+\s*(\w+\s+\d{4}|\d{4}|Present|Current)'
-        
-        match = re.search(date_range_pattern, text, re.IGNORECASE)
-        
-        if match:
-            start = match.group(1)
-            end = match.group(2)
-            is_current = end.lower() in ['present', 'current']
-            
+        extracted = DateRangeMatcher.extract(text)
+        if extracted:
+            start, end = extracted
+            is_current = bool(end and end.lower() == "present")
             return {
                 'start': start,
-                'end': end if not is_current else None,
+                'end': None if is_current else end,
                 'is_current': is_current
             }
-        
         return {}
     
     def _extract_education(self, sections: ResumeRawSections) -> List[EducationItem]:
@@ -368,11 +432,13 @@ class ParsingService:
         """Parse a single education block."""
         if not block.strip():
             return None
+
+        lines = [line.strip() for line in block.split('\n') if line.strip()]
         
         # Extract degree patterns
         degree_patterns = [
-            r'\b(BSc|BEng|BA|BS|BE|BTech|Bachelor)\b',
-            r'\b(MSc|MEng|MA|MS|ME|MTech|Master)\b',
+            r'\b(BSc|B\.Sc|BEng|BA|BS|BE|BTech|Bachelor(?: of [A-Za-z& ]+)?)\b',
+            r'\b(MSc|M\.Sc|MEng|MA|MS|ME|MTech|Master(?: of [A-Za-z& ]+)?)\b',
             r'\b(PhD|Doctorate|Ph\.D\.)\b',
             r'\b(Diploma|Certificate|Associate)\b'
         ]
@@ -386,20 +452,25 @@ class ParsingService:
         
         # Extract organizations (universities)
         orgs = self.nlp_service.extract_organizations(block, limit=2)
-        institution = orgs[0] if orgs else None
+        institution = next((line for line in lines if self._looks_like_company_name(line)), None)
+        institution = institution or (orgs[0] if orgs else None)
         
         # Extract year (4-digit number)
-        year_pattern = r'\b(19|20)\d{2}\b'
+        year_pattern = r'\b(?:19|20)\d{2}\b'
         years = re.findall(year_pattern, block)
         graduation_year = years[-1] if years else None  # Take the most recent
         
         # Extract GPA
-        gpa_pattern = r'GPA[:\s]*(\d+\.\d+)'
+        gpa_pattern = r'GPA[:\s]*(\d+(?:\.\d+)?)'
         gpa_match = re.search(gpa_pattern, block, re.IGNORECASE)
         gpa = gpa_match.group(1) if gpa_match else None
+
+        field_match = re.search(r'\b(?:in|of)\s+([A-Z][A-Za-z&/\- ]+)', block)
+        field_of_study = field_match.group(1).strip() if field_match else None
         
         return EducationItem(
             degree=degree,
+            field_of_study=field_of_study,
             institution=institution,
             graduation_year=graduation_year,
             gpa=gpa,
@@ -412,12 +483,27 @@ class ParsingService:
             return []
         
         skills_text = '\n'.join(sections.sections[SectionType.SKILLS])
+        normalized_skills_text = skills_text.lower()
         
         # Split by common delimiters
         raw_skills = re.split(r'[,;|\n•·]', skills_text)
         
         skill_items = []
         seen_skills = set()
+
+        for category, skills in self.skills_taxonomy.items():
+            for skill_name in skills:
+                pattern = rf'(?<![a-z0-9]){re.escape(skill_name.lower())}(?![a-z0-9])'
+                if re.search(pattern, normalized_skills_text):
+                    normalized = self._normalize_skill_token(skill_name)
+                    if normalized in seen_skills:
+                        continue
+                    seen_skills.add(normalized)
+                    skill_items.append(SkillItem(
+                        name=skill_name,
+                        category=category,
+                        normalized_name=normalized
+                    ))
         
         for skill in raw_skills:
             skill = skill.strip()
@@ -425,7 +511,7 @@ class ParsingService:
                 continue
             
             # Normalize
-            normalized = skill.lower()
+            normalized = self._normalize_skill_token(skill)
             
             # Avoid duplicates
             if normalized in seen_skills:

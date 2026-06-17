@@ -15,8 +15,11 @@ import spacy
 from spacy.language import Language
 from typing import Optional, List, Dict, Tuple
 import re
-from pathlib import Path
+import logging
+from threading import Lock
 from app.core.config import settings
+
+logger = logging.getLogger(__name__)
 
 
 class NLPService:
@@ -24,11 +27,14 @@ class NLPService:
     
     _instance: Optional['NLPService'] = None
     _nlp: Optional[Language] = None
+    _lock = Lock()
     
     def __new__(cls):
         """Ensure only one instance exists (singleton pattern)."""
         if cls._instance is None:
-            cls._instance = super().__new__(cls)
+            with cls._lock:
+                if cls._instance is None:
+                    cls._instance = super().__new__(cls)
         return cls._instance
     
     def __init__(self):
@@ -40,17 +46,40 @@ class NLPService:
         """Load spaCy model."""
         try:
             self._nlp = spacy.load(settings.spacy_model)
-            print(f"✓ Loaded spaCy model: {settings.spacy_model}")
-        except OSError:
-            print(f"✗ Model '{settings.spacy_model}' not found. Downloading...")
-            # Try to download the model
-            import subprocess
-            subprocess.run(
-                ["python", "-m", "spacy", "download", settings.spacy_model],
-                check=True
-            )
-            self._nlp = spacy.load(settings.spacy_model)
-            print(f"✓ Downloaded and loaded: {settings.spacy_model}")
+            logger.info("Loaded spaCy model: %s", settings.spacy_model)
+        except OSError as exc:
+            raise RuntimeError(
+                f"spaCy model '{settings.spacy_model}' is not installed. "
+                f"Install it during setup with: python -m spacy download {settings.spacy_model}"
+            ) from exc
+
+    def _prepare_text(self, text: str) -> str:
+        """Normalize and bound text before NLP processing."""
+        normalized = re.sub(r'\s+', ' ', (text or '')).strip()
+        if not normalized:
+            return ""
+        return normalized[:settings.nlp_max_text_chars]
+
+    def _parse(self, text: str):
+        """Parse text safely with the shared spaCy pipeline."""
+        prepared_text = self._prepare_text(text)
+        if not prepared_text:
+            return None
+        return self.nlp(prepared_text)
+
+    @staticmethod
+    def _entity_texts(doc, entity_types: Optional[List[str]] = None) -> List[Dict]:
+        """Convert doc entities into a serializable structure."""
+        entities = []
+        for ent in doc.ents:
+            if entity_types is None or ent.label_ in entity_types:
+                entities.append({
+                    'text': ent.text,
+                    'label': ent.label_,
+                    'start': ent.start_char,
+                    'end': ent.end_char
+                })
+        return entities
     
     @property
     def nlp(self) -> Language:
@@ -71,19 +100,10 @@ class NLPService:
         Returns:
             List of entities with text, label, start, and end positions
         """
-        doc = self.nlp(text)
-        entities = []
-        
-        for ent in doc.ents:
-            if entity_types is None or ent.label_ in entity_types:
-                entities.append({
-                    'text': ent.text,
-                    'label': ent.label_,
-                    'start': ent.start_char,
-                    'end': ent.end_char
-                })
-        
-        return entities
+        doc = self._parse(text)
+        if doc is None:
+            return []
+        return self._entity_texts(doc, entity_types)
     
     def extract_persons(self, text: str, limit: int = 5) -> List[str]:
         """
@@ -139,7 +159,9 @@ class NLPService:
         Returns:
             List of sentences
         """
-        doc = self.nlp(text)
+        doc = self._parse(text)
+        if doc is None:
+            return []
         sentences = [sent.text.strip() for sent in doc.sents]
         return sentences
     
@@ -153,7 +175,9 @@ class NLPService:
         Returns:
             List of words
         """
-        doc = self.nlp(text)
+        doc = self._parse(text)
+        if doc is None:
+            return []
         words = [token.text for token in doc if not token.is_space]
         return words
     
@@ -223,10 +247,10 @@ class NLPService:
             Tuple of (score, metrics_dict)
         """
         sentences = self.tokenize_sentences(text)
-        doc = self.nlp(text)
+        doc = self._parse(text)
         
         # Get words (excluding punctuation)
-        words = [token.text for token in doc if token.is_alpha]
+        words = [token.text for token in doc if token.is_alpha] if doc is not None else []
         
         if len(sentences) == 0 or len(words) == 0:
             return 0.0, {
@@ -281,10 +305,10 @@ class NLPService:
             Grade level (e.g., 10.2 = 10th grade)
         """
         sentences = self.tokenize_sentences(text)
-        doc = self.nlp(text)
+        doc = self._parse(text)
         
         # Get words (excluding punctuation)
-        words = [token.text for token in doc if token.is_alpha]
+        words = [token.text for token in doc if token.is_alpha] if doc is not None else []
         
         if len(sentences) == 0 or len(words) == 0:
             return 0.0

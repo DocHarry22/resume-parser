@@ -8,6 +8,7 @@ from app.models.resume_models import (
     Resume, ContactInfo, ExperienceItem, 
     EducationItem, SkillItem
 )
+from app.models.scoring_models import ScanMode
 from app.services.scoring_service import ScoringService
 
 
@@ -132,7 +133,7 @@ def test_scoring():
     # Score the resume
     print("🔍 Scoring resume...")
     scoring_service = ScoringService()
-    score = scoring_service.score_resume(resume)
+    score = scoring_service.score_resume(resume, mode=ScanMode.ATS)
     print("✓ Scoring complete!")
     print()
     
@@ -145,34 +146,40 @@ def test_scoring():
     print()
     
     print("📊 Detailed Metrics:")
-    print(f"  • Readability:  {score.readability.readability_score}/100")
-    print(f"    - Flesch Reading Ease: {score.readability.flesch_reading_ease}")
-    print(f"    - Grade Level: {score.readability.flesch_kincaid_grade}")
+    readability = score.detailed_metrics["readability"]
+    structure = score.detailed_metrics["structure"]
+    experience = score.detailed_metrics["experience"]
+    skills = score.detailed_metrics["skills"]
+    layout = score.detailed_metrics["layout"]
+
+    print(f"  • Readability:  {score.readability}/100")
+    print(f"    - Flesch Reading Ease: {readability['flesch_reading_ease']}")
+    print(f"    - Grade Level: {readability['flesch_kincaid_grade']}")
     print()
     
-    print(f"  • Structure:    {score.structure.structure_score}/100")
-    print(f"    - Has contact: {score.structure.has_contact}")
-    print(f"    - Has experience: {score.structure.has_experience}")
-    print(f"    - Has education: {score.structure.has_education}")
-    print(f"    - Has skills: {score.structure.has_skills}")
+    print(f"  • Structure:    {score.ats_compliance}/100")
+    print(f"    - Has contact: {structure['has_contact']}")
+    print(f"    - Has experience: {structure['has_experience']}")
+    print(f"    - Has education: {structure['has_education']}")
+    print(f"    - Has skills: {structure['has_skills']}")
     print()
     
-    print(f"  • Experience:   {score.experience.experience_score}/100")
-    print(f"    - Total roles: {score.experience.total_roles}")
-    print(f"    - Avg bullets/role: {score.experience.avg_bullets_per_role}")
-    print(f"    - Quantified achievements: {score.experience.quantified_achievements}")
-    print(f"    - Quantification rate: {score.experience.quantification_rate}%")
+    print(f"  • Experience:   {score.experience}/100")
+    print(f"    - Total roles: {experience['total_roles']}")
+    print(f"    - Avg bullets/role: {experience['avg_bullets_per_role']}")
+    print(f"    - Quantified achievements: {experience['quantified_achievements']}")
+    print(f"    - Quantification rate: {experience['quantification_rate']}%")
     print()
     
-    print(f"  • Skills:       {score.skills.skills_score}/100")
-    print(f"    - Total skills: {score.skills.total_skills}")
-    print(f"    - Categorized: {score.skills.categorized_skills}")
-    print(f"    - Categories: {score.skills.unique_categories}")
+    print(f"  • Skills:       {score.skills}/100")
+    print(f"    - Total skills: {skills['total_skills']}")
+    print(f"    - Categorized: {skills['categorized_skills']}")
+    print(f"    - Categories: {skills['unique_categories']}")
     print()
     
-    print(f"  • Length:       {score.length.length_score}/100")
-    print(f"    - Word count: {score.length.word_count}")
-    print(f"    - Estimated pages: {score.length.estimated_pages}")
+    print(f"  • Length:       {score.layout}/100")
+    print(f"    - Word count: {layout['word_count']}")
+    print(f"    - Estimated pages: {layout['estimated_pages']}")
     print()
     
     print("💡 Improvement Suggestions:")

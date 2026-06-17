@@ -10,13 +10,22 @@ import logging
 from app.utils.pdf_reader import read_pdf
 from app.utils.docx_reader import DOCXReader
 from app.models.resume_models import RawDocument
+from app.core.config import settings
 
 logger = logging.getLogger(__name__)
 
-# Maximum file size: 25MB
-MAX_FILE_SIZE = 25 * 1024 * 1024
+# Maximum file size
+MAX_FILE_SIZE = settings.max_file_size_mb * 1024 * 1024
+ALLOWED_EXTENSIONS = set(settings.allowed_extensions)
 
-ALLOWED_EXTENSIONS = {".pdf", ".docx", ".doc"}
+
+def _has_valid_signature(data: bytes, ext: str) -> bool:
+    """Validate basic file signatures to reject disguised uploads."""
+    if ext == ".pdf":
+        return data.startswith(b"%PDF")
+    if ext == ".docx":
+        return data.startswith(b"PK")
+    return False
 
 
 async def load_document(upload_file: UploadFile) -> RawDocument:
@@ -80,6 +89,12 @@ async def load_document(upload_file: UploadFile) -> RawDocument:
     if len(data) == 0:
         raise HTTPException(status_code=400, detail="File is empty")
     
+    if not _has_valid_signature(data, ext):
+        raise HTTPException(
+            status_code=400,
+            detail=f"File content does not match {ext} format"
+        )
+
     # Parse based on extension
     try:
         if ext == ".pdf":
@@ -89,7 +104,7 @@ async def load_document(upload_file: UploadFile) -> RawDocument:
                 blocks=result['blocks'],
                 page_count=result.get('page_count')
             )
-        elif ext in (".docx", ".doc"):
+        elif ext == ".docx":
             docx_reader = DOCXReader()
             result = docx_reader.read(data)
             return RawDocument(
@@ -98,15 +113,14 @@ async def load_document(upload_file: UploadFile) -> RawDocument:
                 page_count=None  # DOCX doesn't have page concept
             )
         else:
-            raise HTTPException(status_code=400, detail="Unsupported file type")
+            raise HTTPException(status_code=400, detail="Unsupported file type"            )
     except HTTPException:
-        raise
+            raise
     except ValueError as e:
-        # Reader raised ValueError (e.g., "Unable to extract text from PDF")
-        logger.error(f"Error parsing document: {e}")
-        raise HTTPException(
-            status_code=422,
-            detail=f"Could not parse document: {str(e)}"
+            logger.warning("Document parsing failed for %s: %s", upload_file.filename, e)
+            raise HTTPException(
+                status_code=422,
+                detail=f"Could not parse document: {str(e)}"
         )
     except Exception as e:
         logger.error(f"Unexpected error parsing document: {e}", exc_info=True)
@@ -137,14 +151,17 @@ def load_document_from_path(file_path: str) -> RawDocument:
     ext = path.suffix.lower()
     
     if ext not in ALLOWED_EXTENSIONS:
-        raise ValueError(f"Unsupported file type: {ext}. Allowed: {', '.join(ALLOWED_EXTENSIONS)}")
+        raise ValueError(f"Unsupported file type: {ext}. Allowed: {', '.join(sorted(ALLOWED_EXTENSIONS))}")
     
     with open(path, 'rb') as f:
         data = f.read()
     
     if len(data) == 0:
         raise ValueError("File is empty")
-    
+
+    if not _has_valid_signature(data, ext):
+        raise ValueError(f"File content does not match {ext} format")
+
     if ext == ".pdf":
         result = read_pdf(data)
         return RawDocument(
@@ -152,7 +169,7 @@ def load_document_from_path(file_path: str) -> RawDocument:
             blocks=result['blocks'],
             page_count=result.get('page_count')
         )
-    elif ext in (".docx", ".doc"):
+    elif ext == ".docx":
         docx_reader = DOCXReader()
         result = docx_reader.read(data)
         return RawDocument(

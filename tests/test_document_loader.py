@@ -100,8 +100,20 @@ async def test_load_document_invalid_pdf():
     with pytest.raises(HTTPException) as exc_info:
         await load_document(mock_file)
     
-    # Should be 422 (parsing error) or 500 (internal error)
-    assert exc_info.value.status_code in (422, 500)
+    assert exc_info.value.status_code == 400
+    assert "does not match" in str(exc_info.value.detail).lower()
+
+
+@pytest.mark.asyncio
+async def test_load_document_docx_signature_mismatch():
+    """Reject disguised DOCX uploads before parsing."""
+    mock_file = MockUploadFile("resume.docx", b"not a zip file")
+
+    with pytest.raises(HTTPException) as exc_info:
+        await load_document(mock_file)
+
+    assert exc_info.value.status_code == 400
+    assert "does not match" in str(exc_info.value.detail).lower()
 
 
 def test_load_document_from_path_pdf():
@@ -144,7 +156,7 @@ def test_allowed_extensions():
     """Test that allowed extensions are properly defined."""
     assert ".pdf" in ALLOWED_EXTENSIONS
     assert ".docx" in ALLOWED_EXTENSIONS
-    assert ".doc" in ALLOWED_EXTENSIONS
+    assert ".doc" not in ALLOWED_EXTENSIONS
 
 
 def test_max_file_size():
