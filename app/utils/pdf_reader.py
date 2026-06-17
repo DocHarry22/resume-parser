@@ -65,23 +65,23 @@ def read_pdf(file: bytes) -> dict:
         all_blocks = []
         full_text_parts = []
         page_count = doc.page_count
-        raw_text_found = False  # Track if we found any text at all
+        image_pages = 0
         
         # Process each page
         for page in doc:
+            page_text_parts = []
+            fallback_text = page.get_text("text")
+
             # Get text blocks with position info
             # Block format: (x0, y0, x1, y1, "text", block_no, block_type)
             blocks = page.get_text("blocks")
-            
-            if not blocks:
-                continue
-            
+            if page.get_images(full=True):
+                image_pages += 1
+
             # Sort blocks by position (top-to-bottom, left-to-right)
             # This helps maintain reading order in multi-column layouts
             sorted_blocks = sorted(blocks, key=lambda b: (b[1], b[0]))  # (y0, x0)
-            
-            page_text_parts = []
-            
+
             for block in sorted_blocks:
                 x0, y0, x1, y1, text, block_no, block_type = block
                 
@@ -94,9 +94,6 @@ def read_pdf(file: bytes) -> dict:
                 
                 if not text:
                     continue
-                
-                # We found some text
-                raw_text_found = True
                 
                 # Filter out page numbers (standalone numbers) - be lenient
                 if _is_page_number(text):
@@ -119,45 +116,23 @@ def read_pdf(file: bytes) -> dict:
             if page_text_parts:
                 page_text = "\n".join(page_text_parts)
                 full_text_parts.append(page_text)
+            elif fallback_text and fallback_text.strip():
+                cleaned_fallback = _clean_text(fallback_text)
+                if cleaned_fallback:
+                    full_text_parts.append(cleaned_fallback)
+                    all_blocks.append(cleaned_fallback)
         
         doc.close()
         
         # Build final document
         full_text = "\n\n".join(full_text_parts)
-        
-        # If block extraction failed but we found raw text, try simple text extraction
-        if (not full_text or not all_blocks) and raw_text_found:
-            # Reopen and try simple extraction
-            stream = BytesIO(file)
-            doc = fitz.open(stream=stream, filetype="pdf")
-            simple_text_parts = []
-            for page in doc:
-                text = page.get_text("text")
-                if text and text.strip():
-                    simple_text_parts.append(text.strip())
-            doc.close()
-            
-            if simple_text_parts:
-                full_text = "\n\n".join(simple_text_parts)
-                all_blocks = simple_text_parts
-        
-        # If still no text, try one more fallback without any filtering
+
         if not full_text or not all_blocks:
-            stream = BytesIO(file)
-            doc = fitz.open(stream=stream, filetype="pdf")
-            fallback_parts = []
-            for page in doc:
-                text = page.get_text()
-                if text and text.strip():
-                    fallback_parts.append(text.strip())
-            doc.close()
-            
-            if fallback_parts:
-                full_text = "\n\n".join(fallback_parts)
-                all_blocks = fallback_parts
-        
-        if not full_text or not all_blocks:
-            raise ValueError("Unable to extract text from PDF. This may be a scanned/image-based PDF that requires OCR.")
+            if image_pages == page_count:
+                raise ValueError(
+                    "Unable to extract text from PDF. The document appears to be scanned or image-based and OCR is not configured."
+                )
+            raise ValueError("Unable to extract text from PDF.")
         
         return {
             'full_text': full_text,
