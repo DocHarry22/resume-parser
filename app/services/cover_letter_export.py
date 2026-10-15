@@ -1,12 +1,17 @@
 """Cover Letter Export Service - PDF, DOCX, and TXT generation."""
 
 from io import BytesIO
+from xml.sax.saxutils import escape
 from datetime import datetime
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter, A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.platypus import SimpleDocTemplate, Paragraph as ReportLabParagraph, Spacer
+
+
+def Paragraph(text, style):
+    return ReportLabParagraph(escape(str(text)).replace(chr(10), "<br/>"), style)
 from docx import Document
 from docx.shared import Pt, Inches
 from docx.enum.text import WD_ALIGN_PARAGRAPH
@@ -150,7 +155,7 @@ def generate_pdf(cover_letter: CoverLetter, request: CoverLetterExportRequest) -
         recipient_lines.append(city_state)
     
     if recipient_lines:
-        story.append(Paragraph("<br/>".join(recipient_lines), recipient_style))
+        story.append(Paragraph("\n".join(recipient_lines), recipient_style))
     
     # Salutation
     salutation = cover_letter.content.salutation or "Dear Hiring Manager,"

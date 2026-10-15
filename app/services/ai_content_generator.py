@@ -122,76 +122,34 @@ async def generate_cover_letter_content(
     OpenAI, Claude, or other LLM APIs for more personalized content.
     """
     skills = skills or []
-    suggestions = []
-    
-    # Prepare template variables
-    template_vars = {
-        "job_title": job_title or "this position",
-        "company": company_name or "your company",
-        "experience_area": experience_summary or "my field",
-        "skills_list": ", ".join(skills[:3]) if skills else "relevant technical skills",
-        "years": "5+",  # Could be extracted from resume
-        "achievement": "delivered impactful results",
-        "achievement_area": "driving results",
-        "benefit": "drive similar success for your team",
-        "result": "measurable improvements",
-        "previous_company": "my previous role",
-        "skill_area": experience_summary or "my domain",
-        "unique_value": "combining technical expertise with strong communication",
-        "application": "deliver successful projects",
-        "company_value": "your commitment to innovation",
-    }
-    
-    # Extract keywords from job description for more relevant suggestions
-    keywords = []
-    if job_description:
-        # Simple keyword extraction
-        keywords = extract_keywords(job_description)
-        if keywords:
-            template_vars["experience_area"] = keywords[0] if keywords else template_vars["experience_area"]
-            template_vars["skill_area"] = keywords[0] if len(keywords) > 0 else template_vars["skill_area"]
-    
-    # Generate suggestions based on section
+    role = job_title or "the advertised position"
+    company = company_name or "your organisation"
     if section == "opening":
-        templates = OPENING_TEMPLATES.get(tone, OPENING_TEMPLATES[CoverLetterTone.PROFESSIONAL])
-        for template in templates:
-            try:
-                suggestion = template.format(**template_vars)
-                suggestions.append(suggestion)
-            except KeyError:
-                suggestions.append(template)
-                
+        suggestions = [
+            f"I am applying for {role} at {company}. I would welcome the opportunity to discuss my application.",
+            f"Please consider my application for {role} at {company}. I am interested in learning more about the role and your team.",
+        ]
     elif section == "body":
-        # Combine body templates for the body section
-        all_body_templates = (
-            BODY_TEMPLATES["experience"] + 
-            BODY_TEMPLATES["skills"] + 
-            BODY_TEMPLATES["value"]
-        )
-        for template in all_body_templates:
-            try:
-                suggestion = template.format(**template_vars)
-                suggestions.append(suggestion)
-            except KeyError:
-                suggestions.append(template)
-                
+        facts = []
+        if experience_summary.strip():
+            facts.append(experience_summary.strip())
+        if skills:
+            facts.append("My skills include " + ", ".join(skills) + ".")
+        suggestions = [" ".join(facts)] if facts else [
+            "[Add an example from your own work or education that relates to this role.]"
+        ]
     elif section == "closing":
-        templates = CLOSING_TEMPLATES.get(tone, CLOSING_TEMPLATES[CoverLetterTone.PROFESSIONAL])
-        for template in templates:
-            try:
-                suggestion = template.format(**template_vars)
-                suggestions.append(suggestion)
-            except KeyError:
-                suggestions.append(template)
-    
-    # Get tips for this section
-    tips = TIPS.get(section, [])
-    
-    return {
-        "suggestions": suggestions,
-        "tips": tips,
-        "keywords": keywords,
-    }
+        suggestions = [
+            "Thank you for considering my application. I would welcome the opportunity to discuss it with you.",
+            f"I would appreciate the opportunity to learn more about {role} at {company}. Thank you for your time.",
+        ]
+    else:
+        raise ValueError("Choose opening, body or closing")
+    return {"suggestions": suggestions,
+            "tips": ["Guided draft, not AI-generated. Review each statement before use.",
+                     "Use only achievements and qualifications you can substantiate."],
+            "keywords": extract_keywords(job_description) if job_description else [],
+            "provider": "guided"}
 
 
 def extract_keywords(text: str) -> List[str]:

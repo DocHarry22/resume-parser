@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter, HTTPException, Response
 from typing import List, Optional
-from datetime import datetime
+from datetime import datetime, timezone
 import uuid
 import json
 import logging
@@ -24,7 +24,10 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/cover-letters", tags=["cover-letters"])
 
 # In-memory storage (replace with database in production)
-cover_letters_db: dict = {}
+from app.services.document_store import CoverLetterStore
+from app.services.resume_export import download_headers
+from app.services.builder_service import get_builder_service
+cover_letters_db = CoverLetterStore()
 
 
 # Available templates
@@ -99,7 +102,7 @@ async def get_template(template_id: str):
 async def create_cover_letter(request: CoverLetterCreate):
     """Create a new cover letter."""
     cover_letter_id = str(uuid.uuid4())
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     
     cover_letter = CoverLetter(
         id=cover_letter_id,
@@ -138,11 +141,12 @@ async def update_cover_letter(cover_letter_id: str, updates: CoverLetterUpdate):
     cover_letter = cover_letters_db[cover_letter_id]
     update_data = updates.model_dump(exclude_unset=True)
     
-    for field, value in update_data.items():
-        if value is not None:
-            setattr(cover_letter, field, value)
+    cover_letter = CoverLetter.model_validate({
+        **cover_letter.model_dump(),
+        **{field: value for field, value in update_data.items() if value is not None},
+    })
     
-    cover_letter.updated_at = datetime.utcnow()
+    cover_letter.updated_at = datetime.now(timezone.utc)
     cover_letters_db[cover_letter_id] = cover_letter
     
     return cover_letter
@@ -166,7 +170,7 @@ async def duplicate_cover_letter(cover_letter_id: str):
     
     original = cover_letters_db[cover_letter_id]
     new_id = str(uuid.uuid4())
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     
     # Create a copy with new ID and title
     new_cover_letter = original.model_copy(deep=True)
@@ -194,14 +198,24 @@ async def generate_content(request: AIContentRequest):
             tone=request.tone,
         )
         
+        if request.use_ai:
+            from app.services.writing_provider import rewrite_text
+            source = "\n".join(suggestions["suggestions"])
+            revised = await rewrite_text(source, f"Write a {request.tone.value} cover letter {request.section}",
+                                         request.experience_summary + "\nSkills: " + ", ".join(request.skills))
+            suggestions["suggestions"] = [revised]
+            suggestions["provider"] = "configured_ai"
         return AIContentResponse(
             suggestions=suggestions["suggestions"],
+            provider=suggestions.get("provider", "guided"),
             section=request.section,
             tips=suggestions.get("tips", []),
             keywords=suggestions.get("keywords", []),
         )
+    except HTTPException:
+        raise
     except Exception as e:
-        logger.error(f"Error generating content: {e}")
+        logger.error("Error generating writing content")
         raise HTTPException(status_code=500, detail="Failed to generate content")
 
 
@@ -221,9 +235,7 @@ async def export_cover_letter(cover_letter_id: str, request: CoverLetterExportRe
         return Response(
             content=pdf_bytes,
             media_type="application/pdf",
-            headers={
-                "Content-Disposition": f'attachment; filename="{cover_letter.title}.pdf"'
-            }
+            headers=download_headers(cover_letter.title, "pdf")
         )
     elif request.format == "docx":
         # Generate DOCX
@@ -233,9 +245,7 @@ async def export_cover_letter(cover_letter_id: str, request: CoverLetterExportRe
         return Response(
             content=docx_bytes,
             media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            headers={
-                "Content-Disposition": f'attachment; filename="{cover_letter.title}.docx"'
-            }
+            headers=download_headers(cover_letter.title, "docx")
         )
     elif request.format == "txt":
         # Generate plain text
@@ -245,9 +255,7 @@ async def export_cover_letter(cover_letter_id: str, request: CoverLetterExportRe
         return Response(
             content=txt_content,
             media_type="text/plain",
-            headers={
-                "Content-Disposition": f'attachment; filename="{cover_letter.title}.txt"'
-            }
+            headers=download_headers(cover_letter.title, "txt")
         )
     else:
         raise HTTPException(status_code=400, detail="Unsupported export format")
@@ -256,10 +264,11 @@ async def export_cover_letter(cover_letter_id: str, request: CoverLetterExportRe
 @router.post("/from-resume/{resume_id}", response_model=CoverLetter)
 async def create_from_resume(resume_id: str, job_title: str = "", company_name: str = ""):
     """Create a cover letter pre-populated with data from a resume."""
-    # This would integrate with the resume storage
-    # For now, create a basic cover letter
+    resume = get_builder_service().get_resume(resume_id)
+    if not resume:
+        raise HTTPException(status_code=404, detail="Resume not found")
     cover_letter_id = str(uuid.uuid4())
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     
     cover_letter = CoverLetter(
         id=cover_letter_id,
@@ -269,6 +278,12 @@ async def create_from_resume(resume_id: str, job_title: str = "", company_name: 
         updated_at=now,
     )
     
+    if resume.contact:
+        cover_letter.sender.full_name = resume.contact.full_name
+        cover_letter.sender.email = resume.contact.email
+        cover_letter.sender.phone = resume.contact.phone or ""
+        cover_letter.sender.linkedin = resume.contact.linkedin or ""
+
     # Pre-fill job details if provided
     if job_title:
         cover_letter.job_details.job_title = job_title
@@ -279,3 +294,20 @@ async def create_from_resume(resume_id: str, job_title: str = "", company_name: 
     cover_letters_db[cover_letter_id] = cover_letter
     
     return cover_letter
+
+
+@router.post("/export-data")
+async def export_cover_letter_data(cover_letter: CoverLetter, format: str = "pdf"):
+    """Download current editor data without requiring a saved letter."""
+    from app.services.cover_letter_export import generate_pdf, generate_docx, generate_txt
+    request = CoverLetterExportRequest(format=format)
+    if format == "pdf":
+        content, media_type = generate_pdf(cover_letter, request), "application/pdf"
+    elif format == "docx":
+        content, media_type = generate_docx(cover_letter, request), "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    elif format == "txt":
+        content, media_type = generate_txt(cover_letter), "text/plain; charset=utf-8"
+    else:
+        raise HTTPException(status_code=422, detail="Choose pdf, docx or txt")
+    return Response(content=content, media_type=media_type,
+                    headers=download_headers(cover_letter.title, format))

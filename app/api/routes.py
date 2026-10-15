@@ -80,7 +80,7 @@ async def parse_resume(file: UploadFile = File(...)):
         raise
     except Exception as e:
         logger.error(f"Error parsing resume: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Unable to process resume")
 
 
 @router.post("/score-resume")
@@ -147,7 +147,7 @@ async def score_resume(
         raise
     except Exception as e:
         logger.error(f"Error scoring resume: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Unable to process resume")
 
 
 @router.post("/parse-and-score")
@@ -219,7 +219,7 @@ async def parse_and_score(
         raise
     except Exception as e:
         logger.error(f"Error processing resume: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Unable to process resume")
 
 
 @router.get("/scan-modes")

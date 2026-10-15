@@ -59,6 +59,9 @@ def read_pdf(file: bytes) -> dict:
         # Open PDF
         doc = fitz.open(stream=stream, filetype="pdf")
         
+        if doc.page_count > 100:
+            doc.close()
+            raise ValueError("PDF is limited to 100 pages")
         if doc.page_count == 0:
             raise ValueError("PDF contains no pages")
         

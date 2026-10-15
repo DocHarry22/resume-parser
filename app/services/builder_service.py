@@ -7,8 +7,16 @@ Designed for easy expansion with new operations.
 
 from typing import Optional, List, Dict, Any
 from datetime import datetime
+from fastapi import HTTPException
 import json
 import uuid
+import os
+import tempfile
+import time
+import logging
+
+logger = logging.getLogger(__name__)
+from app.core.workspaces import document_path, current_workspace, workspace_path, enforce_storage_limit
 from pathlib import Path
 
 from app.models.builder_models import (
@@ -62,11 +70,14 @@ class ResumeBuilderService:
         }
         
         if initial_data:
-            resume_data.update(initial_data)
+            # IDs and timestamps are assigned by the service, never imported.
+            resume_data.update({key: value for key, value in initial_data.items()
+                                if key not in {"id", "created_at", "updated_at"}})
         
         resume = ResumeBuilder(**resume_data)
+        if not self.save_resume(resume):
+            raise OSError("Unable to persist resume")
         self._in_memory_cache[resume_id] = resume
-        
         return resume
     
     def create_from_parsed(self, parsed_resume: Resume) -> ResumeBuilder:
@@ -87,11 +98,12 @@ class ResumeBuilderService:
             contact = parsed_resume.contact
             builder_data["contact"] = ContactInfo(
                 full_name=parsed_resume.name or "",
-                email=contact.email or "email@example.com",
+                email=contact.email or "",
                 phone=contact.phone,
                 location=contact.location,
                 linkedin=contact.linkedin,
-                github=contact.github
+                github=contact.github,
+                website=contact.website,
             )
         
         # Summary
@@ -132,20 +144,30 @@ class ResumeBuilderService:
         
         # Skills
         if parsed_resume.skills:
-            skill_names = [skill.name for skill in parsed_resume.skills]
+            skill_names = list(dict.fromkeys(skill.name for skill in parsed_resume.skills))
             builder_data["skills"] = [
-                SkillCategory(
-                    category="Technical Skills",
-                    skills=skill_names
-                )
+                SkillCategory(category="Skills" if offset == 0 else "Additional skills",
+                              skills=skill_names[offset:offset + 20])
+                for offset in range(0, len(skill_names), 20)
             ]
         
+        if parsed_resume.projects:
+            builder_data["projects"] = [
+                ProjectEntry(name=item.title or "", description=item.description or item.raw_text or "",
+                             technologies=item.technologies, url=item.url)
+                for item in parsed_resume.projects
+            ]
+        if parsed_resume.languages:
+            builder_data["languages"] = [{"language": item, "proficiency": ""} for item in parsed_resume.languages]
+
         # Certifications
         if parsed_resume.certifications:
             builder_data["certifications"] = [
                 CertificationEntry(
                     name=cert.name,
                     issuer=cert.issuer or "",
+                    issue_date=cert.date,
+                    credential_id=cert.credential_id,
                 )
                 for cert in parsed_resume.certifications
             ]
@@ -165,12 +187,16 @@ class ResumeBuilderService:
         Returns:
             ResumeBuilder if found, None otherwise
         """
+        try:
+            resume_path = document_path(self.storage_path, resume_id)
+        except ValueError:
+            return None
         # Check in-memory cache first
         if resume_id in self._in_memory_cache:
             return self._in_memory_cache[resume_id]
         
         # Try loading from disk
-        resume_path = self.storage_path / f"{resume_id}.json"
+        resume_path = document_path(self.storage_path, resume_id)
         if resume_path.exists():
             with open(resume_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
@@ -199,20 +225,25 @@ class ResumeBuilderService:
         if not resume:
             return None
         
-        # Apply updates using exclude_unset to only update provided fields
+        # Revalidate the merged model so nested entries remain typed after PATCH.
         update_dict = update_data.model_dump(exclude_unset=True)
-        for key, value in update_dict.items():
-            # Handle nested models - convert dicts back to model instances
-            if key == 'contact' and isinstance(value, dict):
-                value = ContactInfo(**value)
-            setattr(resume, key, value)
+        for key in ("experience", "education", "skills", "certifications", "projects",
+                    "achievements", "languages", "volunteer", "publications"):
+            if update_dict.get(key, object()) is None:
+                update_dict[key] = []
+        if update_dict.get("custom_sections", object()) is None:
+            update_dict["custom_sections"] = {}
+        if update_dict.get("title", object()) is None:
+            update_dict["title"] = "My Resume"
+        resume = ResumeBuilder.model_validate({**resume.model_dump(), **update_dict})
         
         # Update timestamp
         resume.updated_at = datetime.now().isoformat()
         
         # Update cache
+        if not self.save_resume(resume):
+            raise OSError("Unable to persist resume")
         self._in_memory_cache[resume_id] = resume
-        
         return resume
     
     def delete_resume(self, resume_id: str) -> bool:
@@ -227,13 +258,18 @@ class ResumeBuilderService:
         """
         deleted = False
         
+        try:
+            document_path(self.storage_path, resume_id)
+        except ValueError:
+            return False
+
         # Remove from cache
         if resume_id in self._in_memory_cache:
             del self._in_memory_cache[resume_id]
             deleted = True
         
         # Remove from disk
-        resume_path = self.storage_path / f"{resume_id}.json"
+        resume_path = document_path(self.storage_path, resume_id)
         if resume_path.exists():
             resume_path.unlink()
             deleted = True
@@ -253,14 +289,36 @@ class ResumeBuilderService:
         if not resume.id:
             return False
         
+        temporary = None
         try:
-            resume_path = self.storage_path / f"{resume.id}.json"
-            with open(resume_path, 'w', encoding='utf-8') as f:
-                json.dump(resume.model_dump(), f, indent=2)
+            resume_path = document_path(self.storage_path, resume.id)
+            self.storage_path.mkdir(parents=True, exist_ok=True)
+            serialized = json.dumps(resume.model_dump(mode="json"), ensure_ascii=False, indent=2)
+            enforce_storage_limit(self.storage_path, resume_path, len(serialized.encode("utf-8")))
+            with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8",
+                                             dir=self.storage_path, suffix=".tmp",
+                                             delete=False) as handle:
+                temporary = Path(handle.name)
+                handle.write(serialized)
+                handle.flush()
+                os.fsync(handle.fileno())
+            # Windows file indexing/synchronisation can briefly hold the target open.
+            for attempt in range(5):
+                try:
+                    os.replace(temporary, resume_path)
+                    break
+                except PermissionError:
+                    if attempt == 4:
+                        raise
+                    time.sleep(0.03 * (attempt + 1))
             return True
-        except Exception as e:
-            print(f"Error saving resume: {e}")
+        except (OSError, ValueError, TypeError) as error:
+            logger.error("Unable to persist document: %s (OS code %s)",
+                         type(error).__name__, getattr(error, "winerror", getattr(error, "errno", None)))
             return False
+        finally:
+            if temporary is not None:
+                temporary.unlink(missing_ok=True)
     
     def list_resumes(self) -> List[Dict[str, Any]]:
         """
@@ -318,7 +376,8 @@ class ResumeBuilderService:
         resume = self.get_resume(resume_id)
         if not resume:
             return None
-        
+        resume = resume.model_copy(deep=True)
+
         try:
             if section == SectionType.EXPERIENCE:
                 entry = ExperienceEntry(**entry_data)
@@ -344,12 +403,14 @@ class ResumeBuilderService:
                 return None
             
             resume.updated_at = datetime.now().isoformat()
+            if not self.save_resume(resume):
+                raise OSError("Unable to persist resume")
             self._in_memory_cache[resume_id] = resume
-            
             return resume
             
-        except Exception as e:
-            print(f"Error adding section entry: {e}")
+        except HTTPException:
+            raise
+        except (ValueError, TypeError):
             return None
     
     def remove_section_entry(
@@ -372,7 +433,13 @@ class ResumeBuilderService:
         resume = self.get_resume(resume_id)
         if not resume:
             return None
-        
+        resume = resume.model_copy(deep=True)
+        if section not in {SectionType.EXPERIENCE, SectionType.EDUCATION, SectionType.SKILLS,
+                           SectionType.CERTIFICATIONS, SectionType.PROJECTS}:
+            return None
+        if not 0 <= entry_index < len(getattr(resume, section.value)):
+            return None
+
         try:
             if section == SectionType.EXPERIENCE:
                 if 0 <= entry_index < len(resume.experience):
@@ -398,12 +465,14 @@ class ResumeBuilderService:
                 return None
             
             resume.updated_at = datetime.now().isoformat()
+            if not self.save_resume(resume):
+                raise OSError("Unable to persist resume")
             self._in_memory_cache[resume_id] = resume
-            
             return resume
             
-        except Exception as e:
-            print(f"Error removing section entry: {e}")
+        except HTTPException:
+            raise
+        except (ValueError, TypeError):
             return None
     
     def export_to_text(self, resume: ResumeBuilder) -> str:
@@ -416,67 +485,9 @@ class ResumeBuilderService:
         Returns:
             Formatted plain text resume
         """
-        lines = []
-        
-        # Contact
-        if resume.contact:
-            lines.append(resume.contact.full_name.upper())
-            contact_line = []
-            if resume.contact.email:
-                contact_line.append(resume.contact.email)
-            if resume.contact.phone:
-                contact_line.append(resume.contact.phone)
-            if resume.contact.location:
-                contact_line.append(resume.contact.location)
-            lines.append(" | ".join(contact_line))
-            
-            if resume.contact.linkedin:
-                lines.append(f"LinkedIn: {resume.contact.linkedin}")
-            if resume.contact.github:
-                lines.append(f"GitHub: {resume.contact.github}")
-            lines.append("")
-        
-        # Summary
-        if resume.summary:
-            lines.append("PROFESSIONAL SUMMARY")
-            lines.append(resume.summary.summary)
-            lines.append("")
-        
-        # Experience
-        if resume.experience:
-            lines.append("EXPERIENCE")
-            for exp in resume.experience:
-                lines.append(f"{exp.position} at {exp.company}")
-                date_range = f"{exp.start_date} - {exp.end_date or 'Present'}"
-                lines.append(date_range)
-                for desc in exp.description:
-                    lines.append(f"• {desc}")
-                lines.append("")
-        
-        # Education
-        if resume.education:
-            lines.append("EDUCATION")
-            for edu in resume.education:
-                lines.append(f"{edu.degree}, {edu.institution}")
-                if edu.end_date:
-                    lines.append(edu.end_date)
-                lines.append("")
-        
-        # Skills
-        if resume.skills:
-            lines.append("SKILLS")
-            for skill_cat in resume.skills:
-                lines.append(f"{skill_cat.category}: {', '.join(skill_cat.skills)}")
-            lines.append("")
-        
-        # Certifications
-        if resume.certifications:
-            lines.append("CERTIFICATIONS")
-            for cert in resume.certifications:
-                lines.append(f"• {cert.name} - {cert.issuer}")
-            lines.append("")
-        
-        return "\n".join(lines)
+        from app.services.resume_export import resume_blocks
+        return "\n".join(text for _, text in resume_blocks(resume))
+
 
 
 # Singleton instance
@@ -484,6 +495,8 @@ _builder_service: Optional[ResumeBuilderService] = None
 
 def get_builder_service() -> ResumeBuilderService:
     """Get singleton instance of ResumeBuilderService."""
+    if current_workspace.get():
+        return ResumeBuilderService(workspace_path() / "resumes")
     global _builder_service
     if _builder_service is None:
         _builder_service = ResumeBuilderService()

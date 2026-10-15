@@ -6,7 +6,8 @@ RESTful API endpoints for resume building and automated fixes.
 
 from typing import List, Optional, Dict, Any
 from fastapi import APIRouter, HTTPException, UploadFile, File, Form
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
+from app.services.resume_export import export_resume, download_headers
 
 from app.models.builder_models import (
     ResumeBuilder, ResumeUpdate, BuilderResponse,
@@ -49,8 +50,12 @@ async def create_resume(
             message="Resume created successfully",
             resume=resume
         )
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except (ValueError, KeyError) as e:
+        raise HTTPException(status_code=422, detail="Invalid resume data")
+    except Exception:
+        raise HTTPException(status_code=500, detail="Unable to process resume")
 
 
 @router.post("/import", response_model=BuilderResponse)
@@ -83,8 +88,12 @@ async def import_resume(
             message="Resume imported successfully",
             resume=resume_builder
         )
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except (ValueError, KeyError) as e:
+        raise HTTPException(status_code=422, detail="Invalid resume data")
+    except Exception:
+        raise HTTPException(status_code=500, detail="Unable to process resume")
 
 
 @router.get("/{resume_id}", response_model=BuilderResponse)
@@ -389,7 +398,7 @@ async def analyze_for_fixes(
             cert_items.append(CertificationItem(
                 name=cert.name,
                 issuer=cert.issuer,
-                date=cert.date,
+                date=cert.issue_date,
                 credential_id=cert.credential_id,
                 raw_text=""
             ))
@@ -433,8 +442,12 @@ async def analyze_for_fixes(
             "fixes": [fix.to_dict() for fix in fixes]
         }
         
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except (ValueError, KeyError) as e:
+        raise HTTPException(status_code=422, detail="Invalid resume data")
+    except Exception:
+        raise HTTPException(status_code=500, detail="Unable to process resume")
 
 
 @router.post("/{resume_id}/apply-fix")
@@ -485,7 +498,8 @@ async def apply_auto_fix(
             )
         
         # Update in storage
-        builder_service._in_memory_cache[resume_id] = updated_resume
+        if not builder_service.save_resume(updated_resume):
+            raise HTTPException(status_code=500, detail="Unable to save resume")
         
         return BuilderResponse(
             success=True,
@@ -493,8 +507,12 @@ async def apply_auto_fix(
             resume=updated_resume
         )
         
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except (ValueError, KeyError) as e:
+        raise HTTPException(status_code=422, detail="Invalid resume data")
+    except Exception:
+        raise HTTPException(status_code=500, detail="Unable to process resume")
 
 
 @router.post("/{resume_id}/apply-all-fixes")
@@ -548,5 +566,28 @@ async def apply_all_auto_fixes(
             errors={"details": messages} if messages else None
         )
         
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except HTTPException:
+        raise
+    except (ValueError, KeyError) as e:
+        raise HTTPException(status_code=422, detail="Invalid resume data")
+    except Exception:
+        raise HTTPException(status_code=500, detail="Unable to process resume")
+
+
+@router.post("/export/{format}")
+async def export_unsaved_resume(format: str, resume: ResumeBuilder, page_size: str = "A4"):
+    """Export the current editor content without requiring a saved document."""
+    try:
+        content, media_type = export_resume(resume, format, page_size)
+    except ValueError as error:
+        raise HTTPException(status_code=422, detail=str(error))
+    return Response(content=content, media_type=media_type,
+                    headers=download_headers(resume.title, format))
+
+
+@router.get("/{resume_id}/export/{format}")
+async def export_saved_resume(resume_id: str, format: str, page_size: str = "A4"):
+    resume = get_builder_service().get_resume(resume_id)
+    if resume is None:
+        raise HTTPException(status_code=404, detail="Resume not found")
+    return await export_unsaved_resume(format, resume, page_size)
