@@ -1,0 +1,56 @@
+# yaml-language-server: $schema=https://render.com/schema/render.yaml.json
+# PROPOSAL ONLY: applying this Blueprint creates paid compute and persistent storage.
+# Workspace: My Workspace (tea-cspuvgrtq21c739a8r9g), selected in the Dashboard.
+# Review docs/BACKEND_HOSTING.md and obtain fee approval before Deploy Blueprint.
+previews:
+  generation: "off"
+
+services:
+  - type: web
+    name: careerforge-resume-api
+    runtime: docker
+    repo: https://github.com/DocHarry22/resume-parser
+    branch: codex/career-platform-upgrade
+    region: frankfurt
+    plan: 1c-2g
+    numInstances: 1
+    autoDeployTrigger: "off"
+    previews:
+      generation: "off"
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/health
+    maxShutdownDelaySeconds: 30
+    disk:
+      name: careerforge-guest-data
+      mountPath: /var/lib/resume-parser
+      sizeGB: 1
+    envVars:
+      - key: PORT
+        value: "8000"
+      - key: HOST
+        value: 0.0.0.0
+      - key: DATA_DIR
+        value: /var/lib/resume-parser
+      - key: TAXONOMY_DIR
+        value: /app/data
+      - key: SPACY_MODEL
+        value: en_core_web_md
+      - key: WORKSPACE_SECRET
+        generateValue: true
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: COOKIE_SAMESITE
+        value: lax
+      - key: CORS_ORIGINS
+        value: '["https://resume.docheng.co.za"]'
+      - key: MAX_FILE_SIZE_MB
+        value: "10"
+      - key: RATE_LIMIT_REQUESTS
+        value: "60"
+      - key: AI_REQUESTS_PER_MINUTE
+        value: "10"
+      - key: DEBUG
+        value: "false"
+      - key: LOG_LEVEL
+        value: INFO
