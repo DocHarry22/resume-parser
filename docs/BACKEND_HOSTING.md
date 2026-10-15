@@ -6,12 +6,13 @@ Prepared 15 October 2026. **This is a proposal; no service, disk, paid AI subscr
 
 **No new paid resources exist yet.** The project maintainer will publish the reviewed configuration; you do not need to commit or push files.
 
-1. Open the [Render Dashboard](https://dashboard.render.com/) and select **My Workspace** (`tea-cspuvgrtq21c739a8r9g`).
-2. Choose **New > Blueprint** and connect **DocHarry22/resume-parser**.
-3. Enter Blueprint name **careerforge-backend**, branch **codex/career-platform-upgrade**, and **Blueprint Path** **deploy/render.candidate.yaml**.
-4. Check that the review shows exactly one **new** service, **careerforge-resume-api**, in **Frankfurt**, with **1 CPU / 2 GB RAM** (`1c-2g`, US$25/month) and a **1 GB disk** (`careerforge-guest-data`, US$0.25/month). Estimated total: **US$25.25/month before tax, usage and existing workspace fees**. Stop if the disk is missing or an existing service would change.
-5. Only after approving the displayed fee, click **Deploy Blueprint**. This creates the paid service and disk. Opening the Dashboard and reviewing the proposal does not create them.
-6. On the new Blueprint, set **Settings > Auto Sync > No**. Automatic service deploys and previews are already disabled in the proposal.
+1. Open [Review the proposed Render backend](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2FDocHarry22%2Fresume-parser%2Ftree%2Fcodex%2Fcareer-platform-upgrade). This uses Render's [official setup link](https://render.com/docs/deploy-to-render) for the reviewed branch. Sign in or connect GitHub if asked; opening the link does not activate paid resources.
+2. Select **My Workspace** (`tea-cspuvgrtq21c739a8r9g`). Confirm repository **DocHarry22/resume-parser**, branch **codex/career-platform-upgrade**, and root Blueprint **render.yaml**. Use Blueprint name **careerforge-backend** if asked.
+3. Check that the review shows exactly one **new** service, **careerforge-resume-api**, in **Frankfurt**, with **1 CPU / 2 GB RAM** (`1c-2g`, US$25/month) and a **1 GB disk** (`careerforge-guest-data`, US$0.25/month). Estimated total: **US$25.25/month before tax, usage and existing workspace fees**. Stop if the disk is missing or an existing service would change.
+4. Only after approving the displayed fee, click **Deploy Blueprint**. This creates the paid service and disk. Opening the Dashboard and reviewing the proposal does not create them.
+5. On the new Blueprint, set **Settings > Auto Sync > No**. Automatic service deploys and previews are already disabled in the proposal.
+
+If the setup link does not open the correct review, use the [Render Dashboard](https://dashboard.render.com/): **New > Blueprint > Connect DocHarry22/resume-parser**, select branch **codex/career-platform-upgrade**, set **Blueprint Path** to **render.yaml**, and name it **careerforge-backend**. Complete the same workspace, service, disk, and fee review before deploying. The setup link's handling of the slash-containing branch still needs confirmation in the signed-in Dashboard; do not continue if it selects another branch.
 
 The [validation results](qa/render-candidate-validation.json) passed. Follow the [backup runbook](BACKUP_RUNBOOK.md) and complete the acceptance checks below before accepting real user data; creating this backend does not yet connect the main website.
 
@@ -23,7 +24,7 @@ The candidate creates one new Python API in **My Workspace** (`tea-cspuvgrtq21c7
 | --- | --- |
 | Repository | `https://github.com/DocHarry22/resume-parser` |
 | Source branch | `codex/career-platform-upgrade` |
-| Blueprint path | `deploy/render.candidate.yaml` |
+| Blueprint path | `render.yaml` (repository root) |
 | Runtime | Existing root Dockerfile, Python 3.12, one Uvicorn worker |
 | Compute | `1c-2g`: 1 CPU, 2 GB RAM, US$25/month |
 | Durable disk | `careerforge-guest-data`, 1 GB, US$0.25/month |
@@ -49,7 +50,7 @@ The Hostinger plan currently serves a static frontend. Creating this backend alo
 
 ## Reviewed creation path
 
-The connected Render tool can create a web service but cannot attach its required disk, and exposes no Blueprint creation operation. It must not be used to create a paid, incomplete service. The steps above follow Render's [documented Dashboard Blueprint flow](https://render.com/docs/infrastructure-as-code) and [custom Blueprint path support](https://render.com/changelog/blueprints-now-support-custom-filenames-and-paths).
+The connected Render tool can create a web service but cannot attach its required disk, and exposes no Blueprint creation operation. It must not be used to create a paid, incomplete service. The steps above follow Render's [documented Dashboard Blueprint flow](https://render.com/docs/infrastructure-as-code). The [official setup link](https://render.com/docs/deploy-to-render) selects the branch through its repository URL and reads the root `render.yaml`; it opens a review before approval.
 
 The project maintainer handles publishing the reviewed files on `codex/career-platform-upgrade`; no merge into `main` is needed. Record the approved commit and verify the selected branch has no later unreviewed changes before activation. In the Dashboard preview, also verify the generated secret, `/var/lib/resume-parser` disk mount, and absence of validation errors or extra resources. A different fee or configuration requires review before proceeding.
 

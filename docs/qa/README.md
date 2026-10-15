@@ -27,7 +27,7 @@ These results verify the repaired branch locally. They do not satisfy every comm
 | Source release archives | PASS: exact Git content/CRC/hash/path/size/exclusion verification | ../RELEASE_PACKAGING.md |
 | Hostinger upgrade/live-domain acceptance | BLOCKED: Python host and verified backups unresolved | ../DEPLOYMENT_REPORT.md |
 | Registered accounts, live AI provider, billing | FAIL/BLOCKED: not implemented or not configured | ../rea-resume-io/parity-matrix.md |
-| Remote GitHub Actions | PASS: all four jobs on ce44344; subsequent proposal/tooling commits checked separately | [run38793500523](https://github.com/DocHarry22/resume-parser/actions/runs/38793500523) |
+| Remote GitHub Actions | PASS: all four jobs on hosting/backup commit 70887eb, including 14 backup-verifier tests | [run38797397397](https://github.com/DocHarry22/resume-parser/actions/runs/38797397397) |
 
 The final primary artifact has build ID `ZF0WlnsJ74-kmsE6Mk2tD`. Fourteen JS/CSS assets returned 200, the edition banner was absent, and its same-origin API proxy reached the intended local FastAPI fixture on port8001. A final editor rerun and six document-identity/privacy checks followed the last narrow fixes. Career/error-path checks passed on the preceding production build with the same shared API code; remote CI runs the complete suite on the final source. Failure screenshots remain as historical evidence; the final JSON and production-verification file identify passing reruns.
 

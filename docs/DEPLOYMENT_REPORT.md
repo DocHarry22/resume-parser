@@ -47,6 +47,8 @@ The user confirmed there is no verified current backup. The available Hostinger 
 
 The Render candidate passed the current official schema, invalid-plan/zero-disk negative controls and actual application-setting checks; [validation record](qa/render-candidate-validation.json). The local backup verifier passed 14 synthetic ZIP/TAR tests on Python 3.12 and 3.13 and a separate CLI inventory/selected-restore smoke check. A focused independent review found and verified fixes for nested-site provenance and truncated ZIP filenames. The scoped live Hostinger metadata inventory returned all 90 entries, including 70 regular files totaling 67,455,572 bytes; [path/size baseline](qa/hostinger-static-tree.json). This is metadata and synthetic-tool verification, not an actual backup or provider deployment.
 
+All four [remote checks on hosting/backup commit `70887eb`](https://github.com/DocHarry22/resume-parser/actions/runs/38797397397) passed: backend, frontend, browser and container. The backend log confirms 147 passed/4 skipped application tests and all 14 new backup-verifier tests. The runtime application, frontend, Dockerfile and dependency files are unchanged from `ce44344` in this proposal/tooling update.
+
 The native website settings show no automatic Git deployment, but other external CI hooks have not been ruled out. The reviewed work remains on a branch/draft PR while backend deployment, backups and remaining acceptance gates are unresolved. No new production-domain success or production login/import/export result is claimed.
 
 ### Concrete release procedure after access is restored
