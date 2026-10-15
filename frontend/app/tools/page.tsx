@@ -1,6 +1,9 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, Suspense } from "react";
+import Link from 'next/link';
+import TemplateGallery from '../components/TemplateGallery';
+import { ResumeIOBuilder } from '@/components/resumeio';
 import { useSearchParams } from "next/navigation";
 import { 
   FiUpload, FiFile, FiCheck, FiAlertCircle, FiChevronDown, FiChevronUp, 
@@ -23,18 +26,25 @@ type ScanMode = ScanModeType;
 type Industry = "default" | "engineering" | "it-software" | "finance" | "healthcare";
 
 export default function ToolsPage() {
+  return <Suspense fallback={<div className="pt-28 px-6" role="status">Loading your workspace…</div>}><ToolsContent /></Suspense>;
+}
+
+function ToolsContent() {
   const searchParams = useSearchParams();
   const view = searchParams.get("view");
 
   if (view === "scanner") {
     return <ATSScannerView />;
   }
+  if (view === 'builder' || view === 'cv-builder') return <ResumeIOBuilder />;
+  if (view === 'templates' || view === 'cv-templates') return <main className="pt-16"><TemplateGallery /></main>;
 
   return (
     <div className="min-h-screen pt-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-12">
-        <h1 className="text-3xl font-bold text-gray-900">Tools</h1>
-        <p className="text-gray-600 mt-2">Select a tool from the navigation</p>
+        <h1 className="text-3xl font-bold text-gray-900">Your career workspace</h1>
+        <p className="text-gray-600 mt-2">Choose the next step for your application.</p>
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{[['Build or import a CV','/builder'],['Check a resume','/resume-scanner'],['Write a cover letter','/cover-letter'],['My saved documents','/dashboard'],['Track job applications','/job-tracker'],['CV writing guide','/resources/guides']].map(([label,href])=><Link key={href} href={href} className="rounded-2xl border bg-white p-6 font-medium text-teal-800 hover:border-teal-400">{label} →</Link>)}</div>
       </div>
     </div>
   );
@@ -203,14 +213,14 @@ function ATSScannerView() {
             ATS Resume Scanner
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-            Beat the bots. Get instant, actionable feedback with our enterprise-grade resume analysis engine.
+            Get explainable feedback on your writing and structure. Scores guide improvements; they do not predict an employer’s hiring decision.
           </p>
           
           {/* Stats Row */}
           <div className="flex flex-wrap justify-center gap-8 mt-10">
-            <StatBadge icon={<FiCpu size={18} />} label="98% ATS Accuracy" />
-            <StatBadge icon={<FiActivity size={18} />} label="50+ Metrics Analyzed" />
-            <StatBadge icon={<FiEye size={18} />} label="Recruiter Insights" />
+            <StatBadge icon={<FiCpu size={18} />} label="Explainable criteria" />
+            <StatBadge icon={<FiActivity size={18} />} label="Structured feedback" />
+            <StatBadge icon={<FiEye size={18} />} label="Review before applying" />
           </div>
         </div>
 
