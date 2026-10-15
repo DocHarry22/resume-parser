@@ -1,7 +1,7 @@
 {
   "status": "PASS",
   "checkedAtUtc": "2026-10-15T19:55:50.2989013Z",
-  "candidate": "render.yaml",
+  "candidate": "deploy/render.paid-proposal.yaml",
   "applicationRevision": "ce44344cfcb43a7a3b9c3709f5949dcd3925e9e7",
   "schemaUrl": "https://render.com/schema/render.yaml.json",
   "schemaDialect": "https://json-schema.org/draft/2020-12/schema",
@@ -41,5 +41,8 @@
     "Primary same-origin proxy/cookie and no-cache routing",
     "Independent encrypted backup and restore test"
   ],
-  "configurationUnchangedAfterMove": true
+  "configurationUnchangedAfterMove": true,
+  "approvalStatus": "DECLINED",
+  "deploymentStatus": "NOT_ACTIVATED",
+  "archivedAtUtc": "2026-10-15T20:02:10.2081715Z"
 }

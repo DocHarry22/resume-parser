@@ -1,30 +1,22 @@
-# Proposed Render backend
+# Backend hosting: paid proposal declined
 
-Prepared 15 October 2026. **This is a proposal; no service, disk, paid AI subscription, DNS change, or production cutover has been created by this work.**
+Updated 15 October 2026. **The user declined the US$25.25/month Render proposal. It is archived for reference only and must not be activated. No new service, disk, paid AI subscription, DNS change, or production cutover has been created by this work.**
 
-## Dashboard steps
+## Current status
 
-**No new paid resources exist yet.** The project maintainer will publish the reviewed configuration; you do not need to commit or push files.
+**No new paid resources exist. Free hosting alternatives are being researched; none has been selected, configured, or deployed.** The canonical website remains `https://resume.docheng.co.za`; researching a new backend does not change it.
 
-1. Open [Review the proposed Render backend](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2FDocHarry22%2Fresume-parser%2Ftree%2Fcodex%2Fcareer-platform-upgrade). This uses Render's [official setup link](https://render.com/docs/deploy-to-render) for the reviewed branch. Sign in or connect GitHub if asked; opening the link does not activate paid resources.
-2. Select **My Workspace** (`tea-cspuvgrtq21c739a8r9g`). Confirm repository **DocHarry22/resume-parser**, branch **codex/career-platform-upgrade**, and root Blueprint **render.yaml**. Use Blueprint name **careerforge-backend** if asked.
-3. Check that the review shows exactly one **new** service, **careerforge-resume-api**, in **Frankfurt**, with **1 CPU / 2 GB RAM** (`1c-2g`, US$25/month) and a **1 GB disk** (`careerforge-guest-data`, US$0.25/month). Estimated total: **US$25.25/month before tax, usage and existing workspace fees**. Stop if the disk is missing or an existing service would change.
-4. Only after approving the displayed fee, click **Deploy Blueprint**. This creates the paid service and disk. Opening the Dashboard and reviewing the proposal does not create them.
-5. On the new Blueprint, set **Settings > Auto Sync > No**. Automatic service deploys and previews are already disabled in the proposal.
+The declined configuration is preserved at [deploy/render.paid-proposal.yaml](../deploy/render.paid-proposal.yaml). Its contents are unchanged, but the root `render.yaml` and active deployment link have been removed. The [validation record](qa/render-candidate-validation.json) records the archive path and declined status. A schema pass is not deployment approval. Follow the [backup runbook](BACKUP_RUNBOOK.md) before any future migration or cutover.
 
-If the setup link does not open the correct review, use the [Render Dashboard](https://dashboard.render.com/): **New > Blueprint > Connect DocHarry22/resume-parser**, select branch **codex/career-platform-upgrade**, set **Blueprint Path** to **render.yaml**, and name it **careerforge-backend**. Complete the same workspace, service, disk, and fee review before deploying. The setup link's handling of the slash-containing branch still needs confirmation in the signed-in Dashboard; do not continue if it selects another branch.
+The following details describe the rejected paid proposal only. It would have created one new Python API, `careerforge-resume-api`, in **My Workspace** (`tea-cspuvgrtq21c739a8r9g`). The two existing, unrelated Node services remain untouched. No backend URL has been provisioned for this proposal.
 
-The [validation results](qa/render-candidate-validation.json) passed. Follow the [backup runbook](BACKUP_RUNBOOK.md) and complete the acceptance checks below before accepting real user data; creating this backend does not yet connect the main website.
-
-The candidate creates one new Python API in **My Workspace** (`tea-cspuvgrtq21c739a8r9g`). The two existing, unrelated Node services remain outside this Blueprint. The proposed service is `careerforge-resume-api`; its actual public URL is assigned by Render after creation. Do not assume a particular available subdomain.
-
-## Configuration and monthly estimate
+## Archived configuration and declined monthly estimate
 
 | Setting | Proposal |
 | --- | --- |
 | Repository | `https://github.com/DocHarry22/resume-parser` |
 | Source branch | `codex/career-platform-upgrade` |
-| Blueprint path | `render.yaml` (repository root) |
+| Archived Blueprint path | `deploy/render.paid-proposal.yaml` |
 | Runtime | Existing root Dockerfile, Python 3.12, one Uvicorn worker |
 | Compute | `1c-2g`: 1 CPU, 2 GB RAM, US$25/month |
 | Durable disk | `careerforge-guest-data`, 1 GB, US$0.25/month |
@@ -34,7 +26,7 @@ The candidate creates one new Python API in **My Workspace** (`tea-cspuvgrtq21c7
 | Deploys / previews | Service automatic deploys off; service and Blueprint previews off |
 | AI | No provider keys or model configured; paid AI stays unavailable |
 
-**Estimated incremental base cost: US$25.25/month.** This excludes tax, currency conversion, outbound traffic, build overages, and any existing workspace subscription. It does not change the plans of existing services. Confirm the Dashboard's current charge before activation. Render lists `1c-2g` at US$25/month and persistent disks at US$0.25/GB/month on its [pricing page](https://render.com/pricing); the [compute plan reference](https://render.com/docs/compute-plans) confirms the identifier. The free compute plan cannot provide this persistent disk.
+**Declined estimated incremental base cost: US$25.25/month.** This excludes tax, currency conversion, outbound traffic, build overages, and any existing workspace subscription. No plans have been changed. Render lists `1c-2g` at US$25/month and persistent disks at US$0.25/GB/month on its [pricing page](https://render.com/pricing); the [compute plan reference](https://render.com/docs/compute-plans) confirms the identifier. The free compute plan cannot provide this persistent disk.
 
 Frankfurt is a supported [Render region](https://render.com/docs/regions). It is a reasonable initial European region for this South African project, an inference rather than a latency measurement. Region cannot be changed in place. A disk requires a single service instance and causes a short service interruption during deployments; this proposal does not provide high availability. See [persistent disk limitations](https://render.com/docs/disks).
 
@@ -48,15 +40,11 @@ Cookies are Secure, HttpOnly (set by the application), and SameSite=Lax. CORS pe
 
 The Hostinger plan currently serves a static frontend. Creating this backend alone does **not** establish the application's required same-origin `/api` route. Do not point the static Sites edition at this API or change cookies to cross-site mode as a shortcut. A separately reviewed same-origin proxy/frontend hosting configuration and end-to-end cookie verification are required before primary-site cutover. No current placeholder backend is assumed to work.
 
-## Reviewed creation path
+## Archived creation constraints
 
-The connected Render tool can create a web service but cannot attach its required disk, and exposes no Blueprint creation operation. It must not be used to create a paid, incomplete service. The steps above follow Render's [documented Dashboard Blueprint flow](https://render.com/docs/infrastructure-as-code). The [official setup link](https://render.com/docs/deploy-to-render) selects the branch through its repository URL and reads the root `render.yaml`; it opens a review before approval.
+The connected Render tool can create a web service but cannot attach its required disk, and exposes no Blueprint creation operation. The archived plan therefore required Render's [Dashboard Blueprint flow](https://render.com/docs/infrastructure-as-code), not a service-only tool call. It remains unapproved and inactive. There is no active deployment shortcut in this document.
 
-The project maintainer handles publishing the reviewed files on `codex/career-platform-upgrade`; no merge into `main` is needed. Record the approved commit and verify the selected branch has no later unreviewed changes before activation. In the Dashboard preview, also verify the generated secret, `/var/lib/resume-parser` disk mount, and absence of validation errors or extra resources. A different fee or configuration requires review before proceeding.
-
-Blueprint **Auto Sync > No** is separate from service `autoDeployTrigger: off`; service auto-deploy settings alone do not stop automatic infrastructure synchronization. Keep manual deploys and manual Blueprint sync under review.
-
-No custom branch/path Dashboard deep link is assumed. The connected tools can inspect service status, deployment logs, and metrics after an approved creation, but disk setup and the initial Blueprint review require the Dashboard with the currently exposed tool set.
+For historical context, service `autoDeployTrigger: off` does not disable Blueprint infrastructure synchronization; Blueprint **Auto Sync > No** is a separate setting. No Blueprint was created or synchronized by this work.
 
 ## Acceptance and backup gates before real traffic
 
