@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "check": "next typegen && tsc --noEmit",
-    "test": "node --test tests/resume-document.test.cjs && node scripts/test-career.cjs"
+    "test": "node --test tests/resume-document.test.cjs tests/local-export.test.cjs tests/api-config.test.cjs && node scripts/test-career.cjs"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
