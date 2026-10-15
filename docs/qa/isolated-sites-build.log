@@ -1,0 +1,52 @@
+Building Sites in isolated source copy: C:\Users\game\OneDrive\Desktop\Personal\webapps\resume_parser\.mission-work\.runtime\sites-build-E7PuAt
+ ⚠ Specified "rewrites" will not automatically work with "output: export". See more info here: https://nextjs.org/docs/messages/export-no-custom-routes
+ ⚠ Specified "headers" will not automatically work with "output: export". See more info here: https://nextjs.org/docs/messages/export-no-custom-routes
+   ▲ Next.js 15.5.28
+
+   Creating an optimized production build ...
+ ⚠ Specified "rewrites" will not automatically work with "output: export". See more info here: https://nextjs.org/docs/messages/export-no-custom-routes
+ ⚠ Specified "headers" will not automatically work with "output: export". See more info here: https://nextjs.org/docs/messages/export-no-custom-routes
+ ⚠ Specified "rewrites" will not automatically work with "output: export". See more info here: https://nextjs.org/docs/messages/export-no-custom-routes
+ ⚠ Specified "headers" will not automatically work with "output: export". See more info here: https://nextjs.org/docs/messages/export-no-custom-routes
+ ⚠ Specified "rewrites" will not automatically work with "output: export". See more info here: https://nextjs.org/docs/messages/export-no-custom-routes
+ ⚠ Specified "headers" will not automatically work with "output: export". See more info here: https://nextjs.org/docs/messages/export-no-custom-routes
+ ✓ Compiled successfully in 16.6s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/17) ...
+   Generating static pages (4/17)
+   Generating static pages (8/17)
+   Generating static pages (12/17)
+ ✓ Generating static pages (17/17)
+   Finalizing page optimization ...
+   Collecting build traces ...
+ ⚠ rewrites, redirects, and headers are not applied when exporting your application, detected (rewrites, headers). See more info here: https://nextjs.org/docs/messages/export-no-custom-routes
+   Exporting (0/2) ...
+ ✓ Exporting (2/2)
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    1.81 kB         112 kB
+├ ○ /_not-found                            995 B         104 kB
+├ ○ /builder                               201 B         170 kB
+├ ○ /cover-letter                        13.7 kB         156 kB
+├ ○ /dashboard                           7.13 kB         113 kB
+├ ○ /icon.svg                                0 B            0 B
+├ ○ /job-tracker                         5.71 kB         112 kB
+├ ○ /login                                 166 B         106 kB
+├ ○ /privacy                             2.44 kB         109 kB
+├ ○ /resources/guides                      166 B         106 kB
+├ ○ /resume-scanner                      10.4 kB         121 kB
+├ ○ /signup                                166 B         106 kB
+├ ○ /templates                            1.8 kB         112 kB
+├ ○ /tools                                 12 kB         182 kB
+└ ○ /tools/builder                         201 B         170 kB
++ First Load JS shared by all             103 kB
+  ├ chunks/17-84b161c9d0f1cc8b.js        46.5 kB
+  ├ chunks/7d58b2a6-4d7a1b70e14085e8.js  54.2 kB
+  └ other shared chunks (total)          1.99 kB
+
+
+○  (Static)  prerendered as static content
+
+{"project_id":"appgprj_6ad0d2b816bc8191b1964e7bc48c2f93","target":"C:\\Users\\game\\OneDrive\\Desktop\\Personal\\webapps\\resume_parser\\.mission-work\\sites\\careerforge","source_commit":"14dce884309c0f9dfc83d01471bedec7778f91c9","static_directory":"dist"}
+{"status":"prepared","project_id":"appgprj_6ad0d2b816bc8191b1964e7bc48c2f93","target":"C:\\Users\\game\\OneDrive\\Desktop\\Personal\\webapps\\resume_parser\\.mission-work\\sites\\careerforge\\dist","primary_build_untouched":true}

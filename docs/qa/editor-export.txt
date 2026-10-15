@@ -1,0 +1,9 @@
+QA Candidate
+qa@example.test | +27 21 555 0123
+
+PROFESSIONAL SUMMARY
+QA engineer with experience building reliable services, accessible interfaces, and clear documentation. Led practical improvements to release quality and helped teams ship dependable software.
+
+CUSTOM SECTIONS
+Licences
+Valid professional licence

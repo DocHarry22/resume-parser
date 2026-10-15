@@ -1,0 +1,31 @@
+{
+  "baseUrl": "http://127.0.0.1:4173",
+  "startedAt": "2026-10-15T19:12:08.645Z",
+  "checks": [
+    "Sites builder starts blank without invented candidate data",
+    "Sites live preview, browser autosave and reload persistence passed",
+    "Sites local TXT download passed (128 bytes)",
+    "Sites local DOCX download passed (1384 bytes)",
+    "Sites local JSON download passed (1139 bytes)",
+    "Sites PDF action invokes browser Print / Save PDF",
+    "Sites parsing/server-workspace features clearly point to primary app and preserve the draft",
+    "Sites builder desktop: no horizontal overflow",
+    "Sites gallery desktop: no horizontal overflow",
+    "Sites dashboard desktop: no horizontal overflow",
+    "Sites job tracker desktop: no horizontal overflow",
+    "Sites guarded cover letters desktop: no horizontal overflow",
+    "Sites builder mobile: no horizontal overflow",
+    "Sites preview mobile: no horizontal overflow",
+    "Sites gallery mobile: no horizontal overflow",
+    "Sites dashboard mobile: no horizontal overflow",
+    "Sites job tracker mobile: no horizontal overflow",
+    "Sites guarded cover letters mobile: no horizontal overflow",
+    "No browser runtime exceptions or backend API network requests across Sites flows"
+  ],
+  "runtimeErrors": [],
+  "consoleErrors": [],
+  "apiRequests": [],
+  "failedResponses": [],
+  "passed": true,
+  "finishedAt": "2026-10-15T19:12:24.751Z"
+}

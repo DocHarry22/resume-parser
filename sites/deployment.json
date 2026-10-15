@@ -1,0 +1,20 @@
+{
+  "project_id": "appgprj_6ad0d2b816bc8191b1964e7bc48c2f93",
+  "source": "frontend",
+  "target_directory": "sites/careerforge",
+  "static_directory": "dist",
+  "build_environment": {
+    "STATIC_EXPORT": "1",
+    "NEXT_PUBLIC_SITE_MODE": "1"
+  },
+  "canonical_domain": "https://resume.docheng.co.za/",
+  "canonical_backend_verified": false,
+  "shared_identity_verified": false,
+  "published_url": "https://docheng-careerforge.thletsholo2.chatgpt.site",
+  "audience": "owner-private",
+  "version_number": 2,
+  "version_id": "appgprj_6ad0d2b816bc8191b1964e7bc48c2f93~appgver_a9c82ecb50388191a02017eaefc46d70",
+  "deployment_id": "appgdep_6ad1266496808191955c920fff57e5d5",
+  "deployment_status": "succeeded",
+  "site_source_commit": "a907baefc954f86b9b3b95877d3df8cfaac7fd25"
+}

@@ -1,0 +1,81 @@
+{
+  "editor-export.pdf": {
+    "pages": 1,
+    "size_points": [
+      612.0,
+      792.0
+    ],
+    "all_pages_have_text": true,
+    "selectable_characters": 297,
+    "QA_CANDIDATE": true,
+    "cover_marker": false,
+    "cover_unicode": false,
+    "tail": "s to release quality and helped teams ship dependable software.\nLICENCES\nValid professional licence\n"
+  },
+  "editor-print-design.pdf": {
+    "pages": 5,
+    "size_points": [
+      612.0,
+      792.0
+    ],
+    "all_pages_have_text": true,
+    "selectable_characters": 10003,
+    "QA_CANDIDATE": false,
+    "cover_marker": false,
+    "cover_unicode": false,
+    "tail": "ested accessibility and \nhelped teams deliver dependable software.\nFINAL MULTIPAGE CONTENT SENTINEL\n"
+  },
+  "cover-current.pdf": {
+    "pages": 1,
+    "size_points": [
+      612.0,
+      792.0
+    ],
+    "all_pages_have_text": true,
+    "selectable_characters": 332,
+    "QA_CANDIDATE": false,
+    "cover_marker": true,
+    "cover_unicode": true,
+    "tail": "lcome a conversation about the role. Thank you for considering my application.\nSincerely,\nZoë Naïdø\n"
+  },
+  "editor-export.docx": {
+    "paragraphs": 6,
+    "editable": true,
+    "QA_CANDIDATE": true,
+    "cover_marker": false,
+    "cover_unicode": false,
+    "text_characters": 296
+  },
+  "local-editor-export.docx": {
+    "paragraphs": 11,
+    "editable": true,
+    "QA_CANDIDATE": false,
+    "cover_marker": false,
+    "cover_unicode": false,
+    "text_characters": 234
+  },
+  "cover-current.docx": {
+    "paragraphs": 18,
+    "editable": true,
+    "QA_CANDIDATE": false,
+    "cover_marker": true,
+    "cover_unicode": true,
+    "text_characters": 360
+  },
+  "container": {
+    "yaml_parsed": true,
+    "service": [
+      "resume-parser-api"
+    ],
+    "docker_available": false
+  },
+  "sites-resume.docx": {
+    "paragraphs": 4,
+    "editable": true,
+    "exact_name": "Sites QA Zoë",
+    "exact_name_retained": true,
+    "sentinel": "STATIC EXPORT SENTINEL",
+    "sentinel_retained": true,
+    "verification": "Opened using python-docx; paragraph added and saved to memory; original unchanged"
+  }
+}

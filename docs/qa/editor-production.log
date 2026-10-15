@@ -1,0 +1,8 @@
+PASS Blank initial document, editable title, undo and redo passed
+PASS Contact and summary update live and survive a reload
+PASS Template changes preserve content
+PASS Typography, paper selection, optional sections and independent duplication passed
+PASS Mobile and tablet edit/preview controls fit the viewport
+PASS PDF, editable DOCX, TXT and complete JSON backup download
+PASS Selected preview design generates a multipage print PDF without a one-page crop
+PASS TXT import populates editable fields, preserves the earlier document and restores after reload

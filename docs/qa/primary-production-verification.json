@@ -1,0 +1,17 @@
+{
+  "build_id": "ZF0WlnsJ74-kmsE6Mk2tD",
+  "source_commit": "14dce88",
+  "editor_groups_passed": 8,
+  "session_isolation_privacy_checks_passed": 6,
+  "runtime_errors": [],
+  "console_errors": [],
+  "failed_requests": [],
+  "verified_assets": 14,
+  "styled_pdf_pages": 5,
+  "styled_pdf_nonblank_pages": 5,
+  "final_content_retained": true,
+  "api_pdf_selectable_text": true,
+  "api_docx_editable": true,
+  "production_server": "http://127.0.0.1:3000",
+  "note": "Final local production build after the document-pointer and legacy privacy fixes. Earlier public-route smoke and career suites passed; they were not broadly repeated for these scoped fixes."
+}

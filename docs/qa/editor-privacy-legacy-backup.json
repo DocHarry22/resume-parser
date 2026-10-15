@@ -1,0 +1,225 @@
+{
+  "resume_studio_documents_v1": [
+    {
+      "id": "15e30b07-31bd-48d2-ae08-a0f19565c1c8",
+      "resume": {
+        "title": "Untitled resume",
+        "contact": {
+          "full_name": "QA New Applicant D",
+          "email": "new.d@example.test"
+        },
+        "summary": {
+          "summary": ""
+        },
+        "experience": [],
+        "education": [],
+        "skills": [],
+        "certifications": [],
+        "projects": [],
+        "achievements": [],
+        "languages": [],
+        "volunteer": [],
+        "publications": [],
+        "custom_sections": {}
+      },
+      "template": "modern",
+      "colorTheme": "blue",
+      "design": {
+        "font": "sans",
+        "fontSize": 12,
+        "lineHeight": 1.5,
+        "spacing": 24,
+        "pageSize": "A4",
+        "sectionOrder": [
+          "summary",
+          "experience",
+          "education",
+          "skills",
+          "projects",
+          "certifications",
+          "languages",
+          "achievements",
+          "volunteer",
+          "publications",
+          "custom"
+        ],
+        "hiddenSections": []
+      },
+      "updatedAt": "2026-10-15T19:09:06.430Z"
+    },
+    {
+      "id": "1de82bf3-13cb-4fce-bacb-23ef5059b10d",
+      "resume": {
+        "title": "Restored applicant B",
+        "contact": {
+          "full_name": "QA Restored Applicant B",
+          "email": "restored.b@example.test",
+          "phone": "",
+          "location": "",
+          "linkedin": "",
+          "github": "",
+          "website": "",
+          "photo": ""
+        },
+        "summary": {
+          "summary": "A different applicant and an independently restored backup."
+        },
+        "experience": [],
+        "education": [],
+        "skills": [],
+        "certifications": [],
+        "projects": [],
+        "achievements": [],
+        "languages": [],
+        "volunteer": [],
+        "publications": [],
+        "custom_sections": {}
+      },
+      "template": "modern",
+      "colorTheme": "blue",
+      "design": {
+        "font": "sans",
+        "fontSize": 12,
+        "lineHeight": 1.5,
+        "spacing": 24,
+        "pageSize": "A4",
+        "sectionOrder": [
+          "summary",
+          "experience",
+          "education",
+          "skills",
+          "projects",
+          "certifications",
+          "languages",
+          "achievements",
+          "volunteer",
+          "publications",
+          "custom"
+        ],
+        "hiddenSections": []
+      },
+      "updatedAt": "2026-10-15T19:09:04.920Z"
+    },
+    {
+      "id": "d71c9434-7a55-4228-89e4-a857b37ccf07",
+      "resume": {
+        "title": "Imported Resume",
+        "contact": {
+          "full_name": "",
+          "email": "original.a@example.test",
+          "phone": "",
+          "location": "",
+          "linkedin": "",
+          "github": "",
+          "website": "original.a@example.test",
+          "photo": ""
+        },
+        "summary": {
+          "summary": "Original applicant A summary that must remain unchanged."
+        },
+        "experience": [],
+        "education": [],
+        "skills": [
+          {
+            "category": "Skills",
+            "skills": [
+              "Python",
+              "Testing"
+            ]
+          }
+        ],
+        "certifications": [],
+        "projects": [],
+        "achievements": [],
+        "languages": [],
+        "volunteer": [],
+        "publications": [],
+        "custom_sections": {}
+      },
+      "template": "modern",
+      "colorTheme": "blue",
+      "design": {
+        "font": "sans",
+        "fontSize": 12,
+        "lineHeight": 1.5,
+        "spacing": 24,
+        "pageSize": "A4",
+        "sectionOrder": [
+          "summary",
+          "experience",
+          "education",
+          "skills",
+          "projects",
+          "certifications",
+          "languages",
+          "achievements",
+          "volunteer",
+          "publications",
+          "custom"
+        ],
+        "hiddenSections": []
+      },
+      "updatedAt": "2026-10-15T19:09:04.171Z"
+    },
+    {
+      "id": "b60402b4-7755-424e-b22c-7a7a2333675d",
+      "resume": {
+        "title": "Untitled resume",
+        "contact": {
+          "full_name": "",
+          "email": "",
+          "phone": "",
+          "location": "",
+          "linkedin": "",
+          "github": "",
+          "website": "",
+          "photo": ""
+        },
+        "summary": {
+          "summary": ""
+        },
+        "experience": [],
+        "education": [],
+        "skills": [],
+        "certifications": [],
+        "projects": [],
+        "achievements": [],
+        "languages": [],
+        "volunteer": [],
+        "publications": [],
+        "custom_sections": {}
+      },
+      "template": "modern",
+      "colorTheme": "blue",
+      "design": {
+        "font": "sans",
+        "fontSize": 12,
+        "lineHeight": 1.5,
+        "spacing": 24,
+        "pageSize": "A4",
+        "sectionOrder": [
+          "summary",
+          "experience",
+          "education",
+          "skills",
+          "projects",
+          "certifications",
+          "languages",
+          "achievements",
+          "volunteer",
+          "publications",
+          "custom"
+        ],
+        "hiddenSections": []
+      },
+      "updatedAt": "2026-10-15T19:09:03.868Z"
+    }
+  ],
+  "resume_duplicate": {
+    "title": "Legacy QA duplicate",
+    "contact": {
+      "full_name": "Legacy QA Applicant",
+      "email": "legacy.qa@example.test"
+    }
+  }
+}
