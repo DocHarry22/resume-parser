@@ -4,6 +4,7 @@ This is durable guest access, not a registration/login system. A workspace is
 accessible only while its signed browser cookie is available.
 """
 import hashlib
+import asyncio
 import hmac
 import os
 import re
@@ -118,6 +119,9 @@ class WorkspaceMiddleware(BaseHTTPMiddleware):
             except ValueError:
                 return JSONResponse({"detail": "Invalid content length"}, status_code=400)
         if request.url.path.startswith("/api/exports/"):
+            if settings.storage_mode != "local":
+                return JSONResponse({"detail": "Current-document processing is available in browser-local mode."},
+                                    status_code=503, headers={"Cache-Control": "no-store"})
             origin = request.headers.get("origin")
             if origin and origin not in settings.cors_origins:
                 return JSONResponse({"detail": "Untrusted request origin"}, status_code=403)
@@ -193,8 +197,16 @@ class RequestBodyLimitMiddleware:
         limit = ((settings.max_file_size_mb + 1) * 1024 * 1024
                  if scope["path"] in upload_paths else (256 * 1024 if settings.storage_mode == "local" else 1024 * 1024))
         body = bytearray()
+        deadline = (asyncio.get_running_loop().time() + settings.request_body_timeout_seconds
+                    if settings.request_body_timeout_seconds else None)
         while True:
-            message = await receive()
+            try:
+                message = (await asyncio.wait_for(receive(), max(0.001, deadline - asyncio.get_running_loop().time()))
+                           if deadline is not None else await receive())
+            except asyncio.TimeoutError:
+                response = JSONResponse({"detail": "The upload took too long. Please try again."}, status_code=408,
+                                        headers={"Connection": "close", "Cache-Control": "no-store"})
+                return await response(scope, receive, send)
             if message["type"] == "http.disconnect":
                 return
             chunk = message.get("body", b"")

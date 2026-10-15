@@ -70,6 +70,13 @@ def read_pdf(file: bytes) -> dict:
         full_text_parts = []
         page_count = doc.page_count
         raw_text_found = False  # Track if we found any text at all
+        extracted_characters = 0
+        def bound_text(text):
+            nonlocal extracted_characters
+            extracted_characters += len(text)
+            if extracted_characters > settings.max_extracted_characters:
+                doc.close()
+                raise ValueError("The document contains too much text. Import a shorter resume.")
         
         # Process each page
         for page in doc:
@@ -101,6 +108,7 @@ def read_pdf(file: bytes) -> dict:
                 
                 # We found some text
                 raw_text_found = True
+                bound_text(text)
                 
                 # Filter out page numbers (standalone numbers) - be lenient
                 if _is_page_number(text):
@@ -135,8 +143,10 @@ def read_pdf(file: bytes) -> dict:
             stream = BytesIO(file)
             doc = fitz.open(stream=stream, filetype="pdf")
             simple_text_parts = []
+            extracted_characters = 0
             for page in doc:
                 text = page.get_text("text")
+                bound_text(text)
                 if text and text.strip():
                     simple_text_parts.append(text.strip())
             doc.close()
@@ -150,8 +160,10 @@ def read_pdf(file: bytes) -> dict:
             stream = BytesIO(file)
             doc = fitz.open(stream=stream, filetype="pdf")
             fallback_parts = []
+            extracted_characters = 0
             for page in doc:
                 text = page.get_text()
+                bound_text(text)
                 if text and text.strip():
                     fallback_parts.append(text.strip())
             doc.close()

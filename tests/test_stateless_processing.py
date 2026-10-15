@@ -154,6 +154,70 @@ def test_pdf_pages_and_docx_expansion_are_bounded_before_parsing(local_app, monk
     assert result.status_code == 422 and "too large to extract" in result.text
 
 
+def test_job_description_cannot_bypass_text_limit_before_nlp(local_app, monkeypatch):
+    from app.api import routes
+    local_app.include_router(routes.router, prefix="/api")
+    monkeypatch.setattr(settings, "max_extracted_characters", 1000)
+    def forbidden_parse(*args, **kwargs):
+        raise AssertionError("Oversized job description reached NLP")
+    monkeypatch.setattr(routes.parsing_service, "parse_resume", forbidden_parse)
+    client = TestClient(local_app)
+    for path in ("score-resume", "parse-and-score"):
+        result = client.post(f"/api/{path}", files={"file": ("cv.txt", b"Alex Morgan\nPython engineer", "text/plain")},
+                             data={"job_description": "x" * 1001})
+        assert result.status_code == 413 and "job description is too long" in result.text
+
+
+def test_numeric_custom_entries_cannot_bypass_export_allocation_bounds(local_app, monkeypatch):
+    def forbidden_export(*args, **kwargs):
+        raise AssertionError("Unbounded structure reached the rendering engine")
+    monkeypatch.setattr("app.api.stateless_routes.export_resume", forbidden_export)
+    client = TestClient(local_app)
+    for values in ([0] * 100_000, [True] * 2001, [""] * 2001):
+        response = client.post("/api/exports/resume/pdf", json={"custom_sections": {"values": values}})
+        assert response.status_code == 413
+
+
+def test_pdf_text_limit_applies_before_nlp(local_app, monkeypatch):
+    monkeypatch.setattr(settings, "max_extracted_characters", 1000)
+    def forbidden_parse(*args, **kwargs):
+        raise AssertionError("Overlong PDF reached NLP")
+    monkeypatch.setattr("app.services.parsing_service.ParsingService.parse_resume", forbidden_parse)
+    with fitz.open() as document:
+        page = document.new_page()
+        page.insert_textbox(fitz.Rect(10, 10, 580, 820), "Resume content " * 120, fontsize=6)
+        response = TestClient(local_app).post("/api/exports/resume/import", files={"file": ("long.pdf", document.tobytes(), "application/pdf")})
+    assert response.status_code == 422 and "too much text" in response.text
+
+
+def test_stateless_routes_require_the_explicit_local_profile(local_app, monkeypatch):
+    monkeypatch.setattr(settings, "storage_mode", "guest")
+    def forbidden_export(*args, **kwargs):
+        raise AssertionError("Local-only processing exposed on the guest profile")
+    monkeypatch.setattr("app.api.stateless_routes.export_resume", forbidden_export)
+    response = TestClient(local_app).post("/api/exports/resume/pdf", json={})
+    assert response.status_code == 503 and "set-cookie" not in response.headers
+
+
+@pytest.mark.asyncio
+async def test_incomplete_upload_times_out_and_releases_processing_slot(monkeypatch):
+    monkeypatch.setattr(settings, "max_concurrent_processing", 1)
+    monkeypatch.setattr(settings, "request_body_timeout_seconds", 0.02)
+    app = FastAPI()
+    app.add_middleware(RequestBodyLimitMiddleware)
+    app.add_middleware(ProcessingLimitMiddleware)
+    @app.post("/api/job")
+    async def job():
+        return {"complete": True}
+    async def slow_body():
+        await asyncio.sleep(0.2)
+        yield b"{}"
+    async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://test") as client:
+        response = await client.post("/api/job", content=slow_body())
+        assert response.status_code == 408
+        assert (await client.post("/api/job", json={})).status_code == 200
+
+
 @pytest.mark.asyncio
 async def test_busy_processor_rejects_second_job_but_allows_health_and_recovers(monkeypatch):
     monkeypatch.setattr(settings, "max_concurrent_processing", 1)

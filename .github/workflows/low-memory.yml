@@ -49,6 +49,7 @@ jobs:
             --publish 127.0.0.1:18002:8000 \
             --env STORAGE_MODE=local --env COOKIE_SECURE=false --env MAX_FILE_SIZE_MB=2 --env MAX_EXTRACTED_CHARACTERS=60000 \
             --env MAX_CONCURRENT_PROCESSING=1 --env MAX_PDF_PAGES=20 --env MAX_DOCX_EXPANDED_MB=8 \
+            --env REQUEST_BODY_TIMEOUT_SECONDS=30 \
             --env OMP_NUM_THREADS=1 --env OPENBLAS_NUM_THREADS=1 --env MKL_NUM_THREADS=1 --env NUMEXPR_NUM_THREADS=1 \
             --read-only --tmpfs /tmp:rw,noexec,nosuid,size=32m \
             --tmpfs /var/lib/resume-parser:rw,noexec,nosuid,uid=10001,gid=10001,mode=0700,size=16m \

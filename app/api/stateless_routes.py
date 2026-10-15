@@ -5,7 +5,7 @@ from starlette.concurrency import run_in_threadpool
 from app.core.config import settings
 from app.models.builder_models import ResumeBuilder
 from app.models.cover_letter_models import AIContentRequest, CoverLetter
-from app.routers.cover_letter_router import TEMPLATES, export_cover_letter_data, generate_content
+from app.routers.cover_letter_router import TEMPLATES, generate_content
 from app.services.builder_service import ResumeBuilderService
 from app.services.parsing_service import ParsingService
 from app.services.resume_export import download_headers, export_resume
@@ -15,14 +15,19 @@ router = APIRouter(prefix="/exports", tags=["Current-document processing"])
 
 
 def _bounded_content(value):
+    nodes = 0
     def size(item):
+        nonlocal nodes
+        nodes += 1
+        if nodes > 2000:
+            raise HTTPException(status_code=413, detail="This document has too many entries for the processor. Split it into shorter documents.")
         if isinstance(item, str):
             return len(item)
         if isinstance(item, dict):
             return sum(len(str(key)) + size(child) for key, child in item.items())
         if isinstance(item, (list, tuple)):
             return sum(size(child) for child in item)
-        return 0
+        return 0 if item is None else len(str(item))
     if size(value.model_dump(mode="json")) > settings.max_extracted_characters:
         raise HTTPException(status_code=413, detail="Document content is too large for this processor. Shorten it before exporting.")
 
@@ -72,4 +77,20 @@ async def guided_letter(request: AIContentRequest):
 @router.post("/cover-letter/{format}")
 async def export_current_letter(format: str, letter: CoverLetter):
     _bounded_content(letter)
-    return await export_cover_letter_data(letter, format)
+    try:
+        # The existing async wrapper performs synchronous rendering; run it off
+        # the request loop so health and busy responses remain responsive.
+        from app.services.cover_letter_export import generate_pdf, generate_docx, generate_txt
+        from app.models.cover_letter_models import CoverLetterExportRequest
+        request = CoverLetterExportRequest(format=format)
+        if format == "pdf":
+            content, media_type = await run_in_threadpool(generate_pdf, letter, request), "application/pdf"
+        elif format == "docx":
+            content, media_type = await run_in_threadpool(generate_docx, letter, request), "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        elif format == "txt":
+            content, media_type = generate_txt(letter), "text/plain; charset=utf-8"
+        else:
+            raise HTTPException(status_code=422, detail="Supported formats: pdf, docx, txt")
+        return Response(content, media_type=media_type, headers=download_headers(letter.title, format))
+    except ValueError:
+        raise HTTPException(status_code=422, detail="The letter contains unsupported characters or formatting. Check its text or download TXT.")

@@ -5,6 +5,7 @@ from zipfile import ZipFile, BadZipFile
 import logging
 
 from fastapi import UploadFile, HTTPException
+from starlette.concurrency import run_in_threadpool
 from app.core.config import settings
 from app.utils.pdf_reader import read_pdf
 from app.utils.docx_reader import DOCXReader
@@ -77,6 +78,8 @@ async def load_document(upload_file: UploadFile) -> RawDocument:
     if not data:
         raise HTTPException(status_code=400, detail="File is empty")
     try:
+        if settings.storage_mode == "local":
+            return await run_in_threadpool(_extract, bytes(data), extension)
         return _extract(bytes(data), extension)
     except ValueError as error:
         raise HTTPException(status_code=422, detail=str(error))

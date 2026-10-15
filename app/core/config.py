@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     max_pdf_pages: int = Field(default=100, ge=1, le=100)
     max_docx_expanded_mb: int = Field(default=100, ge=1, le=100)
     max_concurrent_processing: int = Field(default=0, ge=0, le=20)
+    request_body_timeout_seconds: float = Field(default=0, ge=0, le=180)
     # Local mode processes uploads/exports without saving personal documents.
     storage_mode: Literal["guest", "local"] = "guest"
 
