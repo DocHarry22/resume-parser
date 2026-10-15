@@ -14,7 +14,7 @@ Pop-Location
 
 py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -m spacy download en_core_web_md
+.\.venv\Scripts\python.exe -m pip install "https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.7.1/en_core_web_md-3.7.1-py3-none-any.whl#sha256=6a0f857a2b4d219c6fa17d455f82430b365bf53171a2d919b9376e5dc9be032e"
 ```
 
 The browser scripts resolve the project's pinned Playwright package from `frontend/node_modules` first. The original Codex bundled runtime is a fallback for the development workstation. `PLAYWRIGHT_MODULE` can explicitly select another installed Playwright module. The default browser channel is Microsoft Edge (`msedge`); set `PLAYWRIGHT_CHANNEL=chromium` to use the browser installed above.

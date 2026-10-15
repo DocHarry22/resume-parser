@@ -65,7 +65,7 @@ pip install -r requirements.txt
 
 4. **Download spaCy language model**:
 ```bash
-python -m spacy download en_core_web_md
+python -m pip install "https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.7.1/en_core_web_md-3.7.1-py3-none-any.whl#sha256=6a0f857a2b4d219c6fa17d455f82430b365bf53171a2d919b9376e5dc9be032e"
 ```
 
 5. **Set up environment variables** (optional):

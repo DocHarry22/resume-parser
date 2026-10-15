@@ -25,8 +25,8 @@ Guest storage is not an account system. No registration, email verification, pas
 - Editor, career, error-path, responsive and Sites browser checks are documented with JSON, screenshots and actual downloads in [QA instructions](qa/RUNNING.md). Final production-mode rerun status is recorded in the QA summary.
 - PDF/DOCX files were independently parsed for selectable text, editable paragraphs, Unicode and complete multipage content. [Export verification](qa/independent-export-verification.json).
 - A static Sites build originally overwrote the primary Next intermediate output. That artifact collision caused browser failures. `scripts/build-sites.cjs` now builds in a separate physical directory; the main build was rebuilt for final reruns. Do not interpret the initial failed runs as a passing release check.
-- GitHub Actions configuration is included. Local checks do not imply a green remote Actions run.
-- A Docker CI job now builds the backend image and checks model availability, an isolated writable volume, guest separation, parsing, exports, deletion and restart persistence. Its smoke script passed against the local API, but actual Docker/image/restart verification remains pending the remote run.
+- GitHub Actions configuration is included. Local checks do not imply a green remote Actions run. Current checks are linked from [PR2](https://github.com/DocHarry22/resume-parser/pull/2).
+- Remote Docker verification **passed** on source `6740b2ba1a935e85627c6b5b444a274cbb223479`, run `38792993537`: image build, statistical model vectors/NER, non-root runtime, an isolated writable volume, guest separation, real parsing/exports, deletion and restart persistence. The backend/browser setup jobs initially failed because spaCy's model downloader constructed an invalid URL; their workflow and setup documentation now use the pinned/checksummed wheel that passed in Docker. Consult the PR for the rerun status.
 
 ## Hostinger: inspected; deployment BLOCKED, live site unchanged
 
@@ -47,7 +47,7 @@ The native website settings show no automatic Git deployment, but other external
 ### Concrete release procedure after access is restored
 
 1. Inspect the existing Hostinger app, connected repo/branch, build/start commands, SSL, API host and data paths. Back up its configuration and durable document data; test restoration to a separate location. Preserve old shared documents until ownership is mapped.
-2. Confirm a Python 3.12 host with sufficient memory for `en_core_web_md`, DejaVu fonts, persistent disk and an HTTPS reverse proxy. The included non-root `Dockerfile`/`docker-compose.yml` describes a single-service backend with a named data volume; Docker was unavailable locally, so its image build remains unverified.
+2. Confirm a Python 3.12 host with sufficient memory for `en_core_web_md`, DejaVu fonts, persistent disk and an HTTPS reverse proxy. The included non-root `Dockerfile`/`docker-compose.yml` describes a single-service backend with a named data volume. Its image and disposable Docker runtime passed remote CI; a Compose deployment and provider-specific volume permissions still need verification on the chosen host.
 3. Set a stable private `WORKSPACE_SECRET`, durable `DATA_DIR`, exact `CORS_ORIGINS` and `COOKIE_SECURE=true`. Configure AI variables only for an approved provider. Review `.env.example`; do not place secrets in browser variables or Git.
 4. Build frontend dependencies from the lockfile. Set `API_PROXY_TARGET` to the verified private backend **before** `next build`; this rewrite is compiled into the build. Run the frontend with the supported Node runtime and verify proxy cookies/HTTPS. The local QA build points at `127.0.0.1:8001` and is not an artifact to upload blindly to Hostinger.
 5. Run the documented suites with isolated fixtures, review the PR/remote checks, merge only after deployment behavior and rollback are confirmed, then deploy using the verified existing mechanism.
@@ -92,4 +92,15 @@ Version2 is now the current private publication. It includes the final guest boo
 - Archive content hash: `sha256:0e3d501fc7be1ab22ec1bf96042f74349d2f2ca2c6fb1706e37bdc89deec1430`.
 - Published URL remains https://docheng-careerforge.thletsholo2.chatgpt.site.
 
-GitHub PR references: pending final tool-confirmed results.
+## GitHub review and source packages
+
+Pushed branch: `codex/career-platform-upgrade`. [Draft PR2](https://github.com/DocHarry22/resume-parser/pull/2) is attached to this Codex chat. It remains unmerged while deployment and acceptance gates are unresolved. Use that PR's Checks tab for current remote CI results; the evidence above records exact completed runs.
+
+Verified source packages were generated from `6740b2ba1a935e85627c6b5b444a274cbb223479`, before the final workflow/documentation-only follow-up. Later report changes do not alter these frozen archive contents.
+
+| Archive | Size | SHA256 |
+|---|---|---|
+| `careerforge-frontend-source-6740b2ba1a93.zip` | 255,015 bytes; 82 files | `b50df15db8fd95d2dd75d0a937c2e411f700b2b0d1f0b679b58a1a3e109530cb` |
+| `careerforge-backend-source-6740b2ba1a93.zip` | 77,538 bytes; 41 files | `615a993d11b6a24ca6c1f76c41a4f4f2376a5e10ae00e4d4afc5cb525dcca92d` |
+
+Local delivery directory: `.runtime/release/6740b2ba1a935e85627c6b5b444a274cbb223479/`. It contains the archives, full per-file manifest, SHA256SUMS and independent `verification.json`. Every ZIP entry matched its committed Git blob, passed CRC/hash verification and required-path checks, and excluded real environment files, private documents, build/dependency folders and old sample PDFs. Both raw and compressed sizes meet the hosting archive bound. These are source artifacts; the target host must build them with verified configuration. [Exact packaging and deployment instructions](RELEASE_PACKAGING.md).

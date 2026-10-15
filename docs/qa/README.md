@@ -7,6 +7,7 @@ These results verify the repaired branch locally. They do not satisfy every comm
 | Backend regression suite | PASS: 147 passed, 4 explicitly skipped; 6 dependency warnings | backend-report.md |
 | Backend compile/dependency consistency | PASS | backend-report.md |
 | Installed backend vulnerability audit | PASS: 87 dependencies, zero known advisories | backend-dependency-audit.json |
+| Backend Docker image/runtime/restart | PASS on remote CI source6740b2b; model, persistence, exports and isolation verified | container-ci-verification.json |
 | Frontend types and primary production build | PASS after guest-session fix | frontend-build.log, primary-assets.json |
 | Frontend Node regression tests | PASS: 12 tests, plus career validation/export checks | editor-report.md, backend-report.md, frontend/tests |
 | Production dependency audit | PASS: zero known advisories | frontend-runtime-audit.json |
@@ -21,6 +22,7 @@ These results verify the repaired branch locally. They do not satisfy every comm
 | Sites local static behavior | PASS: 19 checks; zero API calls and zero browser errors | sites-results.json |
 | Native Sites publication | PASS: saved version2, owner-private, succeeded | ../../sites/deployment.json |
 | Hostinger inspection | PASS within recorded read-only scope | hostinger-inspection.json |
+| Source release archives | PASS: exact Git content/CRC/hash/path/size/exclusion verification | ../RELEASE_PACKAGING.md |
 | Hostinger upgrade/live-domain acceptance | BLOCKED: Python host and verified backups unresolved | ../DEPLOYMENT_REPORT.md |
 | Registered accounts, live AI provider, billing | FAIL/BLOCKED: not implemented or not configured | ../rea-resume-io/parity-matrix.md |
 | Remote GitHub Actions | See actual PR checks; local results are not remote CI | ../DEPLOYMENT_REPORT.md |

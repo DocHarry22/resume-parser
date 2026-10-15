@@ -16,7 +16,7 @@ jobs:
           python-version: '3.12'
           cache: pip
       - run: python -m pip install -r requirements.txt
-      - run: python -m spacy download en_core_web_md
+      - run: python -m pip install "https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.7.1/en_core_web_md-3.7.1-py3-none-any.whl#sha256=6a0f857a2b4d219c6fa17d455f82430b365bf53171a2d919b9376e5dc9be032e"
       - run: python -m pytest tests -q
       - run: python -m compileall -q app
   frontend:
@@ -57,7 +57,7 @@ jobs:
           cache: npm
           cache-dependency-path: frontend/package-lock.json
       - run: python -m pip install -r requirements.txt
-      - run: python -m spacy download en_core_web_md
+      - run: python -m pip install "https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.7.1/en_core_web_md-3.7.1-py3-none-any.whl#sha256=6a0f857a2b4d219c6fa17d455f82430b365bf53171a2d919b9376e5dc9be032e"
       - run: npm ci
         working-directory: frontend
       - run: npx playwright install --with-deps chromium
