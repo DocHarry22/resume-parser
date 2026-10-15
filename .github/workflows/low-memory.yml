@@ -1,0 +1,77 @@
+name: Optional low-memory model profile
+on:
+  pull_request:
+    paths:
+      - Dockerfile
+      - deploy/Dockerfile.free
+      - requirements.txt
+      - 'app/**'
+      - scripts/low-memory-smoke.py
+      - .github/workflows/low-memory.yml
+  push:
+    branches: [main]
+    paths:
+      - Dockerfile
+      - deploy/Dockerfile.free
+      - requirements.txt
+      - 'app/**'
+      - scripts/low-memory-smoke.py
+      - .github/workflows/low-memory.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  small-model-512mb:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      CONTAINER_NAME: careerforge-low-memory-api-${{ github.run_id }}-${{ github.run_attempt }}
+      IMAGE_NAME: careerforge-small-model-ci:${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Guard the medium default and identical standalone free recipe
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          primary = Path('Dockerfile').read_bytes()
+          assert primary.count(b'ARG SPACY_MODEL=en_core_web_md') == 1
+          assert Path('deploy/Dockerfile.free').read_bytes() == primary.replace(b'ARG SPACY_MODEL=en_core_web_md', b'ARG SPACY_MODEL=en_core_web_sm', 1)
+          assert b'"--port", "8000", "--workers", "1"' in primary
+          PY
+      - name: Build the optional small-model image without publishing
+        run: docker build --file deploy/Dockerfile.free --tag "$IMAGE_NAME" .
+      - name: Start stateless fixture with hard free-instance resource limits
+        run: |
+          docker run --detach --name "$CONTAINER_NAME" --label careerforge-low-memory-run="${{ github.run_id }}-${{ github.run_attempt }}" \
+            --publish 127.0.0.1:18002:8000 \
+            --env STORAGE_MODE=local --env COOKIE_SECURE=false --env MAX_FILE_SIZE_MB=2 --env MAX_EXTRACTED_CHARACTERS=60000 \
+            --env MAX_CONCURRENT_PROCESSING=1 --env MAX_PDF_PAGES=20 --env MAX_DOCX_EXPANDED_MB=8 \
+            --env OMP_NUM_THREADS=1 --env OPENBLAS_NUM_THREADS=1 --env MKL_NUM_THREADS=1 --env NUMEXPR_NUM_THREADS=1 \
+            --read-only --tmpfs /tmp:rw,noexec,nosuid,size=32m \
+            --tmpfs /var/lib/resume-parser:rw,noexec,nosuid,uid=10001,gid=10001,mode=0700,size=16m \
+            --cap-drop ALL --security-opt no-new-privileges:true --pids-limit 64 \
+            --memory 512m --memory-swap 512m --cpus 0.1 "$IMAGE_NAME"
+      - name: Check real parsing, scoring, imports, exports, NER and cgroup memory peak
+        run: python scripts/low-memory-smoke.py --container "$CONTAINER_NAME" --output /tmp/low-memory-evidence/results.json
+      - name: Collect diagnostics without claiming production validation
+        if: always()
+        run: |
+          mkdir -p /tmp/low-memory-evidence
+          docker logs "$CONTAINER_NAME" > /tmp/low-memory-evidence/backend.log 2>&1 || true
+          docker inspect --format '{{json .State}}' "$CONTAINER_NAME" > /tmp/low-memory-evidence/state.json 2>&1 || true
+          docker stats --no-stream --format '{{json .}}' "$CONTAINER_NAME" > /tmp/low-memory-evidence/stats.json 2>&1 || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: small-model-512mb-evidence
+          path: /tmp/low-memory-evidence/
+      - name: Remove only this run's disposable container
+        if: always()
+        run: |
+          expected="${{ github.run_id }}-${{ github.run_attempt }}"
+          if [ "$(docker inspect --format '{{index .Config.Labels "careerforge-low-memory-run"}}' "$CONTAINER_NAME" 2>/dev/null)" = "$expected" ]; then
+            docker rm --force "$CONTAINER_NAME"
+          fi

@@ -1,0 +1,43 @@
+{
+  "scope": "Windows local process only; not a Linux container limit or throughput test",
+  "command": "C:\\Users\\game\\OneDrive\\Desktop\\Personal\\webapps\\resume_parser\\.mission-work\\.backend-venv\\Scripts\\python.exe scripts/low-memory-smoke.py --windows-probe",
+  "sourceRevision": "ef4f24f99c84c83b12b35b3828b55153d75a7c6f",
+  "model": "core_web_md",
+  "modelVersion": "3.7.1",
+  "modelVectorsShape": [
+    20000,
+    300
+  ],
+  "samples": [
+    {
+      "stage": "fresh script process",
+      "rssMiB": 25.2,
+      "peakRssMiB": 25.2,
+      "privateCommitMiB": 16.0
+    },
+    {
+      "stage": "app imports and model loaded",
+      "rssMiB": 358.2,
+      "peakRssMiB": 369.2,
+      "privateCommitMiB": 574.3
+    },
+    {
+      "stage": "after 11,000-character synthetic text",
+      "rssMiB": 364.6,
+      "peakRssMiB": 395.7,
+      "privateCommitMiB": 592.3
+    },
+    {
+      "stage": "after 55,000-character synthetic text",
+      "rssMiB": 371.4,
+      "peakRssMiB": 523.7,
+      "privateCommitMiB": 596.7
+    }
+  ],
+  "fixture": {
+    "phrase": "Alex Morgan builds Python services at Example Limited. ",
+    "repetitions": 1000,
+    "largeCharacters": 55000,
+    "privateDataUsed": false
+  }
+}
