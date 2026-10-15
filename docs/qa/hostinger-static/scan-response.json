@@ -1,0 +1,60 @@
+{
+  "resume": {
+    "name": null,
+    "contact": {
+      "email": "static-qa@example.test",
+      "phone": null,
+      "linkedin": null,
+      "github": null,
+      "website": "example.test",
+      "location": null
+    },
+    "summary": null,
+    "experience": [],
+    "education": [],
+    "skills": [],
+    "projects": [],
+    "certifications": [],
+    "languages": [],
+    "raw_text": "STATIC LIVE CURRENT EXPORT\nstatic-qa@example.test"
+  },
+  "score": {
+    "overall": 37.6,
+    "ats_compliance": 10,
+    "readability": 100,
+    "layout": 42,
+    "experience": null,
+    "skills": null,
+    "job_match": null,
+    "comments": [
+      "Include work experience to strengthen your resume",
+      "Add a skills section with relevant keywords",
+      "Resume is too short - add more detail to experience",
+      "Add a professional summary at the top of your resume"
+    ],
+    "flags": [
+      "⚠️ ATS cannot parse images - use text-based PDF",
+      "⚠️ Missing phone number"
+    ],
+    "mode": "basic",
+    "industry": null,
+    "detailed_metrics": {
+      "readability": {
+        "flesch_reading_ease": 54.7,
+        "flesch_kincaid_grade": 6.6,
+        "avg_words_per_sentence": 4
+      },
+      "layout": {
+        "word_count": 5,
+        "estimated_pages": 0
+      },
+      "structure": {
+        "has_contact": true,
+        "has_summary": false,
+        "has_experience": false,
+        "has_education": false,
+        "has_skills": false
+      }
+    }
+  }
+}

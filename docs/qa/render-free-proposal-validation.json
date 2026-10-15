@@ -1,5 +1,7 @@
 {
   "proposalStatus": "NOT_DEPLOYED",
+  "recordType": "Frozen pre-creation configuration observation at checkedAtUtc; fields below describe that time",
+  "currentDeploymentRecord": "docs/qa/render-free-deployment.json",
   "checkedAtUtc": "2026-10-15T22:30:01.57393+02:00",
   "candidate": "deploy/render.free-proposal.yaml",
   "candidateSha256": "384a7c06029f47b870dfcb27ba38042179817ea71b8d58406b536ce3a70a667b",

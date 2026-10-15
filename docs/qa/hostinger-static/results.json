@@ -1,0 +1,1729 @@
+{
+  "scope": "LOCAL STATIC ARTIFACT at simulated canonical origin; NOT DEPLOYED",
+  "sourceCommit": "194f9e8798fb04c6ebe9bf4ffe0e940cf98bcea5",
+  "artifactSha256": "4a6f5a9bdbf367fd8b6f8f9ba8b53c5716ac14ee4004971544f24e19a29ed877",
+  "dist": "C:\\Users\\game\\OneDrive\\Desktop\\Personal\\webapps\\resume_parser\\.mission-work\\.runtime\\hostinger-release\\194f9e8798fb04c6ebe9bf4ffe0e940cf98bcea5\\dist",
+  "simulatedBrowserOrigin": "https://resume.docheng.co.za",
+  "liveApiOrigin": "https://careerforge-resume-api-free.onrender.com",
+  "startedAt": "2026-10-15T21:05:00.723Z",
+  "canonicalNetworkPassThrough": false,
+  "checks": [
+    "A 2 MiB + 1 byte synthetic import is rejected before any live API fetch",
+    "Local primary static artifact starts blank and saves/reloads in browser; current PDF uses the live Render API with canonical CORS",
+    "TXT import populates the editable browser document without a server identity",
+    "Scanner submits the small current PDF to the live service and renders feedback with no-store responses",
+    "Letters persist in browser storage; current PDF uses the stateless live service without a save/list/delete request",
+    "Gallery, dashboard, job tracker, letters and builder load entirely from local static files; mobile390 has no overflow",
+    "Four live processing calls use credentials omit; no workspace cookie, persisted server route, page error, or real canonical-host passthrough"
+  ],
+  "apiRequests": [
+    {
+      "path": "/api/exports/resume/pdf",
+      "method": "POST",
+      "cookieSent": false
+    },
+    {
+      "path": "/api/exports/resume/import",
+      "method": "POST",
+      "cookieSent": false
+    },
+    {
+      "path": "/api/parse-and-score",
+      "method": "POST",
+      "cookieSent": false
+    },
+    {
+      "path": "/api/exports/cover-letter/pdf",
+      "method": "POST",
+      "cookieSent": false
+    }
+  ],
+  "fetches": [
+    {
+      "url": "https://resume.docheng.co.za/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/tools/index.txt?view=templates&_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/resume-scanner/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/cover-letter/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/job-tracker/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/dashboard/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/builder/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/tools/index.txt?view=templates&_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/resume-scanner/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/cover-letter/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/job-tracker/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/dashboard/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://careerforge-resume-api-free.onrender.com/api/exports/resume/pdf?page_size=A4",
+      "credentials": "omit"
+    },
+    {
+      "url": "https://careerforge-resume-api-free.onrender.com/api/exports/resume/import",
+      "credentials": "omit"
+    },
+    {
+      "url": "https://resume.docheng.co.za/index.txt?_rsc=kzL7OEaZsqicjM2C",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/builder/index.txt?_rsc=kzL7OEaZsqicjM2C",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/tools/index.txt?view=templates&_rsc=kzL7OEaZsqicjM2C",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/cover-letter/index.txt?_rsc=kzL7OEaZsqicjM2C",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/job-tracker/index.txt?_rsc=kzL7OEaZsqicjM2C",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/dashboard/index.txt?_rsc=kzL7OEaZsqicjM2C",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://careerforge-resume-api-free.onrender.com/api/parse-and-score?mode=basic",
+      "credentials": "omit"
+    },
+    {
+      "url": "https://resume.docheng.co.za/index.txt?_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/builder/index.txt?_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/tools/index.txt?view=templates&_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/resume-scanner/index.txt?_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/job-tracker/index.txt?_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/dashboard/index.txt?_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://careerforge-resume-api-free.onrender.com/api/exports/cover-letter/pdf",
+      "credentials": "omit"
+    },
+    {
+      "url": "https://resume.docheng.co.za/index.txt?_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/builder/index.txt?_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/tools/index.txt?view=templates&_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/resume-scanner/index.txt?_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/job-tracker/index.txt?_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/dashboard/index.txt?_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/index.txt?_rsc=Uj5fJzh3oSqZfPD_",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/builder/index.txt?_rsc=Uj5fJzh3oSqZfPD_",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/tools/index.txt?view=templates&_rsc=Uj5fJzh3oSqZfPD_",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/resume-scanner/index.txt?_rsc=Uj5fJzh3oSqZfPD_",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/cover-letter/index.txt?_rsc=Uj5fJzh3oSqZfPD_",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/job-tracker/index.txt?_rsc=Uj5fJzh3oSqZfPD_",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/index.txt?_rsc=AnCSnrtqEzaXEcIi",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/builder/index.txt?_rsc=AnCSnrtqEzaXEcIi",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/tools/index.txt?view=templates&_rsc=AnCSnrtqEzaXEcIi",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/resume-scanner/index.txt?_rsc=AnCSnrtqEzaXEcIi",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/cover-letter/index.txt?_rsc=AnCSnrtqEzaXEcIi",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/dashboard/index.txt?_rsc=AnCSnrtqEzaXEcIi",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/index.txt?_rsc=hychSX8B7PZPqPM2",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/builder/index.txt?_rsc=hychSX8B7PZPqPM2",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/tools/index.txt?view=templates&_rsc=hychSX8B7PZPqPM2",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/resume-scanner/index.txt?_rsc=hychSX8B7PZPqPM2",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/cover-letter/index.txt?_rsc=hychSX8B7PZPqPM2",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/job-tracker/index.txt?_rsc=hychSX8B7PZPqPM2",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/dashboard/index.txt?_rsc=hychSX8B7PZPqPM2",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/index.txt?_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/builder/index.txt?_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/tools/index.txt?view=templates&_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/resume-scanner/index.txt?_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/job-tracker/index.txt?_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/dashboard/index.txt?_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/tools/index.txt?view=templates&_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/resume-scanner/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/cover-letter/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/job-tracker/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/dashboard/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    }
+  ],
+  "apiResponses": [
+    {
+      "path": "/api/exports/resume/pdf",
+      "status": 200,
+      "corsOrigin": "https://resume.docheng.co.za",
+      "cacheControl": "no-store",
+      "setCookie": false
+    },
+    {
+      "path": "/api/exports/resume/import",
+      "status": 200,
+      "corsOrigin": "https://resume.docheng.co.za",
+      "cacheControl": "no-store",
+      "setCookie": false
+    },
+    {
+      "path": "/api/parse-and-score",
+      "status": 200,
+      "corsOrigin": "https://resume.docheng.co.za",
+      "cacheControl": "no-store",
+      "setCookie": false
+    },
+    {
+      "path": "/api/exports/cover-letter/pdf",
+      "status": 200,
+      "corsOrigin": "https://resume.docheng.co.za",
+      "cacheControl": "no-store",
+      "setCookie": false
+    }
+  ],
+  "pageErrors": [],
+  "violations": [],
+  "missingLocalPaths": [],
+  "canonicalResponses": [
+    {
+      "path": "/builder/",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/4b2ecf2d0e859776.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/webpack-81027121d25ac293.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/main-app-f717357ca60447a6.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/247-c5f72daefdf06886.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-6b269e688bb12d58.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/900-551a5835fbb6b835.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/171-e5b42dfb2b987fde.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/278-6bccc3c9d4d64848.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/builder/page-f92a23c04df0e4c0.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/353-c996507fb44d0eb9.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/tools/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/resume-scanner/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/cover-letter/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/job-tracker/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/dashboard/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/page-95fed6128d540971.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/44c421e2-62da3d1e97ab9475.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/tools/page-07218806ae7b5077.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/resume-scanner/page-60e7a4d027b6b296.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/job-tracker/page-5f1a9671186e7fdb.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/cover-letter/page-dea626f653738a1b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/dashboard/page-156e93a3e1d2bae3.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/builder",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/4b2ecf2d0e859776.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/webpack-81027121d25ac293.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/main-app-f717357ca60447a6.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/247-c5f72daefdf06886.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-6b269e688bb12d58.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/900-551a5835fbb6b835.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/171-e5b42dfb2b987fde.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/builder/page-f92a23c04df0e4c0.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/278-6bccc3c9d4d64848.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/353-c996507fb44d0eb9.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/builder/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/tools/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/resume-scanner/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/cover-letter/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/page-95fed6128d540971.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/job-tracker/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/dashboard/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/44c421e2-62da3d1e97ab9475.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/tools/page-07218806ae7b5077.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/resume-scanner/page-60e7a4d027b6b296.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/job-tracker/page-5f1a9671186e7fdb.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/cover-letter/page-dea626f653738a1b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/dashboard/page-156e93a3e1d2bae3.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/resume-scanner/",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/4b2ecf2d0e859776.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/webpack-81027121d25ac293.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/main-app-f717357ca60447a6.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/247-c5f72daefdf06886.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-6b269e688bb12d58.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/171-e5b42dfb2b987fde.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/resume-scanner/page-60e7a4d027b6b296.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/builder/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/tools/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/cover-letter/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/job-tracker/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/page-95fed6128d540971.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/dashboard/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/900-551a5835fbb6b835.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/builder/page-f92a23c04df0e4c0.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/44c421e2-62da3d1e97ab9475.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/278-6bccc3c9d4d64848.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/353-c996507fb44d0eb9.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/tools/page-07218806ae7b5077.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/job-tracker/page-5f1a9671186e7fdb.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/cover-letter/page-dea626f653738a1b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/dashboard/page-156e93a3e1d2bae3.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/cover-letter/",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/4b2ecf2d0e859776.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/webpack-81027121d25ac293.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/main-app-f717357ca60447a6.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/247-c5f72daefdf06886.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-6b269e688bb12d58.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/278-6bccc3c9d4d64848.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/cover-letter/page-dea626f653738a1b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/builder/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/tools/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/resume-scanner/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/job-tracker/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/171-e5b42dfb2b987fde.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/dashboard/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/page-95fed6128d540971.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/900-551a5835fbb6b835.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/builder/page-f92a23c04df0e4c0.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/353-c996507fb44d0eb9.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/44c421e2-62da3d1e97ab9475.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/tools/page-07218806ae7b5077.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/resume-scanner/page-60e7a4d027b6b296.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/job-tracker/page-5f1a9671186e7fdb.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/dashboard/page-156e93a3e1d2bae3.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/cover-letter/",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/4b2ecf2d0e859776.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/webpack-81027121d25ac293.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/main-app-f717357ca60447a6.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/247-c5f72daefdf06886.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-6b269e688bb12d58.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/278-6bccc3c9d4d64848.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/cover-letter/page-dea626f653738a1b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/builder/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/tools/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/resume-scanner/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/job-tracker/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/page-95fed6128d540971.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/171-e5b42dfb2b987fde.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/dashboard/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/900-551a5835fbb6b835.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/builder/page-f92a23c04df0e4c0.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/44c421e2-62da3d1e97ab9475.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/353-c996507fb44d0eb9.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/tools/page-07218806ae7b5077.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/resume-scanner/page-60e7a4d027b6b296.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/job-tracker/page-5f1a9671186e7fdb.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/dashboard/page-156e93a3e1d2bae3.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/dashboard/",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/4b2ecf2d0e859776.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/webpack-81027121d25ac293.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/main-app-f717357ca60447a6.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-6b269e688bb12d58.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/247-c5f72daefdf06886.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/dashboard/page-156e93a3e1d2bae3.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/builder/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/tools/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/resume-scanner/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/cover-letter/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/page-95fed6128d540971.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/171-e5b42dfb2b987fde.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/job-tracker/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/900-551a5835fbb6b835.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/builder/page-f92a23c04df0e4c0.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/353-c996507fb44d0eb9.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/44c421e2-62da3d1e97ab9475.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/278-6bccc3c9d4d64848.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/tools/page-07218806ae7b5077.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/resume-scanner/page-60e7a4d027b6b296.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/job-tracker/page-5f1a9671186e7fdb.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/cover-letter/page-dea626f653738a1b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/job-tracker/",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/4b2ecf2d0e859776.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/webpack-81027121d25ac293.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/main-app-f717357ca60447a6.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/247-c5f72daefdf06886.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-6b269e688bb12d58.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/job-tracker/page-5f1a9671186e7fdb.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/builder/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/tools/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/resume-scanner/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/cover-letter/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/171-e5b42dfb2b987fde.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/page-95fed6128d540971.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/dashboard/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/900-551a5835fbb6b835.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/278-6bccc3c9d4d64848.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/builder/page-f92a23c04df0e4c0.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/44c421e2-62da3d1e97ab9475.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/tools/page-07218806ae7b5077.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/resume-scanner/page-60e7a4d027b6b296.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/cover-letter/page-dea626f653738a1b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/353-c996507fb44d0eb9.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/dashboard/page-156e93a3e1d2bae3.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/templates/",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/4b2ecf2d0e859776.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/webpack-81027121d25ac293.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/main-app-f717357ca60447a6.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/247-c5f72daefdf06886.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-6b269e688bb12d58.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/templates/page-5d46618132cd1aef.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/171-e5b42dfb2b987fde.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/builder/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/tools/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/resume-scanner/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/cover-letter/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/page-95fed6128d540971.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/job-tracker/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/900-551a5835fbb6b835.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/builder/page-f92a23c04df0e4c0.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/dashboard/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/44c421e2-62da3d1e97ab9475.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/278-6bccc3c9d4d64848.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/353-c996507fb44d0eb9.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/tools/page-07218806ae7b5077.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/resume-scanner/page-60e7a4d027b6b296.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/cover-letter/page-dea626f653738a1b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/job-tracker/page-5f1a9671186e7fdb.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/dashboard/page-156e93a3e1d2bae3.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/cover-letter/",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/4b2ecf2d0e859776.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/webpack-81027121d25ac293.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/main-app-f717357ca60447a6.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-6b269e688bb12d58.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/247-c5f72daefdf06886.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/cover-letter/page-dea626f653738a1b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/278-6bccc3c9d4d64848.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/builder/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/tools/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/resume-scanner/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/job-tracker/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/171-e5b42dfb2b987fde.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/page-95fed6128d540971.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/dashboard/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/900-551a5835fbb6b835.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/builder/page-f92a23c04df0e4c0.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/44c421e2-62da3d1e97ab9475.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/353-c996507fb44d0eb9.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/tools/page-07218806ae7b5077.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/resume-scanner/page-60e7a4d027b6b296.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/job-tracker/page-5f1a9671186e7fdb.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/dashboard/page-156e93a3e1d2bae3.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/builder/",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/4b2ecf2d0e859776.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/webpack-81027121d25ac293.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/main-app-f717357ca60447a6.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/247-c5f72daefdf06886.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-6b269e688bb12d58.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/900-551a5835fbb6b835.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/171-e5b42dfb2b987fde.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/builder/page-f92a23c04df0e4c0.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/278-6bccc3c9d4d64848.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/353-c996507fb44d0eb9.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/tools/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/resume-scanner/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/cover-letter/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/job-tracker/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/dashboard/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/page-95fed6128d540971.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/44c421e2-62da3d1e97ab9475.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/tools/page-07218806ae7b5077.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/resume-scanner/page-60e7a4d027b6b296.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/job-tracker/page-5f1a9671186e7fdb.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/cover-letter/page-dea626f653738a1b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/dashboard/page-156e93a3e1d2bae3.js",
+      "status": 200,
+      "localMarkerVerified": true
+    }
+  ],
+  "localResponses": 275,
+  "fixtureReloadUrl": "https://resume.docheng.co.za/builder?id=2590bd84-6955-4e2e-87a5-3bb5527d0d0a",
+  "scanContract": {
+    "mode": "basic",
+    "detailedMetricGroups": [
+      "readability",
+      "layout",
+      "structure"
+    ]
+  },
+  "passed": true,
+  "finishedAt": "2026-10-15T21:05:22.033Z"
+}

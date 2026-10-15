@@ -248,6 +248,42 @@ async def test_busy_processor_rejects_second_job_but_allows_health_and_recovers(
         assert (await client.post("/api/job")).status_code == 200
 
 
+@pytest.mark.asyncio
+async def test_processing_slot_remains_held_after_response_body_until_asgi_finalization(monkeypatch):
+    monkeypatch.setattr(settings, "max_concurrent_processing", 1)
+    delivered, finalize = asyncio.Event(), asyncio.Event()
+
+    async def inner(scope, receive, send):
+        await send({"type": "http.response.start", "status": 200, "headers": []})
+        await send({"type": "http.response.body", "body": b"complete", "more_body": False})
+        delivered.set()
+        await finalize.wait()  # Models upload/middleware cleanup after delivery.
+
+    guard = ProcessingLimitMiddleware(inner)
+    scope = {"type": "http", "method": "POST", "path": "/api/exports/resume/pdf"}
+    async def receive():
+        return {"type": "http.request", "body": b"", "more_body": False}
+    messages = []
+    async def send(message):
+        messages.append(message)
+    first = asyncio.create_task(guard(scope, receive, send))
+    await asyncio.wait_for(delivered.wait(), timeout=2)
+    try:
+        assert guard.active == 1 and not first.done()
+        messages.clear()
+        await guard(scope, receive, send)
+        assert messages[0]["status"] == 429
+        assert (b"retry-after", b"10") in messages[0]["headers"]
+        assert guard.active == 1
+    finally:
+        finalize.set()
+        await first
+    assert guard.active == 0
+    messages.clear()
+    await guard(scope, receive, send)
+    assert messages[0]["status"] == 200 and guard.active == 0
+
+
 def test_local_processing_settings_are_bounded():
     for field, value in (("storage_mode", "unknown"), ("max_extracted_characters", 999_999), ("max_pdf_pages", 101),
                          ("max_docx_expanded_mb", 101), ("max_concurrent_processing", -1)):

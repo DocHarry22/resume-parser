@@ -41,7 +41,7 @@ PASS means verified by the specific current checks in docs/qa, not deployed prod
 | Frontend/backend tests | PASS | Actual latest reports in docs/qa; not a claim all mission tests exist |
 | Current dependency advisories | PARTIAL | Backend clean installed audit; frontend remediation/results in QA |
 | Existing GitHub updated | PARTIAL | Branch/PR references belong in final deployment report |
-| Verified Hostinger deployment | BLOCKED | Native inspection confirms static hosting, no Git auto-deploy/Node builds, placeholder backend; Python host and backups unresolved |
+| Verified Hostinger deployment | BLOCKED | Render Free Python processor is live; existing static files still use placeholder backend. Real backup and actual-domain cutover checks remain unresolved |
 | Sites edition | PARTIAL | Privately published version2; local-editing subset verified, Python/shared-account capabilities unavailable |
 | Shared cross-origin accounts/documents | BLOCKED | No verified canonical backend/account integration |
 

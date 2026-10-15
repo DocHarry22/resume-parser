@@ -1,130 +1,87 @@
 # Deployment and acceptance report
 
-Date: 15 October 2026. This is a substantial repair and upgrade of `DocHarry22/resume-parser`, not a completed commercial Resume.io replacement. The full requested acceptance criteria remain unsatisfied. The detailed PASS/PARTIAL/FAIL/BLOCKED checklist is [feature parity](rea-resume-io/parity-matrix.md).
+Updated 15 October 2026. This is a substantial repair of `DocHarry22/resume-parser`, with a working free Python processing service and a browser-local website edition. **The full commercial Resume.io replacement mission is not complete. The canonical Hostinger website has not been replaced.** See the [feature checklist](rea-resume-io/parity-matrix.md) for missing product requirements.
 
-## Source and preservation
+## Current outcome and user decisions
 
-- Working branch: `codex/career-platform-upgrade`; base `4c4891037d88af569204a940e733b390328c8776`.
-- The original OneDrive checkout contains unreadable placeholders and was preserved. Work uses the same repository/history in its `.mission-work` directory.
-- Meaningful implementation commits: `de34c9d` backend/security/exports; `7a394a9` shared modules/navigation/runtime; `10cc308` studio/imports/exports; `b7e5a80` career/letters. Final evidence and publication references are recorded below after completion.
-- Final safety repairs: `1e9c2c8` serializes guest-session initialization; `14dce88` prevents restored documents overwriting a previous server copy and includes legacy draft data in privacy controls.
-- Production data, DNS, paid integrations and the current Hostinger deployment have not been changed.
+The user declined the proposed US$25.25/month Render service and explicitly declined Supabase. The active route uses Render's **Free** compute plan with no disk, database, AI subscription or DNS change. Documents save in the user's browser; Python processes a requested import, analysis or download without saving a document library.
 
-## Implemented behavior
+- Backend: [actual HTTPS health endpoint](https://careerforge-resume-api-free.onrender.com/api/health), service `srv-db8jiqe7bikc739aca2g` in the selected **My Workspace**. Native Render status is live. Automatic deploys and previews are off.
+- Canonical frontend: [resume.docheng.co.za](https://resume.docheng.co.za/), existing files unchanged. Replacement requires a verified current backup.
+- Separate Sites edition: [private publication](https://docheng-careerforge.thletsholo2.chatgpt.site), saved version2; its existing zero-API guard is retained.
+- Review: [draft PR2](https://github.com/DocHarry22/resume-parser/pull/2), branch `codex/career-platform-upgrade`, unmerged. Base `4c4891037d88af569204a940e733b390328c8776`.
+- The original OneDrive checkout was preserved. Work uses the same repository/history in `.mission-work`.
 
-The current additional hosting route is a **browser-local document profile with a stateless Python processor**, following the user's rejection of the paid host and Supabase. It is described below and in [backend hosting](BACKEND_HOSTING.md). The existing durable guest profile remains available; its storage guarantees do not apply to the browser-local profile.
+The paid configuration is archived at `deploy/render.paid-proposal.yaml` and must not be activated. No root `render.yaml` exists. Supabase was evaluated read-only before the user's refusal; no project, schema, keys or database were created. Unrelated existing hosting services and databases remain untouched.
 
-The main frontend now provides an original split-screen editor with blank start, live preview, browser save/restore, six templates, design controls, sections, undo/redo, document library, imports, real document exports and provider-aware writing review. The career workspace provides local job tracking and backups plus cover-letter editing, guest saves and current-content exports. API calls use a configurable same-origin proxy and credentialed requests.
+## Implemented experience
 
-The existing FastAPI/spaCy parser and scoring engine remain. Guest documents are isolated by signed HttpOnly cookies and stored atomically in bounded workspace directories. File validation, request/ZIP expansion limits, exact CORS, origin checks, server-only AI configuration, privacy export/delete and genuine selectable PDF/editable DOCX improve the repaired workflows.
+The original navy/teal CareerForge/DoCHEng frontend now has a split-screen editor, blank start, browser recovery, six original layouts, design controls, section editing, undo/redo, document library, rename/duplicate/delete, imports, real downloads, local jobs and cover letters. Service PDF contains selectable text; DOCX has editable paragraphs. Browser print preserves the preview's design; service exports use a readable layout and are not a promise of pixel-identical template rendering.
 
-Guest storage is not an account system. No registration, email verification, password reset, PostgreSQL ownership migration, billing, live-provider AI integration or cross-device synchronization was completed. There are six original layouts, not thirty. OCR, per-field extraction confidence, a job calendar, interview coaching and several other requested tools remain missing.
+The default FastAPI/spaCy guest profile remains available: signed HttpOnly guest cookies, isolated atomic per-workspace storage, quotas, upload/archive bounds, exact CORS, origin checks, privacy export/delete and optional server-side AI configuration. Its durable-storage guarantees require a suitable persistent host and do not apply to the free profile.
+
+The selected free profile uses `NEXT_PUBLIC_STORAGE_MODE=local` and backend `STORAGE_MODE=local`. It omits credentials, never initializes a guest workspace, blocks server library/AI operations, and sends the current document only to stateless processing routes. Imports return a separate browser document with no server ID. Resume, letter and job libraries remain local; supported browser downloads and editing continue during a processing outage. Clearing browser data or changing devices can lose local documents, so users should retain private JSON backups.
+
+The free image uses pinned/checksummed `en_core_web_sm` 3.7.1. The original default image retains `en_core_web_md`; the small model changes extraction behavior and has no static word vectors. The free limits are 2 MiB uploads, 60,000 extracted characters, 20 PDF pages, 8 MiB expanded DOCX, 2,000 export nodes, one processing request and a 30-second complete-body deadline. The UI rejects oversized processing files before sending them. Browser-only JSON restoration retains its separate 10 MiB limit.
+
+[Backend configuration and availability](BACKEND_HOSTING.md) records idle sleep, shared free-hour limits and possible provider usage charges. The plan has no fixed monthly compute fee; no claim of guaranteed zero usage charges or production uptime is made. No artificial keep-alive is configured.
 
 ## Verification
 
-- Backend: 147 tests passed, 4 skipped; compile check and dependency consistency passed. Installed backend dependency audit found zero known advisories in 87 packages. See [backend report](qa/backend-report.md).
-- Frontend: type checks, normalization/local-export/job tests and production builds have been exercised. The production dependency audit found zero known advisories; the full development dependency audit still reports nine (seven high, two moderate), primarily requiring a separate tooling migration.
-- Editor, career, error-path, responsive and Sites browser checks are documented with JSON, screenshots and actual downloads in [QA instructions](qa/RUNNING.md). Final production-mode rerun status is recorded in the QA summary.
-- PDF/DOCX files were independently parsed for selectable text, editable paragraphs, Unicode and complete multipage content. [Export verification](qa/independent-export-verification.json).
-- A static Sites build originally overwrote the primary Next intermediate output. That artifact collision caused browser failures. `scripts/build-sites.cjs` now builds in a separate physical directory; the main build was rebuilt for final reruns. Do not interpret the initial failed runs as a passing release check.
-- GitHub Actions configuration is included. Local checks do not imply a green remote Actions run. Current checks are linked from [PR2](https://github.com/DocHarry22/resume-parser/pull/2).
-- Remote Docker verification **passed** on source `6740b2ba1a935e85627c6b5b444a274cbb223479`, run `38792993537`: image build, statistical model vectors/NER, non-root runtime, an isolated writable volume, guest separation, real parsing/exports, deletion and restart persistence. The backend/browser setup jobs initially failed because spaCy's model downloader constructed an invalid URL; their workflow and setup documentation now use the pinned/checksummed wheel that passed in Docker. Consult the PR for the rerun status.
-- The corrected [remote run `38793500523`](https://github.com/DocHarry22/resume-parser/actions/runs/38793500523) on `ce44344cfcb43a7a3b9c3709f5949dcd3925e9e7` completed successfully: backend, frontend, browser and container jobs all passed. The native PR checks were read again on 15 October 2026. Subsequent proposal/tooling commits require their own checks; this result refers to that exact application revision.
+| Scope | Result and evidence |
+| --- | --- |
+| Latest local backend regression | PASS: **181 passed, 4 skipped**, 6 dependency warnings after the no-store repair |
+| New privacy regression | PASS: 12 tests cover real parsing/scoring, validation/parser errors, early body/rate rejection and both storage profiles |
+| Frontend regression | PASS: **29 Node tests** plus career checks and TypeScript validation of 74 source files; oversized-upload rejection, exact boundary, credentials omitted, Sites precedence and real React rendering for BASIC/ATS/EXPERT/partial metrics |
+| Initial deployed revision `93d0f41` | All five remote jobs passed: backend, frontend, browser, default container and Linux small-model memory check; [exact CI evidence](qa/deployed-revision-ci.json) |
+| Linux free-profile resources | The initial deployed revision passed 512 MiB/no extra swap/0.1 CPU with a 316.9 MiB cgroup peak, real NER, parsing/scoring, current-content exports, 55,000 characters and a complete 13-page PDF; zero private files and no OOM |
+| Actual Render deployment | [Native service/deploy record](qa/render-free-deployment.json); native provider status and source are distinct from HTTP behavior |
+| First actual HTTPS probe | [Recorded initial failure](qa/render-free-initial-live-api.json): functional/security/content checks passed, but explicit no-store headers were missing on two analysis responses; the narrow repair is committed in `368088a` |
+| Final actual HTTPS probe | PASS on deployed `368088a`: **18 checks / 17 requests**, findings empty; analysis success/errors and all document responses no-store, exact CORS, no cookies, disabled server libraries, real imports/scoring and independently parsed four-format current Unicode exports; [report](qa/render-free-live-api.json) |
+| Deployed backend revision `368088a` | All five remote jobs passed; 181 backend tests passed / 4 skipped, 24 frontend tests plus career checks and 6 static-tooling tests, production build/types, browser, default container and small-model Linux peak 314.8 MiB; [exact evidence](qa/release-368088a-ci.json) |
+| Scanner frontend revision `194f9e8` | Remote frontend, browser, backend and default-container jobs passed, including the new real sparse-PDF scanner/editor regression. Backend/Docker inputs are unchanged from deployed `368088a`. The Linux benchmark's immediate next request received a valid HTTP 429 busy response; [preserved diagnostic](qa/low-memory-admission-failure.json). The verifier's bounded Retry-After handling is tested separately; current remote status belongs to the PR checks |
+| Browser-local behavior | PASS: eight browser groups at 390/1440 pixels, offline letters, failures/recovery, separate profiles, privacy and six independently parsed exports; [evidence](qa/local-mode/README.md) |
+| Primary default guest/editor behavior | Prior production/browser and isolation checks are preserved in [QA](qa/README.md); they do not establish actual Hostinger acceptance |
+| Dependency audits | Installed backend and frontend production dependencies had zero known advisories; frontend development audit remains **7 high, 2 moderate**, requiring a separate tooling migration |
+| Backup verifier | PASS: 14 synthetic ZIP/TAR safety tests plus independent CLI/selected-restore probes on Python3.12/3.13; **no real hosting archive verified** |
+| Final Hostinger static artifact | PASS build/types and independent ZIP/dist/manifest inspection: 66 files, 475,906-byte ZIP; source `194f9e8`. All seven browser groups passed with four live API calls, 275 verified local responses and no errors/violations; [artifact record](qa/hostinger-static-artifact.json), [browser evidence](qa/hostinger-static/README.md) |
+| Actual current browser PDF downloads | PASS: independent selectable-text/current-content/Unicode/nonblank-page checks for resume and unsaved letter; [verification](qa/hostinger-static/independent-export-verification.json) |
 
-## Hostinger: inspected; deployment BLOCKED, live site unchanged
+The earlier Linux memory run on `af8b3ca` observed 310.9 MiB; [that frozen record](qa/low-memory-ci-verification.json) remains tied to its own revision. These measurements are synthetic CI evidence, not a guarantee for every uploaded document or a measurement of Render's live filesystem/memory.
 
-Canonical public URL remains https://resume.docheng.co.za/. Initial browser capture returned HTTP 200 and normal HTTPS. Hostinger management tools became available later in this session, and read-only native calls verified the following:
+The low-resource verifier now handles the server's explicit temporary admission response with bounded, visible retries. It retries only allowlisted memory-only POSTs and the exact HTTP 429 busy response body, honors a valid numeric `Retry-After`, and stops after two retries or 30 seconds of waiting per request. Rate-limit errors, cookies, unexpected statuses, missing/invalid delays and persistent contention still fail. Nine offline tests and a deterministic ASGI-finalization/recovery test cover this behavior; the production concurrency guard and all resource/content assertions are unchanged. [Original native failure and diagnosis](qa/low-memory-ci-backpressure-194.json). Current follow-up results are in the [PR checks](https://github.com/DocHarry22/resume-parser/pull/2/checks).
 
-- The existing enabled subdomain belongs to an active `cloud_economy_v3` plan. It is classified as `other`, and its document root contains an exported static Next frontend with `.htaccess`, route HTML and `_next` assets.
-- There are no linked website Git repositories. Git automatic-deployment settings are all null. There is no Node build history or configured Node environment-variable list. The stored Node build-settings endpoint returns HTTP 404.
-- The full document-root inventory returned 90 entries, including static assets and six old large sample PDFs. The rewrite file serves exported route directories and falls back to the homepage; it contains no API reverse proxy.
-- Publicly deployed cover-letter JavaScript references `https://your-backend-domain.com`. This is an unusable placeholder, not a verified Python API. No working production Python host or persistent backend data store has been identified.
-- Supported operation discovery did not return a regular-hosting backup/export operation. The existing website/data backup and restore are not verified. Resource limits, any backend outside this root, and database ownership remain unknown.
-- Native Hostinger VPS listing is empty. With the user's explicit workspace selection, Render service inspection returned two unrelated Node services and no service for this repository. Existing services were left untouched. The user subsequently requested a new host. A concrete Render service-plus-disk candidate is prepared in [backend hosting](BACKEND_HOSTING.md): one Frankfurt `1c-2g` service with a 1 GB disk, estimated US$25.25/month before tax, usage and any workspace charges. No paid resource was activated.
-- Native DNS read confirms `resume` is an ALIAS to `resume.docheng.co.za.cdn.hstgr.net.` with TTL300. The zone was not edited. HTTPS browser capture succeeded; certificate renewal/expiry operations were not inspected or changed.
+## Hostinger inspection and backup gate
 
-These are production-configuration observations, not a successful deployment. Hostinger's Node capability must not be assumed to host Python/spaCy. No hosting writes, DNS edits, paid activations or database changes have occurred.
+Read-only native inspection identified active `cloud_economy_v3` hosting, account `u836398163`, canonical document root `/home/u836398163/domains/docheng.co.za/public_html/resume`. It is an existing static Next export, with no API reverse proxy, linked Git deployment, configured Node build settings or Node environment. Deployed cover-letter JavaScript still contains the unusable placeholder `https://your-backend-domain.com`. The newly created Python host does not change those files by itself.
 
-The user confirmed there is no verified current backup. The available Hostinger connector cannot create or download a complete regular-hosting backup, and Render's connected service-creation tool cannot attach a disk or create a Blueprint. [Backup instructions and local verification](BACKUP_RUNBOOK.md) keep restoration tests separate from production. The production cutover remains blocked until an actual backup and storage/API checks succeed.
+The complete scoped metadata inventory returned **90 entries, including 70 regular files totaling 67,455,572 bytes**, including six old large sample PDFs. [Path/size baseline](qa/hostinger-static-tree.json). Native DNS remains `resume` ALIAS to `resume.docheng.co.za.cdn.hstgr.net.`, TTL300. The initial public HTTPS capture returned 200. No files, DNS, certificates or account databases were modified.
 
-The user **declined the US$25.25/month proposal and Supabase**. No paid resource or database was created. The reviewed paid configuration is archived at `deploy/render.paid-proposal.yaml`; the root `render.yaml` and active creation instructions were removed. It must not be activated under the current authorization. The free-profile implementation and verification are described below. No free backend has yet been created or verified on Render.
+The user confirmed there is **no verified current backup**. The connected regular-hosting tools cannot create/download a complete files backup; the file-reading endpoint cannot supply a complete binary/large-file archive. A partial metadata/text copy must not be called a backup. [The runbook](BACKUP_RUNBOOK.md) explains creating/downloading the current archive in hPanel and then verifying only the selected site into a fresh private local directory. The verifier checks archive integrity, exact file set/size baseline and restored hashes; it does not establish separately hosted backend/database completeness or successful server restoration.
 
-The Render candidate passed the current official schema, invalid-plan/zero-disk negative controls and actual application-setting checks; [validation record](qa/render-candidate-validation.json). The local backup verifier passed 14 synthetic ZIP/TAR tests on Python 3.12 and 3.13 and a separate CLI inventory/selected-restore smoke check. A focused independent review found and verified fixes for nested-site provenance and truncated ZIP filenames. The scoped live Hostinger metadata inventory returned all 90 entries, including 70 regular files totaling 67,455,572 bytes; [path/size baseline](qa/hostinger-static-tree.json). This is metadata and synthetic-tool verification, not an actual backup or provider deployment.
+A text-input request for the downloaded archive's full local path is pending. The current Hostinger site remains untouched while this required rollback evidence is absent.
 
-All four [remote checks on hosting/backup commit `70887eb`](https://github.com/DocHarry22/resume-parser/actions/runs/38797397397) passed: backend, frontend, browser and container. The backend log confirms 147 passed/4 skipped application tests and all 14 new backup-verifier tests. The runtime application, frontend, Dockerfile and dependency files are unchanged from `ce44344` in this proposal/tooling update.
+## Concrete cutover procedure
 
-The native website settings show no automatic Git deployment, but other external CI hooks have not been ruled out. The reviewed work remains on a branch/draft PR while backend deployment, backups and remaining acceptance gates are unresolved. No new production-domain success or production login/import/export result is claimed.
+1. Obtain the current hPanel archive; inventory it, verify the exact resume subtree locally and retain the original archive and reports privately. Resolve any relevant external backend/database data before replacement.
+2. Retain the verified backend revision and HTTPS probe. Use the primary static artifact from clean committed frontend source `194f9e8`, built with `scripts/build-hostinger.cjs`, the exact verified Render URL, local storage mode and Sites mode unset. Review its ZIP/manifest/hashes and browser evidence. Builds occur in physical copies and leave primary/Sites intermediate output untouched.
+3. Upload only the verified static build output, with `index.html` at archive root, through the scoped Hostinger upload/deploy mechanism for `resume.docheng.co.za` on `u836398163`. The archive deployment overwrites existing files; the verified rollback archive is a prerequisite. No Node/Python execution on Hostinger, DNS change or paid upgrade is required for this profile.
+4. Verify the actual public domain after deployment: assets/redirects, blank editor, local save/reload, import/review, analysis, letters, PDF/DOCX contents, omitted credentials, exact CORS, no cookies/server library calls and unavailable-service recovery. A browser serving local artifact files at a simulated canonical origin is useful preparation, but must not be reported as a deployed-domain test.
+5. Keep the draft PR unmerged until applicable deployment/rollback checks and release acceptance are resolved. Retain the prior files and matching backend/frontend revisions; use the verified selected-site backup for a scoped rollback if necessary.
 
-### Concrete release procedure after access is restored
+## Sites publication retained
 
-1. Inspect the existing Hostinger app, connected repo/branch, build/start commands, SSL, API host and data paths. Back up its configuration and durable document data; test restoration to a separate location. Preserve old shared documents until ownership is mapped.
-2. Confirm a Python 3.12 host with sufficient memory for `en_core_web_md`, DejaVu fonts, persistent disk and an HTTPS reverse proxy. The included non-root `Dockerfile`/`docker-compose.yml` describes a single-service backend with a named data volume. Its image and disposable Docker runtime passed remote CI; a Compose deployment and provider-specific volume permissions still need verification on the chosen host.
-3. Set a stable private `WORKSPACE_SECRET`, durable `DATA_DIR`, exact `CORS_ORIGINS` and `COOKIE_SECURE=true`. Configure AI variables only for an approved provider. Review `.env.example`; do not place secrets in browser variables or Git.
-4. Build frontend dependencies from the lockfile. Set `API_PROXY_TARGET` to the verified private backend **before** `next build`; this rewrite is compiled into the build. Run the frontend with the supported Node runtime and verify proxy cookies/HTTPS. The local QA build points at `127.0.0.1:8001` and is not an artifact to upload blindly to Hostinger.
-5. Run the documented suites with isolated fixtures, review the PR/remote checks, merge only after deployment behavior and rollback are confirmed, then deploy using the verified existing mechanism.
-6. Verify the actual domain: assets, redirects, upload→review→edit, save/restore, scoring, cover letter, PDF/DOCX contents, workspace separation and deletion. Account flows remain a release blocker for an account-based product. Inspect production logs/resource use with authorized tools.
-
-Rollback: retain the previous source revision/build configuration and an independently verified data backup. Roll back frontend and backend together if proxy/schema changes are incompatible. Do not restore old globally accessible document routes merely to make legacy records visible. No destructive migration has run in this work.
-
-## Sites: independently hosted local edition
-
-Existing saved project identity: `appgprj_6ad0d2b816bc8191b1964e7bc48c2f93`, under `sites/careerforge/.openai/hosting.json`. The supported Sites plugin is used to push source, save a version, then publish privately. The deployment URL/version/status are added only from the native tool response.
-
-The same frontend supplies the branding, six templates and resume schema. Browser editing, recovery, JSON/TXT/editable DOCX, printing and local job tracking work. Sites' documented JavaScript/Workers runtime cannot execute this Python/spaCy server. Import/AI/server workspace actions are visibly guarded pending a verified canonical API. Shared account/document/scoring results are BLOCKED. No unverified cross-origin personal API is enabled.
-
-## Free processing profile
-
-`NEXT_PUBLIC_STORAGE_MODE=local` keeps resume and cover-letter libraries in the browser, including offline letter CRUD, reload/recovery and privacy export/deletion. Requests omit credentials and do not initialize a server workspace. Imports and requested downloads use `/api/exports/*` with the current document; the processor does not save a server copy. The Sites guard takes precedence and remains independent.
-
-`STORAGE_MODE=local` disables saved-document and paid-AI routes before any signing-key/cookie creation. Processing has bounded upload bodies, extracted text, PDF pages, DOCX expansion and export structure; the free proposal uses one processing request, a 30-second upload deadline and single-thread numerical libraries. CPU extraction/rendering runs outside the request loop in this profile. The optional `en_core_web_sm` image has a pinned/checksummed wheel. The default medium-model guest profile and command remain available.
-
-- All five remote checks passed on `af8b3ca`: the ordinary backend/frontend/browser/container checks and [the dedicated Linux memory check](https://github.com/DocHarry22/resume-parser/actions/runs/38801198972).
-- The free Docker image passed under 512 MiB with no extra swap and 0.1 CPU. Its recorded cgroup peak was 310.9 MiB; a 55,000-character import and 13-page PDF retained final content, with zero private data files and no workspace cookies. [Exact evidence](qa/low-memory-ci-verification.json).
-- Browser-local mode passed 22 frontend tests, TypeScript and eight real browser groups at 390/1440 pixels, including offline letters, current-content downloads, import identity, failure recovery and privacy. [Browser evidence](qa/local-mode/README.md). All six PDF/DOCX/TXT files passed independent content checks.
-- Independent review found and verified repairs for oversized job-description NLP, scalar/structural export bounds and an unfinished-upload deadline. The final focused stateless suite passed 22 tests; remote checks on the final hardening revision are recorded through the PR.
-
-The Render proposal selects the free compute plan, with no disk, external database or AI subscription. This removes a fixed monthly compute fee; provider bandwidth/build limits and idle sleep still apply. It does not provide cross-device accounts, cloud backups or a production uptime guarantee. A verified Render URL can be used directly by the canonical static frontend with exact CORS and omitted credentials, without DNS changes. The Hostinger files remain unchanged until a real current backup is verified. No root Blueprint is active.
-
-## External-service evaluation
-
-Supabase Auth/PostgreSQL was evaluated as a future canonical ownership layer; no project or database was provisioned. Payment integration remains disabled: merchant ownership, approved ZAR prices, VAT treatment and sandbox verification are absent. Paystack's official subscription documentation was reviewed as one possible provider; this is not evidence of eligibility for every South African business or a completed recurring payment integration. No transactions or paid activations occurred.
-
-## Outstanding severity
-
-- P0 before public release: verified hosting/backups/API routing, account ownership if accounts are offered, deployment secrets/durable disk, actual-domain security/workflow checks.
-- P1 product gaps: thirty distinct templates, OCR/confidence, rich text, persisted versions, exact-style service exports, live AI verification and remaining development advisories.
-- P2 expansion: synchronized jobs/calendar, job URL/file ingestion, interview tools, privacy-controlled sharing and verified localization.
-- P3 monetization: approved products/pricing, tested provider webhooks/cancellation/reconciliation and consent-based team features.
-
-## Confirmed Sites publication
-
-Version 1 was saved before deployment and published privately through the supported Sites plugin. Native deployment status: **succeeded**. URL: https://docheng-careerforge.thletsholo2.chatgpt.site.
+The supported Sites plugin saved and privately published version2 successfully. It is an independent local-editing subset; no new API host is connected as a side effect.
 
 - Project: `appgprj_6ad0d2b816bc8191b1964e7bc48c2f93`.
-- Version: `appgprj_6ad0d2b816bc8191b1964e7bc48c2f93~appgver_f2a76045ad6c8191b006b56ad938fa1a`.
-- Deployment: `appgdep_6ad12019cfe88191927ffd91f45d4b5a`.
-- Pushed Sites source: `037498a8f181c695036e0e8dde858cb429318c62`.
-- Archive content hash: `sha256:8e8e57d03f22461d584f255c0ff6d62df390f0d5785210a934a0ef750d74f08c`.
-
-The source helper initially encountered Windows/WSL path and GNU tar drive-letter handling errors. It succeeded with the installed Git Bash on PATH, a valid process-local temporary directory, `TAR_OPTIONS=--force-local`, and a forward-slash absolute archive path. No plugin files or credentials were written to source.
-
-Version2 is now the current private publication. It includes the final guest bootstrap, import-pointer and privacy fixes from primary source `14dce884309c0f9dfc83d01471bedec7778f91c9`, built in an isolated physical directory. All19 Sites browser checks passed with zero API calls or runtime errors. Primary BUILD_ID `ZF0WlnsJ74-kmsE6Mk2tD` and all17 checked primary asset hashes/statuses remained unchanged throughout the Sites build.
-
-- Saved version2: `appgprj_6ad0d2b816bc8191b1964e7bc48c2f93~appgver_a9c82ecb50388191a02017eaefc46d70`.
+- Saved version: `appgprj_6ad0d2b816bc8191b1964e7bc48c2f93~appgver_a9c82ecb50388191a02017eaefc46d70`.
 - Deployment: `appgdep_6ad1266496808191955c920fff57e5d5`, native status **succeeded**.
-- Pushed Sites source: `a907baefc954f86b9b3b95877d3df8cfaac7fd25`.
-- Archive content hash: `sha256:0e3d501fc7be1ab22ec1bf96042f74349d2f2ca2c6fb1706e37bdc89deec1430`.
-- Published URL remains https://docheng-careerforge.thletsholo2.chatgpt.site.
+- Pushed source: `a907baefc954f86b9b3b95877d3df8cfaac7fd25`.
+- Archive SHA256: `0e3d501fc7be1ab22ec1bf96042f74349d2f2ca2c6fb1706e37bdc89deec1430`.
+- All19 Sites checks passed with zero API calls/runtime errors; primary build ID `ZF0WlnsJ74-kmsE6Mk2tD` and checked primary assets were preserved.
 
-## GitHub review and source packages
+## Product gaps and source delivery
 
-Pushed branch: `codex/career-platform-upgrade`. [Draft PR2](https://github.com/DocHarry22/resume-parser/pull/2) is attached to this Codex chat. It remains unmerged while deployment and acceptance gates are unresolved. Use that PR's Checks tab for current remote CI results; the evidence above records exact completed runs.
+Accounts/login/reset/verification, account authorization and cross-device sync are not implemented. There are six templates, not thirty. OCR, per-field extraction confidence, rich-text editing, persisted version history, a job calendar, interview tools, live-provider AI verification, billing, sharing and parts of localization remain incomplete. The UI must not offer these as working services. The full commercial mission acceptance remains unsatisfied.
 
-Verified source packages were generated from `6740b2ba1a935e85627c6b5b444a274cbb223479`, before the final workflow/documentation-only follow-up. Later report changes do not alter these frozen archive contents.
-
-| Archive | Size | SHA256 |
-|---|---|---|
-| `careerforge-frontend-source-6740b2ba1a93.zip` | 255,015 bytes; 82 files | `b50df15db8fd95d2dd75d0a937c2e411f700b2b0d1f0b679b58a1a3e109530cb` |
-| `careerforge-backend-source-6740b2ba1a93.zip` | 77,538 bytes; 41 files | `615a993d11b6a24ca6c1f76c41a4f4f2376a5e10ae00e4d4afc5cb525dcca92d` |
-
-Local delivery directory: `.runtime/release/6740b2ba1a935e85627c6b5b444a274cbb223479/`. It contains the archives, full per-file manifest, SHA256SUMS and independent `verification.json`. Every ZIP entry matched its committed Git blob, passed CRC/hash verification and required-path checks, and excluded real environment files, private documents, build/dependency folders and old sample PDFs. Both raw and compressed sizes meet the hosting archive bound. These are source artifacts; the target host must build them with verified configuration. [Exact packaging and deployment instructions](RELEASE_PACKAGING.md).
+Older source ZIPs from `6740b2ba1a935e85627c6b5b444a274cbb223479` remain frozen historical artifacts under `.runtime/release`, with [packaging evidence](RELEASE_PACKAGING.md). They predate the free-profile changes and are not the current Hostinger deployment package. The branch/PR contains current source; the new static release has a separate commit-bound manifest and ZIP. No private data, environment files, credentials or original resume PDFs belong in a release artifact.

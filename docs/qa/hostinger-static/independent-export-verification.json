@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "sourceCommit": "194f9e8798fb04c6ebe9bf4ffe0e940cf98bcea5",
+  "scope": "Independent parsing of actual synthetic browser downloads from live stateless Render API; local static artifact at simulated canonical origin, not Hostinger deployment",
+  "method": "PyMuPDF text/page inspection and SHA256",
+  "files": [
+    {
+      "file": "resume-current.pdf",
+      "bytes": 22608,
+      "sha256": "1fee5322a2bb1f12367c791dd358f7e3c23ae95ba4152d3bcbb7657aba96ebc9",
+      "pages": 1,
+      "selectableTextCharacters": 50,
+      "expectedCurrentMarkers": [
+        "STATIC LIVE CURRENT EXPORT"
+      ],
+      "currentContentVerified": true,
+      "allPagesNonblank": true
+    },
+    {
+      "file": "letter-current.pdf",
+      "bytes": 1759,
+      "sha256": "d36ef92a2d3b160f58be40df83147da1aa7900aab7747c0f12fad32926f015d8",
+      "pages": 1,
+      "selectableTextCharacters": 119,
+      "expectedCurrentMarkers": [
+        "STATIC LIVE UNSAVED LETTER",
+        "Zoë Naïdø"
+      ],
+      "currentContentVerified": true,
+      "allPagesNonblank": true
+    }
+  ]
+}

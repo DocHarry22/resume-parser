@@ -43,6 +43,15 @@ Python, SQL, Docker
 """
 MARKER = "END_LOW_MEMORY_SENTINEL"
 LIMIT = 512 * 1024 * 1024
+BUSY_DETAIL = "The processor is busy. Please try again shortly."
+STATELESS_POSTS = {
+    "/api/parse-resume", "/api/score-resume", "/api/parse-and-score",
+    "/api/exports/resume/import",
+    *("/api/exports/resume/" + format for format in ("pdf", "docx", "txt", "json")),
+    *("/api/exports/cover-letter/" + format for format in ("pdf", "docx", "txt")),
+}
+MAX_BUSY_RETRIES = 2
+MAX_BUSY_WAIT_SECONDS = 30
 
 
 def docker(*arguments):
@@ -83,6 +92,7 @@ class Session:
     def __init__(self, base):
         self.base = base
         self.opener = urllib.request.build_opener()
+        self.backpressure_retries = []
 
     def request(self, path, *, method="GET", data=None, content_type=None, expected=200):
         headers = {}
@@ -92,16 +102,41 @@ class Session:
             headers["Content-Type"] = content_type
         start = time.monotonic()
         request = urllib.request.Request(self.base + path, data=data, method=method, headers=headers)
-        try:
-            response = self.opener.open(request, timeout=180)
-        except urllib.error.HTTPError as error:
-            response = error
-        with response:
-            body = response.read(5 * 1024 * 1024 + 1)
-            assert len(body) <= 5 * 1024 * 1024
-            assert response.status == expected, f"{method} {path}: {response.status}, expected {expected}: {body[:200]!r}"
-            assert response.headers.get("Set-Cookie") is None, "Stateless profile unexpectedly minted a guest cookie"
-            return body, response.headers, round(time.monotonic() - start, 3)
+        retries, waited = 0, 0
+        while True:
+            try:
+                response = self.opener.open(request, timeout=180)
+            except urllib.error.HTTPError as error:
+                response = error
+            with response:
+                body = response.read(5 * 1024 * 1024 + 1)
+                assert len(body) <= 5 * 1024 * 1024
+                assert response.headers.get("Set-Cookie") is None, "Stateless profile unexpectedly minted a guest cookie"
+                status, response_headers = response.status, response.headers
+            if status == expected:
+                return body, response_headers, round(time.monotonic() - start, 3)
+            # Response delivery can precede ASGI/upload finalization at 0.1 CPU.
+            # Only replay known memory-only operations on the guard's exact busy
+            # response. Quota errors, other failures and persistent contention fail.
+            retry_after = response_headers.get("Retry-After", "")
+            try:
+                busy = json.loads(body) == {"detail": BUSY_DETAIL}
+            except (ValueError, UnicodeDecodeError):
+                busy = False
+            if (status == 429 and expected in {200, 422} and method == "POST"
+                    and path in STATELESS_POSTS and busy
+                    and re.fullmatch(r"[0-9]{1,2}", retry_after)
+                    and 0 < int(retry_after) <= MAX_BUSY_WAIT_SECONDS
+                    and retries < MAX_BUSY_RETRIES
+                    and waited + int(retry_after) <= MAX_BUSY_WAIT_SECONDS):
+                delay = int(retry_after)
+                retries += 1
+                waited += delay
+                self.backpressure_retries.append({"method": method, "path": path,
+                    "status": status, "retry": retries, "retryAfterSeconds": delay})
+                time.sleep(delay)
+                continue
+            raise AssertionError(f"{method} {path}: {status}, expected {expected}: {body[:200]!r}; busy retries={retries}, waited={waited}s")
 
     def json(self, path, **kwargs):
         body, _, duration = self.request(path, **kwargs)
@@ -149,6 +184,10 @@ def exports(session, resume, *, large=False):
 def api_probe(args):
     session = Session(args.base_url.rstrip("/"))
     result = {"status": "FAIL", "scope": "Synthetic stateless behavior; Linux resource limit verified only when container supplied", "containerResourceLimitVerified": bool(args.container), "memorySamples": [], "checks": []}
+    result["backpressureRetries"] = session.backpressure_retries
+    result["backpressureRetryPolicy"] = {"maxRetriesPerRequest": MAX_BUSY_RETRIES,
+        "maxWaitSecondsPerRequest": MAX_BUSY_WAIT_SECONDS,
+        "scope": "Exact processor-busy 429 on allowlisted memory-only POSTs; honor numeric Retry-After without shortening it"}
     def sample(stage):
         if args.container:
             result["memorySamples"].append(memory_sample(args.container, stage))

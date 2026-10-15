@@ -1,0 +1,73 @@
+{
+  "scope": "Actual new Render Free web service; canonical Hostinger frontend remains unchanged",
+  "providerStatus": "live",
+  "httpVerification": {
+    "status": "PASS",
+    "report": "render-free-live-api.json",
+    "revision": "368088a3313a8263d8a94f1dbfa31c59ed24a011",
+    "checks": 18,
+    "requests": 17,
+    "findings": [],
+    "scope": "Small synthetic HTTPS API requests only; not Hostinger frontend cutover or a load test"
+  },
+  "workspace": {
+    "name": "My Workspace",
+    "id": "tea-cspuvgrtq21c739a8r9g"
+  },
+  "service": {
+    "id": "srv-db8jiqe7bikc739aca2g",
+    "name": "careerforge-resume-api-free",
+    "url": "https://careerforge-resume-api-free.onrender.com",
+    "dashboardUrl": "https://dashboard.render.com/web/srv-db8jiqe7bikc739aca2g",
+    "plan": "free",
+    "region": "frankfurt",
+    "runtime": "docker",
+    "dockerfile": "./deploy/Dockerfile.free",
+    "dockerContext": ".",
+    "automaticDeploys": "off",
+    "previews": "off",
+    "suspended": false,
+    "instances": 1,
+    "createdAt": "2026-10-15T20:36:58.659796Z"
+  },
+  "initialDeploy": {
+    "id": "dep-db8jiqu7bikc739acc7g",
+    "commit": "93d0f413be0e3c0e3b5d1dd8fc085792a74fbe30",
+    "branch": "codex/career-platform-upgrade",
+    "status": "live",
+    "startedAt": "2026-10-15T20:36:59.411719Z",
+    "finishedAt": "2026-10-15T20:38:42.55414Z",
+    "providerUpdatedAt": "2026-10-15T20:39:12.960904Z"
+  },
+  "currentDeploy": {
+    "id": "dep-db8jpheq1p3s738vlu9g",
+    "commit": "368088a3313a8263d8a94f1dbfa31c59ed24a011",
+    "status": "live",
+    "startedAt": "2026-10-15T20:51:17.536905Z",
+    "finishedAt": "2026-10-15T20:52:06.027118Z",
+    "providerUpdatedAt": "2026-10-15T20:52:06.027455Z",
+    "reason": "Deploy verified no-store response repair after all five remote checks passed",
+    "creationOrPlanChange": false
+  },
+  "configurationSource": {
+    "path": "deploy/render.free-proposal.yaml",
+    "sha256": "384a7c06029f47b870dfcb27ba38042179817ea71b8d58406b536ce3a70a667b",
+    "blueprintApplied": false,
+    "creationMechanism": "Native Render create_web_service tool with explicit free plan, Dockerfile and reviewed environment",
+    "difference": "The connected creation tool has no HTTP health-check-path field. Actual healthCheckPath is empty, so provider startup uses its default TCP check. Explicit HTTPS /api/health and functional probes are verified separately."
+  },
+  "fixedMonthlyComputeUsd": 0,
+  "usageChargesMayApply": true,
+  "billingSettingsInspectedOrChanged": false,
+  "paidUpgradeActivated": false,
+  "persistentDiskCreated": false,
+  "externalDatabaseCreated": false,
+  "supabaseUsed": false,
+  "aiProviderConfigured": false,
+  "existingServicesModified": false,
+  "customDomainCreated": false,
+  "dnsChanged": false,
+  "hostingerFilesChanged": false,
+  "realHostingerBackupVerified": false,
+  "verificationSource": "Native Render get_service and get_deploy responses, not inferred from a configuration file"
+}

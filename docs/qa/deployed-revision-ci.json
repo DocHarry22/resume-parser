@@ -1,0 +1,161 @@
+{
+  "revision": "93d0f413be0e3c0e3b5d1dd8fc085792a74fbe30",
+  "checks": [
+    {
+      "name": "small-model-512mb",
+      "conclusion": "success",
+      "url": "https://github.com/DocHarry22/resume-parser/actions/runs/38802918638/job/116656316399"
+    },
+    {
+      "name": "frontend",
+      "conclusion": "success",
+      "url": "https://github.com/DocHarry22/resume-parser/actions/runs/38802918537/job/116656316351"
+    },
+    {
+      "name": "browser",
+      "conclusion": "success",
+      "url": "https://github.com/DocHarry22/resume-parser/actions/runs/38802918537/job/116656316242"
+    },
+    {
+      "name": "container",
+      "conclusion": "success",
+      "url": "https://github.com/DocHarry22/resume-parser/actions/runs/38802918537/job/116656316186"
+    },
+    {
+      "name": "backend",
+      "conclusion": "success",
+      "url": "https://github.com/DocHarry22/resume-parser/actions/runs/38802918537/job/116656315830"
+    }
+  ],
+  "backend": {
+    "passed": 169,
+    "skipped": 4,
+    "dependencyWarnings": 6,
+    "syntheticBackupVerifierTests": 14,
+    "source": "Native backend job 116656315830 log, read during final implementation checks"
+  },
+  "linuxSmallModel": {
+    "runId": 38802918638,
+    "jobId": 116656316399,
+    "url": "https://github.com/DocHarry22/resume-parser/actions/runs/38802918638/job/116656316399",
+    "peakMemoryBytes": 332304384,
+    "peakMemoryMiB": 316.9,
+    "proof": {
+      "status": "PASS",
+      "scope": "Synthetic stateless behavior; Linux resource limit verified only when container supplied",
+      "containerResourceLimitVerified": true,
+      "memorySamples": [
+        {
+          "stage": "ready",
+          "currentBytes": 167063552,
+          "peakBytes": 167530496,
+          "smallModelVersion": "3.7.1",
+          "privateDataFileCount": 0
+        },
+        {
+          "stage": "after typical parse/score/exports",
+          "currentBytes": 185307136,
+          "peakBytes": 185679872,
+          "smallModelVersion": "3.7.1",
+          "privateDataFileCount": 0
+        },
+        {
+          "stage": "after 55k parse/exports",
+          "currentBytes": 189677568,
+          "peakBytes": 332304384,
+          "smallModelVersion": "3.7.1",
+          "privateDataFileCount": 0
+        },
+        {
+          "stage": "final diagnostic",
+          "currentBytes": 199946240,
+          "peakBytes": 332304384,
+          "smallModelVersion": "3.7.1",
+          "privateDataFileCount": 0
+        }
+      ],
+      "checks": [
+        "local storage mode rejects server records and never sets guest cookies",
+        "typical TXT parsing, NER, scoring, stateless builder import and four genuine exports",
+        "55,000-character TXT parse and multipage PDF/editable DOCX/TXT/JSON retain final marker",
+        "document over configured 60,000-character cap rejected"
+      ],
+      "limits": {
+        "memoryBytes": 536870912,
+        "memorySwapBytes": 536870912,
+        "nanoCpus": 100000000,
+        "oomKilled": false
+      },
+      "health": {
+        "status": "healthy",
+        "storage_mode": "local",
+        "spacy_model": "en_core_web_sm",
+        "server_persistence": false
+      },
+      "typicalParseSeconds": 0.488,
+      "typicalScoreSeconds": 0.902,
+      "typicalExports": [
+        {
+          "format": "pdf",
+          "bytes": 23065,
+          "seconds": 1.898,
+          "pages": 1
+        },
+        {
+          "format": "docx",
+          "bytes": 36929,
+          "seconds": 0.397
+        },
+        {
+          "format": "txt",
+          "bytes": 349,
+          "seconds": 0.002
+        },
+        {
+          "format": "json",
+          "bytes": 1927,
+          "seconds": 0.002
+        }
+      ],
+      "largeParse": {
+        "characters": 55000,
+        "seconds": 8.692
+      },
+      "largeExports": [
+        {
+          "format": "pdf",
+          "bytes": 31054,
+          "seconds": 2.197,
+          "pages": 13
+        },
+        {
+          "format": "docx",
+          "bytes": 37269,
+          "seconds": 0.306
+        },
+        {
+          "format": "txt",
+          "bytes": 55398,
+          "seconds": 0.093
+        },
+        {
+          "format": "json",
+          "bytes": 56988,
+          "seconds": 0.096
+        }
+      ],
+      "limitsAfter": {
+        "memoryBytes": 536870912,
+        "memorySwapBytes": 536870912,
+        "nanoCpus": 100000000,
+        "oomKilled": false
+      },
+      "modelProof": {
+        "startupLogNamesSmallModel": true,
+        "realPersonNer": true,
+        "secondModelProcessLoaded": false
+      }
+    }
+  },
+  "scope": "Exact deployed backend source. These are CI results; actual Render HTTPS behavior is recorded separately. Later source/tooling-only commits require their own checks."
+}
