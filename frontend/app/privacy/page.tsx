@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { apiFetch } from '@/lib/apiConfig';
 export default function Privacy(){const [message,setMessage]=useState('');const [busy,setBusy]=useState(false);
-const localKeys=()=>Object.keys(localStorage).filter(k=>k==='resume_studio_documents_v1'||k==='resume_draft'||k==='builder-storage'||k==='resume-studio.jobs.v1'||k.startsWith('resume-studio.letter-draft.'));
+const localKeys=()=>Object.keys(localStorage).filter(k=>k==='resume_studio_documents_v1'||k==='resume_draft'||k==='resume_duplicate'||k==='builder-storage'||k==='resume-studio.jobs.v1'||k.startsWith('resume-studio.letter-draft.'));
 const download=(data:unknown,name:string)=>{const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
 const exportLocal=()=>{try{download(Object.fromEntries(localKeys().map(k=>[k,JSON.parse(localStorage.getItem(k)||'null')])),'careerforge-browser-data.json');setMessage('Browser data downloaded. Keep this backup private.');}catch{setMessage('Browser data could not be read. Please export individual documents from the editor.');}};
 const removeLocal=()=>{if(!confirm('Delete all CareerForge resume drafts, cover-letter drafts and jobs from this browser? Download a backup first.'))return;try{localKeys().forEach(k=>localStorage.removeItem(k));setMessage('CareerForge data removed from this browser. Server documents are separate.');}catch{setMessage('Browser storage could not be cleared.');}};
