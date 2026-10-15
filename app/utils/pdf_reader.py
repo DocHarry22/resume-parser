@@ -22,6 +22,7 @@ import fitz  # PyMuPDF
 from io import BytesIO
 from typing import Union
 import re
+from app.core.config import settings
 
 
 def read_pdf(file: bytes) -> dict:
@@ -59,9 +60,9 @@ def read_pdf(file: bytes) -> dict:
         # Open PDF
         doc = fitz.open(stream=stream, filetype="pdf")
         
-        if doc.page_count > 100:
+        if doc.page_count > settings.max_pdf_pages:
             doc.close()
-            raise ValueError("PDF is limited to 100 pages")
+            raise ValueError(f"PDF is limited to {settings.max_pdf_pages} pages")
         if doc.page_count == 0:
             raise ValueError("PDF contains no pages")
         

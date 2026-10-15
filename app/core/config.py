@@ -1,7 +1,7 @@
 """Application configuration."""
 
 from pydantic_settings import BaseSettings
-from pydantic import ConfigDict, field_validator, model_validator
+from pydantic import ConfigDict, Field, field_validator, model_validator
 from typing import Optional, Literal
 from urllib.parse import urlparse
 
@@ -21,6 +21,12 @@ class Settings(BaseSettings):
     # File Upload Settings
     max_file_size_mb: int = 25
     allowed_extensions: list[str] = [".pdf", ".docx", ".txt"]
+    max_extracted_characters: int = Field(default=250_000, ge=1_000, le=250_000)
+    max_pdf_pages: int = Field(default=100, ge=1, le=100)
+    max_docx_expanded_mb: int = Field(default=100, ge=1, le=100)
+    max_concurrent_processing: int = Field(default=0, ge=0, le=20)
+    # Local mode processes uploads/exports without saving personal documents.
+    storage_mode: Literal["guest", "local"] = "guest"
 
     # Exact frontend origins. Set CORS_ORIGINS to a JSON array in production.
     cors_origins: list[str] = [

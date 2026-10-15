@@ -117,6 +117,23 @@ class WorkspaceMiddleware(BaseHTTPMiddleware):
                     return JSONResponse({"detail": "Request too large"}, status_code=413)
             except ValueError:
                 return JSONResponse({"detail": "Invalid content length"}, status_code=400)
+        if request.url.path.startswith("/api/exports/"):
+            origin = request.headers.get("origin")
+            if origin and origin not in settings.cors_origins:
+                return JSONResponse({"detail": "Untrusted request origin"}, status_code=403)
+            response = await call_next(request)
+            response.headers["Cache-Control"] = "no-store"
+            return response
+        if settings.storage_mode == "local":
+            if request.url.path == "/api/workspace" and request.method in {"GET", "HEAD"}:
+                return JSONResponse({"mode": "local", "resume_count": 0,
+                                     "cover_letter_count": 0, "server_persistence": False,
+                                     "notice": "Documents stay in your browser. This API does not save them."},
+                                    headers={"Cache-Control": "no-store"})
+            if any(request.url.path.startswith(prefix) for prefix in
+                   ("/api/builder", "/api/cover-letters", "/api/workspace", "/api/ai")):
+                return JSONResponse({"detail": "Server document storage and paid AI are unavailable in browser-local mode."},
+                                    status_code=503, headers={"Cache-Control": "no-store"})
         protected = any(
             request.url.path.startswith(prefix)
             for prefix in ("/api/builder", "/api/cover-letters", "/api/workspace", "/api/ai")
@@ -172,9 +189,9 @@ class RequestBodyLimitMiddleware:
     async def __call__(self, scope, receive, send):
         if scope["type"] != "http" or scope["method"] in {"GET", "HEAD", "OPTIONS"}:
             return await self.app(scope, receive, send)
-        upload_paths = {"/api/parse-resume", "/api/score-resume", "/api/parse-and-score", "/api/builder/import"}
+        upload_paths = {"/api/parse-resume", "/api/score-resume", "/api/parse-and-score", "/api/builder/import", "/api/exports/resume/import"}
         limit = ((settings.max_file_size_mb + 1) * 1024 * 1024
-                 if scope["path"] in upload_paths else 1024 * 1024)
+                 if scope["path"] in upload_paths else (256 * 1024 if settings.storage_mode == "local" else 1024 * 1024))
         body = bytearray()
         while True:
             message = await receive()
@@ -196,3 +213,26 @@ class RequestBodyLimitMiddleware:
                 return {"type": "http.request", "body": bytes(body), "more_body": False}
             return await receive()
         return await self.app(scope, replay, send)
+
+
+class ProcessingLimitMiddleware:
+    """Reject excess work immediately, avoiding a memory-heavy upload queue."""
+    def __init__(self, app):
+        self.app = app
+        self.active = 0
+
+    async def __call__(self, scope, receive, send):
+        limited = (scope["type"] == "http" and scope["method"] == "POST"
+                   and scope["path"].startswith("/api/") and settings.max_concurrent_processing)
+        if not limited:
+            return await self.app(scope, receive, send)
+        # The ASGI event loop has no await between this check and increment.
+        if self.active >= settings.max_concurrent_processing:
+            response = JSONResponse({"detail": "The processor is busy. Please try again shortly."},
+                                    status_code=429, headers={"Retry-After": "10", "Cache-Control": "no-store"})
+            return await response(scope, receive, send)
+        self.active += 1
+        try:
+            return await self.app(scope, receive, send)
+        finally:
+            self.active -= 1

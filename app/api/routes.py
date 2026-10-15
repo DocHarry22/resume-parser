@@ -10,6 +10,7 @@ from app.models.scoring_models import ResumeScore, ScanMode
 from app.services.parsing_service import ParsingService
 from app.services.scoring_service import ScoringService, get_scoring_service
 from app.utils.document_loader import load_document
+from app.core.config import settings
 
 # Setup logging
 logger = logging.getLogger(__name__)
@@ -51,7 +52,8 @@ async def root():
 @router.get("/health")
 async def health_check():
     """Health check endpoint."""
-    return {"status": "healthy"}
+    return {"status": "healthy", "storage_mode": settings.storage_mode,
+            "spacy_model": settings.spacy_model, "server_persistence": settings.storage_mode == "guest"}
 
 
 @router.post("/parse-resume", response_model=Resume)

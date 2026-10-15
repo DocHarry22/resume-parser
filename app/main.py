@@ -6,7 +6,8 @@ import logging
 from contextlib import asynccontextmanager
 
 from app.core.config import settings
-from app.core.workspaces import WorkspaceMiddleware, RequestBodyLimitMiddleware
+from app.core.workspaces import WorkspaceMiddleware, RequestBodyLimitMiddleware, ProcessingLimitMiddleware
+from app.api.stateless_routes import router as stateless_router
 from app.api.ai_routes import router as ai_router
 from app.api.workspace_routes import router as workspace_router
 from app.api.routes import router
@@ -92,6 +93,7 @@ app = FastAPI(
 # Signed guest documents are isolated from every other browser workspace.
 app.add_middleware(RequestBodyLimitMiddleware)
 app.add_middleware(WorkspaceMiddleware)
+app.add_middleware(ProcessingLimitMiddleware)
 
 # Only explicitly configured frontend origins may read authenticated responses.
 app.add_middleware(
@@ -107,6 +109,7 @@ app.add_middleware(
 app.include_router(router, prefix="/api", tags=["Resume Processing"])
 app.include_router(builder_router, prefix="/api", tags=["Resume Builder"])
 app.include_router(cover_letter_router, prefix="/api", tags=["Cover Letter Builder"])
+app.include_router(stateless_router, prefix="/api")
 
 app.include_router(ai_router, prefix="/api")
 app.include_router(workspace_router, prefix="/api")

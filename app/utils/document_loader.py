@@ -12,7 +12,7 @@ from app.models.resume_models import RawDocument
 
 logger = logging.getLogger(__name__)
 MAX_FILE_SIZE = settings.max_file_size_mb * 1024 * 1024
-MAX_EXTRACTED_CHARACTERS = 250_000
+MAX_EXTRACTED_CHARACTERS = settings.max_extracted_characters
 ALLOWED_EXTENSIONS = {".pdf", ".docx", ".txt"}
 
 
@@ -28,7 +28,7 @@ def _extract(data: bytes, extension: str) -> RawDocument:
                 names = set(archive.namelist())
                 if not {"[Content_Types].xml", "word/document.xml"} <= names:
                     raise ValueError("The file is not a Word DOCX document")
-                if len(entries) > 2000 or sum(item.file_size for item in entries) > 100 * 1024 * 1024:
+                if len(entries) > 2000 or sum(item.file_size for item in entries) > settings.max_docx_expanded_mb * 1024 * 1024:
                     raise ValueError("The DOCX archive is too large to extract safely")
                 if any(item.file_size > 30 * 1024 * 1024 or item.flag_bits & 1 or
                        (item.file_size > 1024 * 1024 and item.file_size > 1000 * max(item.compress_size, 1))
@@ -69,7 +69,7 @@ async def load_document(upload_file: UploadFile) -> RawDocument:
                 break
             data.extend(chunk)
             if len(data) > MAX_FILE_SIZE:
-                raise HTTPException(status_code=413, detail="File too large. Maximum size: 25MB")
+                raise HTTPException(status_code=413, detail=f"File too large. Maximum size: {settings.max_file_size_mb}MB")
     except HTTPException:
         raise
     except Exception:
