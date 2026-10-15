@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { apiFetch } from '@/lib/apiConfig';
+import { apiFetch, IS_LOCAL_STORAGE } from '@/lib/apiConfig';
 import { Loader2, Sparkles } from 'lucide-react';
 
 export function SummaryAssistant({ text, onAccept }: { text: string; onAccept: (value: string) => void }) {
@@ -13,7 +13,7 @@ export function SummaryAssistant({ text, onAccept }: { text: string; onAccept: (
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
   useEffect(() => {
-    if (process.env.NEXT_PUBLIC_SITE_MODE === '1') { setAvailable(false); return; }
+    if (process.env.NEXT_PUBLIC_SITE_MODE === '1' || IS_LOCAL_STORAGE) { setAvailable(false); return; }
     let cancelled = false;
     apiFetch('/api/ai/status').then(r => r.ok ? r.json() : null).then(result => { if (!cancelled) setAvailable(result?.configured === true); }).catch(() => { if (!cancelled) setAvailable(false); });
     return () => { cancelled = true; };
@@ -30,7 +30,7 @@ export function SummaryAssistant({ text, onAccept }: { text: string; onAccept: (
     finally { setBusy(false); }
   };
   return <div className="rounded-xl border border-violet-100 bg-violet-50/40 p-4 space-y-3"><h3 className="font-semibold text-sm flex items-center gap-2 text-violet-900"><Sparkles size={16} /> Writing assistant</h3>
-    {available === null ? <p className="text-xs text-slate-500">Checking writing assistant availability…</p> : !available ? <p className="text-sm text-slate-600">{process.env.NEXT_PUBLIC_SITE_MODE === '1' ? <>AI writing is available through the <a className="underline text-blue-700" href="https://resume.docheng.co.za/builder" target="_blank" rel="noopener noreferrer">primary site</a>. </> : 'AI writing is unavailable because no provider is configured. '}You can continue editing your summary above.</p> : <>
+    {available === null ? <p className="text-xs text-slate-500">Checking writing assistant availability…</p> : !available ? <p className="text-sm text-slate-600">{process.env.NEXT_PUBLIC_SITE_MODE === '1' ? <>AI writing is available through the <a className="underline text-blue-700" href="https://resume.docheng.co.za/builder" target="_blank" rel="noopener noreferrer">primary site</a>. </> : IS_LOCAL_STORAGE ? 'External AI writing is disabled in this edition. ' : 'AI writing is unavailable because no provider is configured. '}You can continue editing your summary above.</p> : <>
       <label className="block text-sm">Rewrite style<select className="mt-1 w-full rounded-lg border p-2 bg-white" value={action} onChange={e => setAction(e.target.value)}><option value="professional">Professional tone</option><option value="improve">Improve clarity</option><option value="shorten">Shorten</option><option value="expand">Expand</option><option value="ats">Improve keyword clarity</option><option value="tailor">Tailor to a role</option></select></label>
       <label className="block text-sm">Role or job context (optional)<textarea className="mt-1 w-full rounded-lg border p-2 min-h-[80px]" value={context} onChange={e => setContext(e.target.value)} placeholder="Paste relevant job requirements. Review suggestions for accuracy." /></label>
       <label className="flex items-start gap-2 text-xs text-slate-600"><input type="checkbox" checked={consent} onChange={e => setConsent(e.target.checked)} className="mt-0.5" />I consent to sending this summary and the context above to the configured AI provider for a writing suggestion.</label>

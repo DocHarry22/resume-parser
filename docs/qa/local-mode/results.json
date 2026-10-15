@@ -1,0 +1,43 @@
+{
+  "startedAt": "2026-10-15T20:24:00.104Z",
+  "baseUrl": "http://127.0.0.1:3011",
+  "checks": [
+    "Resume starts blank, saves/reloads locally, exports current PDF/DOCX, and creates offline TXT/JSON backups",
+    "Import parses directly into a separate browser document, clears server identity, and survives reload",
+    "Cover letters save offline, reload, duplicate and delete locally; PDF/DOCX exports include unsaved content",
+    "Controlled export outage leaves edits intact and TXT remains available; mobile/desktop layouts fit",
+    "A fresh browser profile has an empty letter library",
+    "Legacy builder entry redirects to the browser editor with its template selection",
+    "Privacy backup includes local letters; deletion removes only app data and exposes no server controls",
+    "All observed API calls are stateless processing; no workspace cookie, persisted routes, or page errors"
+  ],
+  "apiRequests": [
+    {
+      "path": "/api/exports/resume/pdf",
+      "method": "POST"
+    },
+    {
+      "path": "/api/exports/resume/docx",
+      "method": "POST"
+    },
+    {
+      "path": "/api/exports/resume/import",
+      "method": "POST"
+    },
+    {
+      "path": "/api/exports/cover-letter/pdf",
+      "method": "POST"
+    },
+    {
+      "path": "/api/exports/cover-letter/docx",
+      "method": "POST"
+    },
+    {
+      "path": "/api/exports/cover-letter/pdf",
+      "method": "POST"
+    }
+  ],
+  "pageErrors": [],
+  "passed": true,
+  "finishedAt": "2026-10-15T20:24:24.642Z"
+}

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { IS_LOCAL_STORAGE } from '@/lib/apiConfig';
 import { JobDetails } from '@/types/coverLetter';
 
 interface JobDetailsFormProps {
@@ -100,7 +101,7 @@ export function JobDetailsForm({ jobDetails, onChange, onNext, onPrevious }: Job
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none"
         />
         <p className="mt-1 text-xs text-gray-500">
-          Our AI will analyze this to highlight matching keywords and suggest relevant content.
+          {IS_LOCAL_STORAGE ? 'Use these requirements to tailor your letter. Writing ideas are guided starting points and do not use external AI.' : 'Our AI will analyze this to highlight matching keywords and suggest relevant content.'}
         </p>
       </div>
 
@@ -111,8 +112,7 @@ export function JobDetailsForm({ jobDetails, onChange, onNext, onPrevious }: Job
           <div>
             <h4 className="font-medium text-teal-900 mb-1">Pro Tip</h4>
             <p className="text-sm text-teal-700">
-              Including the full job description helps our AI identify key requirements and
-              suggest relevant phrases that will resonate with the hiring manager.
+              {IS_LOCAL_STORAGE ? 'Read the job requirements carefully, then add honest examples of how your experience relates to the role.' : 'Including the full job description helps our AI identify key requirements and suggest relevant phrases that will resonate with the hiring manager.'}
             </p>
           </div>
         </div>

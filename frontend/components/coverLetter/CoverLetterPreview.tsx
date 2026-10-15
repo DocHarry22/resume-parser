@@ -4,6 +4,7 @@ import React, { useState, useRef } from 'react';
 import { CoverLetter } from '@/types/coverLetter';
 import { downloadBlob } from '@/lib/coverLetterApi';
 import { exportLetterDocx } from '@/lib/coverLetterExport';
+import { IS_LOCAL_STORAGE } from '@/lib/apiConfig';
 
 interface CoverLetterPreviewProps {
   coverLetter: CoverLetter;
@@ -97,12 +98,12 @@ export function CoverLetterPreview({ coverLetter, template }: CoverLetterPreview
         const blob = new Blob([textContent], { type: 'text/plain' });
         downloadBlob(blob, `${coverLetter.title || 'cover-letter'}.txt`);
       } else if (format === 'docx') {
-        const blob = await exportLetterDocx(coverLetter, generateTextContent());
+        const blob = IS_LOCAL_STORAGE ? await (await import('@/lib/coverLetterApi')).exportCoverLetterData(coverLetter, 'docx') : await exportLetterDocx(coverLetter, generateTextContent());
         downloadBlob(blob, `${coverLetter.title || 'cover-letter'}.docx`);
       }
     } catch (error) {
       console.error('Export failed:', error);
-      setExportError('Export failed. Your letter is still here. Please try again.');
+      setExportError('Export failed. Your letter is still here. Try again or download TXT to keep a local copy.');
     } finally {
       setIsExporting(false);
     }

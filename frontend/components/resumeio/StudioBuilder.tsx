@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ArrowDown, ArrowUp, Download, Eye, FileText, HelpCircle, Loader2, Palette, Redo2, Save, Settings2, Undo2, Upload, X } from 'lucide-react';
-import { apiFetch } from '@/lib/apiConfig';
+import { apiFetch, IS_LOCAL_STORAGE } from '@/lib/apiConfig';
 import { ResumeBuilder } from '@/types/builder';
 import { TemplateSelector } from './TemplateSelector';
 import { PersonalDetailsForm, SummaryForm, ExperienceForm, EducationForm, SkillsForm, ProjectsForm, CertificationsForm, LanguagesForm } from './SectionForms';
@@ -213,7 +213,8 @@ export function ResumeIOBuilder() {
         else if (id === 'summary') visible.summary = { summary: '' };
         else (visible as any)[id] = [];
       });
-      const response = await apiFetch(`/api/builder/export/${format}?page_size=${doc.design.pageSize}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(visible) });
+      const route = IS_LOCAL_STORAGE ? `/api/exports/resume/${format}` : `/api/builder/export/${format}`;
+      const response = await apiFetch(`${route}?page_size=${doc.design.pageSize}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(visible) });
       if (!response.ok) { const body = await response.json().catch(() => null); throw new Error(serviceError(body, `Export unavailable (${response.status}). Use Print / Save PDF for your chosen design.`)); }
       downloadBlob(await response.blob(), format);
       setNotice(`${format.toUpperCase()} downloaded in a readable document layout. Use Print / Save PDF to export the exact preview design.`);
@@ -232,11 +233,11 @@ export function ResumeIOBuilder() {
       if (/\.json$/i.test(file.name)) imported = normalizeDocument(JSON.parse(await file.text()));
       else {
         const data = new FormData(); data.append('file', file);
-        const response = await apiFetch('/api/builder/import', { method: 'POST', body: data });
+        const response = await apiFetch(IS_LOCAL_STORAGE ? '/api/exports/resume/import' : '/api/builder/import', { method: 'POST', body: data });
         const result = await response.json();
         if (!response.ok || !result.resume) throw new Error(serviceError(result, 'Could not read this resume. Try a text-based PDF, DOCX, or TXT file.'));
         imported = { ...createDocument(), resume: normalizeResume(result.resume) };
-        importedCloudId = result.resume.id || null;
+        importedCloudId = IS_LOCAL_STORAGE ? null : result.resume.id || null;
       }
       // Import creates a separate document, preserving the previously saved draft.
       if (current.current && !save()) throw new Error('Save your current work as a JSON backup before importing.');
@@ -271,6 +272,7 @@ export function ResumeIOBuilder() {
   };
   const sync = async () => {
     if (SITE_MODE) { window.open(PRIMARY_BUILDER, '_blank', 'noopener,noreferrer'); return; }
+    if (IS_LOCAL_STORAGE) { setNotice('Your resume saves only in this browser on this device. Download a JSON backup to keep another copy.'); return; }
     if (!doc || busy) return;
     const syncingDocumentId = doc.id;
     setBusy('sync'); setError('');
@@ -329,8 +331,9 @@ export function ResumeIOBuilder() {
     <div className="no-print flex flex-wrap gap-2 items-center px-4 sm:px-6 py-3 border-b bg-white">
       <input ref={fileInput} aria-label="Import resume" className="hidden" type="file" accept={SITE_MODE ? '.json' : '.pdf,.docx,.txt,.json'} onChange={e => importFile(e.target.files?.[0])} />
       <button className={button} disabled={Boolean(busy)} onClick={() => fileInput.current?.click()}>{busy === 'import' ? <Loader2 className="animate-spin" size={16} /> : <Upload size={16} />} {SITE_MODE ? 'Restore JSON backup' : 'Import resume'}</button>
-      <button className={button} disabled={Boolean(busy)} onClick={duplicate}>Duplicate</button><button className={button} onClick={() => exportFile('json')}>JSON backup</button><button className={button} disabled={Boolean(busy)} onClick={() => exportFile('docx')}>DOCX</button><button className={button} disabled={Boolean(busy)} onClick={() => exportFile('txt')}>TXT</button><button className={button} onClick={() => window.print()}>Print / Save PDF</button><button className={button} disabled={Boolean(busy)} onClick={sync}>{SITE_MODE ? 'Open primary workspace' : 'Save session copy'}</button><button className={`${button} ml-auto`} aria-label="Editor help" onClick={() => setShowHelp(true)}><HelpCircle size={16} /></button>
+      <button className={button} disabled={Boolean(busy)} onClick={duplicate}>Duplicate</button><button className={button} onClick={() => exportFile('json')}>JSON backup</button><button className={button} disabled={Boolean(busy)} onClick={() => exportFile('docx')}>DOCX</button><button className={button} disabled={Boolean(busy)} onClick={() => exportFile('txt')}>TXT</button><button className={button} onClick={() => window.print()}>Print / Save PDF</button>{!IS_LOCAL_STORAGE && <button className={button} disabled={Boolean(busy)} onClick={sync}>{SITE_MODE ? 'Open primary workspace' : 'Save session copy'}</button>}<button className={`${button} ml-auto`} aria-label="Editor help" onClick={() => setShowHelp(true)}><HelpCircle size={16} /></button>
     </div>
+    {IS_LOCAL_STORAGE && <p className="no-print border-b bg-teal-50 px-4 py-3 text-sm text-teal-950 sm:px-6">Saved only in this browser on this device. Download JSON backups before clearing browser data. Imports and PDF / DOCX exports send your document for processing without saving a server copy.</p>}
     {(notice || error) && <div className={`no-print px-6 py-3 text-sm flex items-center justify-between gap-3 ${error ? 'bg-red-50 text-red-800' : 'bg-emerald-50 text-emerald-800'}`} role={error ? 'alert' : 'status'}><span>{error || notice}</span><button aria-label="Dismiss message" onClick={() => { setError(''); setNotice(''); }}><X size={16} /></button></div>}
     <div className="no-print lg:hidden flex p-3 gap-2 bg-white border-b"><button className={`${button} flex-1 ${!mobilePreview ? 'border-blue-500 text-blue-600' : ''}`} onClick={() => setMobilePreview(false)}><FileText size={16} /> Edit</button><button className={`${button} flex-1 ${mobilePreview ? 'border-blue-500 text-blue-600' : ''}`} onClick={() => setMobilePreview(true)}><Eye size={16} /> Preview</button></div>
     <div className="studio-layout flex min-h-[calc(100vh-160px)]">

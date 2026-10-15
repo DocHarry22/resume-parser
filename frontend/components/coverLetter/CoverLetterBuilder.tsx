@@ -18,6 +18,7 @@ import { SenderInfoForm } from './forms/SenderInfoForm';
 import { RecipientInfoForm } from './forms/RecipientInfoForm';
 import { ContentEditor } from './forms/ContentEditor';
 import { CoverLetterPreview } from './CoverLetterPreview';
+import { IS_LOCAL_STORAGE } from '@/lib/apiConfig';
 
 interface CoverLetterBuilderProps {
   initialData?: CoverLetter;
@@ -113,7 +114,7 @@ export function CoverLetterBuilder({ initialData, onSave }: CoverLetterBuilderPr
     const timer = setTimeout(() => {
       try {
         localStorage.setItem(`resume-studio.letter-draft.${coverLetter.id || 'new'}`, JSON.stringify({ savedAt: new Date().toISOString(), letter: coverLetter }));
-        setDraftStatus('Draft saved on this browser. Use Save to update your letters.');
+        setDraftStatus(IS_LOCAL_STORAGE ? 'Draft saved only in this browser on this device. Use Save in browser to add it to your letters.' : 'Draft saved on this browser. Use Save to update your letters.');
       } catch { setDraftStatus('Unable to save a browser draft. Save or export to keep your work.'); }
     }, 600);
     return () => clearTimeout(timer);
@@ -241,7 +242,7 @@ export function CoverLetterBuilder({ initialData, onSave }: CoverLetterBuilderPr
                 disabled={isSaving}
                 className="px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 disabled:opacity-50"
               >
-                {isSaving ? 'Saving...' : 'Save Cover Letter'}
+                {isSaving ? 'Saving...' : IS_LOCAL_STORAGE ? 'Save in browser' : 'Save Cover Letter'}
               </button>
             </div>
           </div>
@@ -293,7 +294,7 @@ export function CoverLetterBuilder({ initialData, onSave }: CoverLetterBuilderPr
                 disabled={isSaving}
                 className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 text-sm font-medium disabled:opacity-50"
               >
-                {isSaving ? 'Saving...' : 'Save'}
+                {isSaving ? 'Saving...' : IS_LOCAL_STORAGE ? 'Save in browser' : 'Save'}
               </button>
             </div>
           </div>
@@ -301,6 +302,7 @@ export function CoverLetterBuilder({ initialData, onSave }: CoverLetterBuilderPr
       </header>
 
       {/* Progress Steps */}
+      {IS_LOCAL_STORAGE && <p className="mx-auto max-w-7xl bg-teal-50 px-4 py-3 text-sm text-teal-950">Your letter stays in this browser on this device. PDF and DOCX exports send the current content for processing without saving a server copy. Download a copy before clearing browser data.</p>}
       {draftStatus && <p role="status" className="mx-auto max-w-7xl px-4 py-2 text-xs text-gray-500">{draftStatus}</p>}
       {saveError && <p role="alert" className="mx-auto max-w-7xl bg-red-50 px-4 py-3 text-sm text-red-800">{saveError}</p>}
       <div className="bg-white border-b border-gray-200">

@@ -1,6 +1,8 @@
 /** One API origin for every frontend. Empty means the same-origin /api proxy. */
 export const API_BASE_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || '').replace(/\/+$/, '');
 export const IS_SITES = process.env.NEXT_PUBLIC_SITE_MODE === '1';
+/** Device-only libraries; the processing service never owns saved documents. */
+export const IS_LOCAL_STORAGE = !IS_SITES && process.env.NEXT_PUBLIC_STORAGE_MODE === 'local';
 
 export function apiUrl(route: string): string {
   const normalized = route.startsWith('/') ? route : '/' + route;
@@ -44,6 +46,12 @@ function ensureWorkspace(): Promise<Response> {
 export async function apiFetch(route: string, init: RequestInit = {}): Promise<Response> {
   // Static Sites must never initialize a guest session or contact the document service.
   if (IS_SITES) return new Response(JSON.stringify({detail: 'Open the main DoCHEng app for imports, AI and server workspace operations.'}), {status: 503, headers: {'Content-Type':'application/json'}});
+  if (IS_LOCAL_STORAGE) {
+    if (requiresWorkspace(route)) {
+      return new Response(JSON.stringify({ detail: 'Documents save only in this browser on this device. Server workspace storage is disabled.' }), { status: 409, headers: { 'Content-Type': 'application/json' } });
+    }
+    return fetch(apiUrl(route), { ...init, credentials: 'omit' });
+  }
   if (requiresWorkspace(route)) {
     const bootstrap = await ensureWorkspace();
     // Each concurrent caller needs its own response body for compatible error handling.

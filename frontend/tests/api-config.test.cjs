@@ -15,6 +15,7 @@ function library(fetch, options = {}) {
     process: { env: {
       NEXT_PUBLIC_API_BASE_URL: options.baseUrl || '',
       NEXT_PUBLIC_SITE_MODE: options.sites ? '1' : '',
+      NEXT_PUBLIC_STORAGE_MODE: options.local ? 'local' : '',
     } },
     navigator: options.locks ? { locks: options.locks } : {},
   };
@@ -178,4 +179,44 @@ test('public processing avoids bootstrap; protected calls preserve request input
   assert.equal(request.init.headers['X-Test'], 'preserved');
   assert.equal(request.init.credentials, 'include');
   assert.equal(api.apiUrl('/api/workspace'), 'https://api.example.test/api/workspace');
+});
+
+test('device-only mode blocks server libraries and AI before bootstrap or network, including deletes', async () => {
+  let fetched = 0, locked = 0;
+  const api = library(async () => { fetched += 1; throw new Error('Unexpected network'); }, {
+    local: true, locks: { request() { locked += 1; throw new Error('Unexpected bootstrap'); } },
+  });
+  for (const [route, method] of [
+    ['/api/workspace', 'GET'], ['/api/workspace?confirm=1', 'DELETE'],
+    ['/api/builder/create', 'POST'], ['/api/builder/list/all', 'GET'], ['/api/builder/id', 'PATCH'],
+    ['/api/cover-letters', 'GET'], ['/api/cover-letters/id', 'DELETE'], ['/api/cover-letters/ai/generate', 'POST'],
+    ['/api/ai/rewrite', 'POST'],
+  ]) {
+    const response = await api.apiFetch(route, { method });
+    assert.equal(response.status, 409, route);
+    assert.match((await response.json()).detail, /only in this browser/);
+  }
+  assert.equal(fetched, 0);
+  assert.equal(locked, 0);
+});
+
+test('device-only processing sends current input without cookies, bootstrap, or changing request options', async () => {
+  const calls = [];
+  const api = library(async (url, init) => { calls.push({ url, init }); return new Response('processed'); }, { local: true });
+  const controller = new AbortController();
+  await api.apiFetch('/api/exports/resume/pdf?page_size=A4', { method: 'POST', body: 'CURRENT', credentials: 'include', signal: controller.signal });
+  await api.apiFetch('/api/parse-resume', { method: 'POST', body: 'FILE' });
+  assert.equal(calls.length, 2);
+  assert.equal(calls[0].init.body, 'CURRENT');
+  assert.equal(calls[0].init.signal, controller.signal);
+  assert.ok(calls.every(call => call.init.credentials === 'omit'));
+  assert.ok(calls.every(call => !call.url.includes('/api/workspace')));
+});
+
+test('Sites guard takes precedence over device-only mode for processing and persisted calls', async () => {
+  let fetched = 0;
+  const api = library(async () => { fetched++; }, { local: true, sites: true });
+  assert.equal(api.IS_LOCAL_STORAGE, false);
+  for (const route of ['/api/exports/resume/pdf', '/api/workspace', '/api/cover-letters']) assert.equal((await api.apiFetch(route)).status, 503);
+  assert.equal(fetched, 0);
 });

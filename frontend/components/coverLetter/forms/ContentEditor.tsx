@@ -3,6 +3,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { CoverLetter, CoverLetterContent, AIContentResponse } from '@/types/coverLetter';
 import { generateContent } from '@/lib/coverLetterApi';
+import { IS_LOCAL_STORAGE } from '@/lib/apiConfig';
 
 interface ContentEditorProps {
   coverLetter: CoverLetter;
@@ -290,6 +291,7 @@ Example: "I am excited about the opportunity to bring my skills to ${coverLetter
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Write Your Letter</h2>
         <p className="text-gray-600">
           Use guided starting points, then add specific examples from your own experience. Check every claim before applying.
+          {IS_LOCAL_STORAGE && ' Writing ideas use guided templates; external AI is disabled in this edition.'}
         </p>
       </div>
 
