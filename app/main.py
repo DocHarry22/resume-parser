@@ -6,7 +6,7 @@ import logging
 from contextlib import asynccontextmanager
 
 from app.core.config import settings
-from app.core.workspaces import WorkspaceMiddleware, RequestBodyLimitMiddleware, ProcessingLimitMiddleware
+from app.core.workspaces import WorkspaceMiddleware, RequestBodyLimitMiddleware, ProcessingLimitMiddleware, DocumentResponsePrivacyMiddleware
 from app.api.stateless_routes import router as stateless_router
 from app.api.ai_routes import router as ai_router
 from app.api.workspace_routes import router as workspace_router
@@ -94,6 +94,8 @@ app = FastAPI(
 app.add_middleware(RequestBodyLimitMiddleware)
 app.add_middleware(WorkspaceMiddleware)
 app.add_middleware(ProcessingLimitMiddleware)
+# Wrap upload/rate/concurrency errors as well as successful document JSON.
+app.add_middleware(DocumentResponsePrivacyMiddleware)
 
 # Only explicitly configured frontend origins may read authenticated responses.
 app.add_middleware(

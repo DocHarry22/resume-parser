@@ -3,6 +3,9 @@ export const API_BASE_URL = (process.env.NEXT_PUBLIC_API_BASE_URL || '').replace
 export const IS_SITES = process.env.NEXT_PUBLIC_SITE_MODE === '1';
 /** Device-only libraries; the processing service never owns saved documents. */
 export const IS_LOCAL_STORAGE = !IS_SITES && process.env.NEXT_PUBLIC_STORAGE_MODE === 'local';
+/** The local processing profile accepts 2 MiB; the default guest API accepts 25 MiB. */
+export const DOCUMENT_UPLOAD_LIMIT_MB = IS_LOCAL_STORAGE ? 2 : 25;
+export const DOCUMENT_UPLOAD_LIMIT_BYTES = DOCUMENT_UPLOAD_LIMIT_MB * 1024 * 1024;
 
 export function apiUrl(route: string): string {
   const normalized = route.startsWith('/') ? route : '/' + route;
@@ -49,6 +52,12 @@ export async function apiFetch(route: string, init: RequestInit = {}): Promise<R
   if (IS_LOCAL_STORAGE) {
     if (requiresWorkspace(route)) {
       return new Response(JSON.stringify({ detail: 'Documents save only in this browser on this device. Server workspace storage is disabled.' }), { status: 409, headers: { 'Content-Type': 'application/json' } });
+    }
+    if (typeof FormData !== 'undefined' && init.body instanceof FormData) {
+      const file = init.body.get('file');
+      if (file && typeof file !== 'string' && file.size > DOCUMENT_UPLOAD_LIMIT_BYTES) {
+        return new Response(JSON.stringify({ detail: `Choose a document no larger than ${DOCUMENT_UPLOAD_LIMIT_MB} MB.` }), { status: 413, headers: { 'Content-Type': 'application/json' } });
+      }
     }
     return fetch(apiUrl(route), { ...init, credentials: 'omit' });
   }

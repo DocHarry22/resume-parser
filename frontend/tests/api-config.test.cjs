@@ -11,7 +11,7 @@ function library(fetch, options = {}) {
     compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 },
   }).outputText;
   const context = {
-    exports: {}, fetch, Response,
+    exports: {}, fetch, Response, FormData,
     process: { env: {
       NEXT_PUBLIC_API_BASE_URL: options.baseUrl || '',
       NEXT_PUBLIC_SITE_MODE: options.sites ? '1' : '',
@@ -219,4 +219,32 @@ test('Sites guard takes precedence over device-only mode for processing and pers
   assert.equal(api.IS_LOCAL_STORAGE, false);
   for (const route of ['/api/exports/resume/pdf', '/api/workspace', '/api/cover-letters']) assert.equal((await api.apiFetch(route)).status, 503);
   assert.equal(fetched, 0);
+});
+
+test('local processing rejects an upload one byte over 2 MiB before network, while the exact boundary is sent without credentials', async () => {
+  const calls = [];
+  const api = library(async (url, init) => { calls.push({url, init}); return new Response('processed'); }, { local: true });
+  const oversized = new FormData(); oversized.set('file', new Blob([new Uint8Array(2 * 1024 * 1024 + 1)]), 'resume.pdf');
+  for (const route of ['/api/parse-and-score?mode=ats', '/api/exports/resume/import']) {
+    const response = await api.apiFetch(route, {method: 'POST', body: oversized});
+    assert.equal(response.status, 413);
+    assert.match((await response.json()).detail, /2 MB/);
+  }
+  assert.equal(calls.length, 0);
+  const exact = new FormData(); exact.set('file', new Blob([new Uint8Array(2 * 1024 * 1024)]), 'resume.pdf');
+  assert.equal((await api.apiFetch('/api/exports/resume/import', {method: 'POST', body: exact})).status, 200);
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].init.body, exact);
+  assert.equal(calls[0].init.credentials, 'omit');
+});
+
+test('Sites guard still wins for oversized processing uploads; guest uploads keep their existing server-authoritative behavior', async () => {
+  let fetched = 0;
+  const upload = new FormData(); upload.set('file', new Blob([new Uint8Array(2 * 1024 * 1024 + 1)]), 'resume.pdf');
+  const sites = library(async () => { fetched++; throw new Error('Sites must stay offline'); }, {local: true, sites: true});
+  assert.equal((await sites.apiFetch('/api/parse-resume', {method: 'POST', body: upload})).status, 503);
+  assert.equal(fetched, 0);
+  const guest = library(async (_url, init) => { fetched++; assert.equal(init.body, upload); return new Response('guest'); });
+  assert.equal((await guest.apiFetch('/api/parse-resume', {method: 'POST', body: upload})).status, 200);
+  assert.equal(fetched, 1);
 });

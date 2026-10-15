@@ -17,6 +17,7 @@ from pathlib import Path
 from fastapi import HTTPException, Request
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import JSONResponse
+from starlette.datastructures import MutableHeaders
 
 from app.core.config import settings
 
@@ -183,6 +184,26 @@ def enforce_storage_limit(directory: Path, destination: Path, content_size: int)
     stored = sum(path.stat().st_size for path in candidates if path != destination and not path.is_symlink())
     if stored + content_size > 20 * 1024 * 1024:
         raise HTTPException(status_code=413, detail="This workspace has reached its 20MB storage limit.")
+
+
+class DocumentResponsePrivacyMiddleware:
+    """Prevent caching document-derived JSON, including admission/validation errors."""
+    paths = frozenset({"/api/parse-resume", "/api/score-resume", "/api/parse-and-score"})
+
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] != "http" or scope["path"].rstrip("/") not in self.paths:
+            return await self.app(scope, receive, send)
+
+        async def private_response(message):
+            if message["type"] == "http.response.start":
+                message = {**message, "headers": list(message.get("headers", []))}
+                MutableHeaders(scope=message)["Cache-Control"] = "no-store"
+            await send(message)
+
+        return await self.app(scope, receive, private_response)
 
 
 class RequestBodyLimitMiddleware:

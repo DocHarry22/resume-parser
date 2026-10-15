@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, ArrowDown, ArrowUp, Download, Eye, FileText, HelpCircle, Loader2, Palette, Redo2, Save, Settings2, Undo2, Upload, X } from 'lucide-react';
-import { apiFetch, IS_LOCAL_STORAGE } from '@/lib/apiConfig';
+import { apiFetch, IS_LOCAL_STORAGE, DOCUMENT_UPLOAD_LIMIT_BYTES } from '@/lib/apiConfig';
 import { ResumeBuilder } from '@/types/builder';
 import { TemplateSelector } from './TemplateSelector';
 import { PersonalDetailsForm, SummaryForm, ExperienceForm, EducationForm, SkillsForm, ProjectsForm, CertificationsForm, LanguagesForm } from './SectionForms';
@@ -225,7 +225,9 @@ export function ResumeIOBuilder() {
     if (!file || busy) return;
     if (SITE_MODE && !/\.json$/i.test(file.name)) { setError('This Sites edition restores JSON backups locally. Open the primary site for PDF, DOCX, and TXT parsing.'); return; }
     if (!/\.(pdf|docx|txt|json)$/i.test(file.name)) { setError('Choose a PDF, DOCX, TXT, or JSON resume file.'); return; }
-    if (file.size > 10 * 1024 * 1024) { setError('Choose a resume smaller than 10 MB.'); return; }
+    // JSON backups stay in the browser; processing uploads use the service limit.
+    const importLimit = /\.json$/i.test(file.name) ? 10 * 1024 * 1024 : Math.min(10 * 1024 * 1024, DOCUMENT_UPLOAD_LIMIT_BYTES);
+    if (file.size > importLimit) { setError(`Choose a ${/\.json$/i.test(file.name) ? 'JSON backup' : 'resume'} no larger than ${importLimit / 1024 / 1024} MB.`); return; }
     setBusy('import'); setError(''); setNotice('');
     try {
       let imported: SavedResume;

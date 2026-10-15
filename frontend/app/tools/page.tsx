@@ -12,6 +12,7 @@ import {
   FiMinimize2
 } from "react-icons/fi";
 import { parseAndScoreResume } from "@/lib/apiClient";
+import { DOCUMENT_UPLOAD_LIMIT_BYTES, DOCUMENT_UPLOAD_LIMIT_MB } from "@/lib/apiConfig";
 import { ParseAndScoreResponse, ScanMode as ScanModeType } from "@/lib/types";
 import { 
   compressFile, 
@@ -81,8 +82,8 @@ function ATSScannerView() {
     setResult(null);
     setCompressionResult(null);
 
-    const maxSize = 25 * 1024 * 1024; // 25MB (backend limit)
-    const targetSize = 15 * 1024 * 1024; // 15MB target for compression
+    const maxSize = DOCUMENT_UPLOAD_LIMIT_BYTES;
+    const targetSize = Math.min(15 * 1024 * 1024, maxSize);
     
     // Check if file needs compression
     if (selectedFile.size > targetSize && isCompressionSupported(selectedFile)) {
@@ -96,7 +97,7 @@ function ATSScannerView() {
         if (result.wasCompressed && result.compressedFile.size <= maxSize) {
           setFile(result.compressedFile);
         } else if (result.compressedFile.size > maxSize) {
-          setError(`File is still too large after compression (${formatFileSize(result.compressedFile.size)}). Maximum size is 25MB. Please use a smaller file.`);
+          setError(`File is still too large after compression (${formatFileSize(result.compressedFile.size)}). Maximum size is ${DOCUMENT_UPLOAD_LIMIT_MB} MB. Please use a smaller file.`);
           setFile(null);
         } else {
           setFile(result.compressedFile);
@@ -109,7 +110,7 @@ function ATSScannerView() {
         setCompressionProgress(null);
       }
     } else if (selectedFile.size > maxSize) {
-      setError(`File too large (${formatFileSize(selectedFile.size)}). Maximum size is 25MB.`);
+      setError(`File too large (${formatFileSize(selectedFile.size)}). Maximum size is ${DOCUMENT_UPLOAD_LIMIT_MB} MB.`);
       setFile(null);
     } else {
       setFile(selectedFile);
@@ -239,7 +240,7 @@ function ATSScannerView() {
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold text-white">Upload Resume</h2>
-                    <p className="text-sm text-gray-400">PDF or DOCX • Max 25MB</p>
+                    <p className="text-sm text-gray-400">PDF or DOCX • Max {DOCUMENT_UPLOAD_LIMIT_MB} MB</p>
                   </div>
                 </div>
 

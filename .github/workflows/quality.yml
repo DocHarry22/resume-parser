@@ -37,6 +37,11 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm test
+      - name: Verify isolated static release tooling
+        run: |
+          node --check ../scripts/build-hostinger.cjs
+          node --test ../scripts/build-hostinger.test.cjs
+          node ../scripts/build-hostinger.cjs --check
       - run: npm run build
   browser:
     runs-on: ubuntu-latest
