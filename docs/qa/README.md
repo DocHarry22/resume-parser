@@ -24,6 +24,8 @@ These results verify the repaired branch locally. They do not satisfy every comm
 | Hostinger inspection | PASS within recorded read-only scope | hostinger-inspection.json |
 | Render backend proposal | PASS: official schema, invalid-setting controls and application configuration; no resources created | render-candidate-validation.json |
 | Local backup verifier | PASS: 14 synthetic ZIP/TAR safety tests and CLI restore; actual production backup still absent | hostinger-backup-verifier-tests.json |
+| Free-profile Linux resource limits | PASS on af8b3ca: 512 MiB/no extra swap, 0.1 CPU; peak 310.9 MiB | low-memory-ci-verification.json |
+| Browser-local resume/letter profile | PASS: 22 Node tests, TypeScript, eight browser groups and six independently parsed exports | local-mode/README.md |
 | Source release archives | PASS: exact Git content/CRC/hash/path/size/exclusion verification | ../RELEASE_PACKAGING.md |
 | Hostinger upgrade/live-domain acceptance | BLOCKED: Python host and verified backups unresolved | ../DEPLOYMENT_REPORT.md |
 | Registered accounts, live AI provider, billing | FAIL/BLOCKED: not implemented or not configured | ../rea-resume-io/parity-matrix.md |

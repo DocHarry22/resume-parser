@@ -40,7 +40,9 @@ The stateless fixture has `STORAGE_MODE=local`, ephemeral tmpfs only, and no pro
 
 Results, limits, timings, cgroup peak, runtime log and final container state are uploaded as `small-model-512mb-evidence`. Label checks restrict cleanup to the job's disposable container. No image is pushed and no hosting service is created.
 
-**Linux resource-limit verification is pending until this workflow runs successfully on the exact reviewed commit.** Docker is unavailable locally. Even a passing synthetic job is not a production load test, a guarantee against memory exhaustion, or proof of permanent free hosting. Browser/proxy configuration and the provider's free-tier limits still need separate checks.
+**Actual Linux resource-limit verification PASS at revision `af8b3caf8d920d885d1985a1decbb0247120e3f1`.** The [dedicated CI job](https://github.com/DocHarry22/resume-parser/actions/runs/38801198972/job/116650371150) enforced 512 MiB memory, 512 MiB total memory-plus-swap and 0.1 CPU. The measured cgroup peak was **326,025,216 bytes (310.9 MiB)**, with no OOM kill and zero private data files. Real small-model NER, typical parsing/scoring/imports, all four export formats, and the 60,000-character rejection cap passed. The 55,000-character input parsed in **8.405 seconds**; its PDF had **13 pages** and retained the final content marker. All five application/default-container/low-memory CI jobs passed on that revision.
+
+The sanitized actual job-log record is `low-memory-ci-verification.json`, extracted through native pull-request diagnostics. Docker remains unavailable locally. This result is specific to the revision and synthetic workload above; later source revisions require their own checks. It is not a production load test, a guarantee against memory exhaustion, an actual Render deployment, or proof of permanent free hosting. Browser/proxy configuration and the provider's free-tier limits still need separate checks.
 
 ## Model quality and free-service boundaries
 

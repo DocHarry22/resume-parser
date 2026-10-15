@@ -1,0 +1,91 @@
+{
+  "status": "PASS",
+  "verifiedAt": "2026-10-15T20:31:43.242388+00:00",
+  "scope": "Independent parsing of current synthetic browser QA exports; no source changes or server restart",
+  "artifacts": [
+    {
+      "file": "docs/qa/local-mode/resume-current.pdf",
+      "bytes": 41406,
+      "sha256": "cd67f5e5f8ba951ed140bdcdfa1a3f597b741e2a01f257b91fbd4ffeaf9cfb76",
+      "pages": 1,
+      "selectableCharacters": 45,
+      "allPagesHaveSelectableText": true,
+      "pageSizesPoints": [
+        [
+          595.28,
+          841.89
+        ]
+      ],
+      "currentMarkers": {
+        "CURRENT UNSAVED EXPORT": true
+      }
+    },
+    {
+      "file": "docs/qa/local-mode/resume-current.docx",
+      "bytes": 36669,
+      "sha256": "b148f5d96229622827333bdaaa31b37bc01382efac7a12b9eed410d6bfb231de",
+      "editableParagraphs": 2,
+      "textCharacters": 44,
+      "currentMarkers": {
+        "CURRENT UNSAVED EXPORT": true
+      }
+    },
+    {
+      "file": "docs/qa/local-mode/resume-current.txt",
+      "bytes": 44,
+      "sha256": "e6368e43e7286d0b1513d4d49328e84e6dd8750b49b12fcaede4c81d31b7c8cd",
+      "textCharacters": 44,
+      "currentMarkers": {
+        "CURRENT UNSAVED EXPORT": true
+      }
+    },
+    {
+      "file": "docs/qa/local-mode/letter-current.pdf",
+      "bytes": 1763,
+      "sha256": "20067fbfe12eda14f1dbb0670e19f802b12ebf94c5f41f7eb17df01abf6cf47b",
+      "pages": 1,
+      "selectableCharacters": 122,
+      "allPagesHaveSelectableText": true,
+      "pageSizesPoints": [
+        [
+          612.0,
+          792.0
+        ]
+      ],
+      "currentMarkers": {
+        "Zoë Naïdø": true,
+        "UNSAVED LETTER EXPORT SENTINEL": true
+      }
+    },
+    {
+      "file": "docs/qa/local-mode/letter-current.docx",
+      "bytes": 36727,
+      "sha256": "47b5f06fe891baab51c709741feb975458db5233d6da81267cddff108fb80701",
+      "editableParagraphs": 14,
+      "textCharacters": 128,
+      "currentMarkers": {
+        "Zoë Naïdø": true,
+        "UNSAVED LETTER EXPORT SENTINEL": true
+      }
+    },
+    {
+      "file": "docs/qa/local-mode/letter-current.txt",
+      "bytes": 133,
+      "sha256": "d4dce724d9129f65338f775aa3b93d6eb4d75ddbe46564a25bec7be7159ce91d",
+      "textCharacters": 127,
+      "currentMarkers": {
+        "Zoë Naïdø": true,
+        "UNSAVED LETTER EXPORT SENTINEL": true
+      }
+    }
+  ],
+  "ownedStatelessData": {
+    "path": ".runtime/small-model-evaluation/stateless-data",
+    "exists": false,
+    "fileCount": 0
+  },
+  "limitations": [
+    "PDF text selection/content and DOCX paragraph editability verified; no additional visual layout claim.",
+    "Windows local fixture checks do not replace the separate Linux resource-limited CI evidence."
+  ]
+}

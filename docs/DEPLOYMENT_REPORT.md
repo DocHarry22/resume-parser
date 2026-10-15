@@ -12,6 +12,8 @@ Date: 15 October 2026. This is a substantial repair and upgrade of `DocHarry22/r
 
 ## Implemented behavior
 
+The current additional hosting route is a **browser-local document profile with a stateless Python processor**, following the user's rejection of the paid host and Supabase. It is described below and in [backend hosting](BACKEND_HOSTING.md). The existing durable guest profile remains available; its storage guarantees do not apply to the browser-local profile.
+
 The main frontend now provides an original split-screen editor with blank start, live preview, browser save/restore, six templates, design controls, sections, undo/redo, document library, imports, real document exports and provider-aware writing review. The career workspace provides local job tracking and backups plus cover-letter editing, guest saves and current-content exports. API calls use a configurable same-origin proxy and credentialed requests.
 
 The existing FastAPI/spaCy parser and scoring engine remain. Guest documents are isolated by signed HttpOnly cookies and stored atomically in bounded workspace directories. File validation, request/ZIP expansion limits, exact CORS, origin checks, server-only AI configuration, privacy export/delete and genuine selectable PDF/editable DOCX improve the repaired workflows.
@@ -45,7 +47,7 @@ These are production-configuration observations, not a successful deployment. Ho
 
 The user confirmed there is no verified current backup. The available Hostinger connector cannot create or download a complete regular-hosting backup, and Render's connected service-creation tool cannot attach a disk or create a Blueprint. [Backup instructions and local verification](BACKUP_RUNBOOK.md) keep restoration tests separate from production. The production cutover remains blocked until an actual backup and storage/API checks succeed.
 
-The user **declined the US$25.25/month proposal**. No paid resource was created. The reviewed configuration is archived at `deploy/render.paid-proposal.yaml`; the root `render.yaml` and active creation instructions were removed. It must not be activated under the current authorization. A no-additional-monthly-cost alternative is being evaluated against memory, durable storage, sleep and usage limits. No free backend has yet been created or verified.
+The user **declined the US$25.25/month proposal and Supabase**. No paid resource or database was created. The reviewed paid configuration is archived at `deploy/render.paid-proposal.yaml`; the root `render.yaml` and active creation instructions were removed. It must not be activated under the current authorization. The free-profile implementation and verification are described below. No free backend has yet been created or verified on Render.
 
 The Render candidate passed the current official schema, invalid-plan/zero-disk negative controls and actual application-setting checks; [validation record](qa/render-candidate-validation.json). The local backup verifier passed 14 synthetic ZIP/TAR tests on Python 3.12 and 3.13 and a separate CLI inventory/selected-restore smoke check. A focused independent review found and verified fixes for nested-site provenance and truncated ZIP filenames. The scoped live Hostinger metadata inventory returned all 90 entries, including 70 regular files totaling 67,455,572 bytes; [path/size baseline](qa/hostinger-static-tree.json). This is metadata and synthetic-tool verification, not an actual backup or provider deployment.
 
@@ -69,6 +71,19 @@ Rollback: retain the previous source revision/build configuration and an indepen
 Existing saved project identity: `appgprj_6ad0d2b816bc8191b1964e7bc48c2f93`, under `sites/careerforge/.openai/hosting.json`. The supported Sites plugin is used to push source, save a version, then publish privately. The deployment URL/version/status are added only from the native tool response.
 
 The same frontend supplies the branding, six templates and resume schema. Browser editing, recovery, JSON/TXT/editable DOCX, printing and local job tracking work. Sites' documented JavaScript/Workers runtime cannot execute this Python/spaCy server. Import/AI/server workspace actions are visibly guarded pending a verified canonical API. Shared account/document/scoring results are BLOCKED. No unverified cross-origin personal API is enabled.
+
+## Free processing profile
+
+`NEXT_PUBLIC_STORAGE_MODE=local` keeps resume and cover-letter libraries in the browser, including offline letter CRUD, reload/recovery and privacy export/deletion. Requests omit credentials and do not initialize a server workspace. Imports and requested downloads use `/api/exports/*` with the current document; the processor does not save a server copy. The Sites guard takes precedence and remains independent.
+
+`STORAGE_MODE=local` disables saved-document and paid-AI routes before any signing-key/cookie creation. Processing has bounded upload bodies, extracted text, PDF pages, DOCX expansion and export structure; the free proposal uses one processing request, a 30-second upload deadline and single-thread numerical libraries. CPU extraction/rendering runs outside the request loop in this profile. The optional `en_core_web_sm` image has a pinned/checksummed wheel. The default medium-model guest profile and command remain available.
+
+- All five remote checks passed on `af8b3ca`: the ordinary backend/frontend/browser/container checks and [the dedicated Linux memory check](https://github.com/DocHarry22/resume-parser/actions/runs/38801198972).
+- The free Docker image passed under 512 MiB with no extra swap and 0.1 CPU. Its recorded cgroup peak was 310.9 MiB; a 55,000-character import and 13-page PDF retained final content, with zero private data files and no workspace cookies. [Exact evidence](qa/low-memory-ci-verification.json).
+- Browser-local mode passed 22 frontend tests, TypeScript and eight real browser groups at 390/1440 pixels, including offline letters, current-content downloads, import identity, failure recovery and privacy. [Browser evidence](qa/local-mode/README.md). All six PDF/DOCX/TXT files passed independent content checks.
+- Independent review found and verified repairs for oversized job-description NLP, scalar/structural export bounds and an unfinished-upload deadline. The final focused stateless suite passed 22 tests; remote checks on the final hardening revision are recorded through the PR.
+
+The Render proposal selects the free compute plan, with no disk, external database or AI subscription. This removes a fixed monthly compute fee; provider bandwidth/build limits and idle sleep still apply. It does not provide cross-device accounts, cloud backups or a production uptime guarantee. A verified Render URL can be used directly by the canonical static frontend with exact CORS and omitted credentials, without DNS changes. The Hostinger files remain unchanged until a real current backup is verified. No root Blueprint is active.
 
 ## External-service evaluation
 
