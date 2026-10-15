@@ -77,6 +77,7 @@ jobs:
           npm --prefix frontend start -- --hostname 127.0.0.1 --port 3000 > /tmp/careerforge-frontend.log 2>&1 &
           python scripts/wait-for-fixtures.py
       - run: node scripts/site-smoke.cjs
+      - run: node frontend/tests/scanner-e2e.cjs
       - run: node frontend/tests/editor-e2e.cjs
       - run: node frontend/tests/editor-session-isolation.cjs
       - run: node docs/qa/career-e2e.cjs

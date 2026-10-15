@@ -615,8 +615,8 @@ function ScoreDashboard({ result, jobDescription }: { result: ParseAndScoreRespo
   // Use actual backend scores (convert to percentages)
   const atsCompliance = Math.round(score.ats_compliance);
   const readability = Math.round(score.readability);
-  const experienceQuality = score.experience !== null ? Math.round(score.experience) : null;
-  const skillsRelevance = score.skills !== null ? Math.round(score.skills) : null;
+  const experienceQuality = typeof score.experience === "number" && Number.isFinite(score.experience) ? Math.round(score.experience) : null;
+  const skillsRelevance = typeof score.skills === "number" && Number.isFinite(score.skills) ? Math.round(score.skills) : null;
   const layoutFormatting = Math.round(score.layout);
   const jobMatch = score.job_match !== null && score.job_match !== undefined ? Math.round(score.job_match) : null;
 
