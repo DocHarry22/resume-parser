@@ -7,7 +7,7 @@ These results verify the repaired branch locally. They do not satisfy every comm
 | Backend regression suite | PASS: 147 passed, 4 explicitly skipped; 6 dependency warnings | backend-report.md |
 | Backend compile/dependency consistency | PASS | backend-report.md |
 | Installed backend vulnerability audit | PASS: 87 dependencies, zero known advisories | backend-dependency-audit.json |
-| Backend Docker image/runtime/restart | PASS on remote CI source6740b2b; model, persistence, exports and isolation verified | container-ci-verification.json |
+| Backend Docker image/runtime/restart | PASS on remote CI source ce44344; model, persistence, exports and isolation verified | [run38793500523](https://github.com/DocHarry22/resume-parser/actions/runs/38793500523) |
 | Frontend types and primary production build | PASS after guest-session fix | frontend-build.log, primary-assets.json |
 | Frontend Node regression tests | PASS: 12 tests, plus career validation/export checks | editor-report.md, backend-report.md, frontend/tests |
 | Production dependency audit | PASS: zero known advisories | frontend-runtime-audit.json |
@@ -22,10 +22,12 @@ These results verify the repaired branch locally. They do not satisfy every comm
 | Sites local static behavior | PASS: 19 checks; zero API calls and zero browser errors | sites-results.json |
 | Native Sites publication | PASS: saved version2, owner-private, succeeded | ../../sites/deployment.json |
 | Hostinger inspection | PASS within recorded read-only scope | hostinger-inspection.json |
+| Render backend proposal | PASS: official schema, invalid-setting controls and application configuration; no resources created | render-candidate-validation.json |
+| Local backup verifier | PASS: 14 synthetic ZIP/TAR safety tests and CLI restore; actual production backup still absent | hostinger-backup-verifier-tests.json |
 | Source release archives | PASS: exact Git content/CRC/hash/path/size/exclusion verification | ../RELEASE_PACKAGING.md |
 | Hostinger upgrade/live-domain acceptance | BLOCKED: Python host and verified backups unresolved | ../DEPLOYMENT_REPORT.md |
 | Registered accounts, live AI provider, billing | FAIL/BLOCKED: not implemented or not configured | ../rea-resume-io/parity-matrix.md |
-| Remote GitHub Actions | See actual PR checks; local results are not remote CI | ../DEPLOYMENT_REPORT.md |
+| Remote GitHub Actions | PASS: all four jobs on ce44344; subsequent proposal/tooling commits checked separately | [run38793500523](https://github.com/DocHarry22/resume-parser/actions/runs/38793500523) |
 
 The final primary artifact has build ID `ZF0WlnsJ74-kmsE6Mk2tD`. Fourteen JS/CSS assets returned 200, the edition banner was absent, and its same-origin API proxy reached the intended local FastAPI fixture on port8001. A final editor rerun and six document-identity/privacy checks followed the last narrow fixes. Career/error-path checks passed on the preceding production build with the same shared API code; remote CI runs the complete suite on the final source. Failure screenshots remain as historical evidence; the final JSON and production-verification file identify passing reruns.
 
