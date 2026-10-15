@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { IS_LOCAL_STORAGE } from '@/lib/apiConfig';
 import { JobDetails } from '@/types/coverLetter';
 
 interface JobDetailsFormProps {
@@ -34,10 +35,11 @@ export function JobDetailsForm({ jobDetails, onChange, onNext, onPrevious }: Job
           </label>
           <input
             type="text"
+            aria-label="job title"
             value={jobDetails.job_title}
             onChange={(e) => handleChange('job_title', e.target.value)}
             placeholder="e.g., Senior Software Engineer"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
           />
         </div>
 
@@ -47,10 +49,11 @@ export function JobDetailsForm({ jobDetails, onChange, onNext, onPrevious }: Job
           </label>
           <input
             type="text"
+            aria-label="company name"
             value={jobDetails.company_name}
             onChange={(e) => handleChange('company_name', e.target.value)}
             placeholder="e.g., Google"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
           />
         </div>
 
@@ -60,10 +63,11 @@ export function JobDetailsForm({ jobDetails, onChange, onNext, onPrevious }: Job
           </label>
           <input
             type="text"
+            aria-label="department"
             value={jobDetails.department}
             onChange={(e) => handleChange('department', e.target.value)}
             placeholder="e.g., Engineering, Marketing"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
           />
         </div>
 
@@ -73,10 +77,11 @@ export function JobDetailsForm({ jobDetails, onChange, onNext, onPrevious }: Job
           </label>
           <input
             type="text"
+            aria-label="reference number"
             value={jobDetails.reference_number}
             onChange={(e) => handleChange('reference_number', e.target.value)}
             placeholder="e.g., JOB-2024-12345"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
           />
         </div>
       </div>
@@ -85,29 +90,29 @@ export function JobDetailsForm({ jobDetails, onChange, onNext, onPrevious }: Job
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
           Job Description
-          <span className="text-gray-500 font-normal ml-2">(Paste the full job posting for better AI suggestions)</span>
+          <span className="text-gray-500 font-normal ml-2">(Paste the full job posting for more relevant writing ideas)</span>
         </label>
         <textarea
+          aria-label="job description"
           value={jobDetails.job_description}
           onChange={(e) => handleChange('job_description', e.target.value)}
           placeholder="Paste the job description here. This helps us generate more relevant content suggestions and match your skills to the job requirements."
           rows={6}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none"
         />
         <p className="mt-1 text-xs text-gray-500">
-          Our AI will analyze this to highlight matching keywords and suggest relevant content.
+          {IS_LOCAL_STORAGE ? 'Use these requirements to tailor your letter. Writing ideas are guided starting points and do not use external AI.' : 'Our AI will analyze this to highlight matching keywords and suggest relevant content.'}
         </p>
       </div>
 
       {/* AI Tips */}
-      <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+      <div className="bg-teal-50 border border-teal-200 rounded-lg p-4">
         <div className="flex gap-3">
-          <div className="text-purple-600 text-xl">💡</div>
+          <div className="text-teal-600 text-xl">💡</div>
           <div>
-            <h4 className="font-medium text-purple-900 mb-1">Pro Tip</h4>
-            <p className="text-sm text-purple-700">
-              Including the full job description helps our AI identify key requirements and
-              suggest relevant phrases that will resonate with the hiring manager.
+            <h4 className="font-medium text-teal-900 mb-1">Pro Tip</h4>
+            <p className="text-sm text-teal-700">
+              {IS_LOCAL_STORAGE ? 'Read the job requirements carefully, then add honest examples of how your experience relates to the role.' : 'Including the full job description helps our AI identify key requirements and suggest relevant phrases that will resonate with the hiring manager.'}
             </p>
           </div>
         </div>
@@ -127,7 +132,7 @@ export function JobDetailsForm({ jobDetails, onChange, onNext, onPrevious }: Job
         <button
           onClick={onNext}
           disabled={!isValid}
-          className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          className="px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
         >
           Continue
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

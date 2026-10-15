@@ -66,10 +66,11 @@ export function TemplateSelector({
           {templates.map((template) => (
             <button
               key={template.id}
+              aria-pressed={selectedTemplate === template.id}
               onClick={() => onSelectTemplate(template.id)}
               className={`group relative rounded-xl overflow-hidden border-2 transition-all duration-200 ${
                 selectedTemplate === template.id
-                  ? 'border-purple-600 ring-2 ring-purple-200'
+                  ? 'border-teal-600 ring-2 ring-teal-200'
                   : 'border-gray-200 hover:border-gray-300'
               }`}
             >
@@ -117,7 +118,7 @@ export function TemplateSelector({
                     </p>
                   </div>
                   {selectedTemplate === template.id && (
-                    <div className="w-6 h-6 bg-purple-600 rounded-full flex items-center justify-center">
+                    <div className="w-6 h-6 bg-teal-600 rounded-full flex items-center justify-center">
                       <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
@@ -141,17 +142,18 @@ export function TemplateSelector({
       <div>
         <h3 className="text-lg font-semibold text-gray-900 mb-2">Select Writing Tone</h3>
         <p className="text-gray-600 text-sm mb-4">
-          This will influence the AI-generated content suggestions.
+          Choose the voice for your guided writing ideas.
         </p>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
           {TONES.map((tone) => (
             <button
               key={tone.value}
+              aria-pressed={selectedTone === tone.value}
               onClick={() => onSelectTone(tone.value)}
               className={`p-3 rounded-lg border-2 text-left transition-all duration-200 ${
                 selectedTone === tone.value
-                  ? 'border-purple-600 bg-purple-50'
+                  ? 'border-teal-600 bg-teal-50'
                   : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
               }`}
             >
@@ -168,7 +170,7 @@ export function TemplateSelector({
         <button
           onClick={onNext}
           disabled={!selectedTemplate}
-          className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          className="px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
         >
           Continue
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

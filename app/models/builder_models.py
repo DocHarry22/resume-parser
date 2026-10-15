@@ -29,8 +29,8 @@ class SectionType(str, Enum):
 
 class ContactInfo(BaseModel):
     """Contact information section."""
-    full_name: str = Field(..., min_length=1, max_length=100)
-    email: str = Field(..., pattern=r'^[\w\.-]+@[\w\.-]+\.\w+$')
+    full_name: str = Field(default="", max_length=100)
+    email: str = Field(default="", pattern=r'^$|^[\w\.-]+@[\w\.-]+\.\w+$')
     phone: Optional[str] = Field(None, max_length=20)
     location: Optional[str] = Field(None, max_length=100)
     linkedin: Optional[str] = Field(None, max_length=200)
@@ -53,7 +53,7 @@ class ContactInfo(BaseModel):
 
 class ProfessionalSummary(BaseModel):
     """Professional summary/objective section."""
-    summary: str = Field(..., min_length=50, max_length=500)
+    summary: str = Field(default="", max_length=5000)
     
     model_config = ConfigDict(
         json_schema_extra={
@@ -66,14 +66,14 @@ class ProfessionalSummary(BaseModel):
 
 class ExperienceEntry(BaseModel):
     """Single work experience entry."""
-    company: str = Field(..., min_length=1, max_length=100)
-    position: str = Field(..., min_length=1, max_length=100)
+    company: str = Field(default="", max_length=100)
+    position: str = Field(default="", max_length=100)
     location: Optional[str] = Field(None, max_length=100)
     start_date: str = Field(..., description="Format: YYYY-MM or 'Present'")
     end_date: Optional[str] = Field(None, description="Format: YYYY-MM or 'Present'")
     current: bool = Field(default=False)
-    description: List[str] = Field(default_factory=list, max_length=10)
-    achievements: List[str] = Field(default_factory=list, max_length=5)
+    description: List[str] = Field(default_factory=list, max_length=100)
+    achievements: List[str] = Field(default_factory=list, max_length=100)
     
     model_config = ConfigDict(
         json_schema_extra={
@@ -99,8 +99,8 @@ class ExperienceEntry(BaseModel):
 
 class EducationEntry(BaseModel):
     """Single education entry."""
-    institution: str = Field(..., min_length=1, max_length=100)
-    degree: str = Field(..., min_length=1, max_length=100)
+    institution: str = Field(default="", max_length=100)
+    degree: str = Field(default="", max_length=100)
     field_of_study: Optional[str] = Field(None, max_length=100)
     location: Optional[str] = Field(None, max_length=100)
     start_date: Optional[str] = Field(None, description="Format: YYYY-MM")
@@ -140,8 +140,8 @@ class SkillCategory(BaseModel):
 
 class CertificationEntry(BaseModel):
     """Single certification entry."""
-    name: str = Field(..., min_length=1, max_length=100)
-    issuer: str = Field(..., min_length=1, max_length=100)
+    name: str = Field(default="", max_length=200)
+    issuer: str = Field(default="", max_length=100)
     issue_date: Optional[str] = Field(None, description="Format: YYYY-MM")
     expiry_date: Optional[str] = Field(None, description="Format: YYYY-MM")
     credential_id: Optional[str] = Field(None, max_length=100)
@@ -162,14 +162,14 @@ class CertificationEntry(BaseModel):
 
 class ProjectEntry(BaseModel):
     """Single project entry."""
-    name: str = Field(..., min_length=1, max_length=100)
-    description: str = Field(..., min_length=10, max_length=300)
-    technologies: List[str] = Field(default_factory=list, max_length=10)
+    name: str = Field(default="", max_length=200)
+    description: str = Field(default="", max_length=10000)
+    technologies: List[str] = Field(default_factory=list, max_length=100)
     url: Optional[str] = Field(None, max_length=200)
     github: Optional[str] = Field(None, max_length=200)
     start_date: Optional[str] = Field(None, description="Format: YYYY-MM")
     end_date: Optional[str] = Field(None, description="Format: YYYY-MM")
-    highlights: List[str] = Field(default_factory=list, max_length=5)
+    highlights: List[str] = Field(default_factory=list, max_length=100)
     
     model_config = ConfigDict(
         json_schema_extra={

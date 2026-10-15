@@ -1,0 +1,22 @@
+{
+  "browser": {
+    "mode": "launch",
+    "executable_path": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe"
+  },
+  "start_url": {
+    "url": "https://resume.io/"
+  },
+  "actions": [
+    {
+      "step_id": "public-homepage",
+      "action": "wait_for_timeout",
+      "duration_ms": 250
+    }
+  ],
+  "capture": {
+    "at_end": [
+      "dom",
+      "url"
+    ]
+  }
+}

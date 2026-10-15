@@ -1,0 +1,39 @@
+{
+  "syntheticOnly": true,
+  "hostingOperationsPerformed": false,
+  "pythonVersion": "3.13.5",
+  "unitTests": {
+    "command": "python -m unittest discover -s scripts -p test_verify_hostinger_backup.py -v",
+    "count": 14,
+    "passed": true,
+    "exitCode": 0
+  },
+  "cliSmoke": {
+    "inventoryExitCode": 0,
+    "selectedRestoreExitCode": 0,
+    "verified": true,
+    "selectedFileCount": 4,
+    "expectedTreeChecked": true,
+    "unrelatedSiteExtracted": false
+  },
+  "scope": "Synthetic fixtures only; no backup creation, download, or server restore.",
+  "authoritativeSiteRoot": "domains/docheng.co.za/public_html/resume",
+  "realBackupProvidedOrVerified": false,
+  "independentPython312": {
+    "version": "3.12.14",
+    "tests": 14,
+    "passed": true,
+    "exitCode": 0,
+    "reportedBy": "parent agent"
+  },
+  "focusedSafetyReview": {
+    "findingsResolved": [
+      "authoritative account wrapper scope",
+      "raw ZIP filename normalization/truncation"
+    ],
+    "regressionTests": 2,
+    "passed": true,
+    "remainingBlockers": false,
+    "reportedBy": "backend audit agent"
+  }
+}

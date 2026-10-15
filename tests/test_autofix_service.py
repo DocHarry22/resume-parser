@@ -87,6 +87,7 @@ def test_generate_fixes_for_missing_summary(autofix_service):
     fix = summary_fixes[0]
     assert fix.action == FixAction.ADD
     assert fix.section == "summary"
+    assert fix.auto_applicable is False  # Placeholder claims require manual review.
     assert fix.suggested_value is not None
     assert "Engineer" in fix.suggested_value  # Should use job title
 

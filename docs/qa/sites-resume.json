@@ -1,0 +1,53 @@
+{
+  "id": "2348abc0-7742-4540-9011-18f94f63f635",
+  "resume": {
+    "title": "Sites QA resume",
+    "contact": {
+      "full_name": "Sites QA Zoë",
+      "email": "sites-qa@example.test",
+      "phone": "",
+      "location": "",
+      "linkedin": "",
+      "github": "",
+      "website": "",
+      "photo": ""
+    },
+    "summary": {
+      "summary": "STATIC EXPORT SENTINEL. I build clear interfaces and dependable tools."
+    },
+    "experience": [],
+    "education": [],
+    "skills": [],
+    "certifications": [],
+    "projects": [],
+    "achievements": [],
+    "languages": [],
+    "volunteer": [],
+    "publications": [],
+    "custom_sections": {}
+  },
+  "template": "modern",
+  "colorTheme": "blue",
+  "design": {
+    "font": "sans",
+    "fontSize": 12,
+    "lineHeight": 1.5,
+    "spacing": 24,
+    "pageSize": "A4",
+    "sectionOrder": [
+      "summary",
+      "experience",
+      "education",
+      "skills",
+      "projects",
+      "certifications",
+      "languages",
+      "achievements",
+      "volunteer",
+      "publications",
+      "custom"
+    ],
+    "hiddenSections": []
+  },
+  "updatedAt": "2026-10-15T19:12:12.408Z"
+}

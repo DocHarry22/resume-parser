@@ -112,7 +112,8 @@ class CoverLetterUpdate(BaseModel):
 
 class AIContentRequest(BaseModel):
     """Request for AI-generated content suggestions."""
-    section: str  # opening, body, closing
+    section: str = Field(..., pattern=r"^(opening|body|closing)$")
+    use_ai: bool = False
     job_title: str
     job_description: str = ""
     company_name: str = ""
@@ -124,6 +125,7 @@ class AIContentRequest(BaseModel):
 class AIContentResponse(BaseModel):
     """Response with AI-generated content."""
     suggestions: List[str]
+    provider: str = "guided"
     section: str
     tips: List[str] = Field(default_factory=list)
     keywords: List[str] = Field(default_factory=list)

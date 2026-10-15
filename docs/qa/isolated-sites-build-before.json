@@ -1,0 +1,112 @@
+{
+  "phase": "before",
+  "source_commit": "14dce884309c0f9dfc83d01471bedec7778f91c9",
+  "primary_build_id": "ZF0WlnsJ74-kmsE6Mk2tD",
+  "project_id": "appgprj_6ad0d2b816bc8191b1964e7bc48c2f93",
+  "resolved_sites_target": "C:\\Users\\game\\OneDrive\\Desktop\\Personal\\webapps\\resume_parser\\.mission-work\\sites\\careerforge",
+  "resolved_dist": "C:\\Users\\game\\OneDrive\\Desktop\\Personal\\webapps\\resume_parser\\.mission-work\\sites\\careerforge\\dist",
+  "primary_assets": [
+    {
+      "path": "/_next/static/chunks/255-b1e2483a7e02feee.js",
+      "status": 200,
+      "bytes": 174133,
+      "sha256": "6fae740f3b027bbe7ef3763f726c42e8b2232e55889caae96c7354b30646e352"
+    },
+    {
+      "path": "/_next/static/chunks/411-48a8d4e45647d482.js",
+      "status": 200,
+      "bytes": 121204,
+      "sha256": "2312622557e26e72d3f76d29b00b56072ce5f55ecaa439a88c5c86ea834e259f"
+    },
+    {
+      "path": "/_next/static/chunks/4bd1b696-c023c6e3521b1417.js",
+      "status": 200,
+      "bytes": 173019,
+      "sha256": "2c752a401191671d5bbbe7514f5828bbb0a7cc50bfbe77ddaf1b1ccba4412ed2"
+    },
+    {
+      "path": "/_next/static/chunks/577-ee82eb3e37d99510.js",
+      "status": 200,
+      "bytes": 84234,
+      "sha256": "0398931ed21870d133ef6cb0b4818b31a218ae6da7c2886eb6e37c3ab97c65b8"
+    },
+    {
+      "path": "/_next/static/chunks/619-ba102abea3e3d0e4.js",
+      "status": 200,
+      "bytes": 8537,
+      "sha256": "9541ff3dd96091ca8bebc305fb72eca68e6015a177e1d3b4aa72859dc52fbdd7"
+    },
+    {
+      "path": "/_next/static/chunks/802-263b48dcb6478a55.js",
+      "status": 200,
+      "bytes": 10046,
+      "sha256": "519966a249707c98f7ec621fdfe78544c6b214291867d8b295ca9f9e304573f4"
+    },
+    {
+      "path": "/_next/static/chunks/804-fe9dbecf49d9ebbb.js",
+      "status": 200,
+      "bytes": 12842,
+      "sha256": "293da370fbd7557b84907d22c5b3b2ad7f70f91fb44f13a1b86411934bcc16f9"
+    },
+    {
+      "path": "/_next/static/chunks/app/builder/page-d9737c65e307e7bd.js",
+      "status": 200,
+      "bytes": 392,
+      "sha256": "2ec07e635236e9d8572f18bfb99e098f26a48828317b9511ed845700afa6cd7a"
+    },
+    {
+      "path": "/_next/static/chunks/app/dashboard/page-058bf2e6a12740ee.js",
+      "status": 200,
+      "bytes": 21401,
+      "sha256": "452a81b05b3dc2eeb720fd37b773b6bd99ec5f8687de40b88e2180d0babe0be6"
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-00d82211d3b7b5b9.js",
+      "status": 200,
+      "bytes": 4697,
+      "sha256": "553352137145bb212cbe70f7d938428e2f5f6934bcc7862f030345c8bdd5f563"
+    },
+    {
+      "path": "/_next/static/chunks/app/page-760494460b85fcbc.js",
+      "status": 200,
+      "bytes": 4144,
+      "sha256": "ebea8a1512aa14a34996e6e63d0680d06bb37e40617bc68469f79b942dfb5946"
+    },
+    {
+      "path": "/_next/static/chunks/app/tools/page-9fcbdbd17163f0a3.js",
+      "status": 200,
+      "bytes": 40240,
+      "sha256": "34c434601863c40cf25b0415d34a76039ae5fd71c8f6c26699dac63b1376c954"
+    },
+    {
+      "path": "/_next/static/chunks/ee560e2c-26709f512ca35dda.js",
+      "status": 200,
+      "bytes": 7171,
+      "sha256": "b5e77644eea5c8de332db7b6d2c6fcc6ae4ec49c9c6603984d58df01a0533969"
+    },
+    {
+      "path": "/_next/static/chunks/main-app-ba138fe498d87634.js",
+      "status": 200,
+      "bytes": 557,
+      "sha256": "a52c06c5ec22fbcf16e30c9ac2b5f28794e393a8f46a87222eb4e1c3080fcc75"
+    },
+    {
+      "path": "/_next/static/chunks/polyfills-42372ed130431b0a.js",
+      "status": 200,
+      "bytes": 112594,
+      "sha256": "0973c1d64c88adc8e3c950410cb58b288f72118d5965b78049438deb8f2f9683"
+    },
+    {
+      "path": "/_next/static/chunks/webpack-1017649d66d1259f.js",
+      "status": 200,
+      "bytes": 3483,
+      "sha256": "59de08fa49fef9e749b061bcac79bd3af994ee3d3ed608929c7261b4d18e902f"
+    },
+    {
+      "path": "/_next/static/css/4b2ecf2d0e859776.css",
+      "status": 200,
+      "bytes": 78136,
+      "sha256": "266d443ec4d5100a712a1f393377402415179c4da1ebbda7f5c4b369076ca524"
+    }
+  ]
+}

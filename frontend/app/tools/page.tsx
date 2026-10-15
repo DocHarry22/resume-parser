@@ -1,6 +1,9 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, Suspense } from "react";
+import Link from 'next/link';
+import TemplateGallery from '../components/TemplateGallery';
+import { ResumeIOBuilder } from '@/components/resumeio';
 import { useSearchParams } from "next/navigation";
 import { 
   FiUpload, FiFile, FiCheck, FiAlertCircle, FiChevronDown, FiChevronUp, 
@@ -9,6 +12,7 @@ import {
   FiMinimize2
 } from "react-icons/fi";
 import { parseAndScoreResume } from "@/lib/apiClient";
+import { DOCUMENT_UPLOAD_LIMIT_BYTES, DOCUMENT_UPLOAD_LIMIT_MB } from "@/lib/apiConfig";
 import { ParseAndScoreResponse, ScanMode as ScanModeType } from "@/lib/types";
 import { 
   compressFile, 
@@ -23,18 +27,25 @@ type ScanMode = ScanModeType;
 type Industry = "default" | "engineering" | "it-software" | "finance" | "healthcare";
 
 export default function ToolsPage() {
+  return <Suspense fallback={<div className="pt-28 px-6" role="status">Loading your workspace…</div>}><ToolsContent /></Suspense>;
+}
+
+function ToolsContent() {
   const searchParams = useSearchParams();
   const view = searchParams.get("view");
 
   if (view === "scanner") {
     return <ATSScannerView />;
   }
+  if (view === 'builder' || view === 'cv-builder') return <ResumeIOBuilder />;
+  if (view === 'templates' || view === 'cv-templates') return <main className="pt-16"><TemplateGallery /></main>;
 
   return (
     <div className="min-h-screen pt-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-12">
-        <h1 className="text-3xl font-bold text-gray-900">Tools</h1>
-        <p className="text-gray-600 mt-2">Select a tool from the navigation</p>
+        <h1 className="text-3xl font-bold text-gray-900">Your career workspace</h1>
+        <p className="text-gray-600 mt-2">Choose the next step for your application.</p>
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{[['Build or import a CV','/builder'],['Check a resume','/resume-scanner'],['Write a cover letter','/cover-letter'],['My saved documents','/dashboard'],['Track job applications','/job-tracker'],['CV writing guide','/resources/guides']].map(([label,href])=><Link key={href} href={href} className="rounded-2xl border bg-white p-6 font-medium text-teal-800 hover:border-teal-400">{label} →</Link>)}</div>
       </div>
     </div>
   );
@@ -71,8 +82,8 @@ function ATSScannerView() {
     setResult(null);
     setCompressionResult(null);
 
-    const maxSize = 25 * 1024 * 1024; // 25MB (backend limit)
-    const targetSize = 15 * 1024 * 1024; // 15MB target for compression
+    const maxSize = DOCUMENT_UPLOAD_LIMIT_BYTES;
+    const targetSize = Math.min(15 * 1024 * 1024, maxSize);
     
     // Check if file needs compression
     if (selectedFile.size > targetSize && isCompressionSupported(selectedFile)) {
@@ -86,7 +97,7 @@ function ATSScannerView() {
         if (result.wasCompressed && result.compressedFile.size <= maxSize) {
           setFile(result.compressedFile);
         } else if (result.compressedFile.size > maxSize) {
-          setError(`File is still too large after compression (${formatFileSize(result.compressedFile.size)}). Maximum size is 25MB. Please use a smaller file.`);
+          setError(`File is still too large after compression (${formatFileSize(result.compressedFile.size)}). Maximum size is ${DOCUMENT_UPLOAD_LIMIT_MB} MB. Please use a smaller file.`);
           setFile(null);
         } else {
           setFile(result.compressedFile);
@@ -99,7 +110,7 @@ function ATSScannerView() {
         setCompressionProgress(null);
       }
     } else if (selectedFile.size > maxSize) {
-      setError(`File too large (${formatFileSize(selectedFile.size)}). Maximum size is 25MB.`);
+      setError(`File too large (${formatFileSize(selectedFile.size)}). Maximum size is ${DOCUMENT_UPLOAD_LIMIT_MB} MB.`);
       setFile(null);
     } else {
       setFile(selectedFile);
@@ -203,14 +214,14 @@ function ATSScannerView() {
             ATS Resume Scanner
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-            Beat the bots. Get instant, actionable feedback with our enterprise-grade resume analysis engine.
+            Get explainable feedback on your writing and structure. Scores guide improvements; they do not predict an employer’s hiring decision.
           </p>
           
           {/* Stats Row */}
           <div className="flex flex-wrap justify-center gap-8 mt-10">
-            <StatBadge icon={<FiCpu size={18} />} label="98% ATS Accuracy" />
-            <StatBadge icon={<FiActivity size={18} />} label="50+ Metrics Analyzed" />
-            <StatBadge icon={<FiEye size={18} />} label="Recruiter Insights" />
+            <StatBadge icon={<FiCpu size={18} />} label="Explainable criteria" />
+            <StatBadge icon={<FiActivity size={18} />} label="Structured feedback" />
+            <StatBadge icon={<FiEye size={18} />} label="Review before applying" />
           </div>
         </div>
 
@@ -229,7 +240,7 @@ function ATSScannerView() {
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold text-white">Upload Resume</h2>
-                    <p className="text-sm text-gray-400">PDF or DOCX • Max 25MB</p>
+                    <p className="text-sm text-gray-400">PDF or DOCX • Max {DOCUMENT_UPLOAD_LIMIT_MB} MB</p>
                   </div>
                 </div>
 
@@ -604,8 +615,8 @@ function ScoreDashboard({ result, jobDescription }: { result: ParseAndScoreRespo
   // Use actual backend scores (convert to percentages)
   const atsCompliance = Math.round(score.ats_compliance);
   const readability = Math.round(score.readability);
-  const experienceQuality = score.experience !== null ? Math.round(score.experience) : null;
-  const skillsRelevance = score.skills !== null ? Math.round(score.skills) : null;
+  const experienceQuality = typeof score.experience === "number" && Number.isFinite(score.experience) ? Math.round(score.experience) : null;
+  const skillsRelevance = typeof score.skills === "number" && Number.isFinite(score.skills) ? Math.round(score.skills) : null;
   const layoutFormatting = Math.round(score.layout);
   const jobMatch = score.job_match !== null && score.job_match !== undefined ? Math.round(score.job_match) : null;
 

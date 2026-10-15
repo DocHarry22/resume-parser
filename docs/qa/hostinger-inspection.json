@@ -1,0 +1,36 @@
+{
+  "observed_on": "2026-10-15",
+  "canonical_domain": "https://resume.docheng.co.za/",
+  "native_tools_available": true,
+  "plan": "cloud_economy_v3",
+  "plan_status": "active",
+  "website_type": "other",
+  "static_export_observed": true,
+  "inventory_entries": 90,
+  "inventory_files": 70,
+  "git_repositories": [],
+  "git_auto_deployment": {
+    "installation_uuid": null,
+    "is_enabled": null,
+    "owner": null,
+    "repository": null,
+    "branch": null,
+    "directory": null
+  },
+  "node_builds": [],
+  "node_environment_keys": [],
+  "node_build_settings_status": 404,
+  "vps_instances": [],
+  "public_cover_backend_reference": "https://your-backend-domain.com",
+  "api_reverse_proxy_in_htaccess": false,
+  "production_backup_verified": false,
+  "production_backend_verified": false,
+  "hosting_writes_performed": false,
+  "dns_changed": false,
+  "dns_zone_read": true,
+  "resume_dns": {
+    "type": "ALIAS",
+    "target": "resume.docheng.co.za.cdn.hstgr.net.",
+    "ttl": 300
+  }
+}

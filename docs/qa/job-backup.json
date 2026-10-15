@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "exportedAt": "2026-10-15T18:55:21.994Z",
+  "jobs": [
+    {
+      "id": "f47b95c3-3e54-4154-b333-5b351ef57875",
+      "company": "Evidence Company",
+      "role": "Senior platform engineer QA",
+      "url": "https://example.com/jobs/platform",
+      "stage": "Interview",
+      "appliedOn": "2026-10-12",
+      "followUpOn": "2026-10-14",
+      "notes": "Follow up with the recruiter. Unicode: Zoë.",
+      "updatedAt": "2026-10-15T18:55:20.382Z"
+    }
+  ]
+}

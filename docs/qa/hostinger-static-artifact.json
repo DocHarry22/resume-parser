@@ -1,0 +1,23 @@
+{
+  "status": "PREPARED_NOT_DEPLOYED",
+  "sourceCommit": "194f9e8798fb04c6ebe9bf4ffe0e940cf98bcea5",
+  "edition": "primary-browser-local",
+  "apiOrigin": "https://careerforge-resume-api-free.onrender.com",
+  "releaseDirectory": ".runtime/hostinger-release/194f9e8798fb04c6ebe9bf4ffe0e940cf98bcea5",
+  "archive": "careerforge-hostinger-static-194f9e8798fb.zip",
+  "zipBytes": 475906,
+  "uncompressedBytes": 1634050,
+  "fileCount": 66,
+  "zipSha256": "4a6f5a9bdbf367fd8b6f8f9ba8b53c5716ac14ee4004971544f24e19a29ed877",
+  "manifestSha256": "9911307c6adb170742c902a4e549066458f7b78e46e0c5b2696dd0b93d272fc2",
+  "build": "PASS: isolated optimized production compilation, lint/typecheck, static page generation and export",
+  "independentInspection": "PASS: Python zipfile/hashlib, exact ZIP/dist/per-file manifest, required root/routes/assets, no private files or source/dependencies",
+  "browserVerification": "PASS: seven groups, four actual live API POSTs, 275 canonical responses fulfilled locally with verified commit markers, zero page errors/violations/missing files; local artifact at simulated canonical origin, not a deployed-site test",
+  "downloadVerification": "PASS: independent parsing of actual current-content resume and letter PDFs, selectable text, Unicode and nonblank pages; hostinger-static/independent-export-verification.json",
+  "deployedBackendRevision": "368088a3313a8263d8a94f1dbfa31c59ed24a011",
+  "backendInputsUnchangedByFrontendFix": true,
+  "primaryIntermediateOutputModified": false,
+  "sitesIdentityUsed": false,
+  "hostingerFilesUploadedOrReplaced": false,
+  "backupRequiredBeforeCutover": true
+}

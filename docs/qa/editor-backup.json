@@ -1,0 +1,55 @@
+{
+  "id": "b91b663b-6262-4dc5-be99-ac3f3270ed91",
+  "resume": {
+    "title": "Tailored QA resume (copy)",
+    "contact": {
+      "full_name": "QA Candidate",
+      "email": "qa@example.test",
+      "phone": "+27 21 555 0123",
+      "location": "",
+      "linkedin": "",
+      "github": "",
+      "website": "",
+      "photo": ""
+    },
+    "summary": {
+      "summary": "QA engineer with experience building reliable services, accessible interfaces, and clear documentation. Led practical improvements to release quality and helped teams ship dependable software."
+    },
+    "experience": [],
+    "education": [],
+    "skills": [],
+    "certifications": [],
+    "projects": [],
+    "achievements": [],
+    "languages": [],
+    "volunteer": [],
+    "publications": [],
+    "custom_sections": {
+      "Licences": "Valid professional licence"
+    }
+  },
+  "template": "elegant",
+  "colorTheme": "blue",
+  "design": {
+    "font": "sans",
+    "fontSize": 14,
+    "lineHeight": 1.5,
+    "spacing": 24,
+    "pageSize": "Letter",
+    "sectionOrder": [
+      "summary",
+      "experience",
+      "education",
+      "skills",
+      "projects",
+      "certifications",
+      "languages",
+      "achievements",
+      "volunteer",
+      "publications",
+      "custom"
+    ],
+    "hiddenSections": []
+  },
+  "updatedAt": "2026-10-15T19:09:01.981Z"
+}

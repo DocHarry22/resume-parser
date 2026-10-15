@@ -1,0 +1,496 @@
+{
+  "status": "PASS",
+  "startedAt": "2026-10-15T20:52:31.593463+00:00",
+  "baseUrl": "https://careerforge-resume-api-free.onrender.com",
+  "canonicalOrigin": "https://resume.docheng.co.za",
+  "reportedLiveDeploymentRevision": "368088a3313a8263d8a94f1dbfa31c59ed24a011",
+  "revisionEvidence": "Parent verified the live Render deployment natively; /api/health does not expose its commit.",
+  "fixture": {
+    "syntheticOnly": true,
+    "utf8Bytes": 296,
+    "realPrivateDataUsed": false
+  },
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "requestOrigin": "https://resume.docheng.co.za",
+      "status": 200,
+      "seconds": 0.844,
+      "bytes": 101,
+      "sha256": "f42e843439942fba576f4e766e66a10a800d108be8c56b1051b79ca445eb9b9f",
+      "setCookiePresent": false,
+      "headers": {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "https://resume.docheng.co.za",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Expose-Headers": "Content-Disposition",
+        "Vary": "Origin",
+        "CF-Cache-Status": "DYNAMIC"
+      }
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/exports/resume/pdf",
+      "requestOrigin": "https://resume.docheng.co.za",
+      "status": 200,
+      "seconds": 0.422,
+      "bytes": 2,
+      "sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3",
+      "setCookiePresent": false,
+      "headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Access-Control-Allow-Origin": "https://resume.docheng.co.za",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, PATCH, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Accept, Accept-Language, Authorization, Content-Language, Content-Type",
+        "Vary": "Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Request-Private-Network",
+        "CF-Cache-Status": "DYNAMIC"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/workspace",
+      "requestOrigin": "https://resume.docheng.co.za",
+      "status": 200,
+      "seconds": 0.797,
+      "bytes": 155,
+      "sha256": "5481018a8a4e8b54e747eb9ecb3f97869d88869d0874aaa5d86b03e1709399d1",
+      "setCookiePresent": false,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Access-Control-Allow-Origin": "https://resume.docheng.co.za",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Expose-Headers": "Content-Disposition",
+        "Vary": "Origin",
+        "CF-Cache-Status": "DYNAMIC"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/builder/list/all",
+      "requestOrigin": "https://resume.docheng.co.za",
+      "status": 503,
+      "seconds": 0.438,
+      "bytes": 87,
+      "sha256": "133ca4203debb9ce8ac30ae1fb74e4ef1ef00b71b7c9e6d6f1eff29aebd1199f",
+      "setCookiePresent": false,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Access-Control-Allow-Origin": "https://resume.docheng.co.za",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Expose-Headers": "Content-Disposition",
+        "Vary": "Origin",
+        "CF-Cache-Status": "DYNAMIC"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/cover-letters",
+      "requestOrigin": "https://resume.docheng.co.za",
+      "status": 503,
+      "seconds": 0.438,
+      "bytes": 87,
+      "sha256": "133ca4203debb9ce8ac30ae1fb74e4ef1ef00b71b7c9e6d6f1eff29aebd1199f",
+      "setCookiePresent": false,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Access-Control-Allow-Origin": "https://resume.docheng.co.za",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Expose-Headers": "Content-Disposition",
+        "Vary": "Origin",
+        "CF-Cache-Status": "DYNAMIC"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/exports/resume/txt",
+      "requestOrigin": "https://untrusted.invalid",
+      "status": 403,
+      "seconds": 0.422,
+      "bytes": 37,
+      "sha256": "ecbfeb82e7cdbbfb36949a08789fa99202f29001e7225e05c43d1865b594b541",
+      "setCookiePresent": false,
+      "headers": {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Expose-Headers": "Content-Disposition",
+        "Vary": "Origin",
+        "CF-Cache-Status": "DYNAMIC"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/parse-resume",
+      "requestOrigin": "https://resume.docheng.co.za",
+      "status": 200,
+      "seconds": 0.766,
+      "bytes": 1793,
+      "sha256": "0e2660e4ba1fd70800d3cac21e74a31c215a9ed6044ca48da1c5d144e8dba00b",
+      "setCookiePresent": false,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Access-Control-Allow-Origin": "https://resume.docheng.co.za",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Expose-Headers": "Content-Disposition",
+        "Vary": "Origin",
+        "CF-Cache-Status": "DYNAMIC"
+      },
+      "explicitNoStore": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/score-resume",
+      "requestOrigin": "https://resume.docheng.co.za",
+      "status": 200,
+      "seconds": 1.266,
+      "bytes": 790,
+      "sha256": "52232f77cbabf1235b9a1a8cda1b26a7d5e25efa483e2b447bdd6e95d430436f",
+      "setCookiePresent": false,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Access-Control-Allow-Origin": "https://resume.docheng.co.za",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Expose-Headers": "Content-Disposition",
+        "Vary": "Origin",
+        "CF-Cache-Status": "DYNAMIC"
+      },
+      "explicitNoStore": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/parse-and-score",
+      "requestOrigin": "https://resume.docheng.co.za",
+      "status": 200,
+      "seconds": 0.954,
+      "bytes": 2355,
+      "sha256": "47591e4d1907af275426cc2a524abdf25ce9be1ac853019c1bce3ffb7ee4208c",
+      "setCookiePresent": false,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Access-Control-Allow-Origin": "https://resume.docheng.co.za",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Expose-Headers": "Content-Disposition",
+        "Vary": "Origin",
+        "CF-Cache-Status": "DYNAMIC"
+      },
+      "explicitNoStore": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/parse-resume",
+      "requestOrigin": "https://resume.docheng.co.za",
+      "status": 422,
+      "seconds": 0.438,
+      "bytes": 89,
+      "sha256": "0d378bd7c5ef2524874df312597cd193ae8fb85da9791c71734cbb097d82223a",
+      "setCookiePresent": false,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Access-Control-Allow-Origin": "https://resume.docheng.co.za",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Expose-Headers": "Content-Disposition",
+        "Vary": "Origin",
+        "CF-Cache-Status": "DYNAMIC"
+      },
+      "explicitNoStore": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/score-resume",
+      "requestOrigin": "https://resume.docheng.co.za",
+      "status": 422,
+      "seconds": 0.36,
+      "bytes": 89,
+      "sha256": "0d378bd7c5ef2524874df312597cd193ae8fb85da9791c71734cbb097d82223a",
+      "setCookiePresent": false,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Access-Control-Allow-Origin": "https://resume.docheng.co.za",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Expose-Headers": "Content-Disposition",
+        "Vary": "Origin",
+        "CF-Cache-Status": "DYNAMIC"
+      },
+      "explicitNoStore": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/parse-and-score",
+      "requestOrigin": "https://resume.docheng.co.za",
+      "status": 422,
+      "seconds": 0.438,
+      "bytes": 89,
+      "sha256": "0d378bd7c5ef2524874df312597cd193ae8fb85da9791c71734cbb097d82223a",
+      "setCookiePresent": false,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Access-Control-Allow-Origin": "https://resume.docheng.co.za",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Expose-Headers": "Content-Disposition",
+        "Vary": "Origin",
+        "CF-Cache-Status": "DYNAMIC"
+      },
+      "explicitNoStore": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/exports/resume/import",
+      "requestOrigin": "https://resume.docheng.co.za",
+      "status": 200,
+      "seconds": 0.657,
+      "bytes": 1392,
+      "sha256": "84ef87cd8566aaf4bc4f977811d07fc015416d9b476e08a283d5afb07af20b10",
+      "setCookiePresent": false,
+      "headers": {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-store",
+        "Access-Control-Allow-Origin": "https://resume.docheng.co.za",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Expose-Headers": "Content-Disposition",
+        "Vary": "Origin",
+        "CF-Cache-Status": "DYNAMIC"
+      },
+      "explicitNoStore": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/exports/resume/pdf",
+      "requestOrigin": "https://resume.docheng.co.za",
+      "status": 200,
+      "seconds": 1.86,
+      "bytes": 22879,
+      "sha256": "b58a58c92f92a82c7eee5f57505f36a2b8d297afcac29a0906d9685bc01fb003",
+      "setCookiePresent": false,
+      "headers": {
+        "Content-Type": "application/pdf",
+        "Content-Disposition": "attachment; filename=\"Synthetic live QA.pdf\"; filename*=UTF-8''Synthetic%20live%20QA.pdf",
+        "Cache-Control": "no-store",
+        "Access-Control-Allow-Origin": "https://resume.docheng.co.za",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Expose-Headers": "Content-Disposition",
+        "Vary": "Origin",
+        "CF-Cache-Status": "DYNAMIC"
+      },
+      "explicitNoStore": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/exports/resume/docx",
+      "requestOrigin": "https://resume.docheng.co.za",
+      "status": 200,
+      "seconds": 0.609,
+      "bytes": 36747,
+      "sha256": "076abb4a9d86dbe52071173ea154328e728b522476f1efb5105f5f18b4c1d807",
+      "setCookiePresent": false,
+      "headers": {
+        "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "Content-Disposition": "attachment; filename=\"Synthetic live QA.docx\"; filename*=UTF-8''Synthetic%20live%20QA.docx",
+        "Cache-Control": "no-store",
+        "Access-Control-Allow-Origin": "https://resume.docheng.co.za",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Expose-Headers": "Content-Disposition",
+        "Vary": "Origin",
+        "CF-Cache-Status": "DYNAMIC"
+      },
+      "explicitNoStore": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/exports/resume/txt",
+      "requestOrigin": "https://resume.docheng.co.za",
+      "status": 200,
+      "seconds": 0.375,
+      "bytes": 121,
+      "sha256": "74930dc87aaee9df2c70b2596de9b16ef5b475be7aa400da1c568f6a2d21f8ee",
+      "setCookiePresent": false,
+      "headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Content-Disposition": "attachment; filename=\"Synthetic live QA.txt\"; filename*=UTF-8''Synthetic%20live%20QA.txt",
+        "Cache-Control": "no-store",
+        "Access-Control-Allow-Origin": "https://resume.docheng.co.za",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Expose-Headers": "Content-Disposition",
+        "Vary": "Origin",
+        "CF-Cache-Status": "DYNAMIC"
+      },
+      "explicitNoStore": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/exports/resume/json",
+      "requestOrigin": "https://resume.docheng.co.za",
+      "status": 200,
+      "seconds": 0.406,
+      "bytes": 593,
+      "sha256": "ee5b1735270fa70f5566e3416548a0ff22b3a761a746e13a0a4d763080482cbb",
+      "setCookiePresent": false,
+      "headers": {
+        "Content-Type": "application/json",
+        "Content-Disposition": "attachment; filename=\"Synthetic live QA.json\"; filename*=UTF-8''Synthetic%20live%20QA.json",
+        "Cache-Control": "no-store",
+        "Access-Control-Allow-Origin": "https://resume.docheng.co.za",
+        "Access-Control-Allow-Credentials": "true",
+        "Access-Control-Expose-Headers": "Content-Disposition",
+        "Vary": "Origin",
+        "CF-Cache-Status": "DYNAMIC"
+      },
+      "explicitNoStore": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "live model and stateless health",
+      "passed": true,
+      "details": {
+        "status": "healthy",
+        "storage_mode": "local",
+        "spacy_model": "en_core_web_sm",
+        "server_persistence": false
+      }
+    },
+    {
+      "name": "canonical browser CORS preflight",
+      "passed": true
+    },
+    {
+      "name": "workspace status advertises no server persistence",
+      "passed": true,
+      "details": {
+        "mode": "local",
+        "resume_count": 0,
+        "cover_letter_count": 0,
+        "server_persistence": false,
+        "notice": "Documents stay in your browser. This API does not save them."
+      }
+    },
+    {
+      "name": "saved-record route unavailable: /api/builder/list/all",
+      "passed": true
+    },
+    {
+      "name": "saved-record route unavailable: /api/cover-letters",
+      "passed": true
+    },
+    {
+      "name": "untrusted Origin rejected before export",
+      "passed": true
+    },
+    {
+      "name": "actual synthetic TXT parsing and NER",
+      "passed": true,
+      "details": {
+        "realPersonNer": true,
+        "contactPresent": true,
+        "companyPresent": true
+      }
+    },
+    {
+      "name": "actual synthetic scoring",
+      "passed": true,
+      "details": {
+        "overall": 76.4
+      }
+    },
+    {
+      "name": "actual combined parsing/scoring",
+      "passed": true,
+      "details": {
+        "contactPresent": true,
+        "overall": 76.4
+      }
+    },
+    {
+      "name": "JSON validation response: /api/parse-resume",
+      "passed": true
+    },
+    {
+      "name": "JSON validation response: /api/score-resume",
+      "passed": true
+    },
+    {
+      "name": "JSON validation response: /api/parse-and-score",
+      "passed": true
+    },
+    {
+      "name": "memory-only editor import without a saved id",
+      "passed": true,
+      "details": {
+        "serverPersistence": false,
+        "serverId": null
+      }
+    },
+    {
+      "name": "current-content PDF export",
+      "passed": true
+    },
+    {
+      "name": "current-content DOCX export",
+      "passed": true
+    },
+    {
+      "name": "current-content TXT export",
+      "passed": true
+    },
+    {
+      "name": "current-content JSON export",
+      "passed": true
+    },
+    {
+      "name": "no workspace cookie on any response",
+      "passed": true
+    }
+  ],
+  "findings": [],
+  "exports": [
+    {
+      "format": "pdf",
+      "bytes": 22879,
+      "sha256": "b58a58c92f92a82c7eee5f57505f36a2b8d297afcac29a0906d9685bc01fb003",
+      "pages": 1,
+      "selectableTextCharacters": 121,
+      "currentContentMarker": true,
+      "exactUnicodeName": true
+    },
+    {
+      "format": "docx",
+      "bytes": 36747,
+      "sha256": "076abb4a9d86dbe52071173ea154328e728b522476f1efb5105f5f18b4c1d807",
+      "editableParagraphs": 4,
+      "currentContentMarker": true,
+      "exactUnicodeName": true
+    },
+    {
+      "format": "txt",
+      "bytes": 121,
+      "sha256": "74930dc87aaee9df2c70b2596de9b16ef5b475be7aa400da1c568f6a2d21f8ee",
+      "currentContentMarker": true,
+      "exactUnicodeName": true
+    },
+    {
+      "format": "json",
+      "bytes": 593,
+      "sha256": "ee5b1735270fa70f5566e3416548a0ff22b3a761a746e13a0a4d763080482cbb",
+      "currentContentMarker": true,
+      "exactUnicodeName": true
+    }
+  ],
+  "requestCount": 17,
+  "minimumRequestSpacingSeconds": 1.5,
+  "finishedAt": "2026-10-15T20:52:56.485170+00:00",
+  "limitations": [
+    "Only small synthetic API requests were used; no model stress or production load claim.",
+    "No AI/provider invocation, hosting change or server record save/delete was performed.",
+    "The probe did not inspect the live filesystem; no persistence is based on health, disabled record routes, memory-only import and reviewed implementation.",
+    "This does not verify the primary frontend cutover or its deployed static assets."
+  ]
+}

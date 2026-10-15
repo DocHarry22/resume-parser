@@ -1,5 +1,6 @@
 "use client";
 
+import { Fragment } from "react";
 import { ResumeScore } from "@/lib/types";
 
 interface ScoreBreakdownProps {
@@ -63,24 +64,61 @@ function ScoreBar({ label, score, maxScore = 100 }: ScoreBarProps) {
   );
 }
 
+type MetricRow = { label: string; value: string | undefined };
+
+function measuredNumber(value: unknown, decimals = 0, suffix = ""): string | undefined {
+  return typeof value === "number" && Number.isFinite(value)
+    ? `${value.toFixed(decimals)}${suffix}` : undefined;
+}
+
+function measuredBoolean(value: unknown): string | undefined {
+  return typeof value === "boolean" ? (value ? "Yes" : "No") : undefined;
+}
+
 export default function ScoreBreakdown({ score }: ScoreBreakdownProps) {
-  // Build breakdown items from the new flat score structure
-  const breakdownItems: { label: string; score: number }[] = [
+  const breakdownItems = [
     { label: "ATS Compliance", score: score.ats_compliance },
     { label: "Readability", score: score.readability },
     { label: "Layout", score: score.layout },
-  ];
-  
-  // Add experience and skills only if available (not null in basic mode)
-  if (score.experience !== null) {
-    breakdownItems.push({ label: "Experience", score: score.experience });
-  }
-  if (score.skills !== null) {
-    breakdownItems.push({ label: "Skills", score: score.skills });
-  }
-  if (score.job_match !== null && score.job_match !== undefined) {
-    breakdownItems.push({ label: "Job Match", score: score.job_match });
-  }
+    { label: "Experience", score: score.experience },
+    { label: "Skills", score: score.skills },
+    { label: "Job Match", score: score.job_match },
+  ].filter((item): item is { label: string; score: number } =>
+    typeof item.score === "number" && Number.isFinite(item.score));
+
+  // The API supplies different analyses by scan mode. Missing measurements
+  // are omitted, while measured zero values and false flags remain visible.
+  const metrics = score.detailed_metrics;
+  const metricGroups: { title: string; rows: MetricRow[] }[] = [
+    { title: "Readability", rows: [
+      { label: "Flesch Reading Ease", value: measuredNumber(metrics?.readability?.flesch_reading_ease, 1) },
+      { label: "Flesch-Kincaid Grade", value: measuredNumber(metrics?.readability?.flesch_kincaid_grade, 1) },
+      { label: "Avg Words/Sentence", value: measuredNumber(metrics?.readability?.avg_words_per_sentence, 1, " words") },
+    ] },
+    { title: "Structure", rows: [
+      { label: "Has Contact Info", value: measuredBoolean(metrics?.structure?.has_contact) },
+      { label: "Has Summary", value: measuredBoolean(metrics?.structure?.has_summary) },
+      { label: "Has Experience", value: measuredBoolean(metrics?.structure?.has_experience) },
+      { label: "Has Education", value: measuredBoolean(metrics?.structure?.has_education) },
+      { label: "Has Skills", value: measuredBoolean(metrics?.structure?.has_skills) },
+    ] },
+    { title: "Experience", rows: [
+      { label: "Total Roles", value: measuredNumber(metrics?.experience?.total_roles) },
+      { label: "Avg Bullets/Role", value: measuredNumber(metrics?.experience?.avg_bullets_per_role, 1) },
+      { label: "Quantified Achievements", value: measuredNumber(metrics?.experience?.quantified_achievements) },
+      { label: "Quantification Rate", value: measuredNumber(metrics?.experience?.quantification_rate, 1, "%") },
+    ] },
+    { title: "Skills", rows: [
+      { label: "Total Skills", value: measuredNumber(metrics?.skills?.total_skills) },
+      { label: "Categorized Skills", value: measuredNumber(metrics?.skills?.categorized_skills) },
+      { label: "Unique Categories", value: measuredNumber(metrics?.skills?.unique_categories) },
+    ] },
+    { title: "Layout", rows: [
+      { label: "Word Count", value: measuredNumber(metrics?.layout?.word_count) },
+      { label: "Estimated Pages", value: measuredNumber(metrics?.layout?.estimated_pages, 1) },
+    ] },
+  ].map(group => ({ ...group, rows: group.rows.filter(row => row.value !== undefined) }))
+    .filter(group => group.rows.length > 0);
 
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 space-y-6">
@@ -172,8 +210,8 @@ export default function ScoreBreakdown({ score }: ScoreBreakdownProps) {
         </div>
       )}
 
-      {/* Detailed Metrics Accordion - Only show if detailed_metrics exists */}
-      {score.detailed_metrics && (
+      {/* Only display analyses and measurements returned by this scan. */}
+      {metricGroups.length > 0 && (
         <div className="border-t pt-6">
           <details className="group">
             <summary className="flex justify-between items-center cursor-pointer list-none">
@@ -196,82 +234,19 @@ export default function ScoreBreakdown({ score }: ScoreBreakdownProps) {
             </summary>
             
             <div className="mt-4 space-y-4 text-sm">
-              {/* Readability Details */}
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h5 className="font-medium text-gray-700 mb-2">Readability</h5>
-                <div className="grid grid-cols-2 gap-2 text-gray-600">
-                  <span>Flesch Reading Ease:</span>
-                  <span className="font-medium">{score.detailed_metrics.readability.flesch_reading_ease.toFixed(1)}</span>
-                  <span>Flesch-Kincaid Grade:</span>
-                  <span className="font-medium">{score.detailed_metrics.readability.flesch_kincaid_grade.toFixed(1)}</span>
-                  <span>Avg Words/Sentence:</span>
-                  <span className="font-medium">{score.detailed_metrics.readability.avg_words_per_sentence.toFixed(1)} words</span>
+              {metricGroups.map(group => (
+                <div key={group.title} className="bg-gray-50 rounded-lg p-4">
+                  <h5 className="font-medium text-gray-700 mb-2">{group.title}</h5>
+                  <div className="grid grid-cols-2 gap-2 text-gray-600">
+                    {group.rows.map(row => (
+                      <Fragment key={row.label}>
+                        <span>{row.label}:</span>
+                        <span className="font-medium">{row.value}</span>
+                      </Fragment>
+                    ))}
+                  </div>
                 </div>
-              </div>
-
-              {/* Structure Details */}
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h5 className="font-medium text-gray-700 mb-2">Structure</h5>
-                <div className="grid grid-cols-2 gap-2 text-gray-600">
-                  <span>Sections Found:</span>
-                  <span className="font-medium">{score.detailed_metrics.structure.section_count}</span>
-                  <span>Has Contact Info:</span>
-                  <span className="font-medium">{score.detailed_metrics.structure.has_contact ? "Yes" : "No"}</span>
-                  <span>Has Experience:</span>
-                  <span className="font-medium">{score.detailed_metrics.structure.has_experience ? "Yes" : "No"}</span>
-                  <span>Has Education:</span>
-                  <span className="font-medium">{score.detailed_metrics.structure.has_education ? "Yes" : "No"}</span>
-                  <span>Has Skills:</span>
-                  <span className="font-medium">{score.detailed_metrics.structure.has_skills ? "Yes" : "No"}</span>
-                </div>
-              </div>
-
-              {/* Experience Details */}
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h5 className="font-medium text-gray-700 mb-2">Experience</h5>
-                <div className="grid grid-cols-2 gap-2 text-gray-600">
-                  <span>Total Roles:</span>
-                  <span className="font-medium">{score.detailed_metrics.experience.total_roles}</span>
-                  <span>Avg Bullets/Role:</span>
-                  <span className="font-medium">{score.detailed_metrics.experience.avg_bullets_per_role.toFixed(1)}</span>
-                  <span>Quantified Achievements:</span>
-                  <span className="font-medium">{score.detailed_metrics.experience.quantified_achievements}</span>
-                  <span>Quantification Rate:</span>
-                  <span className="font-medium">{score.detailed_metrics.experience.quantification_rate.toFixed(1)}%</span>
-                </div>
-              </div>
-
-              {/* Skills Details */}
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h5 className="font-medium text-gray-700 mb-2">Skills</h5>
-                <div className="grid grid-cols-2 gap-2 text-gray-600">
-                  <span>Total Skills:</span>
-                  <span className="font-medium">{score.detailed_metrics.skills.total_skills}</span>
-                  <span>Categorized Skills:</span>
-                  <span className="font-medium">{score.detailed_metrics.skills.categorized_skills}</span>
-                  <span>Unique Categories:</span>
-                  <span className="font-medium">{score.detailed_metrics.skills.unique_categories}</span>
-                </div>
-              </div>
-
-              {/* Length Details */}
-              <div className="bg-gray-50 rounded-lg p-4">
-                <h5 className="font-medium text-gray-700 mb-2">Length</h5>
-                <div className="grid grid-cols-2 gap-2 text-gray-600">
-                  <span>Word Count:</span>
-                  <span className="font-medium">{score.detailed_metrics.length.word_count}</span>
-                  <span>Estimated Pages:</span>
-                  <span className="font-medium">{score.detailed_metrics.length.estimated_pages.toFixed(1)}</span>
-                  <span>Length Status:</span>
-                  <span className="font-medium">
-                    {score.detailed_metrics.length.is_too_short 
-                      ? "Too Short" 
-                      : score.detailed_metrics.length.is_too_long 
-                      ? "Too Long" 
-                      : "Optimal"}
-                  </span>
-                </div>
-              </div>
+              ))}
             </div>
           </details>
         </div>

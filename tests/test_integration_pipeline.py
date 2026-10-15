@@ -107,7 +107,7 @@ def test_pipeline_error_handling():
     
     # Test with unsupported file type
     import tempfile
-    with tempfile.NamedTemporaryFile(suffix=".txt", delete=False) as f:
+    with tempfile.NamedTemporaryFile(suffix=".exe", delete=False) as f:
         f.write(b"test content")
         temp_path = f.name
     

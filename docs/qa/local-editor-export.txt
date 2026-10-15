@@ -1,0 +1,14 @@
+QA Local & Unicode Zoë
+qa@example.test
+
+PROJECTS
+First project
+An editable description
+• A measurable result
+
+PROFESSIONAL SUMMARY
+Original summary with <XML> & special characters.
+
+CUSTOM SECTIONS
+Licences
+A current professional licence

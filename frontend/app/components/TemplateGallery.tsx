@@ -1,152 +1,16 @@
-"use client";
-
-import Link from "next/link";
-
-interface Template {
-  id: string;
-  name: string;
-  category: string;
-  description: string;
-  colorFrom: string;
-  colorTo: string;
-  previewBg: string;
-}
-
-const templates: Template[] = [
-  {
-    id: "modern",
-    name: "Modern Sidebar",
-    category: "Modern",
-    description: "Contemporary design with colored sidebar, perfect for creative professionals",
-    colorFrom: "from-blue-500",
-    colorTo: "to-blue-600",
-    previewBg: "bg-gradient-to-r from-blue-100 to-blue-50"
-  },
-  {
-    id: "classic",
-    name: "Classic Professional",
-    category: "Classic",
-    description: "Traditional two-column layout, ideal for corporate positions",
-    colorFrom: "from-gray-700",
-    colorTo: "to-gray-900",
-    previewBg: "bg-gradient-to-r from-gray-100 to-gray-50"
-  },
-  {
-    id: "minimal",
-    name: "Clean Minimal",
-    category: "Minimal",
-    description: "Simple and elegant design focusing on content clarity",
-    colorFrom: "from-slate-600",
-    colorTo: "to-slate-800",
-    previewBg: "bg-white"
-  },
-  {
-    id: "professional",
-    name: "Professional Executive",
-    category: "Professional",
-    description: "Sophisticated layout with accent bars, great for senior roles",
-    colorFrom: "from-indigo-600",
-    colorTo: "to-indigo-800",
-    previewBg: "bg-gradient-to-r from-indigo-50 to-blue-50"
-  },
-  {
-    id: "creative",
-    name: "Creative Bold",
-    category: "Creative",
-    description: "Eye-catching design with unique sections for creative fields",
-    colorFrom: "from-purple-500",
-    colorTo: "to-pink-500",
-    previewBg: "bg-gradient-to-r from-purple-50 to-pink-50"
-  },
-  {
-    id: "elegant",
-    name: "Elegant Serif",
-    category: "Elegant",
-    description: "Refined typography and spacing for traditional industries",
-    colorFrom: "from-teal-600",
-    colorTo: "to-emerald-600",
-    previewBg: "bg-gradient-to-r from-teal-50 to-emerald-50"
-  }
+'use client';
+import Link from 'next/link';
+import { useState } from 'react';
+import { StudioPreview } from '@/components/resumeio/StudioPreview';
+import { blankResume, DEFAULT_DESIGN } from '@/components/resumeio/resumeDocument';
+import type { TemplateStyle, ColorTheme } from '@/components/resumeio/TemplateSelector';
+const templates: {id:TemplateStyle;name:string;category:string;color:ColorTheme;description:string}[]=[
+{id:'modern',name:'Modern',category:'Modern',color:'blue',description:'A strong header and clear professional structure.'},
+{id:'classic',name:'Classic',category:'Classic',color:'gray',description:'Traditional hierarchy with calm, readable typography.'},
+{id:'minimal',name:'Minimal',category:'Minimal',color:'teal',description:'Uncluttered spacing that keeps your words in focus.'},
+{id:'professional',name:'Professional',category:'Professional',color:'indigo',description:'Confident section accents for an established career.'},
+{id:'creative',name:'Creative',category:'Creative',color:'purple',description:'A distinctive visual rhythm for creative work.'},
+{id:'elegant',name:'Elegant',category:'Classic',color:'green',description:'Refined serif typography with a restrained accent.'},
 ];
-
-export default function TemplateGallery() {
-
-  return (
-    <div className="w-full py-16 px-4 bg-gray-50">
-      {/* Section Header */}
-      <div className="max-w-7xl mx-auto mb-12 text-center">
-        <h2 className="text-3xl font-bold text-gray-900 mb-3">
-          Choose Your Resume Template
-        </h2>
-        <p className="text-lg text-gray-600">
-          Select a professional template that best matches your style and industry
-        </p>
-      </div>
-
-      {/* Template Grid */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {templates.map((template) => (
-          <Link
-            key={template.id}
-            href={`/builder?template=${template.id}`}
-            className="group bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden transform hover:scale-105"
-          >
-            {/* Template Name */}
-            <div className="px-6 pt-5 pb-3">
-              <h3 className="text-xl font-semibold text-gray-800">
-                {template.name}
-              </h3>
-              <span className="inline-block mt-1 text-xs font-medium text-gray-500 uppercase tracking-wide">
-                {template.category}
-              </span>
-            </div>
-
-            {/* Template Preview */}
-            <div className={`relative mx-6 mb-4 aspect-[8.5/11] rounded-lg overflow-hidden shadow-lg border border-gray-200`}>
-              {/* PDF Preview as iframe */}
-              <iframe
-                src={`/templates/${template.id}.pdf#toolbar=0&navpanes=0&scrollbar=0`}
-                className="w-full h-full pointer-events-none"
-                title={`${template.name} preview`}
-              />
-
-              {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 flex items-center justify-center pointer-events-none">
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className={`px-3 py-1.5 bg-gradient-to-r ${template.colorFrom} ${template.colorTo} text-white rounded-lg text-xs font-semibold shadow-lg`}>
-                    Preview
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Template Info */}
-            <div className="px-6 pb-5">
-              <p className="text-sm text-gray-600 mb-4 line-clamp-2">
-                {template.description}
-              </p>
-
-              {/* Use Template Button */}
-              <div className={`w-full py-2.5 px-4 bg-gradient-to-r ${template.colorFrom} ${template.colorTo} text-white font-medium rounded-lg transition-all duration-200 flex items-center justify-center gap-2 group-hover:shadow-lg`}>
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
-                </svg>
-                Use Template
-              </div>
-            </div>
-          </Link>
-        ))}
-      </div>
-    </div>
-  );
-}
+const sample={...blankResume(),contact:{full_name:'Your name',email:'your.email@example.com',location:'Your city'},summary:{summary:'A short introduction to your experience, strengths and the work you want to do next.'},experience:[{position:'Your job title',company:'Your employer',start_date:'2023',current:true,description:['Describe a responsibility and its outcome.','Include only achievements you can support.'],achievements:[]}],education:[{institution:'Your institution',degree:'Your qualification',end_date:'2022',honors:[]}],skills:[{category:'Relevant skills',skills:['Your skills','Your tools','Your strengths']}]};
+export default function TemplateGallery(){const [filter,setFilter]=useState('All');return <section className="w-full border-y border-slate-200 bg-white px-5 py-16" id="templates"><div className="mx-auto max-w-7xl"><div className="mb-8 flex flex-wrap items-end justify-between gap-5"><div><p className="text-xs font-semibold uppercase tracking-[.2em] text-teal-700">Make a good first impression</p><h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">A style that feels like you.</h2><p className="mt-3 max-w-2xl text-slate-500">Six original layouts, one editable resume. Switch designs without losing your content. These examples are placeholders.</p></div><Link href="/builder" className="text-sm font-medium text-teal-800">Open resume studio →</Link></div><div className="mb-8 flex flex-wrap gap-2" aria-label="Filter templates">{['All','Modern','Professional','Classic','Minimal','Creative'].map(f=><button key={f} onClick={()=>setFilter(f)} aria-pressed={filter===f} className={'rounded-full border px-4 py-2 text-sm '+(filter===f?'border-teal-700 bg-teal-700 text-white':'border-slate-200 bg-white text-slate-600 hover:border-teal-500')}>{f}</button>)}</div><div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{templates.filter(t=>filter==='All'||filter===t.category).map(t=><Link key={t.id} href={'/builder?template='+t.id} className="group min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-[#f5f7f8] transition hover:border-teal-400 hover:shadow-xl"><div className="pointer-events-none flex h-[365px] justify-center overflow-hidden px-4 pt-6" aria-hidden="true"><StudioPreview resume={sample} template={t.id} colorTheme={t.color} scale={0.29} design={{...DEFAULT_DESIGN,font:t.id==='elegant'?'serif':'sans'}}/></div><div className="border-t bg-white p-5"><div className="flex items-center justify-between"><h3 className="font-semibold text-slate-900">{t.name}</h3><span className="text-xs text-slate-500">{t.category}</span></div><p className="mt-2 text-sm text-slate-500">{t.description}</p><span className="mt-4 inline-block text-sm font-medium text-teal-800">Use this template →</span></div></Link>)}</div></div></section>}

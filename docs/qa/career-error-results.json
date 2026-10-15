@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "checks": [
+    "Job quota failure: visible error, form retained, no false saved job",
+    "Job modal: Escape closes and restores focus",
+    "Cover list API failure: visible retry error, no misleading empty state",
+    "Cover save API failure: visible error, editor text retained",
+    "Cover PDF API failure: visible error, editor text retained",
+    "Cover DOCX export works while server is unavailable"
+  ]
+}

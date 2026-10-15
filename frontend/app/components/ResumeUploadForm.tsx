@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { ParseAndScoreResponse } from "@/lib/types";
 import { parseAndScoreResume } from "@/lib/apiClient";
+import { DOCUMENT_UPLOAD_LIMIT_BYTES, DOCUMENT_UPLOAD_LIMIT_MB } from "@/lib/apiConfig";
 import { 
   compressFile, 
   formatFileSize, 
@@ -37,6 +38,7 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
   const validateAndSetFile = async (selectedFile: File) => {
     setError(null);
     setCompressionResult(null);
+    setFile(null);
     
     // Validate file type
     const validTypes = [
@@ -55,9 +57,8 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
       return;
     }
 
-    // Validate file size (25MB limit)
-    const maxSize = 25 * 1024 * 1024;
-    const targetSize = 15 * 1024 * 1024; // Target size for compression
+    const maxSize = DOCUMENT_UPLOAD_LIMIT_BYTES;
+    const targetSize = Math.min(15 * 1024 * 1024, maxSize);
     
     if (selectedFile.size > targetSize && isCompressionSupported(selectedFile)) {
       // Try to compress
@@ -71,7 +72,7 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
         if (result.wasCompressed && result.compressedFile.size <= maxSize) {
           setFile(result.compressedFile);
         } else if (result.compressedFile.size > maxSize) {
-          setError(`File is still too large after compression (${formatFileSize(result.compressedFile.size)}). Maximum is 25MB.`);
+          setError(`File is still too large after compression (${formatFileSize(result.compressedFile.size)}). Maximum is ${DOCUMENT_UPLOAD_LIMIT_MB} MB.`);
           setFile(null);
         } else {
           setFile(result.compressedFile);
@@ -84,7 +85,7 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
         setCompressionProgress(null);
       }
     } else if (selectedFile.size > maxSize) {
-      setError(`File size must be less than 25MB. Your file is ${formatFileSize(selectedFile.size)}`);
+      setError(`Choose a file no larger than ${DOCUMENT_UPLOAD_LIMIT_MB} MB. Your file is ${formatFileSize(selectedFile.size)}.`);
       return;
     } else {
       setFile(selectedFile);
@@ -232,7 +233,7 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
                 Supported formats: PDF, DOCX
               </p>
               <p className="text-xs text-gray-400 mt-1">
-                Large files will be automatically compressed
+                Maximum file size: {DOCUMENT_UPLOAD_LIMIT_MB} MB
               </p>
             </div>
           )}

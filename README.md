@@ -1,6 +1,8 @@
-# Resume Parser & Scoring Service
+# DoCHEng CareerForge — Resume Parser and Career Workspace
 
-A production-grade **resume parsing and scoring backend service** built with Python, FastAPI, and spaCy. This service extracts structured information from PDF and DOCX resumes and computes comprehensive quality scores based on multiple metrics.
+The existing FastAPI/spaCy resume parsing and scoring service now includes a connected Next.js resume studio, six original templates, genuine PDF/DOCX/TXT/JSON exports, cover letters and a browser-local career workspace. Guest workspace isolation improves document safety; secure registered accounts and several requested commercial features remain unfinished.
+
+Start with the [deployment and acceptance report](docs/DEPLOYMENT_REPORT.md), [feature parity checklist](docs/rea-resume-io/parity-matrix.md), and [verified setup and QA instructions](docs/qa/RUNNING.md). The report distinguishes implemented local behavior from published services. The original production domain has not been upgraded by this branch. The supported Sites edition uses the same frontend with browser-local capabilities; Python processing requires a verified main backend.
 
 ## 🌟 Features
 
@@ -34,7 +36,7 @@ A production-grade **resume parsing and scoring backend service** built with Pyt
 
 ### Prerequisites
 
-- Python 3.11 or higher
+- Python 3.12 (the runtime verified with the pinned spaCy dependencies)
 - pip (Python package manager)
 
 ### Setup
@@ -63,7 +65,7 @@ pip install -r requirements.txt
 
 4. **Download spaCy language model**:
 ```bash
-python -m spacy download en_core_web_md
+python -m pip install "https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.7.1/en_core_web_md-3.7.1-py3-none-any.whl#sha256=6a0f857a2b4d219c6fa17d455f82430b365bf53171a2d919b9376e5dc9be032e"
 ```
 
 5. **Set up environment variables** (optional):

@@ -1,0 +1,297 @@
+{
+  "observedAtUtc": "2026-10-15 19:46:53 UTC",
+  "source": "Native Hostinger hosting_files_list-website-and-directories",
+  "domain": "resume.docheng.co.za",
+  "siteRoot": "domains/docheng.co.za/public_html/resume",
+  "maxDepth": 10,
+  "totalEntries": 90,
+  "returnedEntries": 90,
+  "files": [
+    {
+      "path": "_next/static/4IJUIZ24iQ_96SFfUlhHk/_buildManifest.js",
+      "bytes": 224
+    },
+    {
+      "path": "_next/static/4IJUIZ24iQ_96SFfUlhHk/_ssgManifest.js",
+      "bytes": 80
+    },
+    {
+      "path": "_next/static/chunks/164f4fb6-1ab7c9d91bd65460.js",
+      "bytes": 333600
+    },
+    {
+      "path": "_next/static/chunks/176-585b8941b1fe95f6.js",
+      "bytes": 21497
+    },
+    {
+      "path": "_next/static/chunks/2f0b94e8-8153771b421f979e.js",
+      "bytes": 46293
+    },
+    {
+      "path": "_next/static/chunks/304.f84ec94735582f54.js",
+      "bytes": 22505
+    },
+    {
+      "path": "_next/static/chunks/481-acf5f728c0cb57d7.js",
+      "bytes": 8173
+    },
+    {
+      "path": "_next/static/chunks/561.9d7fe19cd945eb69.js",
+      "bytes": 513595
+    },
+    {
+      "path": "_next/static/chunks/603-b6e625b588b65be5.js",
+      "bytes": 13057
+    },
+    {
+      "path": "_next/static/chunks/720-5ec69205b07f90a9.js",
+      "bytes": 26347
+    },
+    {
+      "path": "_next/static/chunks/729-f098499276acc0f7.js",
+      "bytes": 8791
+    },
+    {
+      "path": "_next/static/chunks/74.a590d67585531d3b.js",
+      "bytes": 119325
+    },
+    {
+      "path": "_next/static/chunks/834-22f65400f9c8fffc.js",
+      "bytes": 14052
+    },
+    {
+      "path": "_next/static/chunks/902.7de8c061f1a2ac31.js",
+      "bytes": 80224
+    },
+    {
+      "path": "_next/static/chunks/934-d8f165b333b669b9.js",
+      "bytes": 80960
+    },
+    {
+      "path": "_next/static/chunks/938-5eacbb8a9427fea1.js",
+      "bytes": 104834
+    },
+    {
+      "path": "_next/static/chunks/ad2866b8-a3e987bab1e2a6bd.js",
+      "bytes": 199587
+    },
+    {
+      "path": "_next/static/chunks/app/_not-found-127318ee3cdc1c7a.js",
+      "bytes": 1827
+    },
+    {
+      "path": "_next/static/chunks/app/builder/page-322e33859ca14c22.js",
+      "bytes": 98838
+    },
+    {
+      "path": "_next/static/chunks/app/cover-letter/page-da522d51dc222d1d.js",
+      "bytes": 62039
+    },
+    {
+      "path": "_next/static/chunks/app/layout-0f1864c370b21124.js",
+      "bytes": 12398
+    },
+    {
+      "path": "_next/static/chunks/app/page-d90504d51fbde006.js",
+      "bytes": 7904
+    },
+    {
+      "path": "_next/static/chunks/app/resume-scanner/page-8998d77e797ece09.js",
+      "bytes": 27689
+    },
+    {
+      "path": "_next/static/chunks/app/tools/builder/layout-425e72eb00a8d050.js",
+      "bytes": 162
+    },
+    {
+      "path": "_next/static/chunks/app/tools/builder/page-04c88edd51439e38.js",
+      "bytes": 94721
+    },
+    {
+      "path": "_next/static/chunks/app/tools/page-965aebe9ca6935cc.js",
+      "bytes": 32580
+    },
+    {
+      "path": "_next/static/chunks/bc98253f.39075594746d9a53.js",
+      "bytes": 82954
+    },
+    {
+      "path": "_next/static/chunks/fd9d1056-233f91cca6293466.js",
+      "bytes": 171903
+    },
+    {
+      "path": "_next/static/chunks/framework-0d01cdd3f4d700bf.js",
+      "bytes": 140087
+    },
+    {
+      "path": "_next/static/chunks/main-app-78ee05fbd6f5e10a.js",
+      "bytes": 471
+    },
+    {
+      "path": "_next/static/chunks/main-f9f948497a0ac28d.js",
+      "bytes": 109508
+    },
+    {
+      "path": "_next/static/chunks/pages/_app-8e650e1c50ef0819.js",
+      "bytes": 284
+    },
+    {
+      "path": "_next/static/chunks/pages/_error-0ffac66cb3fae446.js",
+      "bytes": 250
+    },
+    {
+      "path": "_next/static/chunks/polyfills-c67a75d1b6f99dc8.js",
+      "bytes": 91460
+    },
+    {
+      "path": "_next/static/chunks/webpack-fc6859081d605de2.js",
+      "bytes": 3927
+    },
+    {
+      "path": "_next/static/css/3c0132dc879fc7c7.css",
+      "bytes": 81615
+    },
+    {
+      "path": "_next/static/media/19cfc7226ec3afaa-s.woff2",
+      "bytes": 19044
+    },
+    {
+      "path": "_next/static/media/21350d82a1f187e9-s.woff2",
+      "bytes": 18744
+    },
+    {
+      "path": "_next/static/media/8e9860b6e62d6359-s.woff2",
+      "bytes": 85272
+    },
+    {
+      "path": "_next/static/media/ba9851c3c22cd980-s.woff2",
+      "bytes": 25844
+    },
+    {
+      "path": "_next/static/media/c5fe6dc8356a8c31-s.woff2",
+      "bytes": 11272
+    },
+    {
+      "path": "_next/static/media/df0a9ae256c0569c-s.woff2",
+      "bytes": 10280
+    },
+    {
+      "path": "_next/static/media/e4af272ccee01ff0-s.p.woff2",
+      "bytes": 48432
+    },
+    {
+      "path": ".htaccess",
+      "bytes": 489
+    },
+    {
+      "path": "404.html",
+      "bytes": 28102
+    },
+    {
+      "path": "404/index.html",
+      "bytes": 28102
+    },
+    {
+      "path": "builder/index.html",
+      "bytes": 156898
+    },
+    {
+      "path": "builder/index.txt",
+      "bytes": 3295
+    },
+    {
+      "path": "cover-letter/index.html",
+      "bytes": 28764
+    },
+    {
+      "path": "cover-letter/index.txt",
+      "bytes": 3393
+    },
+    {
+      "path": "index.html",
+      "bytes": 52884
+    },
+    {
+      "path": "index.txt",
+      "bytes": 2773
+    },
+    {
+      "path": "resume-scanner/index.html",
+      "bytes": 48817
+    },
+    {
+      "path": "resume-scanner/index.txt",
+      "bytes": 3294
+    },
+    {
+      "path": "templates/classic.pdf",
+      "bytes": 10703249
+    },
+    {
+      "path": "templates/creative.pdf",
+      "bytes": 10703249
+    },
+    {
+      "path": "templates/creative.svg",
+      "bytes": 1018
+    },
+    {
+      "path": "templates/elegant.pdf",
+      "bytes": 10703249
+    },
+    {
+      "path": "templates/executive.svg",
+      "bytes": 1030
+    },
+    {
+      "path": "templates/minimal.pdf",
+      "bytes": 10703249
+    },
+    {
+      "path": "templates/minimal.svg",
+      "bytes": 776
+    },
+    {
+      "path": "templates/modern.pdf",
+      "bytes": 10703249
+    },
+    {
+      "path": "templates/modern.svg",
+      "bytes": 1037
+    },
+    {
+      "path": "templates/professional.pdf",
+      "bytes": 10703249
+    },
+    {
+      "path": "templates/professional.svg",
+      "bytes": 1037
+    },
+    {
+      "path": "templates/tech.svg",
+      "bytes": 966
+    },
+    {
+      "path": "tools/builder/index.html",
+      "bytes": 28520
+    },
+    {
+      "path": "tools/builder/index.txt",
+      "bytes": 3732
+    },
+    {
+      "path": "tools/index.html",
+      "bytes": 5290
+    },
+    {
+      "path": "tools/index.txt",
+      "bytes": 3212
+    }
+  ],
+  "contentHashesAvailable": false,
+  "limitations": [
+    "Path and size metadata only; no file payloads were fetched.",
+    "A backup captured after a legitimate site change must use a fresh inventory.",
+    "Not a backup, database inventory or successful restoration."
+  ]
+}

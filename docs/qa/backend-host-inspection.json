@@ -1,0 +1,13 @@
+{
+  "observed_on": "2026-10-15",
+  "provider": "Render",
+  "workspace_selection_confirmed_by_user": true,
+  "services_returned": 2,
+  "existing_service_runtimes": ["node", "node"],
+  "matching_resume_repository_services": 0,
+  "existing_python_backend_identified": false,
+  "new_services_created": false,
+  "existing_services_modified": false,
+  "paid_resources_activated": false,
+  "remaining_requirement": "An approved Python 3.12 host with sufficient spaCy memory, durable data volume, private secrets and HTTPS. Verify backup/restore before production rollout."
+}

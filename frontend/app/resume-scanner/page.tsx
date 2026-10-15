@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from 'next/navigation';
+import { createDocument, normalizeResume, saveDocument } from '@/components/resumeio/resumeDocument';
 import ResumeUploadForm from "../components/ResumeUploadForm";
 import ResumeResultCard from "../components/ResumeResultCard";
 import ScoreBreakdown from "../components/ScoreBreakdown";
@@ -9,7 +11,9 @@ import ProductHeroHeader from "../components/ProductHeroHeader";
 import { ParseAndScoreResponse } from "@/lib/types";
 
 export default function ResumeScannerPage() {
+  const router = useRouter();
   const [result, setResult] = useState<ParseAndScoreResponse | null>(null);
+  const [importError, setImportError] = useState('');
 
   const handleResult = (data: ParseAndScoreResponse) => {
     setResult(data);
@@ -25,13 +29,23 @@ export default function ResumeScannerPage() {
   };
 
   const handleImportClick = () => {
-    console.log("Import resume clicked");
-    // TODO: Implement import resume functionality
+    document.getElementById('scanner-upload')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   const handleBuildClick = () => {
-    console.log("Build resume clicked");
-    window.scrollTo({ top: 600, behavior: "smooth" });
+    router.push('/builder?new=1');
+  };
+  const editParsedResume = () => {
+    if (!result) return;
+    try {
+      const document = createDocument();
+      document.resume = normalizeResume(result.resume);
+      document.resume.title = result.resume.name ? `${result.resume.name} resume` : 'Imported resume';
+      const saved = saveDocument(document);
+      router.push(`/builder?id=${saved.id}`);
+    } catch {
+      setImportError('Your browser could not save the parsed resume. Free some browser storage or use the builder import to try again.');
+    }
   };
 
   return (
@@ -73,7 +87,7 @@ export default function ResumeScannerPage() {
       <div className="max-w-6xl mx-auto px-4 py-8">
         {/* Upload Section */}
         <div className="max-w-xl mx-auto">
-          <div className="bg-white rounded-xl shadow-lg p-6">
+          <div id="scanner-upload" className="bg-white rounded-xl shadow-lg p-6 scroll-mt-24">
             <h2 className="text-lg font-semibold text-gray-800 mb-4">
               Upload Your Resume
             </h2>
@@ -84,6 +98,8 @@ export default function ResumeScannerPage() {
         {/* Results Section */}
         {result && (
           <div className="mt-12">
+            <div className="rounded-xl bg-blue-50 border border-blue-100 p-5 mb-6 flex flex-wrap items-center justify-between gap-4"><div><h2 className="font-semibold text-blue-950">Turn this scan into your next resume</h2><p className="text-sm text-blue-800 mt-1">Open the parsed details in an editable document and review the extraction.</p></div><button onClick={editParsedResume} className="rounded-xl bg-blue-600 text-white px-5 py-3 text-sm font-semibold hover:bg-blue-700">Edit this resume</button></div>
+            {importError && <p role="alert" className="text-red-700 mb-4">{importError}</p>}
             {/* Reset Button */}
             <div className="flex justify-center mb-6">
               <button
@@ -210,7 +226,7 @@ export default function ResumeScannerPage() {
       <footer className="mt-16 py-6 border-t bg-white">
         <div className="max-w-6xl mx-auto px-4 text-center text-sm text-gray-500">
           <p>
-            Resume Scanner • Powered by AI • Your data is processed securely
+            Resume Scanner • Automated writing feedback • Review extracted details for accuracy
           </p>
         </div>
       </footer>

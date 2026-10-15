@@ -40,17 +40,12 @@ class NLPService:
         """Load spaCy model."""
         try:
             self._nlp = spacy.load(settings.spacy_model)
-            print(f"✓ Loaded spaCy model: {settings.spacy_model}")
+            print(f"Loaded spaCy model: {settings.spacy_model}")
         except OSError:
-            print(f"✗ Model '{settings.spacy_model}' not found. Downloading...")
-            # Try to download the model
-            import subprocess
-            subprocess.run(
-                ["python", "-m", "spacy", "download", settings.spacy_model],
-                check=True
+            raise RuntimeError(
+                f"spaCy model '{settings.spacy_model}' is not installed. "
+                f"Install it during deployment with: python -m spacy download {settings.spacy_model}"
             )
-            self._nlp = spacy.load(settings.spacy_model)
-            print(f"✓ Downloaded and loaded: {settings.spacy_model}")
     
     @property
     def nlp(self) -> Language:
