@@ -14,6 +14,10 @@ test('allowlists select deployable source and omit private/build/sample artifact
   assert.deepEqual(classify('frontend/package.json', 'frontend'), { destination: 'package.json' });
   assert.deepEqual(classify('frontend/lib/apiConfig.ts', 'frontend'), { destination: 'lib/apiConfig.ts' });
   assert.equal(classify('frontend/public/templates/professional.pdf', 'frontend'), null);
+  assert.equal(classify('frontend/public/home/README.md', 'frontend'), null);
+  assert.deepEqual(classify('frontend/public/home/commons-regular.woff2', 'frontend'), { destination: 'public/home/commons-regular.woff2' });
+  assert.deepEqual(classify('frontend/public/home/resume-hero.png', 'frontend'), { destination: 'public/home/resume-hero.png' });
+  assert.throws(() => classify('frontend/public/unknown.md', 'frontend'), /unsupported frontend source/);
   assert.equal(classify('frontend/.next/server/app.js', 'frontend'), null);
   assert.equal(classify('frontend/node_modules/example/index.js', 'frontend'), null);
   assert.equal(classify('frontend/tests/editor-e2e.cjs', 'frontend'), null);

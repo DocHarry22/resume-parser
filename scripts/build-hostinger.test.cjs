@@ -20,7 +20,8 @@ test('check-only needs no API origin; explicit origin and environment fallback a
 });
 
 test('curated source excludes Sites identity, environment, private uploads, old PDFs, dependencies, and test fixtures', () => {
-  for (const filename of ['frontend/app/page.tsx', 'frontend/lib/apiConfig.ts', 'frontend/components/resumeio/StudioBuilder.tsx', 'frontend/public/icon.svg', 'frontend/next.config.js']) assert.ok(selectSource(filename), filename);
+  for (const filename of ['frontend/app/page.tsx', 'frontend/lib/apiConfig.ts', 'frontend/components/resumeio/StudioBuilder.tsx', 'frontend/public/icon.svg', 'frontend/next.config.js', 'frontend/public/home/commons-regular.woff2', 'frontend/public/home/resume-hero.png']) assert.ok(selectSource(filename), filename);
+  assert.equal(selectSource('frontend/public/home/README.md'), null);
   for (const filename of ['sites/careerforge/.openai/hosting.json', 'frontend/.env.production', 'frontend/lib/.env.local', 'frontend/public/old-resume.pdf', 'frontend/public/sample.docx', 'frontend/public/uploads/private.png', 'frontend/node_modules/secret.js', 'frontend/.next/private.js', 'frontend/tempss/old.ts', 'frontend/tests/fixture.ts', 'data/resumes/private.json']) assert.equal(selectSource(filename), null, filename);
   assert.throws(() => selectSource('frontend/lib/id_rsa'), /Private or secret/);
   assert.throws(() => selectSource('frontend/app/../escape.tsx'), /Nonportable/);

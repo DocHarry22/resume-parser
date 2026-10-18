@@ -47,6 +47,8 @@ function classify(filename, target) {
     const relative = filename.slice('frontend/'.length);
     const parts = relative.split('/');
     if (parts.some(part => OMIT_DIRS.has(part)) || /\.(?:tsbuildinfo|log|pyc)$/i.test(relative)) return null;
+    // Asset provenance is repository documentation, not a deployed browser asset.
+    if (relative === 'public/home/README.md') return null;
     // Legacy downloadable sample resumes are not used by the implemented gallery.
     if (relative.startsWith('public/') && /\.pdf$/i.test(relative)) return null;
     if (!FRONTEND_ROOT_FILES.has(relative) && !FRONTEND_DIRS.has(parts[0])) return null;

@@ -46,7 +46,7 @@ async function main() {
     report.push('Contact and summary update live and survive a reload');
 
     await page.getByRole('button', { name: 'Modern template', exact: true }).click();
-    await page.getByRole('button', { name: /^Elegant Sophisticated/ }).click();
+    await page.getByRole('dialog', { name: 'Choose resume template' }).getByRole('button', { name: /^Elegant / }).click();
     await page.getByRole('button', { name: 'Apply Changes', exact: true }).click();
     assert.equal(await page.locator('.resume-document').getAttribute('data-template'), 'elegant');
     assert.match(await page.locator('.resume-document').innerText(), /QA Candidate/);
