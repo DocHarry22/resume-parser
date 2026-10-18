@@ -1,0 +1,72 @@
+{
+  "status": "passed",
+  "pages": [
+    {
+      "route": "/",
+      "header": {
+        "y": 0,
+        "height": 80,
+        "visibility": "visible",
+        "display": "block",
+        "topElement": true
+      },
+      "http": 200,
+      "desktop": 1440,
+      "mobile": 390
+    },
+    {
+      "route": "/templates",
+      "header": {
+        "y": 0,
+        "height": 80,
+        "visibility": "visible",
+        "display": "block",
+        "topElement": true
+      },
+      "http": 200,
+      "desktop": 1440,
+      "mobile": 390
+    },
+    {
+      "route": "/resume-scanner",
+      "header": {
+        "y": 0,
+        "height": 80,
+        "visibility": "visible",
+        "display": "block",
+        "topElement": true
+      },
+      "http": 200,
+      "desktop": 1440,
+      "mobile": 390
+    },
+    {
+      "route": "/builder?new=1",
+      "header": {
+        "y": 0,
+        "height": 80,
+        "visibility": "visible",
+        "display": "block",
+        "topElement": true
+      },
+      "http": 200,
+      "desktop": 1440,
+      "mobile": 390
+    },
+    {
+      "route": "/cover-letter",
+      "header": {
+        "y": 0,
+        "height": 80,
+        "visibility": "visible",
+        "display": "block",
+        "topElement": true
+      },
+      "http": 200,
+      "desktop": 1440,
+      "mobile": 390
+    }
+  ],
+  "errors": [],
+  "consoleErrors": []
+}

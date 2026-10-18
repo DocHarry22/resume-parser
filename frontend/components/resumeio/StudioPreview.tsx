@@ -2,7 +2,8 @@
 
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { ResumeBuilder } from '@/types/builder';
-import { TemplateStyle, ColorTheme } from './TemplateSelector';
+import type { TemplateStyle, ColorTheme } from './templateCatalog';
+import { resolveTemplateFont } from './templateCatalog';
 import { ContentSection, DEFAULT_DESIGN, ResumeDesign, SECTION_LABELS, THEME_COLORS } from './resumeDocument';
 
 export { THEME_COLORS } from './resumeDocument';
@@ -20,8 +21,8 @@ function RecordEntries({ values }: { values: Record<string, any>[] }) {
   return <>{values.map((entry, i) => <div className="resume-entry mb-4" key={i}>{Object.entries(entry).filter(([, value]) => value !== '' && value != null).map(([key, value]) => <div key={key}>{Array.isArray(value) ? <Bullets values={value.map(String)} /> : typeof value !== 'object' ? <p><span className="font-semibold">{key.replace(/_/g, ' ')}: </span>{String(value)}</p> : null}</div>)}</div>)}</>;
 }
 
-export function StudioPreview({ resume, template, colorTheme, scale = 0.65, design = DEFAULT_DESIGN }: {
-  resume: ResumeBuilder; template: TemplateStyle; colorTheme: ColorTheme; scale?: number; design?: ResumeDesign;
+export function StudioPreview({ resume, template, colorTheme, scale = 0.65, design = DEFAULT_DESIGN, printable = true }: {
+  resume: ResumeBuilder; template: TemplateStyle; colorTheme: ColorTheme; scale?: number; design?: ResumeDesign; printable?: boolean;
 }) {
   const inner = useRef<HTMLDivElement>(null);
   const width = design.pageSize === 'A4' ? 794 : 816;
@@ -39,10 +40,10 @@ export function StudioPreview({ resume, template, colorTheme, scale = 0.65, desi
       case 'summary': return resume.summary?.summary && <p className="whitespace-pre-wrap">{resume.summary.summary}</p>;
       case 'experience': return resume.experience.length > 0 && resume.experience.map((e, i) => <div className="resume-entry mb-4" key={i}><div className="flex justify-between gap-4"><strong>{e.position}</strong><span className="shrink-0 text-[0.9em]">{period(e.start_date, e.end_date, e.current)}</span></div><p className="opacity-75">{[e.company, e.location].filter(Boolean).join(' · ')}</p><Bullets values={[...e.description, ...e.achievements]} /></div>);
       case 'education': return resume.education.length > 0 && resume.education.map((e, i) => <div className="resume-entry mb-4" key={i}><div className="flex justify-between gap-4"><strong>{e.institution}</strong><span className="shrink-0 text-[0.9em]">{period(e.start_date, e.end_date)}</span></div><p>{[e.degree, e.field_of_study, e.location].filter(Boolean).join(' · ')}</p>{e.gpa != null && <p>GPA: {e.gpa}</p>}<Bullets values={e.honors} /></div>);
-      case 'skills': return resume.skills.length > 0 && resume.skills.map((s, i) => <p className="mb-2" key={i}>{s.category && <strong>{s.category}: </strong>}{s.skills.join(' · ')}</p>);
+      case 'skills': return resume.skills.length > 0 && resume.skills.map((s, i) => <div className="resume-skill-group" key={i}>{s.category && <strong className="resume-skill-category">{s.category}</strong>}<ul className="resume-skill-list">{s.skills.map((skill, index) => <li key={index}>{skill}</li>)}</ul></div>);
       case 'projects': return resume.projects.length > 0 && resume.projects.map((p, i) => <div className="resume-entry mb-4" key={i}><div className="flex justify-between gap-4"><strong>{p.name}</strong><span className="text-[0.9em]">{period(p.start_date, p.end_date)}</span></div><p className="whitespace-pre-wrap">{p.description}</p>{p.technologies.length > 0 && <p className="opacity-75">{p.technologies.join(' · ')}</p>}{(p.url || p.github) && <p className="break-all">{[p.url, p.github].filter(Boolean).join(' · ')}</p>}<Bullets values={p.highlights} /></div>);
       case 'certifications': return resume.certifications.length > 0 && resume.certifications.map((c, i) => <div className="resume-entry mb-3" key={i}><strong>{c.name}</strong><p>{[c.issuer, date(c.issue_date), c.expiry_date && `Expires ${date(c.expiry_date)}`].filter(Boolean).join(' · ')}</p>{c.credential_id && <p>Credential: {c.credential_id}</p>}{c.credential_url && <p className="break-all">{c.credential_url}</p>}</div>);
-      case 'languages': return resume.languages.length > 0 && <p>{resume.languages.map(l => [l.language, l.proficiency].filter(Boolean).join(' — ')).join(' · ')}</p>;
+      case 'languages': return resume.languages.length > 0 && <ul className="resume-language-list">{resume.languages.map((language, index) => <li key={index}><strong>{language.language}</strong><span>{language.proficiency}</span></li>)}</ul>;
       case 'achievements': return resume.achievements.length > 0 && <Bullets values={resume.achievements} />;
       case 'volunteer': return resume.volunteer.length > 0 && <RecordEntries values={resume.volunteer} />;
       case 'publications': return resume.publications.length > 0 && <RecordEntries values={resume.publications} />;
@@ -51,25 +52,37 @@ export function StudioPreview({ resume, template, colorTheme, scale = 0.65, desi
   };
   const content = design.sectionOrder.filter(id => !design.hiddenSections.includes(id)).map(id => {
     const body = section(id);
-    return body ? <section key={id} style={{ marginTop: design.spacing }}><h2 className="font-bold uppercase tracking-[0.14em] mb-3 pb-1 border-b" style={{ color, borderColor: `${color}44`, fontSize: '0.95em' }}>{SECTION_LABELS[id]}</h2>{body}</section> : null;
-  });
+    return body ? { id, element: <section className="resume-section" data-section={id} key={id} style={{ marginTop: design.spacing }}><h2>{SECTION_LABELS[id]}</h2><div className="resume-section-content">{body}</div></section> } : null;
+  }).filter((item): item is { id: ContentSection; element: React.ReactElement } => item !== null);
   const contact = resume.contact;
   const contactLines = [contact?.email, contact?.phone, contact?.location, contact?.linkedin, contact?.github, contact?.website].filter(Boolean);
-  const serif = template === 'classic' || template === 'elegant';
-  const sidebar = template === 'modern';
-  const family = design.font === 'mono' ? 'ui-monospace, monospace' : design.font === 'serif' || serif ? 'Georgia, serif' : 'Arial, Helvetica, sans-serif';
-  return <div className="print-content bg-white shadow-xl rounded-sm shrink-0" style={{ width: width * scale, height: height * scale }}>
-    <div ref={inner} className="print-inner resume-document" data-template={template} style={{ width, minHeight: pageHeight, transform: `scale(${scale})`, transformOrigin: 'top left', fontFamily: family, fontSize: design.fontSize, lineHeight: design.lineHeight, color: '#1e293b', overflowWrap: 'anywhere', background: 'white' }}>
-      <div style={{ display: sidebar ? 'grid' : 'block', gridTemplateColumns: sidebar ? '220px minmax(0, 1fr)' : undefined, minHeight: pageHeight, padding: sidebar ? 0 : template === 'minimal' ? 48 : 42, borderTop: template === 'creative' ? `10px solid ${color}` : undefined }}>
-        <div style={{ textAlign: ['classic', 'elegant'].includes(template) ? 'center' : 'left', background: template === 'professional' || sidebar ? color : undefined, color: template === 'professional' || sidebar ? 'white' : undefined, paddingTop: sidebar ? 42 : template === 'professional' ? 24 : 0, paddingRight: sidebar || template === 'professional' ? 24 : 0, paddingLeft: sidebar || template === 'professional' ? 24 : 0, paddingBottom: sidebar ? 42 : template === 'professional' ? 24 : template === 'classic' ? 18 : 0, borderBottom: template === 'classic' ? `3px double ${color}` : undefined }}>
-          {contact?.photo && /^(data:image\/(png|jpeg|webp);base64,|https?:\/\/)/i.test(contact.photo) && <img src={contact.photo} alt="Profile" className="w-20 h-20 object-cover rounded-full float-right ml-5 mb-3" />}
-          <h1 style={{ color: template === 'professional' || sidebar ? 'white' : color, fontSize: sidebar ? 28 : template === 'elegant' ? 38 : 32, lineHeight: 1.15, fontWeight: template === 'minimal' ? 400 : 700, letterSpacing: template === 'elegant' ? 2 : -0.5 }}>{contact?.full_name || 'Your name'}</h1>
-          {contactLines.length > 0 && (sidebar ? <div className="mt-6 space-y-3 text-[0.9em]">{contactLines.map((line, i) => <p key={i}>{line}</p>)}</div> : <p className="mt-3 text-[0.9em]">{contactLines.join('  ·  ')}</p>)}
-        </div>
-        <div style={{ minWidth: 0, padding: sidebar ? '18px 32px 42px' : undefined }}>
-        {content}
-        {!contact?.full_name && !resume.summary?.summary && !resume.experience.length && !resume.education.length && !resume.skills.length && <p className="mt-12 text-slate-400 text-center">Add your details to begin your resume.</p>}
-        </div>
+  const font = resolveTemplateFont(template, design.font);
+  const family = font === 'mono' ? '"Courier New", monospace' : font === 'serif' ? 'Georgia, "Times New Roman", serif' : 'Arial, Helvetica, sans-serif';
+  const sideSections: ContentSection[] = template === 'modern' ? ['skills', 'languages', 'certifications'] : template === 'elegant' ? ['education', 'skills', 'languages'] : template === 'executive' ? ['education', 'skills', 'languages', 'certifications'] : template === 'creative' ? ['skills', 'languages', 'certifications'] : [];
+  const mainContent = content.filter(item => !sideSections.includes(item.id));
+  const sideContent = content.filter(item => sideSections.includes(item.id));
+  const initials = (contact?.full_name || 'Your name').split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('');
+  const identity = <div className="resume-identity">
+    {contact?.photo && /^(data:image\/(png|jpeg|webp);base64,|https?:\/\/)/i.test(contact.photo) && <img src={contact.photo} alt="Profile" className="resume-photo" />}
+    {template === 'creative' && <div className="resume-monogram" aria-hidden="true">{initials}</div>}
+    {template === 'technical' && <span className="resume-overline" aria-hidden="true">PROFILE / CURRICULUM VITAE</span>}
+    <h1>{contact?.full_name || 'Your name'}</h1>
+    {contactLines.length > 0 && <div className="resume-contact">{contactLines.map((line, index) => <span key={index}>{line}</span>)}</div>}
+  </div>;
+  const empty = !content.length && <p className="resume-empty">Add your details to begin your resume.</p>;
+  return <div className={`${printable ? 'print-content ' : ''}bg-white shadow-xl rounded-sm shrink-0`} style={{ width: width * scale, height: height * scale }}>
+    <div ref={inner} className={`${printable ? 'print-inner ' : ''}resume-document`} data-template={template} style={{ width, minHeight: pageHeight, transform: `scale(${scale})`, transformOrigin: 'top left', fontFamily: family, fontSize: design.fontSize, lineHeight: design.lineHeight, color: '#26313c', overflowWrap: 'anywhere', background: 'white', '--resume-accent': color, '--resume-tint': `${color}0c`, '--resume-rule': `${color}38`, '--resume-page-height': `${pageHeight}px` } as React.CSSProperties}>
+      <div className="resume-layout">
+        {template === 'modern' ? <>
+          <div className="resume-sidebar">{identity}{sideContent.map(item => item.element)}</div>
+          <div className="resume-main">{mainContent.map(item => item.element)}{empty}</div>
+        </> : <>
+          {identity}
+          <div className={`resume-body${sideSections.length ? ' resume-body-split' : ''}`}>
+            <div className="resume-main">{mainContent.map(item => item.element)}{empty}</div>
+            {sideSections.length > 0 && <div className="resume-sidebar">{sideContent.map(item => item.element)}</div>}
+          </div>
+        </>}
       </div>
     </div>
   </div>;

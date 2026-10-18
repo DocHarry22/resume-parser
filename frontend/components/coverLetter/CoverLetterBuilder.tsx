@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import {
   CoverLetter,
   CoverLetterTemplate,
@@ -29,7 +29,7 @@ const TEMPLATES: CoverLetterTemplate[] = [
   {
     id: 'professional',
     name: 'Professional',
-    description: 'Clean and professional design perfect for corporate roles',
+    description: 'Centered serif letterhead with traditional double rules',
     preview_image: '/templates/professional.png',
     category: 'classic',
     is_premium: false,
@@ -38,7 +38,7 @@ const TEMPLATES: CoverLetterTemplate[] = [
   {
     id: 'modern',
     name: 'Modern',
-    description: 'Contemporary design with a fresh, modern feel',
+    description: 'Asymmetric blue nameplate with a vertical accent',
     preview_image: '/templates/modern.png',
     category: 'modern',
     is_premium: false,
@@ -47,7 +47,7 @@ const TEMPLATES: CoverLetterTemplate[] = [
   {
     id: 'minimal',
     name: 'Minimal',
-    description: 'Simple and elegant minimalist design',
+    description: 'Quiet split letterhead with contact details on the right',
     preview_image: '/templates/minimal.png',
     category: 'minimal',
     is_premium: false,
@@ -56,7 +56,7 @@ const TEMPLATES: CoverLetterTemplate[] = [
   {
     id: 'creative',
     name: 'Creative',
-    description: 'Bold design for creative industries',
+    description: 'Warm editorial masthead with a personal monogram',
     preview_image: '/templates/creative.png',
     category: 'creative',
     is_premium: false,
@@ -65,7 +65,7 @@ const TEMPLATES: CoverLetterTemplate[] = [
   {
     id: 'executive',
     name: 'Executive',
-    description: 'Sophisticated design for senior positions',
+    description: 'Navy letterhead with a separate contact column',
     preview_image: '/templates/executive.png',
     category: 'classic',
     is_premium: false,
@@ -74,7 +74,7 @@ const TEMPLATES: CoverLetterTemplate[] = [
   {
     id: 'tech',
     name: 'Tech',
-    description: 'Modern design tailored for tech industry',
+    description: 'Monospace letterhead in a precise technical frame',
     preview_image: '/templates/tech.png',
     category: 'modern',
     is_premium: false,
@@ -92,6 +92,8 @@ export function CoverLetterBuilder({ initialData, onSave }: CoverLetterBuilderPr
   const [saveError, setSaveError] = useState('');
   const [draftReady, setDraftReady] = useState(false);
   const [draftStatus, setDraftStatus] = useState('');
+  const latestLetter = useRef(coverLetter);
+  latestLetter.current = coverLetter;
 
   useEffect(() => {
     try {
@@ -119,6 +121,25 @@ export function CoverLetterBuilder({ initialData, onSave }: CoverLetterBuilderPr
     }, 600);
     return () => clearTimeout(timer);
   }, [coverLetter, draftReady]);
+
+  useEffect(() => {
+    if (!draftReady) return;
+    const flushDraft = () => {
+      const letter = latestLetter.current;
+      try {
+        localStorage.setItem(`resume-studio.letter-draft.${letter.id || 'new'}`, JSON.stringify({ savedAt: new Date().toISOString(), letter }));
+        return true;
+      } catch { return false; }
+    };
+    const onClose = (event: BeforeUnloadEvent) => {
+      if (!flushDraft()) { event.preventDefault(); event.returnValue = ''; }
+    };
+    window.addEventListener('beforeunload', onClose);
+    return () => {
+      window.removeEventListener('beforeunload', onClose);
+      flushDraft();
+    };
+  }, [draftReady]);
 
   const currentStepIndex = WIZARD_STEPS.findIndex((s) => s.id === currentStep);
 
@@ -240,7 +261,7 @@ export function CoverLetterBuilder({ initialData, onSave }: CoverLetterBuilderPr
               <button
                 onClick={handleSave}
                 disabled={isSaving}
-                className="px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 disabled:opacity-50"
+                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
               >
                 {isSaving ? 'Saving...' : IS_LOCAL_STORAGE ? 'Save in browser' : 'Save Cover Letter'}
               </button>
@@ -253,7 +274,7 @@ export function CoverLetterBuilder({ initialData, onSave }: CoverLetterBuilderPr
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="cover-letter-studio min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-16 z-40">
         <div className="max-w-7xl mx-auto px-4 py-4">
@@ -267,7 +288,7 @@ export function CoverLetterBuilder({ initialData, onSave }: CoverLetterBuilderPr
                 type="text"
                 value={coverLetter.title}
                 onChange={(e) => updateCoverLetter({ title: e.target.value })}
-                className="text-sm text-gray-600 bg-transparent border-b border-transparent hover:border-gray-300 focus:border-teal-500 focus:outline-none px-2 py-1"
+                className="text-sm text-gray-600 bg-transparent border-b border-transparent hover:border-gray-300 focus:border-blue-500 focus:outline-none px-2 py-1"
                 placeholder="Cover Letter Title"
               />
             </div>
@@ -292,7 +313,7 @@ export function CoverLetterBuilder({ initialData, onSave }: CoverLetterBuilderPr
               <button
                 onClick={handleSave}
                 disabled={isSaving}
-                className="px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 text-sm font-medium disabled:opacity-50"
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-sm font-medium disabled:opacity-50"
               >
                 {isSaving ? 'Saving...' : IS_LOCAL_STORAGE ? 'Save in browser' : 'Save'}
               </button>
@@ -302,7 +323,7 @@ export function CoverLetterBuilder({ initialData, onSave }: CoverLetterBuilderPr
       </header>
 
       {/* Progress Steps */}
-      {IS_LOCAL_STORAGE && <p className="mx-auto max-w-7xl bg-teal-50 px-4 py-3 text-sm text-teal-950">Your letter stays in this browser on this device. PDF and DOCX exports send the current content for processing without saving a server copy. Download a copy before clearing browser data.</p>}
+      {IS_LOCAL_STORAGE && <p className="mx-auto max-w-7xl bg-blue-50 px-4 py-3 text-sm text-blue-950">Your letter stays in this browser on this device. PDF and DOCX exports send the current content for processing without saving a server copy. Download a copy before clearing browser data.</p>}
       {draftStatus && <p role="status" className="mx-auto max-w-7xl px-4 py-2 text-xs text-gray-500">{draftStatus}</p>}
       {saveError && <p role="alert" className="mx-auto max-w-7xl bg-red-50 px-4 py-3 text-sm text-red-800">{saveError}</p>}
       <div className="bg-white border-b border-gray-200">
@@ -316,16 +337,16 @@ export function CoverLetterBuilder({ initialData, onSave }: CoverLetterBuilderPr
                 onClick={() => goToStep(step.id)}
                 className={`flex-1 flex flex-col items-center relative ${
                   index <= currentStepIndex
-                    ? 'text-teal-600'
+                    ? 'text-blue-600'
                     : 'text-gray-400'
                 }`}
               >
                 <div
                   className={`w-10 h-10 rounded-full flex items-center justify-center text-lg mb-2 ${
                     index < currentStepIndex
-                      ? 'bg-teal-600 text-white'
+                      ? 'bg-blue-600 text-white'
                       : index === currentStepIndex
-                      ? 'bg-teal-100 text-teal-600 ring-2 ring-teal-600'
+                      ? 'bg-blue-100 text-blue-600 ring-2 ring-blue-600'
                       : 'bg-gray-100 text-gray-400'
                   }`}
                 >
@@ -335,7 +356,7 @@ export function CoverLetterBuilder({ initialData, onSave }: CoverLetterBuilderPr
                 {index < WIZARD_STEPS.length - 1 && (
                   <div
                     className={`absolute top-5 left-[60%] w-[80%] h-0.5 ${
-                      index < currentStepIndex ? 'bg-teal-600' : 'bg-gray-200'
+                      index < currentStepIndex ? 'bg-blue-600' : 'bg-gray-200'
                     }`}
                   />
                 )}

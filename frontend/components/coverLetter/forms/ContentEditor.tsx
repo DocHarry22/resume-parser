@@ -92,7 +92,7 @@ export function ContentEditor({ coverLetter, onChange, onNext, onPrevious }: Con
           onClick={() => setActiveSection(section)}
           className={`flex-1 px-2 py-2 text-sm font-medium border-b-2 transition-colors sm:px-4 ${
             activeSection === section
-              ? 'border-teal-600 text-teal-600'
+              ? 'border-blue-600 text-blue-600'
               : 'border-transparent text-gray-500 hover:text-gray-700'
           }`}
         >
@@ -119,7 +119,7 @@ export function ContentEditor({ coverLetter, onChange, onNext, onPrevious }: Con
               <button
                 onClick={generateAISuggestions}
                 disabled={isGenerating}
-                className="px-4 py-2 bg-gradient-to-r from-teal-600 to-teal-600 text-white rounded-lg text-sm font-medium hover:from-teal-700 hover:to-teal-700 disabled:opacity-50 flex items-center gap-2"
+                className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-600 text-white rounded-lg text-sm font-medium hover:from-blue-700 hover:to-blue-700 disabled:opacity-50 flex items-center gap-2"
               >
                 {isGenerating ? (
                   <>
@@ -140,7 +140,7 @@ export function ContentEditor({ coverLetter, onChange, onNext, onPrevious }: Con
 
 Example: "I am writing to express my strong interest in the ${coverLetter.job_details.job_title || 'position'} at ${coverLetter.job_details.company_name || 'your company'}. With my background in..."`}
               rows={5}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
             />
           </div>
         );
@@ -158,7 +158,7 @@ Example: "I am writing to express my strong interest in the ${coverLetter.job_de
               <button
                 onClick={generateAISuggestions}
                 disabled={isGenerating}
-                className="px-4 py-2 bg-gradient-to-r from-teal-600 to-teal-600 text-white rounded-lg text-sm font-medium hover:from-teal-700 hover:to-teal-700 disabled:opacity-50 flex items-center gap-2"
+                className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-600 text-white rounded-lg text-sm font-medium hover:from-blue-700 hover:to-blue-700 disabled:opacity-50 flex items-center gap-2"
               >
                 {isGenerating ? (
                   <>
@@ -174,17 +174,18 @@ Example: "I am writing to express my strong interest in the ${coverLetter.job_de
             
             {content.body_paragraphs.map((paragraph, index) => (
               <div key={index} className="relative">
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <div className="block text-sm font-medium text-gray-700 mb-1">
                   Paragraph {index + 1}
                   {content.body_paragraphs.length > 1 && (
                     <button
+                      aria-label={`Remove body paragraph ${index + 1}`}
                       onClick={() => removeBodyParagraph(index)}
                       className="ml-2 text-red-500 hover:text-red-700 text-xs"
                     >
                       Remove
                     </button>
                   )}
-                </label>
+                </div>
                 <textarea
                   aria-label={`Body paragraph ${index + 1}`}
                   value={paragraph}
@@ -193,14 +194,14 @@ Example: "I am writing to express my strong interest in the ${coverLetter.job_de
                     ? "Describe your most relevant qualifications and how they align with the job requirements..."
                     : "Add another key achievement or relevant experience..."}
                   rows={5}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                 />
               </div>
             ))}
             
             <button
               onClick={addBodyParagraph}
-              className="w-full py-3 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-teal-400 hover:text-teal-600 transition-colors flex items-center justify-center gap-2"
+              className="w-full py-3 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-blue-400 hover:text-blue-600 transition-colors flex items-center justify-center gap-2"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
@@ -223,7 +224,7 @@ Example: "I am writing to express my strong interest in the ${coverLetter.job_de
               <button
                 onClick={generateAISuggestions}
                 disabled={isGenerating}
-                className="px-4 py-2 bg-gradient-to-r from-teal-600 to-teal-600 text-white rounded-lg text-sm font-medium hover:from-teal-700 hover:to-teal-700 disabled:opacity-50 flex items-center gap-2"
+                className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-600 text-white rounded-lg text-sm font-medium hover:from-blue-700 hover:to-blue-700 disabled:opacity-50 flex items-center gap-2"
               >
                 {isGenerating ? (
                   <>
@@ -244,7 +245,7 @@ Example: "I am writing to express my strong interest in the ${coverLetter.job_de
 
 Example: "I am excited about the opportunity to bring my skills to ${coverLetter.job_details.company_name || 'your team'}. I would welcome the chance to discuss how I can contribute..."`}
               rows={5}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
             />
 
             <div className="grid grid-cols-2 gap-4">
@@ -256,7 +257,7 @@ Example: "I am excited about the opportunity to bring my skills to ${coverLetter
                   aria-label="Sign-off"
                   value={content.signature}
                   onChange={(e) => handleChange('signature', e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
                   <option value="Sincerely">Sincerely</option>
                   <option value="Best regards">Best regards</option>
@@ -276,7 +277,7 @@ Example: "I am excited about the opportunity to bring my skills to ${coverLetter
                   value={content.ps_line}
                   onChange={(e) => handleChange('ps_line', e.target.value)}
                   placeholder="P.S. I'm also available for a call..."
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
             </div>
@@ -308,7 +309,7 @@ Example: "I am excited about the opportunity to bring my skills to ${coverLetter
           value={content.salutation}
           onChange={(e) => handleChange('salutation', e.target.value)}
           placeholder="Dear Hiring Manager,"
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         />
       </div>
 
@@ -341,11 +342,11 @@ Example: "I am excited about the opportunity to bring my skills to ${coverLetter
               {aiSuggestions.suggestions.map((suggestion, index) => (
                 <div
                   key={index}
-                  className="p-4 border border-gray-200 rounded-lg hover:border-teal-300 hover:bg-teal-50 cursor-pointer transition-colors"
+                  className="p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 cursor-pointer transition-colors"
                   onClick={() => applySuggestion(suggestion)}
                 >
                   <p className="text-gray-700">{suggestion}</p>
-                  <button onClick={event => { event.stopPropagation(); applySuggestion(suggestion); }} className="mt-2 text-sm text-teal-600 font-medium">
+                  <button onClick={event => { event.stopPropagation(); applySuggestion(suggestion); }} className="mt-2 text-sm text-blue-600 font-medium">
                     Use this →
                   </button>
                 </div>
@@ -396,7 +397,7 @@ Example: "I am excited about the opportunity to bring my skills to ${coverLetter
         <button
           onClick={onNext}
           disabled={!isValid}
-          className="px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
         >
           Preview & Export
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

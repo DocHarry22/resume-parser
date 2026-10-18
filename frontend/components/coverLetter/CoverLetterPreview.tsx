@@ -5,55 +5,12 @@ import { CoverLetter } from '@/types/coverLetter';
 import { downloadBlob } from '@/lib/coverLetterApi';
 import { exportLetterDocx } from '@/lib/coverLetterExport';
 import { IS_LOCAL_STORAGE } from '@/lib/apiConfig';
+import { Letterhead, LETTER_DESIGNS } from './Letterhead';
 
 interface CoverLetterPreviewProps {
   coverLetter: CoverLetter;
   template: string;
 }
-
-const TEMPLATE_STYLES: Record<string, { 
-  headerBg: string; 
-  headerText: string;
-  accentColor: string;
-  fontFamily: string;
-}> = {
-  professional: {
-    headerBg: 'bg-[#1a1a2e]',
-    headerText: 'text-white',
-    accentColor: '#1a1a2e',
-    fontFamily: 'font-serif',
-  },
-  modern: {
-    headerBg: 'bg-gradient-to-r from-[#667eea] to-[#764ba2]',
-    headerText: 'text-white',
-    accentColor: '#667eea',
-    fontFamily: 'font-sans',
-  },
-  minimal: {
-    headerBg: 'bg-gray-100',
-    headerText: 'text-gray-800',
-    accentColor: '#2d3436',
-    fontFamily: 'font-sans',
-  },
-  creative: {
-    headerBg: 'bg-gradient-to-r from-[#e17055] to-[#fdcb6e]',
-    headerText: 'text-white',
-    accentColor: '#e17055',
-    fontFamily: 'font-sans',
-  },
-  executive: {
-    headerBg: 'bg-[#2c3e50]',
-    headerText: 'text-white',
-    accentColor: '#2c3e50',
-    fontFamily: 'font-serif',
-  },
-  tech: {
-    headerBg: 'bg-gradient-to-r from-[#090979] to-[#00d4ff]',
-    headerText: 'text-white',
-    accentColor: '#00d4ff',
-    fontFamily: 'font-mono',
-  },
-};
 
 export function CoverLetterPreview({ coverLetter, template }: CoverLetterPreviewProps) {
   const [isExporting, setIsExporting] = useState(false);
@@ -62,7 +19,7 @@ export function CoverLetterPreview({ coverLetter, template }: CoverLetterPreview
   const [exportError, setExportError] = useState('');
   const letterRef = useRef<HTMLDivElement>(null);
 
-  const styles = TEMPLATE_STYLES[template] || TEMPLATE_STYLES.professional;
+  const styles = LETTER_DESIGNS[template] || LETTER_DESIGNS.professional;
   const { sender, recipient, content, job_details } = coverLetter;
 
   // Set date on client side to avoid hydration mismatch
@@ -219,45 +176,8 @@ export function CoverLetterPreview({ coverLetter, template }: CoverLetterPreview
 
       {/* Letter Preview */}
       <div className="p-4 bg-gray-50 max-h-[calc(100vh-250px)] overflow-y-auto">
-        <div ref={letterRef} className={`bg-white shadow-lg mx-auto max-w-[8.5in] aspect-[8.5/11] p-8 ${styles.fontFamily}`}>
-          {/* Header - Sender Info */}
-          <div className={`${template === 'minimal' ? 'border-b-2 border-gray-300' : ''} pb-4 mb-6`}>
-            {template !== 'minimal' && (
-              <div className={`${styles.headerBg} ${styles.headerText} -mx-8 -mt-8 px-8 py-6 mb-6`}>
-                <h1 className="text-2xl font-bold">{sender.full_name || 'Your Name'}</h1>
-                <div className="text-sm opacity-90 mt-2 flex flex-wrap gap-x-4 gap-y-1">
-                  {sender.email && <span>{sender.email}</span>}
-                  {sender.phone && <span>{sender.phone}</span>}
-                  {sender.linkedin && <span>{sender.linkedin}</span>}
-                </div>
-                {sender.address && (
-                  <div className="text-sm opacity-80 mt-1">
-                    {sender.address}
-                    {sender.city && `, ${sender.city}`}
-                    {sender.state && `, ${sender.state}`}
-                    {sender.zip_code && ` ${sender.zip_code}`}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {template === 'minimal' && (
-              <>
-                <h1 className="text-xl font-semibold text-gray-900">{sender.full_name || 'Your Name'}</h1>
-                <div className="text-sm text-gray-600 mt-1">
-                  {[sender.email, sender.phone, sender.linkedin].filter(Boolean).join(' • ')}
-                </div>
-                {sender.address && (
-                  <div className="text-sm text-gray-500 mt-1">
-                    {sender.address}
-                    {sender.city && `, ${sender.city}`}
-                    {sender.state && `, ${sender.state}`}
-                    {sender.zip_code && ` ${sender.zip_code}`}
-                  </div>
-                )}
-              </>
-            )}
-          </div>
+        <div ref={letterRef} data-live-letter-preview={template} data-letter-template={template} className={`letter-document bg-white shadow-lg mx-auto max-w-[8.5in] min-h-[11in] p-8 ${styles.fontFamily}`}>
+          <Letterhead sender={sender} template={template} />
 
           {/* Date */}
           {coverLetter.settings.include_date && <div className="text-sm text-gray-600 mb-4">{formatDate()}</div>}

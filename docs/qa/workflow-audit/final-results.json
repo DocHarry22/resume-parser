@@ -1,0 +1,113 @@
+{
+  "completedAt": "2026-10-18T20:38:37.444Z",
+  "baseUrl": "http://127.0.0.1:3100",
+  "passed": true,
+  "browserWorkflowGroups": 27,
+  "regressions": [
+    {
+      "name": "builder new from current editor",
+      "status": "passed"
+    },
+    {
+      "name": "builder template navigation from current editor",
+      "status": "passed"
+    },
+    {
+      "name": "resume immediate navigation preserves last edit",
+      "status": "passed"
+    },
+    {
+      "name": "cover letter immediate return preserves draft",
+      "status": "passed"
+    },
+    {
+      "name": "checker change file button is clickable",
+      "status": "passed"
+    },
+    {
+      "name": "checker rejects unsupported DOC",
+      "status": "passed"
+    },
+    {
+      "name": "checker rejects mismatched file extension",
+      "status": "passed"
+    },
+    {
+      "name": "every template filter and preview works",
+      "status": "passed"
+    },
+    {
+      "name": "builder design toolbar help undo redo and print",
+      "status": "passed"
+    },
+    {
+      "name": "homepage all controls and internal link targets",
+      "status": "passed"
+    },
+    {
+      "name": "checker real basic scan and edit handoff",
+      "status": "passed"
+    },
+    {
+      "name": "checker real ats scan and edit handoff",
+      "status": "passed"
+    },
+    {
+      "name": "checker real expert scan and edit handoff",
+      "status": "passed"
+    },
+    {
+      "name": "checker empty invalid files service failure and retry",
+      "status": "passed"
+    },
+    {
+      "name": "builder PDF DOCX JSON imports and invalid backup preserve documents",
+      "status": "passed"
+    },
+    {
+      "name": "builder photo duplicate delete and repeated new navigation",
+      "status": "passed",
+      "attempts": [
+        {
+          "name": "builder photo duplicate delete and repeated new navigation",
+          "status": "failed",
+          "error": "Expected values to be strictly equal:\n\n1 !== 2\n"
+        },
+        {
+          "name": "builder photo duplicate delete and repeated new navigation",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "resume storage failure retains edits and permits backup",
+      "status": "passed"
+    },
+    {
+      "name": "cover letter wizard templates tones writing ideas and preview",
+      "status": "passed"
+    },
+    {
+      "name": "builder every content section save rich exports and multipage print",
+      "status": "passed"
+    }
+  ],
+  "localWorkflows": [
+    "Resume starts blank, saves/reloads locally, exports current PDF/DOCX, and creates offline TXT/JSON backups",
+    "Import parses directly into a separate browser document, clears server identity, and survives reload",
+    "Cover letters save offline, reload, duplicate and delete locally; PDF/DOCX exports include unsaved content",
+    "Controlled export outage leaves edits intact and TXT remains available; mobile/desktop layouts fit",
+    "A fresh browser profile has an empty letter library",
+    "Legacy builder entry redirects to the browser editor with its template selection",
+    "Privacy backup includes local letters; deletion removes only app data and exposes no server controls",
+    "All observed API calls are stateless processing; no workspace cookie, persisted routes, or page errors"
+  ],
+  "pageErrors": [],
+  "unitTests": {
+    "passed": 29,
+    "failed": 0
+  },
+  "careerValidation": "passed",
+  "productionBuild": "passed",
+  "note": "The repeated-create test waits for the new document URL before typing. Its corrected isolated rerun passed; application code was unchanged."
+}

@@ -1,0 +1,75 @@
+[
+  {
+    "name": "builder new from current editor",
+    "status": "passed"
+  },
+  {
+    "name": "builder template navigation from current editor",
+    "status": "passed"
+  },
+  {
+    "name": "resume immediate navigation preserves last edit",
+    "status": "passed"
+  },
+  {
+    "name": "cover letter immediate return preserves draft",
+    "status": "passed"
+  },
+  {
+    "name": "checker change file button is clickable",
+    "status": "passed"
+  },
+  {
+    "name": "checker rejects unsupported DOC",
+    "status": "passed"
+  },
+  {
+    "name": "checker rejects mismatched file extension",
+    "status": "passed"
+  },
+  {
+    "name": "every template filter and preview works",
+    "status": "passed"
+  },
+  {
+    "name": "builder design toolbar help undo redo and print",
+    "status": "passed"
+  },
+  {
+    "name": "homepage all controls and internal link targets",
+    "status": "passed"
+  },
+  {
+    "name": "checker real basic scan and edit handoff",
+    "status": "passed"
+  },
+  {
+    "name": "checker real ats scan and edit handoff",
+    "status": "passed"
+  },
+  {
+    "name": "checker real expert scan and edit handoff",
+    "status": "passed"
+  },
+  {
+    "name": "checker empty invalid files service failure and retry",
+    "status": "passed"
+  },
+  {
+    "name": "builder PDF DOCX JSON imports and invalid backup preserve documents",
+    "status": "passed"
+  },
+  {
+    "name": "builder photo duplicate delete and repeated new navigation",
+    "status": "passed"
+  },
+  {
+    "name": "resume storage failure retains edits and permits backup",
+    "status": "passed"
+  },
+  {
+    "name": "cover letter wizard templates tones writing ideas and preview",
+    "status": "failed",
+    "error": "locator.click: Timeout 25000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Remove', exact: true }).last()\u001b[22m\n"
+  }
+]

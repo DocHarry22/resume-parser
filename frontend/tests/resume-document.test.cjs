@@ -11,7 +11,9 @@ function library() {
   const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 } }).outputText;
   const storage = new Map();
   const localStorage = { getItem: key => storage.get(key) ?? null, setItem: (key, value) => storage.set(key, value) };
-  const context = { exports: {}, crypto: webcrypto, structuredClone, localStorage, window: { dispatchEvent() {} }, Event };
+  const catalog = { exports: {} };
+  vm.runInNewContext(ts.transpileModule(fs.readFileSync(path.join(__dirname, '../components/resumeio/templateCatalog.ts'), 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText, catalog);
+  const context = { exports: {}, require: id => { assert.equal(id, './templateCatalog'); return catalog.exports; }, crypto: webcrypto, structuredClone, localStorage, window: { dispatchEvent() {} }, Event };
   vm.runInNewContext(compiled, context);
   return { ...context.exports, storage, localStorage };
 }
@@ -31,6 +33,21 @@ test('scanner output populates the editable fields without losing dates, bullets
   assert.equal(resume.projects[0].name, 'Portfolio');
   assert.equal(resume.languages[0].language, 'English');
   assert.equal(resume.skills[0].skills[0], 'TypeScript');
+});
+
+test('new template choices survive browser saves and JSON backup normalization', () => {
+  const lib = library();
+  for (const template of ['executive', 'technical']) {
+    const original = lib.createDocument();
+    original.template = template;
+    original.resume.contact.full_name = 'Template migration candidate';
+    lib.saveDocument(original);
+    const restored = lib.normalizeDocument(JSON.parse(JSON.stringify(original)));
+    assert.equal(restored.template, template);
+    assert.equal(lib.readDocuments().find(item => item.id === original.id).template, template);
+    assert.equal(restored.resume.contact.full_name, 'Template migration candidate');
+    assert.equal(restored.design.font, 'template');
+  }
 });
 
 test('browser saves support independent copies and restore content plus design', () => {

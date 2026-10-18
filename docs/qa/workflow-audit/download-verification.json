@@ -1,0 +1,22 @@
+[
+  {
+    "file": "resume-current",
+    "pdf_pages": 1,
+    "pdf_and_docx_text_verified": true
+  },
+  {
+    "file": "letter-current",
+    "pdf_pages": 1,
+    "pdf_and_docx_text_verified": true
+  },
+  {
+    "file": "rich-resume",
+    "pdf_pages": 1,
+    "pdf_and_docx_text_verified": true
+  },
+  {
+    "file": "rich-resume-print.pdf",
+    "pages": 4,
+    "last_paragraph_verified": true
+  }
+]

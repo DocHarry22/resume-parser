@@ -1,0 +1,10 @@
+{
+  "baseUrl": "http://127.0.0.1:3100",
+  "checks": [
+    "professional print rendered",
+    "professional long print rendered"
+  ],
+  "pageErrors": [],
+  "passed": true,
+  "completedAt": "2026-10-18T21:40:51.054Z"
+}

@@ -1,5 +1,6 @@
 import JSZip from 'jszip';
 import { SavedResume, SECTION_LABELS, THEME_COLORS } from './resumeDocument';
+import { resolveTemplateFont } from './templateCatalog';
 
 type Block = { kind: 'title' | 'heading' | 'body' | 'bullet'; text: string };
 const flatten = (value: unknown): string[] => {
@@ -44,7 +45,8 @@ const xml = (value: string) => value.replace(/[\u0000-\u0008\u000B\u000C\u000E-\
 /** A real Office Open XML document, generated locally without sending personal data. */
 export async function localDocx(doc: SavedResume): Promise<Blob> {
   const archive = new JSZip();
-  const font = doc.design.font === 'serif' ? 'Georgia' : doc.design.font === 'mono' ? 'Courier New' : 'Arial';
+  const selectedFont = resolveTemplateFont(doc.template, doc.design.font);
+  const font = selectedFont === 'serif' ? 'Georgia' : selectedFont === 'mono' ? 'Courier New' : 'Arial';
   const color = THEME_COLORS[doc.colorTheme].slice(1);
   const paragraphs = resumeTextBlocks(doc).map(block => {
     const heading = block.kind === 'heading'; const title = block.kind === 'title';

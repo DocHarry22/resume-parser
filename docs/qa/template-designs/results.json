@@ -1,0 +1,21 @@
+{
+  "baseUrl": "http://127.0.0.1:3100",
+  "checks": [
+    "All eight gallery designs and category filters work; card navigation carries the displayed color",
+    "Modern preserves all content, saves/reloads and prints",
+    "Classic preserves all content, saves/reloads and prints",
+    "Minimal preserves all content, saves/reloads and prints",
+    "Professional preserves all content, saves/reloads and prints",
+    "Creative preserves all content, saves/reloads and prints",
+    "Elegant preserves all content, saves/reloads and prints",
+    "Executive preserves all content, saves/reloads and prints",
+    "Technical preserves all content, saves/reloads and prints",
+    "The selector uses eight real previews; font overrides and section visibility work without printing thumbnails",
+    "Long documents print in sidebar, timeline and executive formats",
+    "Gallery and scaled builder preview fit a mobile viewport",
+    "All six cover letter thumbnails and real letterheads retain sender details on desktop and mobile"
+  ],
+  "pageErrors": [],
+  "passed": true,
+  "completedAt": "2026-10-18T21:29:39.263Z"
+}

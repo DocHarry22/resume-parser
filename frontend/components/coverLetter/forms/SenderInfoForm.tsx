@@ -38,7 +38,7 @@ export function SenderInfoForm({ sender, onChange, onNext, onPrevious }: SenderI
             value={sender.full_name}
             onChange={(e) => handleChange('full_name', e.target.value)}
             placeholder="John Doe"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
 
@@ -52,7 +52,7 @@ export function SenderInfoForm({ sender, onChange, onNext, onPrevious }: SenderI
             value={sender.email}
             onChange={(e) => handleChange('email', e.target.value)}
             placeholder="john.doe@email.com"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
 
@@ -66,7 +66,7 @@ export function SenderInfoForm({ sender, onChange, onNext, onPrevious }: SenderI
             value={sender.phone}
             onChange={(e) => handleChange('phone', e.target.value)}
             placeholder="+1 (555) 123-4567"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
       </div>
@@ -85,7 +85,7 @@ export function SenderInfoForm({ sender, onChange, onNext, onPrevious }: SenderI
             value={sender.address}
             onChange={(e) => handleChange('address', e.target.value)}
             placeholder="123 Main Street, Apt 4"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
 
@@ -100,7 +100,7 @@ export function SenderInfoForm({ sender, onChange, onNext, onPrevious }: SenderI
               value={sender.city}
               onChange={(e) => handleChange('city', e.target.value)}
               placeholder="San Francisco"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
           <div>
@@ -113,7 +113,7 @@ export function SenderInfoForm({ sender, onChange, onNext, onPrevious }: SenderI
               value={sender.state}
               onChange={(e) => handleChange('state', e.target.value)}
               placeholder="CA"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
         </div>
@@ -129,7 +129,7 @@ export function SenderInfoForm({ sender, onChange, onNext, onPrevious }: SenderI
               value={sender.zip_code}
               onChange={(e) => handleChange('zip_code', e.target.value)}
               placeholder="94102"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
           <div>
@@ -142,7 +142,7 @@ export function SenderInfoForm({ sender, onChange, onNext, onPrevious }: SenderI
               value={sender.country}
               onChange={(e) => handleChange('country', e.target.value)}
               placeholder="United States"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
         </div>
@@ -163,7 +163,7 @@ export function SenderInfoForm({ sender, onChange, onNext, onPrevious }: SenderI
               value={sender.linkedin}
               onChange={(e) => handleChange('linkedin', e.target.value)}
               placeholder="https://linkedin.com/in/johndoe"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
           <div>
@@ -176,7 +176,7 @@ export function SenderInfoForm({ sender, onChange, onNext, onPrevious }: SenderI
               value={sender.website}
               onChange={(e) => handleChange('website', e.target.value)}
               placeholder="https://johndoe.com"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
         </div>
@@ -196,7 +196,7 @@ export function SenderInfoForm({ sender, onChange, onNext, onPrevious }: SenderI
         <button
           onClick={onNext}
           disabled={!isValid}
-          className="px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
         >
           Continue
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -3,7 +3,7 @@ const { chromium, browserChannel, baseUrl } = require('../../scripts/playwright-
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const output = path.resolve(__dirname, '../../docs/qa/local-mode');
+const output = process.env.QA_OUTPUT ? path.resolve(process.env.QA_OUTPUT) : path.resolve(__dirname, '../../docs/qa/local-mode');
 fs.mkdirSync(output, { recursive: true });
 const report = { startedAt: new Date().toISOString(), baseUrl, checks: [], apiRequests: [], pageErrors: [] };
 const note = value => { report.checks.push(value); console.log(value); };
@@ -103,7 +103,7 @@ let browser;
   note('Controlled export outage leaves edits intact and TXT remains available; mobile/desktop layouts fit');
   const fresh = await browser.newContext(); const other = await fresh.newPage();
   await other.goto(baseUrl + '/cover-letter', { waitUntil: 'networkidle' });
-  await other.getByRole('heading', { name: 'Give your application a voice', exact: true }).waitFor();
+  await other.getByRole('heading', { name: 'Give your application a voice.', exact: true }).waitFor();
   await fresh.close();
   note('A fresh browser profile has an empty letter library');
   await go('/tools/builder?template=modern');

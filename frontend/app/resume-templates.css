@@ -1,0 +1,116 @@
+/* Document layouts use physical-page proportions at every preview scale. */
+.resume-document .resume-layout { min-height: var(--resume-page-height); padding: 48px; }
+.resume-document .resume-identity { padding-bottom: 16px; }
+.resume-document .resume-identity h1 { margin: 0; font-size: 2.8em; line-height: 1.12; letter-spacing: -.045em; font-weight: 700; color: var(--resume-accent); }
+.resume-document .resume-contact { display: flex; flex-wrap: wrap; gap: 5px 16px; margin-top: 16px; font-size: .86em; color: #52606b; }
+.resume-document .resume-photo { width: 84px; height: 84px; object-fit: cover; border-radius: 50%; float: right; margin: 0 0 14px 20px; }
+.resume-document .resume-main, .resume-document .resume-sidebar { min-width: 0; }
+.resume-document .resume-section { min-width: 0; }
+.resume-document .resume-section > h2 { margin: 0 0 12px; padding: 0 0 7px; border-bottom: 1px solid var(--resume-rule); color: var(--resume-accent); font-size: .88em; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; line-height: 1.45; }
+.resume-document .resume-section-content > :last-child { margin-bottom: 0; }
+.resume-document .resume-skill-group { margin-bottom: 12px; }
+.resume-document .resume-skill-category { display: block; font-size: .95em; margin-bottom: 6px; }
+.resume-document .resume-skill-list { display: flex; flex-wrap: wrap; gap: 4px 12px; list-style: none; margin: 0; padding: 0; }
+.resume-document .resume-language-list { list-style: none; margin: 0; padding: 0; }
+.resume-document .resume-language-list li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; margin-bottom: 8px; }
+.resume-document .resume-language-list span { opacity: .75; }
+.resume-document .resume-empty { margin-top: 48px; color: #8b95a3; text-align: center; }
+.resume-document .resume-body-split { display: grid; grid-template-columns: minmax(0, 1fr) 200px; gap: 32px; }
+
+/* Modern: the sidebar carries actual qualifications, not just contact details. */
+.resume-document[data-template='modern'] .resume-layout { display: grid; grid-template-columns: 238px minmax(0, 1fr); padding: 0; }
+.resume-document[data-template='modern'] .resume-sidebar { background: #182d42; color: #f5f8fc; padding: 44px 26px; border-top: 12px solid var(--resume-accent); }
+.resume-document[data-template='modern'] .resume-identity h1 { color: #fff; font-size: 2.6em; }
+.resume-document[data-template='modern'] .resume-contact { display: grid; gap: 10px; color: #d8e1eb; margin-block: 24px 32px; }
+.resume-document[data-template='modern'] .resume-photo { float: none; margin: 0 0 24px; width: 92px; height: 92px; border: 4px solid #ffffff24; }
+.resume-document[data-template='modern'] .resume-sidebar h2 { color: #fff; border-color: #ffffff32; }
+.resume-document[data-template='modern'] .resume-main { padding: 24px 34px 44px; }
+.resume-document[data-template='modern'] .resume-sidebar .resume-skill-list { display: grid; gap: 7px; }
+.resume-document[data-template='modern'] .resume-sidebar .resume-section { margin-top: 32px !important; }
+.resume-document[data-template='modern'] .resume-language-list li { display: block; }
+.resume-document[data-template='modern'] .resume-language-list span { display: block; font-size: .9em; }
+
+/* Classic: a restrained, full-width university-style chronological document. */
+.resume-document[data-template='classic'] .resume-layout { padding: 48px 54px; }
+.resume-document[data-template='classic'] .resume-identity { text-align: center; border-bottom: 3px double var(--resume-accent); padding-bottom: 22px; }
+.resume-document[data-template='classic'] .resume-identity h1 { color: var(--resume-accent); font-size: 2.5em; text-transform: uppercase; letter-spacing: .06em; }
+.resume-document[data-template='classic'] .resume-contact { justify-content: center; color: #333; margin-top: 12px; }
+.resume-document[data-template='classic'] .resume-section > h2 { color: var(--resume-accent); border-color: var(--resume-accent); letter-spacing: .04em; font-size: 1em; padding-bottom: 4px; }
+.resume-document[data-template='classic'] .resume-entry { margin-bottom: 20px; }
+
+/* Minimal: margin labels form a quiet editorial reading grid. */
+.resume-document[data-template='minimal'] .resume-layout { padding: 58px 48px; }
+.resume-document[data-template='minimal'] .resume-identity { border-bottom: 1px solid #d8dfe0; padding-bottom: 30px; margin-bottom: 12px; }
+.resume-document[data-template='minimal'] .resume-identity h1 { color: #243336; font-size: 3.2em; font-weight: 400; letter-spacing: -.06em; }
+.resume-document[data-template='minimal'] .resume-contact { max-width: 520px; color: #718080; }
+.resume-document[data-template='minimal'] .resume-section { display: grid; grid-template-columns: 132px minmax(0, 1fr); gap: 28px; }
+.resume-document[data-template='minimal'] .resume-section > h2 { border: 0; color: var(--resume-accent); font-size: .82em; padding-top: 2px; letter-spacing: .08em; }
+.resume-document[data-template='minimal'] .resume-skill-list { gap: 4px 18px; }
+
+/* Professional: a date rail makes career progression immediately visible. */
+.resume-document[data-template='professional'] .resume-layout { padding: 40px; }
+.resume-document[data-template='professional'] .resume-identity { border-top: 5px solid var(--resume-accent); padding-top: 20px; padding-bottom: 20px; border-bottom: 1px solid #dfe3ea; }
+.resume-document[data-template='professional'] .resume-identity h1 { color: #202a3c; font-size: 3em; }
+.resume-document[data-template='professional'] .resume-section > h2 { border: 0; color: #25334a; background: var(--resume-tint); padding: 5px 12px; letter-spacing: .1em; }
+.resume-document[data-template='professional'] :is([data-section='experience'], [data-section='education']) .resume-entry { position: relative; margin-left: 108px; padding: 0 0 8px 22px; border-left: 1px solid var(--resume-rule); }
+.resume-document[data-template='professional'] :is([data-section='experience'], [data-section='education']) .resume-entry::before { content: ''; position: absolute; top: 4px; left: -4px; width: 7px; height: 7px; border-radius: 50%; background: var(--resume-accent); }
+.resume-document[data-template='professional'] :is([data-section='experience'], [data-section='education']) .resume-entry > div > span { position: absolute; left: -108px; width: 90px; white-space: normal; color: #65738a; font-size: .82em; }
+
+/* Creative: a portfolio masthead and asymmetric, open qualifications column. */
+.resume-document[data-template='creative'] .resume-layout { padding: 0 44px 44px; border-top: 14px solid var(--resume-accent); }
+.resume-document[data-template='creative'] .resume-identity { position: relative; padding: 44px 106px 28px 0; border-bottom: 2px solid var(--resume-accent); }
+.resume-document[data-template='creative'] .resume-identity h1 { color: #242133; font-size: 4.2em; font-weight: 800; letter-spacing: -.065em; text-transform: uppercase; }
+.resume-document[data-template='creative'] .resume-monogram { position: absolute; top: 48px; right: 0; display: flex; align-items: center; justify-content: center; width: 78px; height: 78px; background: var(--resume-accent); color: #fff; border-radius: 50% 50% 0 50%; font-weight: 700; font-size: 2em; }
+.resume-document[data-template='creative'] .resume-photo { position: relative; width: 70px; height: 70px; }
+.resume-document[data-template='creative'] .resume-body-split { grid-template-columns: minmax(0, 1fr) 180px; gap: 34px; }
+.resume-document[data-template='creative'] .resume-sidebar { padding-top: 10px; }
+.resume-document[data-template='creative'] .resume-section > h2 { border: 0; padding: 0; font-size: 1.12em; text-transform: none; letter-spacing: -.02em; }
+.resume-document[data-template='creative'] [data-section='summary'] { border-left: 3px solid var(--resume-accent); padding-left: 18px; }
+.resume-document[data-template='creative'] .resume-skill-list { display: grid; }
+
+/* Elegant: large serif typography and an ivory panel on the opposite side. */
+.resume-document[data-template='elegant'] .resume-layout { padding: 48px 46px 46px; }
+.resume-document[data-template='elegant'] .resume-identity { padding-bottom: 28px; border-bottom: 1px solid var(--resume-accent); }
+.resume-document[data-template='elegant'] .resume-identity h1 { font-size: 3.7em; font-weight: 400; letter-spacing: -.035em; }
+.resume-document[data-template='elegant'] .resume-contact { font-family: Arial, sans-serif; font-size: .82em; }
+.resume-document[data-template='elegant'] .resume-body-split { gap: 28px; grid-template-columns: minmax(0, 1fr) 208px; }
+.resume-document[data-template='elegant'] .resume-sidebar { background: #f5f3ed; margin-top: 24px; padding: 0 20px 28px; }
+.resume-document[data-template='elegant'] .resume-section > h2 { font-size: 1.4em; font-weight: 400; letter-spacing: 0; text-transform: none; border: 0; }
+.resume-document[data-template='elegant'] .resume-sidebar .resume-entry > div { display: block; }
+.resume-document[data-template='elegant'] .resume-sidebar .resume-entry > div > span { display: block; margin-top: 5px; }
+.resume-document[data-template='elegant'] .resume-skill-list { display: grid; gap: 8px; }
+
+/* Executive: a broad nameplate above a genuinely separate credentials column. */
+.resume-document[data-template='executive'] .resume-layout { padding: 0; }
+.resume-document[data-template='executive'] .resume-identity { padding: 46px 48px 34px; background: #202b38; border-bottom: 7px solid var(--resume-accent); color: #fff; }
+.resume-document[data-template='executive'] .resume-identity h1 { color: #fff; font-size: 3em; font-weight: 500; letter-spacing: .01em; }
+.resume-document[data-template='executive'] .resume-contact { color: #d6dde5; }
+.resume-document[data-template='executive'] .resume-body-split { padding: 10px 44px 44px; grid-template-columns: minmax(0, 1fr) 196px; gap: 30px; }
+.resume-document[data-template='executive'] .resume-sidebar { padding-left: 22px; border-left: 1px solid #dde2e8; }
+.resume-document[data-template='executive'] .resume-section > h2 { color: #26313c; letter-spacing: .13em; border-bottom: 2px solid #26313c; }
+.resume-document[data-template='executive'] .resume-sidebar .resume-entry > div { display: block; }
+.resume-document[data-template='executive'] .resume-sidebar .resume-entry > div > span { display: block; margin-top: 4px; }
+.resume-document[data-template='executive'] .resume-skill-list { display: grid; gap: 7px; }
+
+/* Technical: an outline with numbered sections and discrete, readable skill tags. */
+.resume-document[data-template='technical'] .resume-layout { padding: 42px 48px; border-left: 9px solid var(--resume-accent); counter-reset: resume-section; }
+.resume-document[data-template='technical'] .resume-overline { display: block; color: var(--resume-accent); letter-spacing: .16em; font-size: .75em; margin-bottom: 14px; }
+.resume-document[data-template='technical'] .resume-identity { border-bottom: 2px solid #253d43; padding-bottom: 24px; }
+.resume-document[data-template='technical'] .resume-identity h1 { font-size: 3em; color: #183c40; letter-spacing: -.06em; }
+.resume-document[data-template='technical'] .resume-section > h2 { counter-increment: resume-section; letter-spacing: .035em; font-size: .98em; padding-bottom: 8px; }
+.resume-document[data-template='technical'] .resume-section > h2::before { content: counter(resume-section, decimal-leading-zero) ' / '; color: #879ca0; font-weight: 400; }
+.resume-document[data-template='technical'] .resume-skill-list { gap: 8px; }
+.resume-document[data-template='technical'] .resume-skill-list li { border: 1px solid var(--resume-rule); background: var(--resume-tint); padding: 4px 9px; border-radius: 3px; }
+
+@media print {
+  .resume-document { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+  .studio-root .print-content, .studio-root .print-content .print-inner { min-height: 0 !important; }
+  .studio-root .studio-layout { min-height: 0 !important; }
+  .studio-root .studio-preview-scroll { padding: 0 !important; }
+  .resume-document .resume-layout { min-height: 0; }
+  .resume-document .resume-layout, .resume-document .resume-main, .resume-document .resume-sidebar { padding-bottom: 0 !important; }
+  .resume-document .resume-section > h2 { break-after: avoid; }
+  .resume-document .resume-entry { break-inside: avoid; }
+  .resume-document [data-section='custom'] .resume-entry { break-inside: auto !important; page-break-inside: auto !important; }
+  .resume-document .resume-identity { break-inside: avoid; }
+}

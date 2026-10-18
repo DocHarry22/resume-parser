@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { LetterTemplateThumbnail } from './Letterhead';
 import { CoverLetterTemplate, CoverLetterTone } from '@/types/coverLetter';
 
 interface TemplateSelectorProps {
@@ -70,41 +71,11 @@ export function TemplateSelector({
               onClick={() => onSelectTemplate(template.id)}
               className={`group relative rounded-xl overflow-hidden border-2 transition-all duration-200 ${
                 selectedTemplate === template.id
-                  ? 'border-teal-600 ring-2 ring-teal-200'
+                  ? 'border-blue-600 ring-2 ring-blue-200'
                   : 'border-gray-200 hover:border-gray-300'
               }`}
             >
-              {/* Template Preview */}
-              <div
-                className="aspect-[3/4] w-full flex items-center justify-center"
-                style={{
-                  background: `linear-gradient(135deg, ${template.color_scheme[0]} 0%, ${template.color_scheme[1]} 50%, ${template.color_scheme[2]} 100%)`,
-                }}
-              >
-                {/* Stylized Letter Preview */}
-                <div className="w-[80%] h-[85%] bg-white rounded-md shadow-lg p-3 transform transition-transform group-hover:scale-105">
-                  <div
-                    className="h-2 rounded mb-2"
-                    style={{ backgroundColor: template.color_scheme[0], width: '60%' }}
-                  />
-                  <div className="space-y-1.5">
-                    <div className="h-1.5 bg-gray-200 rounded w-full" />
-                    <div className="h-1.5 bg-gray-200 rounded w-11/12" />
-                    <div className="h-1.5 bg-gray-200 rounded w-10/12" />
-                  </div>
-                  <div className="mt-3 space-y-1.5">
-                    <div className="h-1.5 bg-gray-100 rounded w-full" />
-                    <div className="h-1.5 bg-gray-100 rounded w-full" />
-                    <div className="h-1.5 bg-gray-100 rounded w-9/12" />
-                  </div>
-                  <div className="mt-3 space-y-1.5">
-                    <div className="h-1.5 bg-gray-100 rounded w-full" />
-                    <div className="h-1.5 bg-gray-100 rounded w-10/12" />
-                    <div className="h-1.5 bg-gray-100 rounded w-full" />
-                    <div className="h-1.5 bg-gray-100 rounded w-8/12" />
-                  </div>
-                </div>
-              </div>
+              <LetterTemplateThumbnail template={template.id} />
 
               {/* Template Info */}
               <div className="p-3 bg-white border-t">
@@ -118,7 +89,7 @@ export function TemplateSelector({
                     </p>
                   </div>
                   {selectedTemplate === template.id && (
-                    <div className="w-6 h-6 bg-teal-600 rounded-full flex items-center justify-center">
+                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
                       <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
@@ -153,7 +124,7 @@ export function TemplateSelector({
               onClick={() => onSelectTone(tone.value)}
               className={`p-3 rounded-lg border-2 text-left transition-all duration-200 ${
                 selectedTone === tone.value
-                  ? 'border-teal-600 bg-teal-50'
+                  ? 'border-blue-600 bg-blue-50'
                   : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
               }`}
             >
@@ -170,7 +141,7 @@ export function TemplateSelector({
         <button
           onClick={onNext}
           disabled={!selectedTemplate}
-          className="px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
         >
           Continue
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

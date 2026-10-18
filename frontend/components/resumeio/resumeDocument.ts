@@ -1,12 +1,13 @@
 import { ResumeBuilder } from '@/types/builder';
-import { ColorTheme, TemplateStyle } from './TemplateSelector';
+import { isTemplateStyle } from './templateCatalog';
+import type { ColorTheme, TemplateStyle } from './templateCatalog';
 
 export const STORAGE_KEY = 'resume_studio_documents_v1';
 export const THEME_COLORS: Record<ColorTheme, string> = { blue: '#2563eb', green: '#059669', purple: '#7c3aed', red: '#dc2626', orange: '#ea580c', teal: '#0d9488', gray: '#374151', indigo: '#4f46e5' };
 export const SECTION_IDS = ['summary', 'experience', 'education', 'skills', 'projects', 'certifications', 'languages', 'achievements', 'volunteer', 'publications', 'custom'] as const;
 export type ContentSection = typeof SECTION_IDS[number];
 export interface ResumeDesign {
-  font: 'sans' | 'serif' | 'mono';
+  font: 'template' | 'sans' | 'serif' | 'mono';
   fontSize: number;
   lineHeight: number;
   spacing: number;
@@ -23,7 +24,7 @@ export interface SavedResume {
   updatedAt: string;
 }
 export const DEFAULT_DESIGN: ResumeDesign = {
-  font: 'sans', fontSize: 12, lineHeight: 1.5, spacing: 24, pageSize: 'A4',
+  font: 'template', fontSize: 12, lineHeight: 1.5, spacing: 24, pageSize: 'A4',
   sectionOrder: [...SECTION_IDS], hiddenSections: [],
 };
 export const SECTION_LABELS: Record<ContentSection, string> = {
@@ -73,11 +74,11 @@ export function normalizeResume(value: unknown): ResumeBuilder {
 export function normalizeDocument(value: unknown): SavedResume {
   const raw = record(value);
   const design = record(raw.design);
-  const template = ['modern', 'classic', 'minimal', 'professional', 'creative', 'elegant'].includes(raw.template) ? raw.template : 'modern';
+  const template = isTemplateStyle(raw.template) ? raw.template : 'modern';
   const colorTheme = ['blue', 'green', 'purple', 'red', 'orange', 'teal', 'gray', 'indigo'].includes(raw.colorTheme) ? raw.colorTheme : 'blue';
   const order = Array.isArray(design.sectionOrder) ? design.sectionOrder.filter((s: any) => SECTION_IDS.includes(s)) : [];
   return { id: str(raw.id) || crypto.randomUUID(), resume: normalizeResume(raw.resume || raw), template, colorTheme,
-    design: { ...DEFAULT_DESIGN, font: ['sans', 'serif', 'mono'].includes(design.font) ? design.font : 'sans',
+    design: { ...DEFAULT_DESIGN, font: ['template', 'sans', 'serif', 'mono'].includes(design.font) ? design.font : 'template',
       fontSize: Math.max(10, Math.min(16, Number(design.fontSize) || 12)), lineHeight: Math.max(1.2, Math.min(2, Number(design.lineHeight) || 1.5)),
       spacing: Math.max(12, Math.min(40, Number(design.spacing) || 24)), pageSize: design.pageSize === 'Letter' ? 'Letter' : 'A4',
       sectionOrder: Array.from(new Set([...order, ...SECTION_IDS])) as ContentSection[],

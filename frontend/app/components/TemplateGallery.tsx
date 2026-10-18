@@ -1,16 +1,27 @@
 'use client';
+
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
 import { StudioPreview } from '@/components/resumeio/StudioPreview';
-import { blankResume, DEFAULT_DESIGN } from '@/components/resumeio/resumeDocument';
-import type { TemplateStyle, ColorTheme } from '@/components/resumeio/TemplateSelector';
-const templates: {id:TemplateStyle;name:string;category:string;color:ColorTheme;description:string}[]=[
-{id:'modern',name:'Modern',category:'Modern',color:'blue',description:'A strong header and clear professional structure.'},
-{id:'classic',name:'Classic',category:'Classic',color:'gray',description:'Traditional hierarchy with calm, readable typography.'},
-{id:'minimal',name:'Minimal',category:'Minimal',color:'teal',description:'Uncluttered spacing that keeps your words in focus.'},
-{id:'professional',name:'Professional',category:'Professional',color:'indigo',description:'Confident section accents for an established career.'},
-{id:'creative',name:'Creative',category:'Creative',color:'purple',description:'A distinctive visual rhythm for creative work.'},
-{id:'elegant',name:'Elegant',category:'Classic',color:'green',description:'Refined serif typography with a restrained accent.'},
-];
-const sample={...blankResume(),contact:{full_name:'Your name',email:'your.email@example.com',location:'Your city'},summary:{summary:'A short introduction to your experience, strengths and the work you want to do next.'},experience:[{position:'Your job title',company:'Your employer',start_date:'2023',current:true,description:['Describe a responsibility and its outcome.','Include only achievements you can support.'],achievements:[]}],education:[{institution:'Your institution',degree:'Your qualification',end_date:'2022',honors:[]}],skills:[{category:'Relevant skills',skills:['Your skills','Your tools','Your strengths']}]};
-export default function TemplateGallery(){const [filter,setFilter]=useState('All');return <section className="w-full border-y border-slate-200 bg-white px-5 py-16" id="templates"><div className="mx-auto max-w-7xl"><div className="mb-8 flex flex-wrap items-end justify-between gap-5"><div><p className="text-xs font-semibold uppercase tracking-[.2em] text-teal-700">Make a good first impression</p><h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900">A style that feels like you.</h2><p className="mt-3 max-w-2xl text-slate-500">Six original layouts, one editable resume. Switch designs without losing your content. These examples are placeholders.</p></div><Link href="/builder" className="text-sm font-medium text-teal-800">Open resume studio →</Link></div><div className="mb-8 flex flex-wrap gap-2" aria-label="Filter templates">{['All','Modern','Professional','Classic','Minimal','Creative'].map(f=><button key={f} onClick={()=>setFilter(f)} aria-pressed={filter===f} className={'rounded-full border px-4 py-2 text-sm '+(filter===f?'border-teal-700 bg-teal-700 text-white':'border-slate-200 bg-white text-slate-600 hover:border-teal-500')}>{f}</button>)}</div><div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{templates.filter(t=>filter==='All'||filter===t.category).map(t=><Link key={t.id} href={'/builder?template='+t.id} className="group min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-[#f5f7f8] transition hover:border-teal-400 hover:shadow-xl"><div className="pointer-events-none flex h-[365px] justify-center overflow-hidden px-4 pt-6" aria-hidden="true"><StudioPreview resume={sample} template={t.id} colorTheme={t.color} scale={0.29} design={{...DEFAULT_DESIGN,font:t.id==='elegant'?'serif':'sans'}}/></div><div className="border-t bg-white p-5"><div className="flex items-center justify-between"><h3 className="font-semibold text-slate-900">{t.name}</h3><span className="text-xs text-slate-500">{t.category}</span></div><p className="mt-2 text-sm text-slate-500">{t.description}</p><span className="mt-4 inline-block text-sm font-medium text-teal-800">Use this template →</span></div></Link>)}</div></div></section>}
+import { DEFAULT_DESIGN } from '@/components/resumeio/resumeDocument';
+import { RESUME_TEMPLATES } from '@/components/resumeio/templateCatalog';
+import { templateSample } from '@/components/resumeio/templateSample';
+
+export const templates = RESUME_TEMPLATES;
+export const gallerySample = templateSample;
+
+export default function TemplateGallery({ variant = 'grid', showHeading = true }: { variant?: 'grid' | 'carousel'; showHeading?: boolean }) {
+  const [filter, setFilter] = useState('All');
+  const [ready, setReady] = useState(false);
+  useEffect(() => setReady(true), []);
+  const track = useRef<HTMLDivElement>(null);
+  const filtered = templates.filter(template => filter === 'All' || template.category === filter);
+  const scroll = (direction: number) => track.current?.scrollBy({ left: direction * 360, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  return <section className={`template-gallery template-gallery-${variant}`} id="templates" data-gallery-ready={ready} aria-label="Resume templates"><div className="cf-container">
+    {showHeading && <div className="gallery-heading"><div><p className="cf-eyebrow">Made for a great first impression</p><h2>Resume templates that<br className="gallery-heading-break" /> let your experience shine.</h2><p>Choose your look. Make it yours. Download and take the next step.</p></div>{variant === 'carousel' ? <Link className="home-text-link" href="/templates">View all templates <ArrowRight size={18} /></Link> : <span className="gallery-promise"><Check size={17} />Switch styles without losing your content</span>}</div>}
+    <div className="gallery-controls"><div className="gallery-filters" aria-label="Filter templates">{['All', 'Modern', 'Professional', 'Classic', 'Minimal', 'Creative'].map(category => <button key={category} disabled={!ready} onClick={() => { setFilter(category); if (track.current) track.current.scrollLeft = 0; }} aria-pressed={filter === category}>{category}</button>)}</div>{variant === 'carousel' && <div className="gallery-arrows"><button onClick={() => scroll(-1)} aria-label="Previous templates"><ArrowLeft size={20} /></button><button onClick={() => scroll(1)} aria-label="Next templates"><ArrowRight size={20} /></button></div>}</div>
+    <div className="gallery-track" ref={track}>{filtered.map(template => <article className="template-card" key={template.id}><Link className="template-preview-link" href={`/builder?template=${template.id}&color=${template.color}`} aria-label={`Use ${template.name} template`}><div className="template-preview-canvas" aria-hidden="true"><StudioPreview printable={false} resume={gallerySample} template={template.id} colorTheme={template.color} scale={0.36} design={DEFAULT_DESIGN} /></div><span className="template-use-button">Use this template <ArrowRight size={17} /></span></Link><div className="template-card-details"><h3>{template.name}</h3><span>{template.format}</span><p>{template.description}</p></div></article>)}</div>
+    <p className="gallery-example-note">Illustrative sample content. Your new resume starts with your own details.</p>
+  </div></section>;
+}
