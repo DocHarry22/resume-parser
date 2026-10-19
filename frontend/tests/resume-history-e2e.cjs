@@ -1,3 +1,4 @@
+const { clickResumeAction } = require("../../scripts/playwright-runtime.cjs");
 const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
@@ -37,10 +38,10 @@ const report = { baseUrl, startedAt: new Date().toISOString(), results: [] };
 
   await run('editor checkpoint, content and design diff, safe restore and undo restore', async page => {
     await page.goto(baseUrl + '/builder?id=' + fixture.id, { waitUntil: 'networkidle' }); await page.getByLabel(/^Full Name/).fill('Latest Candidate');
-    await page.getByRole('link', { name: 'Version history', exact: true }).click(); await page.locator('main[data-workspace-ready=true]').waitFor(); assert.equal((await source(page)).resume.contact.full_name, 'Latest Candidate');
+    await clickResumeAction(page, "Version history", 'link'); await page.locator('main[data-workspace-ready=true]').waitFor(); assert.equal((await source(page)).resume.contact.full_name, 'Latest Candidate');
     await checkpoint(page); const original = await source(page); const originalId = original.versions[0].id;
     await edit(page, 'Newer work with Python, SQL and process safety.'); await page.getByRole('button', { name: 'Design & sections', exact: true }).click(); await page.getByLabel('Font', { exact: true }).selectOption('serif');
-    await page.getByRole('link', { name: 'Version history', exact: true }).click(); await page.locator('.history-change').first().waitFor(); assert.match(await page.locator('.history-changes').textContent(), /Newer work with Python/); assert.match(await page.locator('.history-changes').textContent(), /Serif|serif/);
+    await clickResumeAction(page, "Version history", 'link'); await page.locator('.history-change').first().waitFor(); assert.match(await page.locator('.history-changes').textContent(), /Newer work with Python/); assert.match(await page.locator('.history-changes').textContent(), /Serif|serif/);
     await page.getByLabel('Filter changes by section').selectOption('Design'); assert.ok((await page.locator('.history-change').allTextContents()).every(text => text.includes('Design'))); await page.getByLabel('Filter changes by section').selectOption('All changes');
     await confirm(page, () => page.getByRole('button', { name: 'Restore checkpoint', exact: true }).click(), false); assert.equal((await source(page)).versions.length, 1);
     await confirm(page, () => page.getByRole('button', { name: 'Restore checkpoint', exact: true }).click()); await page.getByText('Checkpoint restored.', { exact: false }).waitFor();
@@ -70,7 +71,7 @@ const report = { baseUrl, startedAt: new Date().toISOString(), results: [] };
     // Change saved state while this tab has edits pending, before its autosave.
     await page.getByLabel(/^Professional Summary/).fill('UNSAVED tab draft'); await other.evaluate(key => { const docs = JSON.parse(localStorage.getItem(key)); docs[0].resume.summary.summary = 'NEWER saved draft'; localStorage.setItem(key, JSON.stringify(docs)); }, resumeKey);
     await page.getByRole('button', { name: 'Load latest saved version', exact: true }).waitFor(); assert.equal(await page.getByLabel(/^Professional Summary/).inputValue(), 'UNSAVED tab draft'); assert.equal((await source(page)).resume.summary.summary, 'NEWER saved draft');
-    const downloadPromise = page.waitForEvent('download'); await page.getByRole('button', { name: 'JSON backup', exact: true }).click(); const download = await downloadPromise; const backupPath = path.join(temporary, 'unsaved-draft.json'); await download.saveAs(backupPath); const backup = JSON.parse(fs.readFileSync(backupPath)); assert.equal(backup.resume.summary.summary, 'UNSAVED tab draft'); assert.equal(backup.versions.length, 1);
+    const downloadPromise = page.waitForEvent('download'); await clickResumeAction(page, "JSON backup"); const download = await downloadPromise; const backupPath = path.join(temporary, 'unsaved-draft.json'); await download.saveAs(backupPath); const backup = JSON.parse(fs.readFileSync(backupPath)); assert.equal(backup.resume.summary.summary, 'UNSAVED tab draft'); assert.equal(backup.versions.length, 1);
     await confirm(page, () => page.getByRole('button', { name: 'Load latest saved version', exact: true }).click(), false); assert.equal(await page.getByLabel(/^Professional Summary/).inputValue(), 'UNSAVED tab draft');
     await confirm(page, () => page.getByRole('button', { name: 'Load latest saved version', exact: true }).click()); assert.equal(await page.getByLabel(/^Professional Summary/).inputValue(), 'NEWER saved draft'); assert.equal((await source(page)).versions.length, 1); await other.close();
   });

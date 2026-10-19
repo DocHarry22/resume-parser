@@ -1,3 +1,4 @@
+const { clickResumeAction } = require("../../scripts/playwright-runtime.cjs");
 const fs = require('node:fs'), path = require('node:path'), assert = require('node:assert/strict');
 const temporary = path.resolve(__dirname, '../../.runtime/letters-browser'); fs.mkdirSync(temporary, { recursive: true }); process.env.TEMP = process.env.TMP = temporary;
 const { chromium, browserChannel } = require('../../scripts/playwright-runtime.cjs');
@@ -38,7 +39,7 @@ const report = { baseUrl, startedAt: new Date().toISOString(), results: [] };
     await page.screenshot({ path: path.join(out, 'letters-desktop.png'), fullPage: true }); await go(page, '/job-tracker'); assert.equal(await page.getByRole('link', { name: 'Cover letter', exact: true }).getAttribute('href'), '/cover-letter?id=' + letter.id);
   });
   await run('resume editor shortcut flushes edits and manual letters can opt out of copied summary', async page => {
-    await page.goto(baseUrl + '/builder?id=' + fixture.id, { waitUntil: 'networkidle' }); await page.getByLabel(/^Full Name/).fill('Latest unsaved contact'); await page.getByRole('link', { name: 'Write cover letter', exact: true }).click(); await page.locator('main[data-workspace-ready=true]').waitFor();
+    await page.goto(baseUrl + '/builder?id=' + fixture.id, { waitUntil: 'networkidle' }); await page.getByLabel(/^Full Name/).fill('Latest unsaved contact'); await clickResumeAction(page, "Write cover letter", 'link'); await page.locator('main[data-workspace-ready=true]').waitFor();
     await page.getByLabel('Target role').fill('Engineering Analyst'); await page.getByLabel('Company', { exact: true }).fill('Manual Example'); await page.getByLabel('Use my resume summary as a starting paragraph', { exact: false }).uncheck(); const letter = await create(page, 'minimal'); assert.equal(letter.sender.full_name, 'Latest unsaved contact'); assert.deepEqual(letter.content.body_paragraphs, ['']); assert.equal(letter.workspace_context.jobId, ''); assert.equal(await page.getByRole('button', { name: 'Use for this application', exact: true }).count(), 0);
     await go(page, '/letters'); await page.getByLabel('Starting resume').selectOption(''); await page.getByLabel('Tracked opportunity').selectOption(''); await page.getByLabel('Target role').fill('Independent application'); const blank = await create(page); assert.equal(blank.sender.full_name, ''); assert.deepEqual(blank.content.body_paragraphs, ['']);
   });
@@ -73,7 +74,7 @@ const report = { baseUrl, startedAt: new Date().toISOString(), results: [] };
     for (const style of ['professional', 'modern', 'minimal', 'creative', 'executive', 'tech']) { await create(page, style); await page.locator(`[data-live-letter-preview="${style}"]`).waitFor(); assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${style} fits`); }
     await page.evaluate(() => { document.activeElement?.blur(); window.scrollTo(0, 0); }); await page.screenshot({ path: path.join(out, 'letters-390.png'), fullPage: true });
     await page.locator('.letters-current').getByRole('link', { name: 'Edit letter', exact: true }).click(); await page.getByRole('button', { name: 'Write Content', exact: true }).click(); assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
-    await page.getByLabel('Opening paragraph', { exact: true }).fill('CURRENT UNSAVED LETTER BACKUP'); const file = await download(page, () => page.getByRole('button', { name: 'JSON backup', exact: true }).click(), 'unsaved-letter.json'); assert.equal(JSON.parse(fs.readFileSync(file)).content.opening_paragraph, 'CURRENT UNSAVED LETTER BACKUP');
+    await page.getByLabel('Opening paragraph', { exact: true }).fill('CURRENT UNSAVED LETTER BACKUP'); const file = await download(page, () => clickResumeAction(page, "JSON backup"), 'unsaved-letter.json'); assert.equal(JSON.parse(fs.readFileSync(file)).content.opening_paragraph, 'CURRENT UNSAVED LETTER BACKUP');
   });
   await run('empty workspace can start a manual letter and removed letter links stay recoverable', async page => {
     await go(page, '/letters'); await page.getByRole('heading', { name: 'A little context. A lasting impression.', exact: true }).waitFor(); await page.getByLabel('Target role').fill('My next role'); const letter = await create(page); assert.equal(letter.sender.full_name, ''); assert.equal((await letters(page)).length, 1);

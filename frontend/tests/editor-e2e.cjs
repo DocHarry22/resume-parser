@@ -1,3 +1,4 @@
+const { clickResumeAction } = require("../../scripts/playwright-runtime.cjs");
 // Run against the local frontend and backend: node tests/editor-e2e.cjs
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -62,7 +63,7 @@ async function main() {
     await page.getByLabel('Licences', { exact: true }).fill('Valid professional licence');
     assert.match(await page.locator('.resume-document').innerText(), /Valid professional licence/);
     const originalId = new URL(page.url()).searchParams.get('id');
-    await page.getByRole('button', { name: 'Duplicate', exact: true }).click();
+    await clickResumeAction(page, "Duplicate");
     assert.notEqual(new URL(page.url()).searchParams.get('id'), originalId);
     assert.match(await title.inputValue(), /\(copy\)$/);
     report.push('Typography, paper selection, optional sections and independent duplication passed');
@@ -82,7 +83,7 @@ async function main() {
 
     for (const [name, filename] of [['Download PDF', 'editor-export.pdf'], ['DOCX', 'editor-export.docx'], ['TXT', 'editor-export.txt'], ['JSON backup', 'editor-backup.json']]) {
       const downloadPromise = page.waitForEvent('download', { timeout: 60000 });
-      await page.getByRole('button', { name, exact: true }).click();
+      await clickResumeAction(page, name);
       const download = await downloadPromise;
       await download.saveAs(path.join(output, filename));
       assert.ok(fs.statSync(path.join(output, filename)).size > 50, `${filename} is empty`);

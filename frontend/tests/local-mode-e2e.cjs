@@ -1,3 +1,5 @@
+const { clickResumeAction } = require("../../scripts/playwright-runtime.cjs");
+const { openResumeActions } = require('../../scripts/playwright-runtime.cjs');
 // Run only against a frontend built with NEXT_PUBLIC_STORAGE_MODE=local and a stateless backend.
 const { chromium, browserChannel, baseUrl } = require('../../scripts/playwright-runtime.cjs');
 const assert = require('node:assert/strict');
@@ -33,16 +35,16 @@ let browser;
   await page.getByLabel(/^Full Name/).fill('CURRENT UNSAVED EXPORT');
   for (const format of ['pdf', 'docx']) {
     const [request] = await Promise.all([page.waitForRequest(req => new URL(req.url()).pathname === `/api/exports/resume/${format}`),
-      download(`resume-current.${format}`, () => page.getByRole('button', { name: format === 'pdf' ? 'Download PDF' : 'DOCX', exact: true }).click())]);
+      download(`resume-current.${format}`, () => clickResumeAction(page, format === 'pdf' ? 'Download PDF' : 'DOCX'))]);
     assert.equal(request.postDataJSON().contact.full_name, 'CURRENT UNSAVED EXPORT');
   }
   let before = report.apiRequests.length;
-  const txt = await download('resume-current.txt', () => page.getByRole('button', { name: 'TXT', exact: true }).click());
+  const txt = await download('resume-current.txt', () => clickResumeAction(page, "TXT"));
   assert.match(fs.readFileSync(txt, 'utf8'), /CURRENT UNSAVED EXPORT/);
-  const backup = await download('resume-current.json', () => page.getByRole('button', { name: 'JSON backup', exact: true }).click());
+  const backup = await download('resume-current.json', () => clickResumeAction(page, "JSON backup"));
   assert.equal(JSON.parse(fs.readFileSync(backup)).resume.contact.full_name, 'CURRENT UNSAVED EXPORT');
   assert.equal(report.apiRequests.length, before);
-  assert.ok(await page.getByRole('button', { name: 'Print / Save PDF', exact: true }).isVisible());
+  await openResumeActions(page); assert.ok(await page.getByRole('button', { name: 'Print / Save PDF', exact: true }).isVisible());
   note('Resume starts blank, saves/reloads locally, exports current PDF/DOCX, and creates offline TXT/JSON backups');
   const importResponse = page.waitForResponse(response => new URL(response.url()).pathname === '/api/exports/resume/import');
   await page.getByLabel('Import resume', { exact: true }).setInputFiles({ name: 'local-import.txt', mimeType: 'text/plain', buffer: Buffer.from('Imported Local Candidate\nlocal-import@example.test\n\nSUMMARY\nPractical experience making useful tools.\n\nSKILLS\nPython, communication') });

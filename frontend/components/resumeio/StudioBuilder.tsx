@@ -3,7 +3,7 @@
 import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { ArrowLeft, ArrowDown, ArrowRight, ArrowUp, Download, Eye, FileText, HelpCircle, History, Loader2, Palette, Redo2, Save, Settings2, Target, Undo2, Upload, X } from 'lucide-react';
+import { ArrowLeft, ArrowDown, ArrowRight, ArrowUp, Copy, Download, Eye, FileJson, FileText, HelpCircle, History, Loader2, Palette, Printer, Redo2, Save, Settings2, Target, Undo2, Upload, X } from 'lucide-react';
 import { apiFetch, IS_LOCAL_STORAGE, DOCUMENT_UPLOAD_LIMIT_BYTES } from '@/lib/apiConfig';
 import { ResumeBuilder } from '@/types/builder';
 import { TemplateSelector } from './TemplateSelector';
@@ -13,6 +13,7 @@ import { StudioPreview } from './StudioPreview';
 import { SummaryAssistant } from './SummaryAssistant';
 import { CustomSectionForm } from './CustomSectionForm';
 import { localDocx, localText } from './localExport';
+import { BuilderActions } from './BuilderActions';
 import { ContentSection, createDocument, normalizeDocument, normalizeResume, readDocuments, ResumeDesign, resumeStateKey, SavedResume, saveDocument, SECTION_LABELS, STORAGE_KEY, THEME_COLORS } from './resumeDocument';
 
 const button = 'inline-flex items-center justify-center gap-2 rounded border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors';
@@ -135,7 +136,7 @@ function ResumeStudio() {
       const requestedColor = params.get('color');
       if (requestedColor && Object.hasOwn(THEME_COLORS, requestedColor)) initial = { ...initial, colorTheme: requestedColor as SavedResume['colorTheme'] };
       if (params.get('type') === 'cv' && params.has('new')) initial.resume.title = 'Untitled CV';
-      if (params.has('import')) setNotice(SITE_MODE ? 'Choose Restore JSON backup above to upload your saved resume.' : 'Choose Import resume above to upload your PDF, DOCX, TXT or JSON backup. Your existing browser draft will be kept.');
+      if (params.has('import')) setNotice(SITE_MODE ? 'Choose Restore JSON backup in Resume actions to upload your saved resume.' : 'Choose Import resume in Resume actions to upload your PDF, DOCX, TXT or JSON backup. Your existing browser draft will be kept.');
       current.current = initial;
       past.current = [];
       future.current = [];
@@ -389,14 +390,25 @@ function ResumeStudio() {
     <div className="no-print cf-editor-toolbar border-b bg-white px-4 sm:px-6 py-4">
       <div className="flex flex-wrap items-center justify-between gap-3 max-w-[1800px] mx-auto">
         <div className="flex items-center gap-3 min-w-0 flex-1 basis-full sm:basis-0"><Link href="/tools" aria-label="Back to documents" className="p-2 rounded-xl hover:bg-slate-100"><ArrowLeft size={20} /></Link><div className="min-w-0"><p className="cf-editor-overline">Your resume workspace</p><input aria-label="Resume title" className="font-semibold text-lg max-w-full w-64 bg-transparent outline-none border-b border-transparent focus:border-blue-500" value={resume.title} onChange={e => updateResume({ title: e.target.value })} /><p className="text-xs text-slate-500 mt-1" role="status">{saveState === 'saved' ? `Saved in this browser${savedAt ? ` · ${new Date(savedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}` : ''}` : saveState === 'failed' ? 'Save failed — download a backup' : 'Saving in this browser…'}</p></div></div>
-        <div className="flex items-center gap-2"><button title="Undo (Ctrl/Cmd+Z)" aria-label="Undo" className={button} onClick={undo} disabled={!past.current.length}><Undo2 size={16} /></button><button title="Redo (Ctrl/Cmd+Shift+Z)" aria-label="Redo" className={button} onClick={redo} disabled={!future.current.length}><Redo2 size={16} /></button><button className={`${button} hidden sm:inline-flex`} onClick={save}><Save size={16} /> Save</button><button className={primaryButton} disabled={Boolean(busy)} onClick={() => exportFile('pdf')}>{busy === 'export-pdf' ? <Loader2 size={16} className="animate-spin" /> : <Download size={16} />} {SITE_MODE ? 'Print / Save PDF' : 'Download PDF'}</button></div>
+        <div className="studio-primary-actions flex flex-wrap items-center gap-2"><button title="Undo (Ctrl/Cmd+Z)" aria-label="Undo" className={button} onClick={undo} disabled={!past.current.length}><Undo2 size={16} /></button><button title="Redo (Ctrl/Cmd+Shift+Z)" aria-label="Redo" className={button} onClick={redo} disabled={!future.current.length}><Redo2 size={16} /></button><button className={`${button} hidden sm:inline-flex`} onClick={save}><Save size={16} /> Save</button><button className={primaryButton} disabled={Boolean(busy)} onClick={() => exportFile('pdf')}>{busy === 'export-pdf' ? <Loader2 size={16} className="animate-spin" /> : <Download size={16} />} {SITE_MODE ? 'Print / Save PDF' : 'Download PDF'}</button>
+          <BuilderActions>
+            <button disabled={Boolean(busy)} onClick={() => fileInput.current?.click()}>{busy === 'import' ? <Loader2 className="animate-spin" size={16} /> : <Upload size={16} />}{SITE_MODE ? 'Restore JSON backup' : 'Import resume'}</button>
+            <Link href={`/history?resume=${encodeURIComponent(doc.id)}`}><History size={16} />Version history</Link>
+            <Link href={`/letters?resume=${encodeURIComponent(doc.id)}${doc.tailoring?.jobId ? `&job=${encodeURIComponent(doc.tailoring.jobId)}` : ""}`}><FileText size={16} />Write cover letter</Link>
+            <Link href={`/tailor?resume=${encodeURIComponent(doc.id)}`}><Target size={16} />Tailor for a job</Link>
+            <button disabled={Boolean(busy)} onClick={duplicate}><Copy size={16} />Duplicate</button>
+            <hr />
+            <button onClick={() => exportFile('json')}><FileJson size={16} />JSON backup</button>
+            <button disabled={Boolean(busy)} onClick={() => exportFile('docx')}><FileText size={16} />DOCX</button>
+            <button disabled={Boolean(busy)} onClick={() => exportFile('txt')}><FileText size={16} />TXT</button>
+            <button onClick={() => window.print()}><Printer size={16} />Print / Save PDF</button>
+            {!IS_LOCAL_STORAGE && <button disabled={Boolean(busy)} onClick={sync}><Save size={16} />{SITE_MODE ? 'Open primary workspace' : 'Save session copy'}</button>}
+            <hr /><button onClick={() => setShowHelp(true)}><HelpCircle size={16} />Editor help</button>
+          </BuilderActions>
+        </div>
       </div>
     </div>
-    <div className="no-print cf-editor-tools flex flex-wrap gap-2 items-center px-4 sm:px-6 py-3 border-b bg-white">
-      <input ref={fileInput} aria-label="Import resume" className="hidden" type="file" accept={SITE_MODE ? '.json' : '.pdf,.docx,.txt,.json'} onChange={e => importFile(e.target.files?.[0])} />
-      <button className={button} disabled={Boolean(busy)} onClick={() => fileInput.current?.click()}>{busy === 'import' ? <Loader2 className="animate-spin" size={16} /> : <Upload size={16} />} {SITE_MODE ? 'Restore JSON backup' : 'Import resume'}</button>
-      <Link className={button} href={`/history?resume=${encodeURIComponent(doc.id)}`}><History size={16} />Version history</Link><Link className={button} href={`/letters?resume=${encodeURIComponent(doc.id)}${doc.tailoring?.jobId ? `&job=${encodeURIComponent(doc.tailoring.jobId)}` : ""}`}><FileText size={16} />Write cover letter</Link><Link className={button} href={`/tailor?resume=${encodeURIComponent(doc.id)}`}><Target size={16} />Tailor for a job</Link><button className={button} disabled={Boolean(busy)} onClick={duplicate}>Duplicate</button><button className={button} onClick={() => exportFile('json')}>JSON backup</button><button className={button} disabled={Boolean(busy)} onClick={() => exportFile('docx')}>DOCX</button><button className={button} disabled={Boolean(busy)} onClick={() => exportFile('txt')}>TXT</button><button className={button} onClick={() => window.print()}>Print / Save PDF</button>{!IS_LOCAL_STORAGE && <button className={button} disabled={Boolean(busy)} onClick={sync}>{SITE_MODE ? 'Open primary workspace' : 'Save session copy'}</button>}<button className={`${button} ml-auto`} aria-label="Editor help" onClick={() => setShowHelp(true)}><HelpCircle size={16} /></button>
-    </div>
+    <input ref={fileInput} aria-label="Import resume" className="hidden" type="file" accept={SITE_MODE ? '.json' : '.pdf,.docx,.txt,.json'} onChange={e => importFile(e.target.files?.[0])} />
     {doc.tailoring && <div className="no-print studio-tailoring-banner"><div><Target size={16} /><span>Tailored for</span><strong>{doc.tailoring.role}{doc.tailoring.company ? ` · ${doc.tailoring.company}` : ''}</strong></div><Link href={`/tailor?resume=${encodeURIComponent(doc.id)}`}>Review term coverage<ArrowRight size={14} /></Link></div>}
     {externalConflict && <div className="no-print studio-conflict-reload"><span>Your unsaved draft has been kept in this tab. Back it up before loading the newer saved version.</span><button onClick={loadLatest}>Load latest saved version</button></div>}
     {IS_LOCAL_STORAGE && <p className="no-print border-b bg-teal-50 px-4 py-3 text-sm text-teal-950 sm:px-6">Saved only in this browser on this device. Download JSON backups before clearing browser data. Imports and PDF / DOCX exports send your document for processing without saving a server copy.</p>}

@@ -37,6 +37,7 @@ node_modules/
 .next-salary/
 .next-salary-release/
 .next-career-plan/
+.next-builder-actions/
 out/
 .npm
 *.tsbuildinfo

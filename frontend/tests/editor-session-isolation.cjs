@@ -1,3 +1,5 @@
+const { clickResumeAction } = require("../../scripts/playwright-runtime.cjs");
+const { openResumeActions } = require('../../scripts/playwright-runtime.cjs');
 // Regression: changing local documents must never reuse another document's server ID.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -31,12 +33,17 @@ async function main() {
     await page.getByLabel(/^Email/).waitFor();
     await page.waitForFunction(() => document.querySelector('input[type="email"]')?.value === 'restored.b@example.test');
 
-    // Delay creation enough to assert document switching cannot race the server response.
-    await page.route('**/api/builder/create', async route => { await new Promise(resolve => setTimeout(resolve, 250)); await route.continue(); });
+    // Hold creation until the in-flight controls have been checked, without timing assumptions.
+    let releaseCreate, createStarted;
+    await page.route('**/api/builder/create', async route => { const held = new Promise(resolve => { releaseCreate = resolve; }); createStarted?.(); await held; await route.continue(); });
     async function saveAsNew() {
+      const started = new Promise(resolve => { createStarted = resolve; });
       const createdResponse = page.waitForResponse(response => new URL(response.url()).pathname === '/api/builder/create' && response.request().method() === 'POST', { timeout: 15000 });
-      await page.getByRole('button', { name: 'Save session copy', exact: true }).click();
+      await clickResumeAction(page, "Save session copy");
+      await started;
+      await openResumeActions(page);
       assert.equal(await page.getByRole('button', { name: 'Duplicate', exact: true }).isDisabled(), true);
+      releaseCreate();
       const saved = await (await createdResponse).json();
       assert.ok(saved.resume?.id);
       await page.getByText('Saved to this browser and your current server session.', { exact: false }).waitFor();
@@ -53,7 +60,7 @@ async function main() {
     checks.push('TXT A → JSON B → session save creates separate B and leaves A byte-for-byte unchanged');
     checks.push('Duplicate is disabled while a server save is in flight');
 
-    await page.getByRole('button', { name: 'Duplicate', exact: true }).click();
+    await clickResumeAction(page, "Duplicate");
     const duplicateId = await saveAsNew();
     assert.notEqual(duplicateId, restoredId);
     const duplicate = (await (await context.request.get(`${baseUrl}/api/builder/${duplicateId}`)).json()).resume;
@@ -75,7 +82,7 @@ async function main() {
     await input.setInputFiles({ name: 'invalid.json', mimeType: 'application/json', buffer: Buffer.from('{"unrelated":"data"}') });
     await page.getByRole('alert').filter({ hasText: 'recognised resume' }).waitFor();
     const updatedResponse = page.waitForResponse(response => new URL(response.url()).pathname === `/api/builder/${newId}` && response.request().method() === 'PATCH');
-    await page.getByRole('button', { name: 'Save session copy', exact: true }).click();
+    await clickResumeAction(page, "Save session copy");
     assert.equal((await updatedResponse).status(), 200);
     checks.push('Failed restore retains the active document and its correct server pointer');
 

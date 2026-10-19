@@ -129,6 +129,22 @@ body.career-theme {
 .cf-editor-toolbar input[aria-label='Resume title'] { font-size: 25px; font-weight: 500; line-height: 30px; width: 320px; }
 .cf-editor-overline { font-size: 13px; line-height: 18px; text-transform: uppercase; letter-spacing: 1px; color: #828ba2; margin-bottom: 3px; }
 .cf-editor-tools { background: var(--cf-pale); border-color: var(--cf-line); padding-block: 14px; }
+.studio-action-menu { position: relative; flex-shrink: 0; }
+.studio-actions-toggle { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border: 1px solid var(--cf-line); border-radius: 4px; background: white; color: #344563; }
+.studio-actions-toggle:hover, .studio-actions-toggle[aria-expanded='true'] { background: #edf7ff; border-color: #80c4fa; color: var(--cf-blue); }
+.studio-actions-toggle:focus-visible, .studio-action-popover :is(button, a):focus-visible { outline: 2px solid var(--cf-blue); outline-offset: 2px; }
+.studio-action-popover { position: absolute; right: 0; top: calc(100% + 8px); z-index: 65; width: 256px; max-width: calc(100vw - 32px); overflow-y: auto; overscroll-behavior: contain; border: 1px solid var(--cf-line); border-radius: 12px; background: white; padding: 8px; box-shadow: 0 14px 42px #132d5426; }
+.studio-actions-caption { padding: 7px 10px 9px; color: #8490a4; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+.studio-action-popover :is(button, a) { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 42px; padding: 9px 10px; border: 0; border-radius: 6px; background: transparent; color: #344563; font-size: 14px; line-height: 20px; text-align: left; text-decoration: none; }
+.studio-action-popover :is(button, a):hover { background: #edf7ff; color: var(--cf-blue); }
+.studio-action-popover button:disabled { opacity: .4; cursor: not-allowed; }
+.studio-action-popover svg { flex-shrink: 0; color: #7d91ac; }
+.studio-action-popover hr { margin: 6px 8px; border: 0; border-top: 1px solid #e9eef5; }
+@media (max-width: 380px) {
+  .studio-primary-actions > button[aria-label='Undo'], .studio-primary-actions > button[aria-label='Redo'] { width: 34px; padding-inline: 8px; }
+  .studio-actions-toggle { width: 36px; }
+  .studio-root .no-print .studio-primary-actions > button:not([aria-label]) { font-size: 14px; padding-inline: 12px; }
+}
 .studio-root .studio-layout > aside { border-color: var(--cf-line); }
 .studio-root .studio-preview-pane { background: #edf0f6; }
 .studio-root .studio-preview-pane > .no-print:first-child { background: #f7f9fc; border-color: var(--cf-line); }

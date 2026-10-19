@@ -97,7 +97,7 @@ async function verifyBackend(origin, request = fetch) {
 
 function assertPrimaryEdition(homepage, builder) {
   // The homepage explains storage in its footer; the notice appears on app pages.
-  if (!builder.includes('Your resumes, letters and jobs save in this browser.') || [homepage, builder].some(html => html.includes('Browser workspace edition:'))) throw new Error('Export did not render the primary device-only edition.');
+  if (!builder.includes('Saved only in this browser on this device.') || [homepage, builder].some(html => html.includes('Browser workspace edition:'))) throw new Error('Export did not render the primary device-only edition.');
 }
 
 function runBuild(cli, workdir, env) {

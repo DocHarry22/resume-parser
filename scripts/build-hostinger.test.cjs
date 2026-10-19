@@ -36,7 +36,7 @@ test('build environment fixes primary local mode and does not inherit Sites iden
 });
 
 test('primary edition verification supports the homepage without a notice and rejects Sites or unconfigured app pages', () => {
-  const primaryNotice = 'Your resumes, letters and jobs save in this browser.';
+  const primaryNotice = 'Saved only in this browser on this device.';
   assert.doesNotThrow(() => assertPrimaryEdition('<h1>CareerForge</h1>', primaryNotice));
   assert.throws(() => assertPrimaryEdition('<h1>CareerForge</h1>', '<h1>Builder</h1>'), /primary device-only edition/);
   assert.throws(() => assertPrimaryEdition('Browser workspace edition:', primaryNotice), /primary device-only edition/);

@@ -1,3 +1,4 @@
+const { clickResumeAction } = require("../../scripts/playwright-runtime.cjs");
 const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
@@ -45,7 +46,7 @@ const report = { baseUrl, startedAt: new Date().toISOString(), results: [] };
   });
   await run('builder shortcut flushes current edits and supports a pasted target', async page => {
     await page.goto(baseUrl + '/builder?id=' + fixture.id, { waitUntil: 'networkidle' }); await page.getByLabel(/^Full Name/).fill('LATEST UNSAVED CANDIDATE');
-    await page.getByRole('link', { name: 'Tailor for a job', exact: true }).click(); await page.locator('main[data-workspace-ready=true]').waitFor(); assert.equal((await saved(page)).find(item => item.id === fixture.id).resume.contact.full_name, 'LATEST UNSAVED CANDIDATE');
+    await clickResumeAction(page, "Tailor for a job", 'link'); await page.locator('main[data-workspace-ready=true]').waitFor(); assert.equal((await saved(page)).find(item => item.id === fixture.id).resume.contact.full_name, 'LATEST UNSAVED CANDIDATE');
     await page.getByLabel('Target role').fill('Engineering Analyst'); await page.getByLabel('Company', { exact: true }).fill('Manual opportunity'); await page.getByLabel('Job description', { exact: true }).fill('Python Python SQL analysis with excellent teamwork and skills.');
     await page.getByRole('button', { name: 'Use suggestions', exact: true }).click(); assert.match(await page.getByLabel('Terms to check', { exact: true }).inputValue(), /python/);
     const id = await create(page); const copy = (await saved(page)).find(item => item.id === id); assert.equal(copy.tailoring.jobId, ''); assert.equal(copy.resume.contact.full_name, 'LATEST UNSAVED CANDIDATE'); assert.equal(await page.getByRole('button', { name: 'Use for this application', exact: true }).count(), 0);

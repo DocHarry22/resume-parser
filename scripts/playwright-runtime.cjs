@@ -14,8 +14,22 @@ function loadPlaywright() {
   }
 }
 
+async function openResumeActions(page) {
+  const toggle = page.getByRole('button', { name: 'Resume actions', exact: true });
+  if (await toggle.count() && await toggle.getAttribute('aria-expanded') !== 'true') await toggle.click();
+}
+
+async function clickResumeAction(page, name, role = 'button') {
+  if (name === 'Download PDF') { await page.getByRole(role, { name, exact: true }).click(); return; }
+  const inBuilder = await page.getByRole('button', { name: 'Resume actions', exact: true }).count();
+  if (inBuilder) await openResumeActions(page);
+  await (inBuilder ? page.locator('#resume-actions') : page).getByRole(role, { name, exact: true }).click();
+}
+
 module.exports = {
   ...loadPlaywright(),
   browserChannel: process.env.PLAYWRIGHT_CHANNEL || 'msedge',
+  openResumeActions,
+  clickResumeAction,
   baseUrl: (process.env.BASE_URL || 'http://localhost:3000').replace(/\/+$/, ''),
 };

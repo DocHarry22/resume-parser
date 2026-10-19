@@ -1,3 +1,4 @@
+const { clickResumeAction } = require("../../scripts/playwright-runtime.cjs");
 const fs = require('fs'), path = require('path'), assert = require('node:assert/strict');
 // Run against the local-mode frontend and its real document processing service.
 const runtime = path.resolve(__dirname, '../../.runtime/playwright-temp');
@@ -81,14 +82,14 @@ const results = [];
   for(const href of links){await go(page,href);assert.equal(await page.locator('.resume-document').getAttribute('data-template'),new URL(base+href).searchParams.get('template'));}
  });
  await run('builder design toolbar help undo redo and print',async page=>{
-  await go(page,'/builder?new=1');await page.getByRole('button',{name:'Editor help',exact:true}).click();await page.getByRole('dialog',{name:'Editor help'}).waitFor();await page.getByRole('button',{name:'Done',exact:true}).click();
+  await go(page,'/builder?new=1');await clickResumeAction(page, "Editor help");await page.getByRole('dialog',{name:'Editor help'}).waitFor();await page.getByRole('button',{name:'Done',exact:true}).click();
   await page.getByLabel(/^Full Name/).fill('Undo redo candidate');await page.getByRole('button',{name:'Undo',exact:true}).click();assert.equal(await page.getByLabel(/^Full Name/).inputValue(),'');await page.getByRole('button',{name:'Redo',exact:true}).click();assert.equal(await page.getByLabel(/^Full Name/).inputValue(),'Undo redo candidate');
   await page.getByRole('button',{name:'Design & sections',exact:true}).click();await page.getByLabel('Font',{exact:true}).selectOption('serif');await page.getByLabel('Paper',{exact:true}).selectOption('Letter');await page.getByLabel('Show Professional summary',{exact:true}).uncheck();await page.getByRole('button',{name:'Move Education up',exact:true}).click();
   await page.getByRole('button',{name:'Choose template & color',exact:true}).click();const dialog=page.getByRole('dialog',{name:'Choose resume template'});
   for(const color of ['Blue','Green','Purple','Red','Orange','Teal','Gray','Indigo']) await dialog.getByRole('button',{name:color,exact:true}).click();
   for(const name of ['Modern','Classic','Minimal','Professional','Creative','Executive','Technical','Elegant']) await dialog.getByRole('button',{name:new RegExp('^'+name+' ')}).click();
   await dialog.getByRole('button',{name:'Apply Changes',exact:true}).click();assert.equal(await page.locator('.resume-document').getAttribute('data-template'),'elegant');
-  await page.evaluate(()=>{window.__printCalls=0;window.print=()=>window.__printCalls++;});await page.getByRole('button',{name:'Print / Save PDF',exact:true}).click();assert.equal(await page.evaluate(()=>window.__printCalls),1);
+  await page.evaluate(()=>{window.__printCalls=0;window.print=()=>window.__printCalls++;});await clickResumeAction(page, "Print / Save PDF");assert.equal(await page.evaluate(()=>window.__printCalls),1);
  });
  await run('homepage all controls and internal link targets',async(page,context)=>{
   await go(page,'/');for(const menu of ['Resume Templates','Resume Examples','Cover Letter','Resources']){await page.locator('.home-header').getByRole('button',{name:menu,exact:true}).click();assert.ok(await page.locator('.home-nav-dropdown').isVisible());await page.keyboard.press('Escape');}
@@ -148,7 +149,7 @@ const results = [];
   await page.locator('input[type=file][accept^="image/"]').setInputFiles({name:'photo.png',mimeType:'image/png',buffer:Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9Wl2KAAAAABJRU5ErkJggg==','base64')});
   await page.getByRole('img',{name:'Profile',exact:true}).first().waitFor();await page.reload({waitUntil:'networkidle'});await page.getByRole('img',{name:'Profile',exact:true}).first().waitFor();
   await page.getByRole('button',{name:'Remove profile photo',exact:true}).click();assert.equal(await page.getByRole('img',{name:'Profile',exact:true}).count(),0);
-  await save(page);const old=new URL(page.url()).searchParams.get('id');await page.getByRole('button',{name:'Duplicate',exact:true}).click();
+  await save(page);const old=new URL(page.url()).searchParams.get('id');await clickResumeAction(page, "Duplicate");
   await page.waitForFunction(id=>new URLSearchParams(location.search).get('id')!==id,old);const copy=new URL(page.url()).searchParams.get('id');
   await page.getByRole('button',{name:'Design & sections',exact:true}).click();page.once('dialog',dialog=>dialog.accept());await page.getByRole('button',{name:'Delete this resume from browser',exact:true}).click();
   assert.equal(await page.evaluate(id=>JSON.parse(localStorage.getItem('resume_studio_documents_v1')).some(d=>d.id===id),copy),false);
@@ -161,7 +162,7 @@ const results = [];
   await page.evaluate(()=>{window.__setItem=Storage.prototype.setItem;Storage.prototype.setItem=function(key,value){if(key==='resume_studio_documents_v1')throw new DOMException('Storage is full','QuotaExceededError');return window.__setItem.call(this,key,value);};});
   await save(page);await page.getByRole('alert').filter({hasText:'Browser save failed'}).waitFor();
   await page.locator('.home-header').getByRole('link',{name:'CareerForge home',exact:true}).click();assert.ok(page.url().includes('/builder'));
-  const [backup]=await Promise.all([page.waitForEvent('download'),page.getByRole('button',{name:'JSON backup',exact:true}).click()]);const destination=path.join(out,'storage-failure-backup.json');await backup.saveAs(destination);assert.equal(JSON.parse(fs.readFileSync(destination)).resume.contact.full_name,'Storage full candidate');
+  const [backup]=await Promise.all([page.waitForEvent('download'),clickResumeAction(page, "JSON backup")]);const destination=path.join(out,'storage-failure-backup.json');await backup.saveAs(destination);assert.equal(JSON.parse(fs.readFileSync(destination)).resume.contact.full_name,'Storage full candidate');
   await page.evaluate(()=>{Storage.prototype.setItem=window.__setItem;});await save(page);
  });
  await run('cover letter wizard templates tones writing ideas and preview',async page=>{
