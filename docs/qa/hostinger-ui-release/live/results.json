@@ -1,0 +1,41 @@
+{
+  "scope": "Actual deployed canonical website over HTTPS; isolated synthetic browser profile",
+  "baseUrl": "https://resume.docheng.co.za",
+  "apiOrigin": "https://careerforge-resume-api-free.onrender.com",
+  "startedAt": "2026-10-19T07:43:49.013Z",
+  "checks": [
+    "Actual homepage serves the expanded upgraded theme and local assets",
+    "All eight templates, filters and selected-template navigation work on the live domain",
+    "Live builder saves/reloads, restores the selected design and downloads current JSON/PDF",
+    "Live TXT import populates a separate editable browser document",
+    "Live checker uploads the exported PDF and renders real service feedback",
+    "Live cover letters save/reload and download a current PDF",
+    "All five upgraded pages fit mobile; no browser exceptions, failed responses or processing cookies"
+  ],
+  "pageErrors": [],
+  "failedResponses": [],
+  "apiRequests": [
+    {
+      "url": "https://careerforge-resume-api-free.onrender.com/api/exports/resume/pdf?page_size=A4",
+      "method": "POST",
+      "cookieSent": false
+    },
+    {
+      "url": "https://careerforge-resume-api-free.onrender.com/api/exports/resume/import",
+      "method": "POST",
+      "cookieSent": false
+    },
+    {
+      "url": "https://careerforge-resume-api-free.onrender.com/api/parse-and-score?mode=basic",
+      "method": "POST",
+      "cookieSent": false
+    },
+    {
+      "url": "https://careerforge-resume-api-free.onrender.com/api/exports/cover-letter/pdf",
+      "method": "POST",
+      "cookieSent": false
+    }
+  ],
+  "passed": true,
+  "finishedAt": "2026-10-19T07:44:53.981Z"
+}

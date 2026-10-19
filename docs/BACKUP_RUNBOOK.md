@@ -1,5 +1,13 @@
 # Hostinger backup and local verification
 
+## Current deployment decision — 19 October 2026
+
+The user reports that Hostinger's online backups exist, but downloading them locally fails. The main-domain update will use those user-confirmed provider-retained backups as its rollback option. The earlier local-download verification workflow below is retained for when an archive becomes available; it is not a new requirement to keep asking this user to download the same failing archive.
+
+The connected regular-hosting tools cannot inspect or restore those online backups, so their timestamp, contents and restorability have not been independently verified. Hostinger documents folder-level recovery through **Files backups → Show files**, including a selected directory under `domains/docheng.co.za/public_html`. If recovery is necessary, scope it to `resume` and avoid restoring other domains or databases. No backup restore is authorized or performed as part of publishing the upgrade. Reference: [Hostinger's folder-level restore instructions](https://www.hostinger.com/support/4283700-how-to-restore-backups-at-hostinger/).
+
+Record the backup basis accurately as **user-confirmed online backups; no local archive or restore test**. Never label the metadata inventory or the replacement release ZIP as a verified backup.
+
 **No real Hostinger backup has been created, downloaded, or restored by this work.** The verifier has been checked using synthetic archives only. Creating a backup in hPanel, downloading it, and verifying a local selected-site restore are separate steps; none establishes a successful production restoration.
 
 Scope: `resume.docheng.co.za`, whose authoritative site root is `domains/docheng.co.za/public_html/resume`. The account wrapper, when present in the archive, must be exactly `u836398163/` or `home/u836398163/`. Other websites and hosting accounts are outside this task.

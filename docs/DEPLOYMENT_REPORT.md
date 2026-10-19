@@ -1,5 +1,11 @@
 # Deployment and acceptance report
 
+## Latest main-domain publication — 19 October 2026
+
+The upgraded primary frontend is now deployed and verified at **https://resume.docheng.co.za/**. Release source `d64a76351d27ceea8d0decdde1df340d051f1762` includes the expanded homepage/shared theme, eight distinct resume layouts, six cover-letter letterheads and workflow fixes. All 81 deployed file paths and sizes match the reviewed static release. Seven actual-domain browser groups passed, including saving/reload, downloads, imports, checking, letters and mobile views; downloaded resume/letter PDFs were independently reopened and checked. [Current release and evidence](qa/hostinger-ui-release/README.md).
+
+The user confirmed provider-retained online backups and reported that local downloads fail. Publication used those reported online backups as its rollback basis; no local archive or independent restore test exists. Only this subdomain's static files changed. The backend, DNS, databases, other sites and private Sites version 3 remain unchanged. The dated 15 October report below preserves its historical observations and must not be read as the current frontend-deployment state.
+
 Updated 15 October 2026. This is a substantial repair of `DocHarry22/resume-parser`, with a working free Python processing service and a browser-local website edition. **The full commercial Resume.io replacement mission is not complete. The canonical Hostinger website has not been replaced.** See the [feature checklist](rea-resume-io/parity-matrix.md) for missing product requirements.
 
 ## Current outcome and user decisions
