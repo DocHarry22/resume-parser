@@ -3,7 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { apiOrigin, options, selectSource, childEnvironment, inventory, verifyBackend } = require('./build-hostinger.cjs');
+const { apiOrigin, options, selectSource, childEnvironment, inventory, verifyBackend, assertPrimaryEdition } = require('./build-hostinger.cjs');
 const origin = 'https://careerforge-resume-api-free.onrender.com';
 
 test('only an exact native HTTPS Render origin is accepted', () => {
@@ -31,6 +31,14 @@ test('build environment fixes primary local mode and does not inherit Sites iden
   const env = childEnvironment(origin, { PATH: 'tools', NEXT_PUBLIC_SITE_MODE: '1', NEXT_PUBLIC_API_BASE_URL: 'https://wrong.example', HOSTINGER_API_ORIGIN: origin, OPENAI_API_KEY: 'private', DATABASE_URL: 'private', NODE_OPTIONS: '--require=hook', API_PROXY_TARGET: 'private', NEXT_PUBLIC_STORAGE_MODE: 'server' });
   assert.equal(env.PATH, 'tools'); assert.equal(env.STATIC_EXPORT, '1'); assert.equal(env.NEXT_PUBLIC_STORAGE_MODE, 'local'); assert.equal(env.NEXT_PUBLIC_API_BASE_URL, origin);
   for (const key of ['NEXT_PUBLIC_SITE_MODE', 'HOSTINGER_API_ORIGIN', 'OPENAI_API_KEY', 'DATABASE_URL', 'NODE_OPTIONS', 'API_PROXY_TARGET']) assert.equal(Object.hasOwn(env, key), false, key);
+});
+
+test('primary edition verification supports the homepage without a notice and rejects Sites or unconfigured app pages', () => {
+  const primaryNotice = 'Your resumes, letters and jobs save in this browser.';
+  assert.doesNotThrow(() => assertPrimaryEdition('<h1>CareerForge</h1>', primaryNotice));
+  assert.throws(() => assertPrimaryEdition('<h1>CareerForge</h1>', '<h1>Builder</h1>'), /primary device-only edition/);
+  assert.throws(() => assertPrimaryEdition('Browser workspace edition:', primaryNotice), /primary device-only edition/);
+  assert.throws(() => assertPrimaryEdition('<h1>CareerForge</h1>', 'Browser workspace edition:'), /primary device-only edition/);
 });
 
 test('static inventory requires real routes/assets and refuses private or source documents', t => {

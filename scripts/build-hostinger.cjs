@@ -95,6 +95,11 @@ async function verifyBackend(origin, request = fetch) {
   return { url: origin + '/api/health', storage_mode: body.storage_mode, server_persistence: body.server_persistence, verifiedAt: new Date().toISOString() };
 }
 
+function assertPrimaryEdition(homepage, builder) {
+  // The homepage explains storage in its footer; the notice appears on app pages.
+  if (!builder.includes('Your resumes, letters and jobs save in this browser.') || [homepage, builder].some(html => html.includes('Browser workspace edition:'))) throw new Error('Export did not render the primary device-only edition.');
+}
+
 function runBuild(cli, workdir, env) {
   return new Promise((resolve, reject) => {
     const child = spawn(process.execPath, [cli, 'build', workdir], { cwd: workdir, env, stdio: 'inherit', shell: false, windowsHide: true });
@@ -138,7 +143,7 @@ async function main(argv = process.argv.slice(2)) {
     fs.writeFileSync(path.join(exported, '.htaccess'), 'DirectoryIndex index.html\nOptions -Indexes\nErrorDocument 404 /404.html\n<IfModule mod_headers.c>\n  Header always set X-Content-Type-Options "nosniff"\n  Header always set Referrer-Policy "strict-origin-when-cross-origin"\n  Header always set X-Frame-Options "SAMEORIGIN"\n</IfModule>\n', { flag: 'wx' });
     const listing = inventory(exported);
     const homepage = fs.readFileSync(path.join(exported, 'index.html'), 'utf8');
-    if (!homepage.includes('Your resumes, letters and jobs save in this browser.') || homepage.includes('Browser workspace edition:')) throw new Error('Export did not render the primary device-only edition.');
+    assertPrimaryEdition(homepage, fs.readFileSync(path.join(exported, 'builder', 'index.html'), 'utf8'));
     if (!listing.files.some(file => file.path.endsWith('.js') && fs.readFileSync(file.absolute, 'utf8').includes(settings.origin))) throw new Error('Expected exact backend origin is missing from the compiled browser scripts.');
     const JSZip = require(require.resolve('jszip', { paths: [frontend] })), zip = new JSZip();
     const timestamp = Math.max(Number(gitText(['show', '-s', '--format=%ct', commit])) * 1000, Date.UTC(1980, 0, 1));
@@ -158,4 +163,4 @@ async function main(argv = process.argv.slice(2)) {
 }
 
 if (require.main === module) main().catch(error => { console.error(error.stack || error.message); process.exitCode = 1; });
-module.exports = { apiOrigin, options, selectSource, childEnvironment, inventory, verifyBackend };
+module.exports = { apiOrigin, options, selectSource, childEnvironment, inventory, verifyBackend, assertPrimaryEdition };
