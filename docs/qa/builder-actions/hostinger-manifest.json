@@ -1,0 +1,1170 @@
+{
+  "schemaVersion": 1,
+  "commit": "65a2b914bf2f96a33474f4734fb891eafe84ec90",
+  "generatedAt": "2026-10-19T17:05:43.308Z",
+  "edition": "primary-browser-local",
+  "apiOrigin": "https://careerforge-resume-api-free.onrender.com",
+  "backend": {
+    "url": "https://careerforge-resume-api-free.onrender.com/api/health",
+    "storage_mode": "local",
+    "server_persistence": false,
+    "verifiedAt": "2026-10-19T17:04:33.837Z"
+  },
+  "buildEnvironment": {
+    "STATIC_EXPORT": "1",
+    "NEXT_PUBLIC_STORAGE_MODE": "local",
+    "NEXT_PUBLIC_SITE_MODE": null
+  },
+  "sourceFiles": [
+    {
+      "path": "frontend/app/app-theme.css",
+      "gitBlob": "20b2dddba17816f04720e38ad4770c194e7eb5b2"
+    },
+    {
+      "path": "frontend/app/auto-apply/auto-apply.css",
+      "gitBlob": "00d307e99cec06ba7c7542767750c05ff62271f2"
+    },
+    {
+      "path": "frontend/app/auto-apply/page.tsx",
+      "gitBlob": "40c0ca7926768ae9709a1b1fd95a098d054e9708"
+    },
+    {
+      "path": "frontend/app/builder/page.tsx",
+      "gitBlob": "8a050391f14789e0a7840b90ee55516c8436da18"
+    },
+    {
+      "path": "frontend/app/career-plan/page.tsx",
+      "gitBlob": "9310a50d4dee115ac988271e536a9a161e8b0928"
+    },
+    {
+      "path": "frontend/app/career-plan/plan.css",
+      "gitBlob": "4df636800001665feb92ab6d22f646ff739ac13f"
+    },
+    {
+      "path": "frontend/app/components/GuestAccess.tsx",
+      "gitBlob": "b839a6150e02e5224997e849712a217856bc5cf5"
+    },
+    {
+      "path": "frontend/app/components/HomepageExamples.tsx",
+      "gitBlob": "05a588c465cda932bee69277e245961b2fbf390a"
+    },
+    {
+      "path": "frontend/app/components/HomepageHero.tsx",
+      "gitBlob": "4f8875439ab0a8d4d6355f2b3fb91803aca9518a"
+    },
+    {
+      "path": "frontend/app/components/HomepageNavbar.tsx",
+      "gitBlob": "20306c74083537c736beb8ba321ae3856c86c98a"
+    },
+    {
+      "path": "frontend/app/components/HomepageTools.tsx",
+      "gitBlob": "64588f6db6d5387138af5f504a336e17fea71c6d"
+    },
+    {
+      "path": "frontend/app/components/MainNavbar.tsx",
+      "gitBlob": "e5b8d54812a7b54a971572eb8d61a128e04fc80a"
+    },
+    {
+      "path": "frontend/app/components/ProductHeroHeader.tsx",
+      "gitBlob": "b0c65ead38b7dfed992057e832b75c6bed74379c"
+    },
+    {
+      "path": "frontend/app/components/ResumeResultCard.tsx",
+      "gitBlob": "0e9850ea8a270c54ef44808123b6b8adbf24b502"
+    },
+    {
+      "path": "frontend/app/components/ResumeUploadForm.tsx",
+      "gitBlob": "1b6ff570e84347f5d028d6aadc3e46c5c6ecfa6f"
+    },
+    {
+      "path": "frontend/app/components/ScoreBreakdown.tsx",
+      "gitBlob": "2457fd03eef5154aa110a65f77d287df5d8758cd"
+    },
+    {
+      "path": "frontend/app/components/SiteFooter.tsx",
+      "gitBlob": "3b6633ac4fddb5b6425bcbc8cac10f5e2f9ca009"
+    },
+    {
+      "path": "frontend/app/components/StorageNotice.tsx",
+      "gitBlob": "069d749a4fd0573bfdd4df48a4f9e9d9952489a9"
+    },
+    {
+      "path": "frontend/app/components/TemplateGallery.tsx",
+      "gitBlob": "0496faae63cfbb711a8ace0eb0fe9b1b6580c49e"
+    },
+    {
+      "path": "frontend/app/cover-letter/page.tsx",
+      "gitBlob": "b8fad05d8e03cf24f39a5df8c01984e9bb13511e"
+    },
+    {
+      "path": "frontend/app/dashboard/page.tsx",
+      "gitBlob": "42010d1b74717dd9d8d112ff6ef43d4ba3e1c300"
+    },
+    {
+      "path": "frontend/app/documents/page.tsx",
+      "gitBlob": "8bb297599d71a5fbe39ecb2291861304d891c847"
+    },
+    {
+      "path": "frontend/app/globals.css",
+      "gitBlob": "3af08240aba9b9d0817875b786af4e627877bfd3"
+    },
+    {
+      "path": "frontend/app/history/history.css",
+      "gitBlob": "8ee595a1dc78301e0d3a9e04854eecfc1727f76b"
+    },
+    {
+      "path": "frontend/app/history/page.tsx",
+      "gitBlob": "6958cbf4edae3f79900c3141af91611b94e9fbcb"
+    },
+    {
+      "path": "frontend/app/homepage.css",
+      "gitBlob": "aaf689699f430aa83838763811f0a416ab952a40"
+    },
+    {
+      "path": "frontend/app/icon.svg",
+      "gitBlob": "5774ec3761be6303139df9bacb57a56cdcc0e488"
+    },
+    {
+      "path": "frontend/app/interview-prep/page.tsx",
+      "gitBlob": "9956f13800530bbb783d22d8f8931aece2fd2a84"
+    },
+    {
+      "path": "frontend/app/job-tracker/page.tsx",
+      "gitBlob": "baa2e5e8ec8fccf495257e5d94fb1a555b26eeae"
+    },
+    {
+      "path": "frontend/app/job-tracker/tracker.css",
+      "gitBlob": "80935943fb39616124137b722b0d0afd939e62a8"
+    },
+    {
+      "path": "frontend/app/jobs/SearchSources.tsx",
+      "gitBlob": "6ad4bd028f2d95e3acde1c531408226570087049"
+    },
+    {
+      "path": "frontend/app/jobs/jobs.css",
+      "gitBlob": "72834caa5ceb3806a31f1935972302da1b836dc8"
+    },
+    {
+      "path": "frontend/app/jobs/page.tsx",
+      "gitBlob": "b1fe9a0dcfd24ff2dc50ce3375144c2e2e2106d5"
+    },
+    {
+      "path": "frontend/app/layout.tsx",
+      "gitBlob": "bfb0e16c5154fd348534b0e9e2c12c87e021e0b4"
+    },
+    {
+      "path": "frontend/app/letter-templates.css",
+      "gitBlob": "151a7d4c8603a70507f343ff93a4adb7c3b1baef"
+    },
+    {
+      "path": "frontend/app/letters/letters.css",
+      "gitBlob": "71d89c15f245b25d371121d5c1b3cf1f61567d3c"
+    },
+    {
+      "path": "frontend/app/letters/page.tsx",
+      "gitBlob": "03970695e7fce50aa293ec62007cd65565bf28ba"
+    },
+    {
+      "path": "frontend/app/login/page.tsx",
+      "gitBlob": "14768212339daeca7737ee31d3cdf4bb04699bb7"
+    },
+    {
+      "path": "frontend/app/page.tsx",
+      "gitBlob": "30621c35067a1e64bd608adf3c5b24046f63840a"
+    },
+    {
+      "path": "frontend/app/privacy/page.tsx",
+      "gitBlob": "d2f55a21b99c37eccd141cdb18a4b7017598ccf9"
+    },
+    {
+      "path": "frontend/app/resources/guides/page.tsx",
+      "gitBlob": "11218e06609e41ddd0320053d76f33f3783c2694"
+    },
+    {
+      "path": "frontend/app/resume-scanner/page.tsx",
+      "gitBlob": "5b18f70301d15896d3ffc0d2d3613525ddfec3af"
+    },
+    {
+      "path": "frontend/app/resume-templates.css",
+      "gitBlob": "16a1cdec8e266cbd3262892374159793c6ab496a"
+    },
+    {
+      "path": "frontend/app/salary-analyzer/page.tsx",
+      "gitBlob": "e5de40295d44f01a7f6c3551e7fe153d288c0bc6"
+    },
+    {
+      "path": "frontend/app/salary-analyzer/salary.css",
+      "gitBlob": "22bde05380a71a55b06410f3c34889e1b873af84"
+    },
+    {
+      "path": "frontend/app/signup/page.tsx",
+      "gitBlob": "14768212339daeca7737ee31d3cdf4bb04699bb7"
+    },
+    {
+      "path": "frontend/app/tailor/page.tsx",
+      "gitBlob": "7175333e1ce1c68d57aaa2f1f38d0451fba67e3c"
+    },
+    {
+      "path": "frontend/app/tailor/tailor.css",
+      "gitBlob": "b2950e9abb4e3769ccdcd2e3ba964f32ed4854b7"
+    },
+    {
+      "path": "frontend/app/templates/page.tsx",
+      "gitBlob": "8ce50354225586c2619039d12910e1e3672b3554"
+    },
+    {
+      "path": "frontend/app/tools/builder/layout.tsx",
+      "gitBlob": "b51b0be6845b0c2c751909a8e9e9627d972a93b0"
+    },
+    {
+      "path": "frontend/app/tools/builder/page.tsx",
+      "gitBlob": "6dfe786e6ab436c665b99eb88187b44c55955d6d"
+    },
+    {
+      "path": "frontend/app/tools/page.tsx",
+      "gitBlob": "aa0c29d796f282c4cd53a1cb178becd74d4026ce"
+    },
+    {
+      "path": "frontend/app/workspace.css",
+      "gitBlob": "0c50efa01ca8e1bdea98eae752d874af34211136"
+    },
+    {
+      "path": "frontend/components/AutoFixPanel.tsx",
+      "gitBlob": "ef5da9170728e65382f30bc8a9ca10bb32be8e09"
+    },
+    {
+      "path": "frontend/components/RealTimeSuggestions.tsx",
+      "gitBlob": "2b8f10a6071fcd69f134b7e0e4d35d204dce1c1d"
+    },
+    {
+      "path": "frontend/components/ResumeBuilder.tsx",
+      "gitBlob": "8b1da7c27cf3b8adadffc9514f0209a1bc5a077e"
+    },
+    {
+      "path": "frontend/components/ResumePreview.tsx",
+      "gitBlob": "7359e27517ce399b259ce43b386f5f7259a268f0"
+    },
+    {
+      "path": "frontend/components/ResumeTemplates.tsx",
+      "gitBlob": "10f90cc093bd28fc1c015e3bf9542e9a5c5b83f8"
+    },
+    {
+      "path": "frontend/components/SectionEditors.tsx",
+      "gitBlob": "0a3e2cf1938cd6ab611ee0bddd89ddc1e0cd4cd7"
+    },
+    {
+      "path": "frontend/components/builder/BuilderCanvas.tsx",
+      "gitBlob": "8ec443c92081bb7fbd09a39c5e43e85493e402cf"
+    },
+    {
+      "path": "frontend/components/builder/BuilderToolbar.tsx",
+      "gitBlob": "02b7c3c2cd3b27f1d5189805b37114ed36dd475f"
+    },
+    {
+      "path": "frontend/components/builder/LivePreview.tsx",
+      "gitBlob": "203a038ccf08eb9975e9d4e04be749507ba5d55e"
+    },
+    {
+      "path": "frontend/components/builder/SectionBlock.tsx",
+      "gitBlob": "0cd3cf5928fe2a7c59440e98a2867b15c38ad26a"
+    },
+    {
+      "path": "frontend/components/builder/SectionEditor.tsx",
+      "gitBlob": "2c6364d9a8f643ead6d4445bfe44a861c131edd0"
+    },
+    {
+      "path": "frontend/components/builder/SectionForms.tsx",
+      "gitBlob": "9293ceef456efdad608416e1119de0022b94dfd1"
+    },
+    {
+      "path": "frontend/components/builder/SectionSidebar.tsx",
+      "gitBlob": "9225709de1dc0fe7e9bdfb23fb097bf1d17a3d7a"
+    },
+    {
+      "path": "frontend/components/builder/SidebarNav.tsx",
+      "gitBlob": "2c461026951b91390c9924e4466391c1a3c5d41b"
+    },
+    {
+      "path": "frontend/components/builder/index.ts",
+      "gitBlob": "a9d7391bd299c3344b71e13a121b8f2d760db42e"
+    },
+    {
+      "path": "frontend/components/coverLetter/CoverLetterBuilder.tsx",
+      "gitBlob": "053c964cdfa7d89c52ba4bade4d4092792ac98c4"
+    },
+    {
+      "path": "frontend/components/coverLetter/CoverLetterPreview.tsx",
+      "gitBlob": "e0569e0bbd105e56a378af0116b15ba57ec427b3"
+    },
+    {
+      "path": "frontend/components/coverLetter/Letterhead.tsx",
+      "gitBlob": "67b06b91884bf9402a86d8370960745c8388d1dc"
+    },
+    {
+      "path": "frontend/components/coverLetter/TemplateSelector.tsx",
+      "gitBlob": "3bf6539477de8037cd894faef991ae510188af3f"
+    },
+    {
+      "path": "frontend/components/coverLetter/forms/ContentEditor.tsx",
+      "gitBlob": "e5de9f50b8da445ab67d30d5d0074c2c588a9452"
+    },
+    {
+      "path": "frontend/components/coverLetter/forms/JobDetailsForm.tsx",
+      "gitBlob": "86dbb72743763c5b3b1c54fa051948d5425d488b"
+    },
+    {
+      "path": "frontend/components/coverLetter/forms/RecipientInfoForm.tsx",
+      "gitBlob": "94dccccd9296bb9aba77dea40d4f716d689fc117"
+    },
+    {
+      "path": "frontend/components/coverLetter/forms/SenderInfoForm.tsx",
+      "gitBlob": "50778530aae2eba73a6a3b099cd2ae37d3fd3a05"
+    },
+    {
+      "path": "frontend/components/coverLetter/index.ts",
+      "gitBlob": "603179089e3349f1e31c429c72bfb0be11d90422"
+    },
+    {
+      "path": "frontend/components/resumeio/BuilderActions.tsx",
+      "gitBlob": "4d7bca7f97269be0c98f9f87f0be4fde6ad7bc55"
+    },
+    {
+      "path": "frontend/components/resumeio/CollapsibleSection.tsx",
+      "gitBlob": "4db2634b590e4ef001e48c3761ea521827acf5fe"
+    },
+    {
+      "path": "frontend/components/resumeio/CustomSectionForm.tsx",
+      "gitBlob": "8df9aa3afb55c45c6f014c9d985f12a37bc5fe76"
+    },
+    {
+      "path": "frontend/components/resumeio/LiveResumePreview.tsx",
+      "gitBlob": "56b75e5a00264c60ea7b5f598eb0502ba4857829"
+    },
+    {
+      "path": "frontend/components/resumeio/ProgressHeader.tsx",
+      "gitBlob": "c3c00e8d9b7a957795a2ba9fd59ff7a46421ea16"
+    },
+    {
+      "path": "frontend/components/resumeio/ResumeIOBuilder.tsx",
+      "gitBlob": "421a3498d0e4a1cda5f0ce219f877b9405ab7bab"
+    },
+    {
+      "path": "frontend/components/resumeio/SectionForms.tsx",
+      "gitBlob": "7fee9f94a426dc309d2f6197f0407735b8e9d17c"
+    },
+    {
+      "path": "frontend/components/resumeio/StudioBuilder.tsx",
+      "gitBlob": "b0393b6ea911e6178306e97f8d8f049aaad430c2"
+    },
+    {
+      "path": "frontend/components/resumeio/StudioPreview.tsx",
+      "gitBlob": "265747895adf9cc40bacd4f0009ff36349c8b5b3"
+    },
+    {
+      "path": "frontend/components/resumeio/SummaryAssistant.tsx",
+      "gitBlob": "21e5daeb26211627c15646a7f8cad16c9c565ab2"
+    },
+    {
+      "path": "frontend/components/resumeio/TemplateSelector.tsx",
+      "gitBlob": "25535e0c7935d53a6e288cd4fcf1b31cd600c18b"
+    },
+    {
+      "path": "frontend/components/resumeio/TemplateThumbnail.tsx",
+      "gitBlob": "113ab885ce7e8a16f6a67bb8db2aa088055122f8"
+    },
+    {
+      "path": "frontend/components/resumeio/index.ts",
+      "gitBlob": "fe53b28654dc5abbef1e5df374a5845bc52edb3e"
+    },
+    {
+      "path": "frontend/components/resumeio/localExport.ts",
+      "gitBlob": "999eb864a91425715d1d8efc0fd8d459590cda81"
+    },
+    {
+      "path": "frontend/components/resumeio/resumeDocument.ts",
+      "gitBlob": "9861941b970d43dfbe8fff13fe0c484ece016769"
+    },
+    {
+      "path": "frontend/components/resumeio/templateCatalog.ts",
+      "gitBlob": "d083dfa874ae172e3746aa398312a360f4761fd3"
+    },
+    {
+      "path": "frontend/components/resumeio/templateSample.ts",
+      "gitBlob": "132f2cf8873f5680b1a4b658aedc6a229c1bb203"
+    },
+    {
+      "path": "frontend/components/workspace/DocumentThumbnail.tsx",
+      "gitBlob": "2ec9b6b208ab7b7e75a808358948846340d5fe54"
+    },
+    {
+      "path": "frontend/components/workspace/WorkspaceFrame.tsx",
+      "gitBlob": "ba688604e7c6fda7fca907d267b9f5607d52e625"
+    },
+    {
+      "path": "frontend/components/workspace/workspaceData.ts",
+      "gitBlob": "77877d2e2bcdbf8b6eeded36a3644b775705c2bc"
+    },
+    {
+      "path": "frontend/lib/apiClient.ts",
+      "gitBlob": "96e5da2617c31d7e5ce79c3d1e1301b6fac94016"
+    },
+    {
+      "path": "frontend/lib/apiConfig.ts",
+      "gitBlob": "d88c839d2003a5ea62aa7173937a47ce7dc2808f"
+    },
+    {
+      "path": "frontend/lib/applicationLetters.ts",
+      "gitBlob": "fb0643892f8f3dad45baae35f64159a97d61e07d"
+    },
+    {
+      "path": "frontend/lib/autoApply.ts",
+      "gitBlob": "ee6bebd38c3f9b091252f64fce3699f63fa47a51"
+    },
+    {
+      "path": "frontend/lib/careerPlans.ts",
+      "gitBlob": "ce3094f58fb6007396e838f9f4e2a9507647e30c"
+    },
+    {
+      "path": "frontend/lib/careerWorkspace.ts",
+      "gitBlob": "d1480c0da487b0a643ecf14c16264bc27ef0fb32"
+    },
+    {
+      "path": "frontend/lib/coverLetterApi.ts",
+      "gitBlob": "673038ea4ff309c74dc6adfd51d588ccf8100ce8"
+    },
+    {
+      "path": "frontend/lib/coverLetterExport.ts",
+      "gitBlob": "9036ef3dcc0afb5931ea1fad6f95b1a4971bd27f"
+    },
+    {
+      "path": "frontend/lib/fileCompression.ts",
+      "gitBlob": "9e0bb96309d5d0b3cb7fad9e8fd21e4254b109d1"
+    },
+    {
+      "path": "frontend/lib/jobSearch.ts",
+      "gitBlob": "5f4d7243a5d03d9120dc43a4aa5252f40e8b462d"
+    },
+    {
+      "path": "frontend/lib/localCoverLetters.ts",
+      "gitBlob": "7470265ff8e5909f0f41f58f1837c6d81dc4774a"
+    },
+    {
+      "path": "frontend/lib/resumeHistory.ts",
+      "gitBlob": "8925d18be801944419d2657d72a83fbe50205b49"
+    },
+    {
+      "path": "frontend/lib/resumeTailoring.ts",
+      "gitBlob": "3302d19f18d40573afad062cb2620f2c8be92593"
+    },
+    {
+      "path": "frontend/lib/salaryAnalyzer.ts",
+      "gitBlob": "b896afcd01de7ed970b82b0b960651bbf3b6f32b"
+    },
+    {
+      "path": "frontend/lib/savedJobSearches.ts",
+      "gitBlob": "bcb2457ae0e8a254c30b2abfeb1da4405c43ab67"
+    },
+    {
+      "path": "frontend/lib/types.ts",
+      "gitBlob": "425bb88d86a0a472d602cb84106759e53bbfe265"
+    },
+    {
+      "path": "frontend/lib/utils.ts",
+      "gitBlob": "131d3941c51013adf360643af1a5a2ead9182111"
+    },
+    {
+      "path": "frontend/next-env.d.ts",
+      "gitBlob": "830fb594ca2970a827555c28a253b097367e08d8"
+    },
+    {
+      "path": "frontend/next.config.js",
+      "gitBlob": "2ae3cfbcaa718c310a2920b135624c5dd30d3c3c"
+    },
+    {
+      "path": "frontend/package-lock.json",
+      "gitBlob": "a2d2fd1db9f3afcebcf1100dc3fa31ffe2359abb"
+    },
+    {
+      "path": "frontend/package.json",
+      "gitBlob": "121be48869d9d93c805b9430d4eb08358a4fe2a4"
+    },
+    {
+      "path": "frontend/postcss.config.js",
+      "gitBlob": "12a703d900da8159c30e75acbd2c4d87ae177f62"
+    },
+    {
+      "path": "frontend/public/application-helper/careerforge-auto-apply.zip",
+      "gitBlob": "4947e33b5e6fdfa86668b3feb732822919b2fbf0"
+    },
+    {
+      "path": "frontend/public/home/commons-medium.woff2",
+      "gitBlob": "2b15780028454e1c97118a2b709116c8e2ff522a"
+    },
+    {
+      "path": "frontend/public/home/commons-regular.woff2",
+      "gitBlob": "838591a34b6049d1d3632c063b0210754ccb10ec"
+    },
+    {
+      "path": "frontend/public/home/commons-semibold.woff2",
+      "gitBlob": "e8932c77095777cfd5f851dc4fc26e57d9c563a2"
+    },
+    {
+      "path": "frontend/public/home/features/cover-letter.png",
+      "gitBlob": "6ba5e3190b52fb872859e0699bac4e01174f8564"
+    },
+    {
+      "path": "frontend/public/home/features/job-match.png",
+      "gitBlob": "de1248892d6e0bcf43f1f8f2fdb21599216b692e"
+    },
+    {
+      "path": "frontend/public/home/features/step-by-step.png",
+      "gitBlob": "d7945585ad37f13ceaab8d75fd68349ad788d7aa"
+    },
+    {
+      "path": "frontend/public/home/features/summary.png",
+      "gitBlob": "8919f67ba80c3643baacfcfd31aaba34a0a434b2"
+    },
+    {
+      "path": "frontend/public/home/footer-resumes.png",
+      "gitBlob": "a21f8fc790eb4b436007f9015ec1ef48655acf49"
+    },
+    {
+      "path": "frontend/public/home/resources/cover-letter.png",
+      "gitBlob": "24f5687f9eb680a02832ae46aa2128e5282ac89f"
+    },
+    {
+      "path": "frontend/public/home/resources/resume.png",
+      "gitBlob": "fdbc337ad8aa2b525c7bc34d87250c4135a4c5e2"
+    },
+    {
+      "path": "frontend/public/home/resume-hero-mobile.png",
+      "gitBlob": "7359cba5ade92d627ad45f0405c9e40f4259cdf3"
+    },
+    {
+      "path": "frontend/public/home/resume-hero.png",
+      "gitBlob": "a8d07f0c0f15b8a21bb12bbe7e6e9f1b58505714"
+    },
+    {
+      "path": "frontend/public/home/tools/resume-builder.png",
+      "gitBlob": "3d4048a14f4dd7219a56e07e5a1d0a780eb43ea8"
+    },
+    {
+      "path": "frontend/store/builderStore.ts",
+      "gitBlob": "44223b18bf83e490295cca7db40ae8a1056c4946"
+    },
+    {
+      "path": "frontend/tailwind.config.ts",
+      "gitBlob": "a4129efbee0647d11241588015e1636d3d11e92f"
+    },
+    {
+      "path": "frontend/tsconfig.json",
+      "gitBlob": "d8b93235f205efbea6e8fceb1c9ddb57ddddf28d"
+    },
+    {
+      "path": "frontend/types/builder.ts",
+      "gitBlob": "c6b3c92b8cd21976ab5d19426b3e8958d9d6db98"
+    },
+    {
+      "path": "frontend/types/coverLetter.ts",
+      "gitBlob": "a302e9e565fed9652311035c2ddf14f512f0b003"
+    },
+    {
+      "path": "frontend/types/document.ts",
+      "gitBlob": "b77319b9c5310c99285d55cbdfc8a60d99d581df"
+    },
+    {
+      "path": "frontend/types/resume.ts",
+      "gitBlob": "62b506b259003a132a5d31cdec0b31f207107cdc"
+    },
+    {
+      "path": "frontend/types/sections.ts",
+      "gitBlob": "6b5b00558d588e5f760b8071bada40d0561f0fbc"
+    }
+  ],
+  "artifact": {
+    "filename": "careerforge-hostinger-static-65a2b914bf2f.zip",
+    "bytes": 2785026,
+    "uncompressedBytes": 4526410,
+    "sha256": "29e53aee5abd1f05d714ee295f6002164312f6d9df7be0a91ff32a5e1c3d227f",
+    "fileCount": 115
+  },
+  "files": [
+    {
+      "path": "_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "bytes": 174384,
+      "sha256": "bcc6c7e8caae988cdf8309975f0d5c8cc634465260417fbf678f3f78e70006c3"
+    },
+    {
+      "path": "_next/static/chunks/247-c5f72daefdf06886.js",
+      "bytes": 8535,
+      "sha256": "45cae2ee82c95259bf3770eba51a13ddac6c07f73b8d8e0a2a7a5062d86d86e2"
+    },
+    {
+      "path": "_next/static/chunks/315-6fb18f02b2f66a81.js",
+      "bytes": 120751,
+      "sha256": "dbfe65104eaacfd478f3e79b98d906ce5395cf1fed12d57fa81e6cc7934a0b80"
+    },
+    {
+      "path": "_next/static/chunks/501.751f4a2792ed6108.js",
+      "bytes": 740,
+      "sha256": "4e2198cfef5b9bce1217a625f14693fe76fb296314a4def2532b13adcbb90198"
+    },
+    {
+      "path": "_next/static/chunks/552-a4687ceb9cd693d0.js",
+      "bytes": 8063,
+      "sha256": "fc2d7c645bb693806d6203f6c6d8d04d508bbb07a136898902a95fc21a487d05"
+    },
+    {
+      "path": "_next/static/chunks/656.9de8bca38b60e5af.js",
+      "bytes": 5444,
+      "sha256": "84d0cf0ac97f00e0fa17a2641bd65aea5838ef186537f58dcfeb9dac0a68d2bb"
+    },
+    {
+      "path": "_next/static/chunks/680-aa8493552b5d902c.js",
+      "bytes": 90374,
+      "sha256": "3817f1c19390c0c2c81b36a2aae4ca4ced701a410209e3ed8f70fcbaa03c4137"
+    },
+    {
+      "path": "_next/static/chunks/742-bbf121bc3946faa3.js",
+      "bytes": 11781,
+      "sha256": "f2c68a7c24a729b678bd40d11802fcda0322bb20bce2cbfcab9bf84142102695"
+    },
+    {
+      "path": "_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "bytes": 173019,
+      "sha256": "277fd1cba52d65fd12b87fb1d345d8a8619e396293b055f369fa668f61a1b92d"
+    },
+    {
+      "path": "_next/static/chunks/810-f6036a1b0538759e.js",
+      "bytes": 27339,
+      "sha256": "691af68c60489059582a4938be6caec30d42a6fdeea011fe2f55c91bcb751855"
+    },
+    {
+      "path": "_next/static/chunks/821-9672c1ce725233fa.js",
+      "bytes": 7967,
+      "sha256": "c806ffe5e4f0418102afdf8c011838c74523750e8445bf3e577d9ec1652b6ff6"
+    },
+    {
+      "path": "_next/static/chunks/854-afe9533f6262bacc.js",
+      "bytes": 11763,
+      "sha256": "eaab0e67c4bf461a6ad9d27fae1e6d06048ca762b777f4a49a5ad975e60a1b23"
+    },
+    {
+      "path": "_next/static/chunks/874-3f8bbae6376a04d4.js",
+      "bytes": 16298,
+      "sha256": "462d57d90581092520fa8a28f37e5c05c8bb0824e9ac02f64eb0e725c652ec7c"
+    },
+    {
+      "path": "_next/static/chunks/91-c27a68f399603ebb.js",
+      "bytes": 18800,
+      "sha256": "81a70808bdc1d0d218bbe53c97ebe5a4bd31d8cef62cd84bf13125f9a4b99f87"
+    },
+    {
+      "path": "_next/static/chunks/922-288a5ef379b94d6a.js",
+      "bytes": 21841,
+      "sha256": "1c1b561c8b8dd2a3b5b9f99bfa7ea21aff973606d65ac0909f46c97eb695e0ca"
+    },
+    {
+      "path": "_next/static/chunks/app/_not-found/page-00815bc36caf7c9d.js",
+      "bytes": 2669,
+      "sha256": "391937f9730da5414df4aa8112e3ff942193b9da7184657781622626928183a8"
+    },
+    {
+      "path": "_next/static/chunks/app/auto-apply/page-b3090cc957bd9c35.js",
+      "bytes": 37518,
+      "sha256": "3bb096610317f0238e830456dd0e45fcd2c436e2db9b3b93330a7ef51df87b23"
+    },
+    {
+      "path": "_next/static/chunks/app/builder/page-5fe8596a2bf45f93.js",
+      "bytes": 389,
+      "sha256": "9ae1c39960331e92b4f2544b46676f97383252c160cc9efded6b9210f30886a1"
+    },
+    {
+      "path": "_next/static/chunks/app/career-plan/page-a6f6093af0796c54.js",
+      "bytes": 35232,
+      "sha256": "3a610034a940631b940670e2eac14e4f6ee38b36a0633207e3585705a31e2769"
+    },
+    {
+      "path": "_next/static/chunks/app/cover-letter/page-0d4091111a6cd022.js",
+      "bytes": 49752,
+      "sha256": "faba3d00369a5f6fa26852c1eb5bf3a2488135bb1ef1c6f9e5fa1d8356a6011c"
+    },
+    {
+      "path": "_next/static/chunks/app/dashboard/page-9228a5fbffd590ee.js",
+      "bytes": 13687,
+      "sha256": "39852dfd5fd200ddcd467f5a01590c95026b1a6164bf0963d49545a374dbc639"
+    },
+    {
+      "path": "_next/static/chunks/app/documents/page-5976b0f5eb308f87.js",
+      "bytes": 10584,
+      "sha256": "4f1e5c03674cb199935723bb40e031a546d95d577ba22ef3efe85df4c4d8eaf8"
+    },
+    {
+      "path": "_next/static/chunks/app/history/page-de67d16629862557.js",
+      "bytes": 16948,
+      "sha256": "333d4b3d2561bc064adc66cc1cd8287a44c07de3eaac7c7bae39d766def63979"
+    },
+    {
+      "path": "_next/static/chunks/app/interview-prep/page-8f6df140a35213d5.js",
+      "bytes": 12795,
+      "sha256": "23b22047e3a2bee2833fc265445f4c0bc1f198bb3824f019fdd634ebdac3f011"
+    },
+    {
+      "path": "_next/static/chunks/app/job-tracker/page-5019010e018505cd.js",
+      "bytes": 39220,
+      "sha256": "c53c6638be4b24cadc89a7eab0965ef5a0a38ab251a6208a7a659059a39ae6b6"
+    },
+    {
+      "path": "_next/static/chunks/app/jobs/page-4397cae6f8c85c0c.js",
+      "bytes": 23407,
+      "sha256": "e7b804d697b4b8618d635ca452f4b14427ed69edf7b171ba3bce1f96c6d94c74"
+    },
+    {
+      "path": "_next/static/chunks/app/layout-8eeade1ec31f784a.js",
+      "bytes": 15633,
+      "sha256": "2f026206b01ef845bf153c9039253a24198f1340f5ed59d19984153fda1bc61f"
+    },
+    {
+      "path": "_next/static/chunks/app/letters/page-97e2aa3bf2b6d7db.js",
+      "bytes": 25387,
+      "sha256": "d43ca5b4b27d1c7847001ed087051fafe3ea5e80496fa8d62356235c352387ad"
+    },
+    {
+      "path": "_next/static/chunks/app/login/page-3842a28b574f88eb.js",
+      "bytes": 189,
+      "sha256": "0ffc8c2416a55e3c3c17c05a05a5776c3980416962710072b0c01e8713efe2aa"
+    },
+    {
+      "path": "_next/static/chunks/app/page-9d3b08bc99aa6df7.js",
+      "bytes": 19681,
+      "sha256": "b92f8981d56e8b349920df331ec98fa3ece76e52af67b5ba060fc8c168ca9042"
+    },
+    {
+      "path": "_next/static/chunks/app/privacy/page-6888a3606757dc0e.js",
+      "bytes": 8430,
+      "sha256": "95b9db64a92c086dc55d685c9781283770114c8eea1b7b8abdddac67f61f84da"
+    },
+    {
+      "path": "_next/static/chunks/app/resources/guides/page-3842a28b574f88eb.js",
+      "bytes": 189,
+      "sha256": "0ffc8c2416a55e3c3c17c05a05a5776c3980416962710072b0c01e8713efe2aa"
+    },
+    {
+      "path": "_next/static/chunks/app/resume-scanner/page-7490c4b61108044d.js",
+      "bytes": 4660,
+      "sha256": "3ae6ecad64ef00b1031b55997ecdd05249b64eac8a28c0451749e95799a21ff3"
+    },
+    {
+      "path": "_next/static/chunks/app/salary-analyzer/page-5cee9fe73fbe5a23.js",
+      "bytes": 32710,
+      "sha256": "3d3e1bdcadd7937e23b8558a6adb458208cfcb5d00a143397cea84c710a223f0"
+    },
+    {
+      "path": "_next/static/chunks/app/signup/page-3842a28b574f88eb.js",
+      "bytes": 189,
+      "sha256": "0ffc8c2416a55e3c3c17c05a05a5776c3980416962710072b0c01e8713efe2aa"
+    },
+    {
+      "path": "_next/static/chunks/app/tailor/page-8face6666afd4e4d.js",
+      "bytes": 19352,
+      "sha256": "3d0be4750c28e62e255e0803ea8738badfa5f63390d1f6e574cdc0245b6b1cd6"
+    },
+    {
+      "path": "_next/static/chunks/app/templates/page-e59098006f640e8c.js",
+      "bytes": 6413,
+      "sha256": "16a8c70f7af71d8479ca589ec6152ca27999038dcd54a665c1b7cd84042361b3"
+    },
+    {
+      "path": "_next/static/chunks/app/tools/builder/layout-02b073cb7a617f33.js",
+      "bytes": 128,
+      "sha256": "0d66116cd79647ca786a83b1a7cffc304b1417a47c511461f435ee2d12b0ab9b"
+    },
+    {
+      "path": "_next/static/chunks/app/tools/builder/page-5be642a1575b1a3d.js",
+      "bytes": 883,
+      "sha256": "dac6ee068c5d60516da1a0672095ac857605a4100f2083580dd24eee6d9309a4"
+    },
+    {
+      "path": "_next/static/chunks/app/tools/page-9a1371f92c0e70f8.js",
+      "bytes": 6955,
+      "sha256": "040d55279c5e770db6d23d5c9ef8d71ad65d6a8582888d5a0e46081358d0eb9e"
+    },
+    {
+      "path": "_next/static/chunks/framework-138d446469aa2b5b.js",
+      "bytes": 139834,
+      "sha256": "3dcc45daaf3fc0379f13af83fd253ebdc0128529870877beb769900a406f74a6"
+    },
+    {
+      "path": "_next/static/chunks/main-app-f717357ca60447a6.js",
+      "bytes": 554,
+      "sha256": "0ca30eff70cdd6cf72edb9516a5ec97d1a089936062883ae342aeeaab39aa77a"
+    },
+    {
+      "path": "_next/static/chunks/main-cfffce2932250552.js",
+      "bytes": 120336,
+      "sha256": "09f2ce6037de37b0753c05621c94e0c9242a5f42230ba40fa7a5a7c73476d7bd"
+    },
+    {
+      "path": "_next/static/chunks/pages/_app-ba78c719f3a95b3f.js",
+      "bytes": 914,
+      "sha256": "b8efe29bf7e27ba9c3b36056defeb8b6aacafb4bcefbbf9095414703f48caf4d"
+    },
+    {
+      "path": "_next/static/chunks/pages/_error-0f3efd53be8b362b.js",
+      "bytes": 5650,
+      "sha256": "2dd8c95a8e5a3fd7f4f82ee20e60107cc7d4fa910f119d2a4e730d851d9939a3"
+    },
+    {
+      "path": "_next/static/chunks/polyfills-42372ed130431b0a.js",
+      "bytes": 112594,
+      "sha256": "0973c1d64c88adc8e3c950410cb58b288f72118d5965b78049438deb8f2f9683"
+    },
+    {
+      "path": "_next/static/chunks/webpack-5eac3c924e1f63f5.js",
+      "bytes": 3513,
+      "sha256": "fefd3e1c0ddc0b7fbb24bbe535355be92ee333fcfb5ff1879f31cf21546ed23b"
+    },
+    {
+      "path": "_next/static/css/1b8db0b00b261248.css",
+      "bytes": 20059,
+      "sha256": "dc0e45c2f107351386074f49d4054366fa0ca7dd960ccab00962c28f59c26563"
+    },
+    {
+      "path": "_next/static/css/456f5b80e5e4c3c6.css",
+      "bytes": 74629,
+      "sha256": "e36f68e802419473c92031c0e82b16e40964aebbfd87f7f32faf047200ad74b6"
+    },
+    {
+      "path": "_next/static/css/5ba3d811cdeb3caa.css",
+      "bytes": 40846,
+      "sha256": "3be43b2c721056832291e275e70aca78519d81bc11dcfb7202dd61980809a331"
+    },
+    {
+      "path": "_next/static/css/d8c1cdacf99ceea1.css",
+      "bytes": 87677,
+      "sha256": "d6c2e3acf173e7c1c372d6628adf35582dbf418885954cddaae2236d0173a932"
+    },
+    {
+      "path": "_next/static/wMVZgFXpdy72-rO7hya6L/_buildManifest.js",
+      "bytes": 1352,
+      "sha256": "5f6245c80f7096f0b005786bb55c2a96c1bdda5ac3e3ce7d54df11de3e8e1eff"
+    },
+    {
+      "path": "_next/static/wMVZgFXpdy72-rO7hya6L/_ssgManifest.js",
+      "bytes": 80,
+      "sha256": "678f6ce2cb80b1fe72fc67e7412be6e2ab6ada083111b64f7c40d35e3cba5e00"
+    },
+    {
+      "path": ".htaccess",
+      "bytes": 280,
+      "sha256": "d2ae45d8473b1c12bff872ff19ebe728d307e3b9f0e5c1c8bcf68026a0f83758"
+    },
+    {
+      "path": "404.html",
+      "bytes": 11342,
+      "sha256": "8a578040a9d4e16f20359e745b1b862161dd44e0c644406cdfc24469215a16f2"
+    },
+    {
+      "path": "404/index.html",
+      "bytes": 11342,
+      "sha256": "8a578040a9d4e16f20359e745b1b862161dd44e0c644406cdfc24469215a16f2"
+    },
+    {
+      "path": "application-helper/careerforge-auto-apply.zip",
+      "bytes": 9617,
+      "sha256": "93ec795cd91a543494e50747e5e160298784a123e0e750b9b8e6f345175d36d6"
+    },
+    {
+      "path": "auto-apply/index.html",
+      "bytes": 20245,
+      "sha256": "5934b004ae977fb7d8210099d7ded40e793a67c2a2272be24f5c422e145e8d48"
+    },
+    {
+      "path": "auto-apply/index.txt",
+      "bytes": 5344,
+      "sha256": "d1502edc31532c960d185cb5cb53075f4adbb2af545f3ea00fe62c89c813513a"
+    },
+    {
+      "path": "builder/index.html",
+      "bytes": 11171,
+      "sha256": "168bb99f621d4491ee33b599da32cc831215bb64c36a98108a4e4af717729336"
+    },
+    {
+      "path": "builder/index.txt",
+      "bytes": 5253,
+      "sha256": "bc73aa7847d6b195612543bf80d3c324aaf7922f97e5ccd9986f9deb61b9d088"
+    },
+    {
+      "path": "career-plan/index.html",
+      "bytes": 21730,
+      "sha256": "c6e54a4431fc4d81b7eda346595e3a9963754a9747195116d84631ad3cd0ff0c"
+    },
+    {
+      "path": "career-plan/index.txt",
+      "bytes": 5210,
+      "sha256": "2906ce34155cfe9b874c52650bd613773e938a2580f09c90b92cf3a79bc1b75f"
+    },
+    {
+      "path": "cover-letter/index.html",
+      "bytes": 13337,
+      "sha256": "63ee4e0b15d2408f25b2b7f3adfcfb95ca32ebf6f554c1d8286bc859ef56f76e"
+    },
+    {
+      "path": "cover-letter/index.txt",
+      "bytes": 5306,
+      "sha256": "1ba9f6f61c50592e341a406a4ccb9807fb415905b2baaba59738205ecec8ce32"
+    },
+    {
+      "path": "dashboard/index.html",
+      "bytes": 32445,
+      "sha256": "d9be4b8eb313ebae0c6fb88dca99a0c3084340fce0afbf261578a3cbcd23668c"
+    },
+    {
+      "path": "dashboard/index.txt",
+      "bytes": 5338,
+      "sha256": "cdc5d6426ee7785f3089cd9312fd9ef96fea5d5e35dba34bc48f3725070d3c0d"
+    },
+    {
+      "path": "documents/index.html",
+      "bytes": 24128,
+      "sha256": "46e4200f6c230558e7b8413651ce9be1193bd6985dbad59e0ce2f338420fa4a7"
+    },
+    {
+      "path": "documents/index.txt",
+      "bytes": 5338,
+      "sha256": "86500ecac5bee557a4269a4104e60981725c9ae37ed1e19e4bd1aa10ea30d92e"
+    },
+    {
+      "path": "history/index.html",
+      "bytes": 20232,
+      "sha256": "dda0cc4080f676734793d099cf6f5d442e1e4573ac89e78bfcbd29c0284371f1"
+    },
+    {
+      "path": "history/index.txt",
+      "bytes": 5330,
+      "sha256": "3cd501aba500cd1e1f51a00b4f3ac72271420ef4c8ec4e0084704fb35cb78ab0"
+    },
+    {
+      "path": "home/commons-medium.woff2",
+      "bytes": 47398,
+      "sha256": "e680b79147dcf287b36f1c0fe4923f815aa32594afc28b75e7e6425ae9b5d246"
+    },
+    {
+      "path": "home/commons-regular.woff2",
+      "bytes": 21040,
+      "sha256": "705e164f8723e428b0d026ffbdc8cf933e65c874b0d945aa2a293cc171bb3f65"
+    },
+    {
+      "path": "home/commons-semibold.woff2",
+      "bytes": 21180,
+      "sha256": "a79e96e988a1599bbccfee7fcc549564c743c31b7cffec40363f81129f5a71ca"
+    },
+    {
+      "path": "home/features/cover-letter.png",
+      "bytes": 15061,
+      "sha256": "7c9d5f93de8b8eb918e4074b9b75a144b79085c93f06c4986b44da4bc4b6a69a"
+    },
+    {
+      "path": "home/features/job-match.png",
+      "bytes": 25362,
+      "sha256": "d60085210542d22880621cba6e8b4784cea74ab35b64e5cacbe95383a814f3cb"
+    },
+    {
+      "path": "home/features/step-by-step.png",
+      "bytes": 21757,
+      "sha256": "f5e0361d0b13c1fd1731828c42792af7d802296b8613ded14710da8f6488b9a7"
+    },
+    {
+      "path": "home/features/summary.png",
+      "bytes": 15947,
+      "sha256": "de7007c9d2a238c3d938eea21f0cc3f57ad61a0c264e80bfc7e8bd5a39e3b9a3"
+    },
+    {
+      "path": "home/footer-resumes.png",
+      "bytes": 868142,
+      "sha256": "d0aee1cfc655c4deb224498b9859c3f99e47579a4072bcb477ff32a1a4847f33"
+    },
+    {
+      "path": "home/resources/cover-letter.png",
+      "bytes": 697673,
+      "sha256": "4493c730b02ac1d52da98251b5b1eecf175221998fa94da3ea3b2bd8f5969ba7"
+    },
+    {
+      "path": "home/resources/resume.png",
+      "bytes": 245404,
+      "sha256": "c79491b7b226502fcf3204aab83ae14a2bd70238657d671a852a4ed2d6c422b9"
+    },
+    {
+      "path": "home/resume-hero-mobile.png",
+      "bytes": 18699,
+      "sha256": "5c80501543de7beb6c1da36e868bc93c7427a33dab109acb455b02fc03b3873a"
+    },
+    {
+      "path": "home/resume-hero.png",
+      "bytes": 67336,
+      "sha256": "1f41ca145f1d4762c36c40fd95a6f9d1fa073ed7a255bbc12b2ba7d141fd56ad"
+    },
+    {
+      "path": "home/tools/resume-builder.png",
+      "bytes": 35232,
+      "sha256": "0522c502d438379d02eafe337bf0e5a9e6041313b13fff76afb656a54d26c4bd"
+    },
+    {
+      "path": "icon.svg",
+      "bytes": 272,
+      "sha256": "9fc4cf9b1e26514bed3b7eb645eeb0e89444b6edf82d68c8dd229375711622c5"
+    },
+    {
+      "path": "index.html",
+      "bytes": 105371,
+      "sha256": "9793d9753b45e279417cd4b31233e836ab9779e0f6167a9486505095c9bdb135"
+    },
+    {
+      "path": "index.txt",
+      "bytes": 30494,
+      "sha256": "3889393011b8c9eed2c617472e5ade1f1ab039ff389514320aacb9c966d14ba2"
+    },
+    {
+      "path": "interview-prep/index.html",
+      "bytes": 24878,
+      "sha256": "f8d5592b6d647a579ec49ad93c1f96717fa03e801b081b3eb8dc991b21216eff"
+    },
+    {
+      "path": "interview-prep/index.txt",
+      "bytes": 5222,
+      "sha256": "cf35b0f515888da392830b089feb2a8a90acff93433695517b1561ef464ce7d7"
+    },
+    {
+      "path": "job-tracker/index.html",
+      "bytes": 28018,
+      "sha256": "5957858db96c26b5380aae4414a1acd0bc49c024ad537363352b47635b46317d"
+    },
+    {
+      "path": "job-tracker/index.txt",
+      "bytes": 5461,
+      "sha256": "5f8b0af4ed567776c9266fa4b04d73179514931212ebe763a5ae3039ec886d8e"
+    },
+    {
+      "path": "jobs/index.html",
+      "bytes": 27408,
+      "sha256": "a47d49635072254c23b7307ecad493008b3f6cdc42b789467bc3aca416e895ff"
+    },
+    {
+      "path": "jobs/index.txt",
+      "bytes": 5228,
+      "sha256": "838f8413d1834c895ee44b11ced2731bdc8d1dee2dd015934d293c5944833486"
+    },
+    {
+      "path": "letters/index.html",
+      "bytes": 20238,
+      "sha256": "7e0778b9a59a08b27a52bb031797f3890e43416646b4551c1dc78f6d066ef567"
+    },
+    {
+      "path": "letters/index.txt",
+      "bytes": 5332,
+      "sha256": "3b833c2e8f3706534438f42af276bddfbeae77100d28ad53d55a8339c459427e"
+    },
+    {
+      "path": "login/index.html",
+      "bytes": 12546,
+      "sha256": "0278cd9fdc2bd645d952893de5a6b95a46099977db64a4b1c39b7c79142e3f50"
+    },
+    {
+      "path": "login/index.txt",
+      "bytes": 6039,
+      "sha256": "8dd6486f013ba639045a6a183d31b6a8f1939f00de841c21b67dec799ecb7af5"
+    },
+    {
+      "path": "privacy/index.html",
+      "bytes": 13088,
+      "sha256": "85225c9ebcf7cece02008acd0ad78946d63821cfd8113322b83705680f1bfc28"
+    },
+    {
+      "path": "privacy/index.txt",
+      "bytes": 5192,
+      "sha256": "445e4a7179de5422d25498b90c4ef62cc2360604726c67aa2203cfd57dc0fc80"
+    },
+    {
+      "path": "resources/guides/index.html",
+      "bytes": 21951,
+      "sha256": "2ed317d232a5ce8f7600c1ccfbe542bcfde08b0925a922d9e470f4bf53422afd"
+    },
+    {
+      "path": "resources/guides/index.txt",
+      "bytes": 11277,
+      "sha256": "b6884c147ca7132440ea742e3a2cd853e3d2dcaaaea2de84f522ad99308a2760"
+    },
+    {
+      "path": "resume-scanner/index.html",
+      "bytes": 18176,
+      "sha256": "228d71b63be336743266bec1fe69dccaa76eb894533e5f33c9bb3e1aadab893b"
+    },
+    {
+      "path": "resume-scanner/index.txt",
+      "bytes": 5314,
+      "sha256": "fcc83066e47cb39fc20d04af72958cf61c0574a2a6aa8ac53d8ffeb687cb6e29"
+    },
+    {
+      "path": "salary-analyzer/index.html",
+      "bytes": 29178,
+      "sha256": "8cfaf86fc64067b84ca578e26e5baba8c712479b61aa5f00c71e5392d19402ab"
+    },
+    {
+      "path": "salary-analyzer/index.txt",
+      "bytes": 5226,
+      "sha256": "72127e4573c639b622b69a72f010770d7dbca318245c4195378463fb7efd43ae"
+    },
+    {
+      "path": "signup/index.html",
+      "bytes": 12551,
+      "sha256": "40a3d9cbe62a718f6516ce98a34f0a40b4abfea4004f17f04bdc691bed2f557a"
+    },
+    {
+      "path": "signup/index.txt",
+      "bytes": 6043,
+      "sha256": "fc4e46cb28418562b5cc006de21981cf7e40f9ac450ad0cbf4ad8469c4f8dab5"
+    },
+    {
+      "path": "tailor/index.html",
+      "bytes": 20228,
+      "sha256": "a808fd22aa9e4cbda9cb8b2e41080e877f347805202fa6cf311b1c7fc1b49852"
+    },
+    {
+      "path": "tailor/index.txt",
+      "bytes": 5326,
+      "sha256": "597eaf0850317243c368f87a4d7fcfaaaa99e6b6f4940193c627f8575099490e"
+    },
+    {
+      "path": "templates/index.html",
+      "bytes": 51683,
+      "sha256": "7600011f5a2c6fcd29f51d8ea6e6fcf6ddf6ac60f7ab0b07d32abe5050fa2bdf"
+    },
+    {
+      "path": "templates/index.txt",
+      "bytes": 8293,
+      "sha256": "7eead0090f922b5f16fab334c521efced96c4ca22e465f9f7de11d6a601d35c8"
+    },
+    {
+      "path": "tools/builder/index.html",
+      "bytes": 11984,
+      "sha256": "8012bec36040f42181f279b269d01349b474e7d14584db6f291ca15c1e80966f"
+    },
+    {
+      "path": "tools/builder/index.txt",
+      "bytes": 5886,
+      "sha256": "c51d8d8f76861112bed2fde0f5c0c040625ec6aa53f76267e71bd48d644951a0"
+    },
+    {
+      "path": "tools/index.html",
+      "bytes": 11689,
+      "sha256": "40c23951a422a3c2b889f44e05fa2712a0e7bb8b1f0684594cca16713a0a4416"
+    },
+    {
+      "path": "tools/index.txt",
+      "bytes": 5462,
+      "sha256": "6fc7fe6f61be8970fd491ceceb7c356a7a9a8bef2fe99581ffd92259fbdfd7b9"
+    }
+  ],
+  "primaryBuildUntouched": true,
+  "sitesIdentityUsed": false
+}

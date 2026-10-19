@@ -1,0 +1,47 @@
+{
+  "id": "39e50c67-26e0-4dc0-988e-472bebd9dcd4",
+  "resume": {
+    "title": "Builder actions QA",
+    "contact": {
+      "full_name": "Menu Candidate",
+      "email": ""
+    },
+    "summary": {
+      "summary": ""
+    },
+    "experience": [],
+    "education": [],
+    "skills": [],
+    "certifications": [],
+    "projects": [],
+    "achievements": [],
+    "languages": [],
+    "volunteer": [],
+    "publications": [],
+    "custom_sections": {}
+  },
+  "template": "modern",
+  "colorTheme": "blue",
+  "design": {
+    "font": "template",
+    "fontSize": 12,
+    "lineHeight": 1.5,
+    "spacing": 24,
+    "pageSize": "A4",
+    "sectionOrder": [
+      "summary",
+      "experience",
+      "education",
+      "skills",
+      "projects",
+      "certifications",
+      "languages",
+      "achievements",
+      "volunteer",
+      "publications",
+      "custom"
+    ],
+    "hiddenSections": []
+  },
+  "updatedAt": "2026-10-19T17:05:43.350Z"
+}
