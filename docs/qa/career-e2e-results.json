@@ -1,0 +1,29 @@
+{
+  "startedAt": "2026-10-15T18:55:02.959Z",
+  "checks": [
+    "Job tracker: add, edit, stage change, reload persistence, search and JSON export passed",
+    "Job tracker desktop: no horizontal overflow",
+    "Job modal desktop: no horizontal overflow",
+    "Dashboard desktop: no horizontal overflow",
+    "Job tracker tablet: no horizontal overflow",
+    "Job modal tablet: no horizontal overflow",
+    "Dashboard tablet: no horizontal overflow",
+    "Job tracker mobile: no horizontal overflow",
+    "Job modal mobile: no horizontal overflow",
+    "Dashboard mobile: no horizontal overflow",
+    "Job tracker: delete and backup restore passed",
+    "Cover letter DOCX: download passed (4964 bytes)",
+    "Cover letter PDF: download passed (1943 bytes)",
+    "Cover letter TXT: download passed (369 bytes)",
+    "Cover editor desktop: no horizontal overflow",
+    "Cover editor tablet: no horizontal overflow",
+    "Cover editor mobile: no horizontal overflow",
+    "Cover list desktop: no horizontal overflow",
+    "Cover list tablet: no horizontal overflow",
+    "Cover list mobile: no horizontal overflow",
+    "Cover letter: create/save/update without duplicates/reload/current unsaved export passed"
+  ],
+  "browserErrors": [],
+  "finishedAt": "2026-10-15T18:55:53.601Z",
+  "passed": true
+}

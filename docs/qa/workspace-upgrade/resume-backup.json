@@ -1,0 +1,76 @@
+{
+  "id": "f24c502e-6a87-440b-9c14-84c7a416e0ff",
+  "resume": {
+    "title": "Process engineering CV (copy)",
+    "contact": {
+      "full_name": "Test Candidate",
+      "email": "test@example.test",
+      "phone": "",
+      "location": "",
+      "linkedin": "",
+      "github": "",
+      "website": "",
+      "photo": ""
+    },
+    "summary": {
+      "summary": "Chemical engineer with experience in process improvement."
+    },
+    "experience": [
+      {
+        "company": "Example Works",
+        "position": "Process engineer",
+        "location": "",
+        "start_date": "2024",
+        "end_date": "",
+        "current": true,
+        "description": [
+          "Improved a process"
+        ],
+        "achievements": []
+      }
+    ],
+    "education": [
+      {
+        "institution": "Example University",
+        "degree": "BEng",
+        "field_of_study": "",
+        "location": "",
+        "start_date": "",
+        "end_date": "",
+        "honors": []
+      }
+    ],
+    "skills": [],
+    "certifications": [],
+    "projects": [],
+    "achievements": [],
+    "languages": [],
+    "volunteer": [],
+    "publications": [],
+    "custom_sections": {}
+  },
+  "template": "modern",
+  "colorTheme": "blue",
+  "design": {
+    "font": "template",
+    "fontSize": 12,
+    "lineHeight": 1.5,
+    "spacing": 24,
+    "pageSize": "A4",
+    "sectionOrder": [
+      "summary",
+      "experience",
+      "education",
+      "skills",
+      "projects",
+      "certifications",
+      "languages",
+      "achievements",
+      "volunteer",
+      "publications",
+      "custom"
+    ],
+    "hiddenSections": []
+  },
+  "updatedAt": "2026-10-19T08:25:32.985Z"
+}

@@ -1,0 +1,16 @@
+import Link from 'next/link';
+import { ArrowRight, BookOpen } from 'lucide-react';
+
+const guidance = [
+  { id: 'your-story', title: 'Start with your own evidence', text: 'Use your real employers, dates, qualifications and skills. Write what you did, how you did it and the outcome. Add numbers only when you can support them.' },
+  { id: 'graduates', title: 'For graduates and first applications', text: 'Include matric and tertiary qualifications, relevant coursework, projects, volunteering and internships. For learnerships or apprenticeships, connect your existing learning and interests to the advertised requirements.' },
+  { id: 'technical', title: 'For technical and engineering roles', text: 'Describe equipment, tools, systems, safety practices and responsibilities you have actually used. Add licences or professional registrations in a custom section when relevant. Enter your own verified qualification titles and NQF levels; the editor does not validate accreditation or convert qualifications.' },
+  { id: 'tailor', title: 'Tailor without adding claims', text: 'Compare the job description with your experience. Use the employer’s terminology where it accurately describes your skills. A missing keyword is a prompt to check your experience, not a reason to add a skill you do not have.' },
+  { id: 'cover-letters', title: 'Make a personal introduction', text: 'Use your cover letter to connect your experience to the opportunity. Say what interests you about the role, describe a relevant example from your work or learning, and close with a clear expression of interest. Keep the details accurate and make the final words your own.' },
+  { id: 'personal-details', title: 'Keep personal details proportionate', text: 'A name, professional email, phone and broad location are usually enough to begin. Avoid identity numbers, bank details or unnecessary sensitive information. Ask references before sharing their contact information.' },
+  { id: 'final-check', title: 'Check the finished document', text: 'Read your exported PDF or DOCX, verify spelling and dates, and confirm that every section is included. A resume quality score is a writing aid, not a prediction of an employer’s decision.' },
+];
+
+export default function Guides() {
+  return <main className="cf-page cf-container guides-page"><section className="cf-page-hero"><nav className="cf-breadcrumb" aria-label="Breadcrumb"><Link href="/">Home</Link><span>/</span><span>Writing guide</span></nav><span className="cf-icon-tile"><BookOpen size={29} strokeWidth={1.5} /></span><p className="cf-eyebrow">A little guidance for your next chapter</p><h1>Your experience.<br /><span>A clearer story.</span></h1><p className="cf-page-description">Practical starting points for a resume and cover letter that sound like you. Clear writing and accurate information go a long way.</p></section><div className="guides-layout"><nav className="guides-index" aria-label="Guide topics">{guidance.map(({ id, title }) => <a href={`#${id}`} key={id}>{title}</a>)}</nav><div className="guides-content">{guidance.map(({ id, title, text }, index) => <section id={id} key={id}><span>{String(index + 1).padStart(2, '0')}</span><div><h2>{title}</h2><p>{text}</p></div></section>)}<Link className="cf-button" href="/builder?new=1">Create my resume <ArrowRight size={18} /></Link></div></div></main>;
+}

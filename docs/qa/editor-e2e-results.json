@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "checks": [
+    "Blank initial document, editable title, undo and redo passed",
+    "Contact and summary update live and survive a reload",
+    "Template changes preserve content",
+    "Typography, paper selection, optional sections and independent duplication passed",
+    "Mobile and tablet edit/preview controls fit the viewport",
+    "PDF, editable DOCX, TXT and complete JSON backup download",
+    "Selected preview design generates a multipage print PDF without a one-page crop",
+    "TXT import populates editable fields, preserves the earlier document and restores after reload"
+  ],
+  "runtimeErrors": [],
+  "consoleErrors": [],
+  "failedRequests": []
+}

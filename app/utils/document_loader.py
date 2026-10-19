@@ -1,164 +1,104 @@
-"""
-Unified document loader that detects file type and delegates to appropriate reader.
-Provides a single interface for FastAPI UploadFile handling with validation.
-"""
-
-from fastapi import UploadFile, HTTPException
+"""Validated, bounded PDF, DOCX and UTF-8 TXT imports."""
+from io import BytesIO
 from pathlib import Path
+from zipfile import ZipFile, BadZipFile
 import logging
 
+from fastapi import UploadFile, HTTPException
+from starlette.concurrency import run_in_threadpool
+from app.core.config import settings
 from app.utils.pdf_reader import read_pdf
 from app.utils.docx_reader import DOCXReader
 from app.models.resume_models import RawDocument
 
 logger = logging.getLogger(__name__)
+MAX_FILE_SIZE = settings.max_file_size_mb * 1024 * 1024
+MAX_EXTRACTED_CHARACTERS = settings.max_extracted_characters
+ALLOWED_EXTENSIONS = {".pdf", ".docx", ".txt"}
 
-# Maximum file size: 25MB
-MAX_FILE_SIZE = 25 * 1024 * 1024
 
-ALLOWED_EXTENSIONS = {".pdf", ".docx", ".doc"}
+def _extract(data: bytes, extension: str) -> RawDocument:
+    if extension == ".pdf":
+        if not data[:1024].lstrip().startswith(b"%PDF-"):
+            raise ValueError("The file is not a valid PDF")
+        result = read_pdf(data)
+    elif extension == ".docx":
+        try:
+            with ZipFile(BytesIO(data)) as archive:
+                entries = archive.infolist()
+                names = set(archive.namelist())
+                if not {"[Content_Types].xml", "word/document.xml"} <= names:
+                    raise ValueError("The file is not a Word DOCX document")
+                if len(entries) > 2000 or sum(item.file_size for item in entries) > settings.max_docx_expanded_mb * 1024 * 1024:
+                    raise ValueError("The DOCX archive is too large to extract safely")
+                if any(item.file_size > 30 * 1024 * 1024 or item.flag_bits & 1 or
+                       (item.file_size > 1024 * 1024 and item.file_size > 1000 * max(item.compress_size, 1))
+                       for item in entries):
+                    raise ValueError("The DOCX archive contains unsafe entries")
+        except BadZipFile:
+            raise ValueError("The file is not a valid DOCX archive")
+        result = DOCXReader().read(data)
+    elif extension == ".txt":
+        try:
+            text = data.decode("utf-8-sig")
+        except UnicodeDecodeError:
+            raise ValueError("Save text files with UTF-8 encoding before importing")
+        if "\x00" in text:
+            raise ValueError("The text file contains binary data")
+        result = {"full_text": text, "blocks": [line.strip() for line in text.splitlines() if line.strip()]}
+    else:
+        raise ValueError("Unsupported file type")
+    if not result.get("full_text", "").strip():
+        raise ValueError("No readable text found. Scanned PDFs require OCR before importing.")
+    if len(result["full_text"]) > MAX_EXTRACTED_CHARACTERS:
+        raise ValueError("The document contains too much text. Import a shorter resume.")
+    return RawDocument(full_text=result["full_text"], blocks=result["blocks"],
+                       page_count=result.get("page_count"))
 
 
 async def load_document(upload_file: UploadFile) -> RawDocument:
-    """
-    Read an UploadFile and extract text based on file type.
-    
-    Detects file type by extension and delegates to appropriate reader:
-    - .pdf → PyMuPDF (fitz) reader
-    - .docx/.doc → python-docx reader
-    
-    Args:
-        upload_file: FastAPI UploadFile object
-        
-    Returns:
-        RawDocument with extracted text and blocks
-        
-    Raises:
-        HTTPException: If file type is unsupported or file is too large
-        
-    Example:
-        ```python
-        @router.post("/upload")
-        async def upload_resume(file: UploadFile = File(...)):
-            doc = await load_document(file)
-            return {"text_length": len(doc.full_text)}
-        ```
-    """
-    # Validate filename
     if not upload_file.filename:
         raise HTTPException(status_code=400, detail="No filename provided")
-    
-    filename = upload_file.filename.lower()
-    
-    # Check file extension
-    ext = None
-    for allowed_ext in ALLOWED_EXTENSIONS:
-        if filename.endswith(allowed_ext):
-            ext = allowed_ext
-            break
-    
-    if not ext:
-        raise HTTPException(
-            status_code=400,
-            detail=f"Unsupported file type. Allowed: {', '.join(ALLOWED_EXTENSIONS)}"
-        )
-    
-    # Read file content
+    extension = Path(upload_file.filename).suffix.lower()
+    if extension not in ALLOWED_EXTENSIONS:
+        raise HTTPException(status_code=400, detail="Unsupported file type. Use PDF, DOCX or TXT.")
+    data = bytearray()
     try:
-        data = await upload_file.read()
-    except Exception as e:
-        logger.error(f"Error reading uploaded file: {e}")
-        raise HTTPException(status_code=400, detail="Error reading file")
-    
-    # Check file size
-    if len(data) > MAX_FILE_SIZE:
-        raise HTTPException(
-            status_code=400,
-            detail=f"File too large. Maximum size: {MAX_FILE_SIZE / (1024*1024):.1f}MB"
-        )
-    
-    if len(data) == 0:
-        raise HTTPException(status_code=400, detail="File is empty")
-    
-    # Parse based on extension
-    try:
-        if ext == ".pdf":
-            result = read_pdf(data)
-            return RawDocument(
-                full_text=result['full_text'],
-                blocks=result['blocks'],
-                page_count=result.get('page_count')
-            )
-        elif ext in (".docx", ".doc"):
-            docx_reader = DOCXReader()
-            result = docx_reader.read(data)
-            return RawDocument(
-                full_text=result['full_text'],
-                blocks=result['blocks'],
-                page_count=None  # DOCX doesn't have page concept
-            )
-        else:
-            raise HTTPException(status_code=400, detail="Unsupported file type")
+        while True:
+            chunk = await upload_file.read(min(64 * 1024, MAX_FILE_SIZE + 1 - len(data)))
+            if not chunk:
+                break
+            data.extend(chunk)
+            if len(data) > MAX_FILE_SIZE:
+                raise HTTPException(status_code=413, detail=f"File too large. Maximum size: {settings.max_file_size_mb}MB")
     except HTTPException:
         raise
-    except ValueError as e:
-        # Reader raised ValueError (e.g., "Unable to extract text from PDF")
-        logger.error(f"Error parsing document: {e}")
-        raise HTTPException(
-            status_code=422,
-            detail=f"Could not parse document: {str(e)}"
-        )
-    except Exception as e:
-        logger.error(f"Unexpected error parsing document: {e}", exc_info=True)
-        raise HTTPException(
-            status_code=500,
-            detail=f"Internal error parsing document: {str(e)}"
-        )
+    except Exception:
+        raise HTTPException(status_code=400, detail="Error reading file")
+    if not data:
+        raise HTTPException(status_code=400, detail="File is empty")
+    try:
+        if settings.storage_mode == "local":
+            return await run_in_threadpool(_extract, bytes(data), extension)
+        return _extract(bytes(data), extension)
+    except ValueError as error:
+        raise HTTPException(status_code=422, detail=str(error))
+    except Exception:
+        logger.exception("Unable to parse uploaded document")
+        raise HTTPException(status_code=422, detail="Unable to read this document. Try a new PDF or DOCX export.")
 
 
 def load_document_from_path(file_path: str) -> RawDocument:
-    """
-    Load a document from a file path (for testing/CLI usage).
-    
-    Args:
-        file_path: Path to PDF or DOCX file
-        
-    Returns:
-        RawDocument with extracted text and blocks
-        
-    Raises:
-        ValueError: If file type is unsupported or parsing fails
-    """
     path = Path(file_path)
-    
     if not path.exists():
         raise ValueError(f"File not found: {file_path}")
-    
-    ext = path.suffix.lower()
-    
-    if ext not in ALLOWED_EXTENSIONS:
-        raise ValueError(f"Unsupported file type: {ext}. Allowed: {', '.join(ALLOWED_EXTENSIONS)}")
-    
-    with open(path, 'rb') as f:
-        data = f.read()
-    
-    if len(data) == 0:
+    extension = path.suffix.lower()
+    if extension not in ALLOWED_EXTENSIONS:
+        raise ValueError(f"Unsupported file type: {extension}")
+    with path.open("rb") as handle:
+        data = handle.read(MAX_FILE_SIZE + 1)
+    if len(data) > MAX_FILE_SIZE:
+        raise ValueError("File too large")
+    if not data:
         raise ValueError("File is empty")
-    
-    if ext == ".pdf":
-        result = read_pdf(data)
-        return RawDocument(
-            full_text=result['full_text'],
-            blocks=result['blocks'],
-            page_count=result.get('page_count')
-        )
-    elif ext in (".docx", ".doc"):
-        docx_reader = DOCXReader()
-        result = docx_reader.read(data)
-        return RawDocument(
-            full_text=result['full_text'],
-            blocks=result['blocks'],
-            page_count=None
-        )
-    else:
-        raise ValueError(f"Unsupported file type: {ext}")
+    return _extract(data, extension)

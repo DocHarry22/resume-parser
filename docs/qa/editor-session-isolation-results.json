@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "checks": [
+    "TXT A → JSON B → session save creates separate B and leaves A byte-for-byte unchanged",
+    "Duplicate is disabled while a server save is in flight",
+    "Duplicate resets the server pointer and saves to its own server document",
+    "Delete/new resets the pointer without overwriting the deleted local copy’s server document",
+    "Failed restore retains the active document and its correct server pointer",
+    "Privacy UI exports and deletes legacy duplicate data while preserving unrelated browser preferences"
+  ],
+  "runtimeErrors": []
+}

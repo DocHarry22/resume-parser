@@ -1,0 +1,29 @@
+{
+  "verifiedAt": "2026-10-19T12:42:22.369Z",
+  "preview": "http://127.0.0.1:3103/jobs",
+  "smokeStatus": 200,
+  "build": {
+    "pages": 24,
+    "status": "passed",
+    "directory": ".next-search-sources"
+  },
+  "unitTests": 81,
+  "newBrowserChecks": 6,
+  "existingBrowserChecks": 6,
+  "liveFeeds": {
+    "readOnly": true,
+    "feeds": [
+      {
+        "feed": "jobicy",
+        "visibleListings": 100,
+        "checkedAt": "2026-10-19T12:34:17.429Z"
+      },
+      {
+        "feed": "arbeitnow",
+        "visibleListings": 100,
+        "checkedAt": "2026-10-19T12:34:20.460Z"
+      }
+    ]
+  },
+  "scope": "Local preview only. Search shortcuts open external sites; no employer application submitted."
+}

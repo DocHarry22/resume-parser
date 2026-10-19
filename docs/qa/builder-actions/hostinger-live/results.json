@@ -1,0 +1,14 @@
+{
+  "baseUrl": "https://resume.docheng.co.za",
+  "transport": "HTTP",
+  "checks": [
+    "Red-marked top notice and expanded action row removed; one icon disclosure remains",
+    "All requested actions retain current-document context; keyboard navigation and Escape restore focus",
+    "390/320px closed and expanded views fit; clicking outside dismisses",
+    "Import chooser, current JSON backup, independent duplicate and help work from the menu",
+    "Menu navigation opens version history for the active copy"
+  ],
+  "pageErrors": [],
+  "passed": true,
+  "finishedAt": "2026-10-19T17:10:23.237Z"
+}

@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "testedWidths": [
+    320,
+    390,
+    768,
+    1080,
+    1241,
+    1440,
+    1920
+  ],
+  "checks": [
+    "desktop and mobile screenshots",
+    "no horizontal overflow",
+    "image loading",
+    "desktop dropdowns",
+    "outside click dismissal",
+    "Escape dismissal",
+    "mobile menu and submenu",
+    "FAQ accordion",
+    "template filtering",
+    "upload navigation and file chooser",
+    "new resume navigation",
+    "no page errors",
+    "no failed HTTP responses"
+  ],
+  "errors": [],
+  "failures": []
+}

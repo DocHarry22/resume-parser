@@ -1,0 +1,425 @@
+{
+  "observedAt": "2026-10-15T13:12:05.765Z",
+  "method": "Playwright, anonymous public navigation; no access-control bypass; no login or payment",
+  "results": [
+    {
+      "name": "home",
+      "url": "https://resume.io/",
+      "status": 403,
+      "finalUrl": "https://resume.io/",
+      "title": "ERROR: The request could not be satisfied",
+      "headings": [
+        "403 ERROR",
+        "The request could not be satisfied."
+      ],
+      "buttons": [],
+      "links": [],
+      "inputs": [],
+      "network": [
+        {
+          "url": "https://resume.io/",
+          "status": 403,
+          "type": "document"
+        }
+      ]
+    },
+    {
+      "name": "templates",
+      "url": "https://resume.io/resume-templates",
+      "status": 403,
+      "finalUrl": "https://resume.io/resume-templates",
+      "title": "ERROR: The request could not be satisfied",
+      "headings": [
+        "403 ERROR",
+        "The request could not be satisfied."
+      ],
+      "buttons": [],
+      "links": [],
+      "inputs": [],
+      "network": [
+        {
+          "url": "https://resume.io/resume-templates",
+          "status": 403,
+          "type": "document"
+        }
+      ]
+    },
+    {
+      "name": "pricing",
+      "url": "https://resume.io/pricing",
+      "status": 403,
+      "finalUrl": "https://resume.io/pricing",
+      "title": "ERROR: The request could not be satisfied",
+      "headings": [
+        "403 ERROR",
+        "The request could not be satisfied."
+      ],
+      "buttons": [],
+      "links": [],
+      "inputs": [],
+      "network": [
+        {
+          "url": "https://resume.io/pricing",
+          "status": 403,
+          "type": "document"
+        }
+      ]
+    },
+    {
+      "name": "builder",
+      "url": "https://resume.io/app/create-resume?template=london",
+      "status": 403,
+      "finalUrl": "https://resume.io/app/create-resume?template=london",
+      "title": "ERROR: The request could not be satisfied",
+      "headings": [
+        "403 ERROR",
+        "The request could not be satisfied."
+      ],
+      "buttons": [],
+      "links": [],
+      "inputs": [],
+      "network": [
+        {
+          "url": "https://resume.io/app/create-resume",
+          "status": 403,
+          "type": "document"
+        }
+      ]
+    },
+    {
+      "name": "production",
+      "url": "https://resume.docheng.co.za/",
+      "status": 200,
+      "finalUrl": "https://resume.docheng.co.za/",
+      "title": "Resume Scanner - AI-Powered Resume Analysis",
+      "headings": [
+        "PDF Resume Templates(Customize & Download)",
+        "Build Your Perfect Resume with AI Power",
+        "Everything You Need to Get Hired",
+        "Choose Your Resume Template",
+        "Ready to Land Your Dream Job?"
+      ],
+      "buttons": [
+        "Builders",
+        "Resumes",
+        "Cover Letters",
+        "CVs",
+        "Resources",
+        "Import existing resume",
+        "Build my resume"
+      ],
+      "links": [
+        {
+          "label": "CFCareerForge AI",
+          "href": "/"
+        },
+        {
+          "label": "Log in",
+          "href": "/login"
+        },
+        {
+          "label": "Get Started Free",
+          "href": "/signup"
+        },
+        {
+          "label": "Resume BuilderNew",
+          "href": "/builder"
+        },
+        {
+          "label": "ATS Scanner",
+          "href": "/tools?view=scanner"
+        },
+        {
+          "label": "Cover Letter BuilderNew",
+          "href": "/cover-letter"
+        },
+        {
+          "label": "CV Builder",
+          "href": "/tools?view=cv-builder"
+        },
+        {
+          "label": "Resume BuilderPopular",
+          "href": "/builder"
+        },
+        {
+          "label": "Resume Templates",
+          "href": "/tools?view=templates"
+        },
+        {
+          "label": "ATS Resume Checker",
+          "href": "/tools?view=scanner"
+        },
+        {
+          "label": "Resume Writing Guide",
+          "href": "/tools?view=guide_resume"
+        },
+        {
+          "label": "Google Docs",
+          "href": "/tools?view=templates&filter=google-docs"
+        },
+        {
+          "label": "Microsoft Word",
+          "href": "/tools?view=templates&filter=word"
+        },
+        {
+          "label": "PDF Format",
+          "href": "/tools?view=templates&filter=pdf"
+        },
+        {
+          "label": "Plain Text",
+          "href": "/tools?view=templates&filter=plain-text"
+        },
+        {
+          "label": "Chronological",
+          "href": "/tools?view=templates&filter=chronological"
+        },
+        {
+          "label": "Functional",
+          "href": "/tools?view=templates&filter=functional"
+        },
+        {
+          "label": "Combination",
+          "href": "/tools?view=templates&filter=combination"
+        },
+        {
+          "label": "One Page",
+          "href": "/tools?view=templates&filter=one-page"
+        },
+        {
+          "label": "Cover Letter BuilderNew",
+          "href": "/cover-letter"
+        },
+        {
+          "label": "Cover Letter Templates",
+          "href": "/tools?view=cover-templates"
+        },
+        {
+          "label": "Writing Guide",
+          "href": "/tools?view=cover-guide"
+        },
+        {
+          "label": "CV Builder",
+          "href": "/tools?view=cv-builder"
+        },
+        {
+          "label": "CV Templates",
+          "href": "/tools?view=cv-templates"
+        },
+        {
+          "label": "CV Writing Guide",
+          "href": "/tools?view=cv-guide"
+        },
+        {
+          "label": "Career Blog",
+          "href": "/resources/blog"
+        },
+        {
+          "label": "Resume Examples",
+          "href": "/resources/examples"
+        },
+        {
+          "label": "Career Guides",
+          "href": "/resources/guides"
+        },
+        {
+          "label": "Help Center",
+          "href": "/help"
+        },
+        {
+          "label": "Contact Us",
+          "href": "/contact"
+        },
+        {
+          "label": "About Us",
+          "href": "/about"
+        },
+        {
+          "label": "Log in",
+          "href": "/login"
+        },
+        {
+          "label": "Get Started Free",
+          "href": "/signup"
+        },
+        {
+          "label": "AI Resume Builder",
+          "href": "/"
+        },
+        {
+          "label": "Resume Templates",
+          "href": "/templates"
+        },
+        {
+          "label": "Check Your Resume",
+          "href": "/tools?view=scanner"
+        },
+        {
+          "label": "Build New Resume",
+          "href": "/tools?view=builder"
+        },
+        {
+          "label": "ATS Resume CheckerUpload your resume and get instant ATS compatibility analysis ",
+          "href": "/tools?view=scanner"
+        },
+        {
+          "label": "AI Resume BuilderCreate professional resumes with AI-powered suggestions, smart ",
+          "href": "/tools?view=builder"
+        },
+        {
+          "label": "Cover Letter BuilderCreate compelling cover letters with AI-powered suggestions ",
+          "href": "/cover-letter"
+        },
+        {
+          "label": "Resume TemplatesBrowse 50+ professional templates designed for different industr",
+          "href": "/tools?view=templates"
+        },
+        {
+          "label": "Modern SidebarModernPreviewContemporary design with colored sidebar, perfect for",
+          "href": "/builder?template=modern"
+        },
+        {
+          "label": "Classic ProfessionalClassicPreviewTraditional two-column layout, ideal for corpo",
+          "href": "/builder?template=classic"
+        },
+        {
+          "label": "Clean MinimalMinimalPreviewSimple and elegant design focusing on content clarity",
+          "href": "/builder?template=minimal"
+        },
+        {
+          "label": "Professional ExecutiveProfessionalPreviewSophisticated layout with accent bars, ",
+          "href": "/builder?template=professional"
+        },
+        {
+          "label": "Creative BoldCreativePreviewEye-catching design with unique sections for creativ",
+          "href": "/builder?template=creative"
+        },
+        {
+          "label": "Elegant SerifElegantPreviewRefined typography and spacing for traditional indust",
+          "href": "/builder?template=elegant"
+        },
+        {
+          "label": "Check Your Resume Now",
+          "href": "/tools?view=scanner"
+        }
+      ],
+      "inputs": [],
+      "network": [
+        {
+          "url": "https://resume.docheng.co.za/",
+          "status": 200,
+          "type": "document"
+        },
+        {
+          "url": "https://resume.docheng.co.za/_next/static/css/3c0132dc879fc7c7.css",
+          "status": 200,
+          "type": "stylesheet"
+        },
+        {
+          "url": "https://resume.docheng.co.za/_next/static/chunks/webpack-fc6859081d605de2.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "url": "https://resume.docheng.co.za/templates/modern.pdf",
+          "status": 200,
+          "type": "document"
+        },
+        {
+          "url": "https://resume.docheng.co.za/templates/classic.pdf",
+          "status": 200,
+          "type": "document"
+        },
+        {
+          "url": "https://resume.docheng.co.za/templates/minimal.pdf",
+          "status": 200,
+          "type": "document"
+        },
+        {
+          "url": "https://resume.docheng.co.za/templates/professional.pdf",
+          "status": 200,
+          "type": "document"
+        },
+        {
+          "url": "https://resume.docheng.co.za/templates/creative.pdf",
+          "status": 200,
+          "type": "document"
+        },
+        {
+          "url": "https://resume.docheng.co.za/templates/elegant.pdf",
+          "status": 200,
+          "type": "document"
+        },
+        {
+          "url": "https://resume.docheng.co.za/_next/static/media/e4af272ccee01ff0-s.p.woff2",
+          "status": 200,
+          "type": "font"
+        },
+        {
+          "url": "https://resume.docheng.co.za/_next/static/chunks/fd9d1056-233f91cca6293466.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "url": "https://resume.docheng.co.za/_next/static/chunks/main-app-78ee05fbd6f5e10a.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "url": "https://resume.docheng.co.za/_next/static/chunks/938-5eacbb8a9427fea1.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "url": "https://resume.docheng.co.za/_next/static/chunks/729-f098499276acc0f7.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "url": "https://resume.docheng.co.za/_next/static/chunks/app/page-d90504d51fbde006.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "url": "https://resume.docheng.co.za/_next/static/chunks/app/layout-0f1864c370b21124.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "url": "https://resume.docheng.co.za/_next/static/chunks/834-22f65400f9c8fffc.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "url": "https://resume.docheng.co.za/_next/static/chunks/176-585b8941b1fe95f6.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "url": "https://resume.docheng.co.za/tools.txt",
+          "status": 200,
+          "type": "fetch"
+        },
+        {
+          "url": "https://resume.docheng.co.za/tools.txt",
+          "status": 200,
+          "type": "fetch"
+        },
+        {
+          "url": "https://resume.docheng.co.za/login.txt",
+          "status": 200,
+          "type": "fetch"
+        },
+        {
+          "url": "https://resume.docheng.co.za/index.txt",
+          "status": 200,
+          "type": "fetch"
+        },
+        {
+          "url": "https://resume.docheng.co.za/signup.txt",
+          "status": 200,
+          "type": "fetch"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,235 @@
+{
+  "resume_studio_documents_v1": [
+    {
+      "id": "0a39c76d-322b-4d99-ae63-a05108d96cd0",
+      "resume": {
+        "title": "Imported Resume",
+        "contact": {
+          "full_name": "",
+          "email": "local-import@example.test",
+          "phone": "",
+          "location": "",
+          "linkedin": "",
+          "github": "",
+          "website": "example.test",
+          "photo": ""
+        },
+        "summary": {
+          "summary": "Practical experience making useful tools."
+        },
+        "experience": [],
+        "education": [],
+        "skills": [
+          {
+            "category": "Skills",
+            "skills": [
+              "Python",
+              "communication"
+            ]
+          }
+        ],
+        "certifications": [],
+        "projects": [],
+        "achievements": [],
+        "languages": [],
+        "volunteer": [],
+        "publications": [],
+        "custom_sections": {}
+      },
+      "template": "modern",
+      "colorTheme": "blue",
+      "design": {
+        "font": "sans",
+        "fontSize": 12,
+        "lineHeight": 1.5,
+        "spacing": 24,
+        "pageSize": "A4",
+        "sectionOrder": [
+          "summary",
+          "experience",
+          "education",
+          "skills",
+          "projects",
+          "certifications",
+          "languages",
+          "achievements",
+          "volunteer",
+          "publications",
+          "custom"
+        ],
+        "hiddenSections": []
+      },
+      "updatedAt": "2026-10-18T20:37:35.103Z"
+    },
+    {
+      "id": "7d9be76e-bf2f-4cd3-b193-0a5375ffc6d2",
+      "resume": {
+        "title": "Local QA resume",
+        "contact": {
+          "full_name": "CURRENT UNSAVED EXPORT",
+          "email": "local-qa@example.test",
+          "phone": "",
+          "location": "",
+          "linkedin": "",
+          "github": "",
+          "website": "",
+          "photo": ""
+        },
+        "summary": {
+          "summary": ""
+        },
+        "experience": [],
+        "education": [],
+        "skills": [],
+        "certifications": [],
+        "projects": [],
+        "achievements": [],
+        "languages": [],
+        "volunteer": [],
+        "publications": [],
+        "custom_sections": {}
+      },
+      "template": "modern",
+      "colorTheme": "blue",
+      "design": {
+        "font": "sans",
+        "fontSize": 12,
+        "lineHeight": 1.5,
+        "spacing": 24,
+        "pageSize": "A4",
+        "sectionOrder": [
+          "summary",
+          "experience",
+          "education",
+          "skills",
+          "projects",
+          "certifications",
+          "languages",
+          "achievements",
+          "volunteer",
+          "publications",
+          "custom"
+        ],
+        "hiddenSections": []
+      },
+      "updatedAt": "2026-10-18T20:37:26.102Z"
+    }
+  ],
+  "resume-studio.letter-draft.49928fd7-9550-46ac-9dc5-e340a441cce8": {
+    "savedAt": "2026-10-18T20:37:34.238Z",
+    "letter": {
+      "id": "49928fd7-9550-46ac-9dc5-e340a441cce8",
+      "title": "Offline local letter",
+      "sender": {
+        "full_name": "Zoë Naïdø",
+        "email": "local-qa@example.test",
+        "phone": "",
+        "address": "",
+        "city": "",
+        "state": "",
+        "zip_code": "",
+        "country": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "recipient": {
+        "name": "",
+        "title": "",
+        "company": "",
+        "department": "",
+        "address": "",
+        "city": "",
+        "state": "",
+        "zip_code": "",
+        "country": ""
+      },
+      "job_details": {
+        "job_title": "",
+        "company_name": "",
+        "department": "",
+        "job_description": "",
+        "reference_number": ""
+      },
+      "content": {
+        "salutation": "Dear Hiring Manager,",
+        "opening_paragraph": "UNSAVED LETTER EXPORT SENTINEL",
+        "body_paragraphs": [
+          ""
+        ],
+        "closing_paragraph": "",
+        "signature": "Sincerely",
+        "ps_line": ""
+      },
+      "settings": {
+        "template": "professional",
+        "tone": "professional",
+        "font_family": "Arial",
+        "font_size": 11,
+        "line_spacing": 1.15,
+        "margin_size": "normal",
+        "include_date": true,
+        "date_format": "MMMM d, yyyy"
+      },
+      "created_at": "2026-10-18T20:37:29.069Z",
+      "updated_at": "2026-10-18T20:37:30.972Z"
+    }
+  },
+  "resume-studio.letters.v1": [
+    {
+      "id": "49928fd7-9550-46ac-9dc5-e340a441cce8",
+      "title": "Offline local letter",
+      "sender": {
+        "full_name": "Zoë Naïdø",
+        "email": "local-qa@example.test",
+        "phone": "",
+        "address": "",
+        "city": "",
+        "state": "",
+        "zip_code": "",
+        "country": "",
+        "linkedin": "",
+        "website": ""
+      },
+      "recipient": {
+        "name": "",
+        "title": "",
+        "company": "",
+        "department": "",
+        "address": "",
+        "city": "",
+        "state": "",
+        "zip_code": "",
+        "country": ""
+      },
+      "job_details": {
+        "job_title": "",
+        "company_name": "",
+        "department": "",
+        "job_description": "",
+        "reference_number": ""
+      },
+      "content": {
+        "salutation": "Dear Hiring Manager,",
+        "opening_paragraph": "UNSAVED LETTER EXPORT SENTINEL",
+        "body_paragraphs": [
+          ""
+        ],
+        "closing_paragraph": "",
+        "signature": "Sincerely",
+        "ps_line": ""
+      },
+      "settings": {
+        "template": "professional",
+        "tone": "professional",
+        "font_family": "Arial",
+        "font_size": 11,
+        "line_spacing": 1.15,
+        "margin_size": "normal",
+        "include_date": true,
+        "date_format": "MMMM d, yyyy"
+      },
+      "created_at": "2026-10-18T20:37:29.069Z",
+      "updated_at": "2026-10-18T20:37:30.972Z"
+    }
+  ]
+}

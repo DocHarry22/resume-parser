@@ -1,0 +1,53 @@
+{
+  "id": "7d9be76e-bf2f-4cd3-b193-0a5375ffc6d2",
+  "resume": {
+    "title": "Local QA resume",
+    "contact": {
+      "full_name": "CURRENT UNSAVED EXPORT",
+      "email": "local-qa@example.test",
+      "phone": "",
+      "location": "",
+      "linkedin": "",
+      "github": "",
+      "website": "",
+      "photo": ""
+    },
+    "summary": {
+      "summary": ""
+    },
+    "experience": [],
+    "education": [],
+    "skills": [],
+    "certifications": [],
+    "projects": [],
+    "achievements": [],
+    "languages": [],
+    "volunteer": [],
+    "publications": [],
+    "custom_sections": {}
+  },
+  "template": "modern",
+  "colorTheme": "blue",
+  "design": {
+    "font": "sans",
+    "fontSize": 12,
+    "lineHeight": 1.5,
+    "spacing": 24,
+    "pageSize": "A4",
+    "sectionOrder": [
+      "summary",
+      "experience",
+      "education",
+      "skills",
+      "projects",
+      "certifications",
+      "languages",
+      "achievements",
+      "volunteer",
+      "publications",
+      "custom"
+    ],
+    "hiddenSections": []
+  },
+  "updatedAt": "2026-10-18T20:34:31.206Z"
+}

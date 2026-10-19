@@ -1,0 +1,12 @@
+# Backend context is an allowlist. Documents, credentials and frontend assets stay out.
+**
+!Dockerfile
+!requirements.txt
+!app/
+!app/**
+!data/
+!data/section_headings.json
+!data/skills_taxonomy.json
+**/__pycache__/
+**/*.pyc
+**/.env*

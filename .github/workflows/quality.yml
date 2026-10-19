@@ -1,0 +1,138 @@
+name: Application quality
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - run: python -m pip install "https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.7.1/en_core_web_md-3.7.1-py3-none-any.whl#sha256=6a0f857a2b4d219c6fa17d455f82430b365bf53171a2d919b9376e5dc9be032e"
+      - run: python -m pytest tests -q
+      - run: python -m compileall -q app
+      - name: Verify safe local backup inventory and restoration
+        run: python -m unittest discover -s scripts -p 'test_verify_hostinger_backup.py' -v
+  frontend:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - run: npm run check
+      - run: npm test
+      - name: Verify isolated static release tooling
+        run: |
+          node --check ../scripts/build-hostinger.cjs
+          node --test ../scripts/build-hostinger.test.cjs
+          node ../scripts/build-hostinger.cjs --check
+      - run: npm run build
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      COOKIE_SECURE: 'false'
+      API_PROXY_TARGET: http://127.0.0.1:8001
+      PLAYWRIGHT_CHANNEL: chromium
+      BASE_URL: http://127.0.0.1:3000
+      EDITOR_URL: http://127.0.0.1:3000/builder?new=1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: python -m pip install -r requirements.txt
+      - run: python -m pip install "https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.7.1/en_core_web_md-3.7.1-py3-none-any.whl#sha256=6a0f857a2b4d219c6fa17d455f82430b365bf53171a2d919b9376e5dc9be032e"
+      - run: npm ci
+        working-directory: frontend
+      - run: npx playwright install --with-deps chromium
+        working-directory: frontend
+      - run: npm run build
+        working-directory: frontend
+      - name: Start isolated local fixtures
+        run: |
+          python -m uvicorn app.main:app --host 127.0.0.1 --port 8001 > /tmp/careerforge-api.log 2>&1 &
+          npm --prefix frontend start -- --hostname 127.0.0.1 --port 3000 > /tmp/careerforge-frontend.log 2>&1 &
+          python scripts/wait-for-fixtures.py
+      - run: node scripts/site-smoke.cjs
+      - run: node frontend/tests/scanner-e2e.cjs
+      - run: node frontend/tests/editor-e2e.cjs
+      - run: node frontend/tests/editor-session-isolation.cjs
+      - run: node docs/qa/career-e2e.cjs
+      - run: node docs/qa/career-errors.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-evidence
+          path: docs/qa/
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CONTAINER_NAME: careerforge-ci-api-${{ github.run_id }}-${{ github.run_attempt }}
+      VOLUME_NAME: careerforge-ci-data-${{ github.run_id }}-${{ github.run_attempt }}
+      IMAGE_NAME: careerforge-backend-ci:${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build backend image locally without publishing
+        run: docker build --tag "$IMAGE_NAME" .
+      - name: Start disposable backend with durable fixture volume
+        run: |
+          docker volume create --label careerforge-ci-run="${{ github.run_id }}-${{ github.run_attempt }}" "$VOLUME_NAME"
+          docker run --detach --name "$CONTAINER_NAME" --label careerforge-ci-run="${{ github.run_id }}-${{ github.run_attempt }}" \
+            --publish 127.0.0.1:18001:8000 --env COOKIE_SECURE=false \
+            --mount type=volume,source="$VOLUME_NAME",target=/var/lib/resume-parser \
+            --read-only --tmpfs /tmp:rw,noexec,nosuid,size=128m \
+            --cap-drop ALL --security-opt no-new-privileges:true --pids-limit 128 --memory 2g --cpus 2 \
+            "$IMAGE_NAME"
+      - name: Verify guest persistence, real exports and isolation across restart
+        run: python scripts/container-smoke.py --restart-container "$CONTAINER_NAME"
+      - name: Verify installed statistical NLP model in the packaged runtime
+        run: |
+          docker exec "$CONTAINER_NAME" python -c "from app.services.nlp_service import get_nlp_service; nlp = get_nlp_service().nlp; assert nlp.meta['name'] == 'core_web_md'; assert nlp.vocab.vectors_length == 300; assert 'ner' in nlp.pipe_names; print('Packaged en_core_web_md loaded with vectors and NER')"
+      - name: Collect container diagnostics
+        if: always()
+        run: |
+          mkdir -p /tmp/container-evidence
+          docker logs "$CONTAINER_NAME" > /tmp/container-evidence/backend.log 2>&1 || true
+          docker inspect --format '{{json .State}}' "$CONTAINER_NAME" > /tmp/container-evidence/state.json 2>&1 || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: backend-container-evidence
+          path: /tmp/container-evidence/
+      - name: Remove only this run's disposable resources
+        if: always()
+        run: |
+          expected="${{ github.run_id }}-${{ github.run_attempt }}"
+          if [ "$(docker inspect --format '{{index .Config.Labels "careerforge-ci-run"}}' "$CONTAINER_NAME" 2>/dev/null)" = "$expected" ]; then
+            docker rm --force "$CONTAINER_NAME"
+          fi
+          if [ "$(docker volume inspect --format '{{index .Labels "careerforge-ci-run"}}' "$VOLUME_NAME" 2>/dev/null)" = "$expected" ]; then
+            docker volume rm "$VOLUME_NAME"
+          fi

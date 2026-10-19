@@ -1,0 +1,40 @@
+Alex Morgan
+alex.morgan@example.test
+
+PROFESSIONAL SUMMARY
+Software engineer building reliable systems with Python and TypeScript.
+
+WORK EXPERIENCE
+Software Engineer — Example Company
+2020-01
+
+EDUCATION
+Bachelor of Science — Example University
+
+SKILLS
+General: Python
+
+PROJECTS
+Accessible application
+Built a useful application.
+
+CERTIFICATIONS
+Quality Certificate — Example Institute
+
+LANGUAGES
+English — Intermediate
+
+ACHIEVEMENTS
+• Improved delivery time by 20%.
+
+VOLUNTEERING
+description: Community mentor
+
+PUBLICATIONS
+description: Practical engineering guide
+
+CUSTOM SECTIONS
+Licences
+Current professional licence
+Additional evidence
+A useful detail.

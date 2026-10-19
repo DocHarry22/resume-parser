@@ -1,0 +1,33 @@
+{
+  "verifiedAt": "2026-10-19T12:10:35.444Z",
+  "build": {
+    "status": "passed",
+    "pages": 24,
+    "distDir": ".next-jobs-release"
+  },
+  "unit": {
+    "status": "passed",
+    "tests": 75
+  },
+  "appBrowser": {
+    "passed": 6,
+    "total": 6
+  },
+  "installedHelper": {
+    "passed": 4,
+    "total": 4
+  },
+  "finalMobile": {
+    "passed": 1,
+    "total": 1
+  },
+  "trackerRegression": {
+    "passed": 8,
+    "pageErrors": []
+  },
+  "helperPackage": {
+    "bytes": 9542,
+    "sha256": "b4dc429613453b8949a1e0b0751a943dbcb17f799e4204982f44e86b23df76e0"
+  },
+  "scope": "Local preview only. No employer application submitted."
+}

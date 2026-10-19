@@ -201,7 +201,7 @@ class AutoFixService:
             description="Add a professional summary to introduce your qualifications",
             original_value=None,
             suggested_value=suggested_summary,
-            auto_applicable=True,
+            auto_applicable=False,
             metadata={
                 "template": True,
                 "customization_needed": True,

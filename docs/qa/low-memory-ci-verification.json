@@ -1,0 +1,124 @@
+{
+  "status": "PASS",
+  "scope": "Synthetic stateless behavior; Linux resource limit verified only when container supplied",
+  "containerResourceLimitVerified": true,
+  "memorySamples": [
+    {
+      "stage": "ready",
+      "currentBytes": 180908032,
+      "peakBytes": 182521856,
+      "smallModelVersion": "3.7.1",
+      "privateDataFileCount": 0
+    },
+    {
+      "stage": "after typical parse/score/exports",
+      "currentBytes": 185479168,
+      "peakBytes": 185913344,
+      "smallModelVersion": "3.7.1",
+      "privateDataFileCount": 0
+    },
+    {
+      "stage": "after 55k parse/exports",
+      "currentBytes": 190074880,
+      "peakBytes": 326025216,
+      "smallModelVersion": "3.7.1",
+      "privateDataFileCount": 0
+    },
+    {
+      "stage": "final diagnostic",
+      "currentBytes": 190054400,
+      "peakBytes": 326025216,
+      "smallModelVersion": "3.7.1",
+      "privateDataFileCount": 0
+    }
+  ],
+  "checks": [
+    "local storage mode rejects server records and never sets guest cookies",
+    "typical TXT parsing, NER, scoring, stateless builder import and four genuine exports",
+    "55,000-character TXT parse and multipage PDF/editable DOCX/TXT/JSON retain final marker",
+    "document over configured 60,000-character cap rejected"
+  ],
+  "limits": {
+    "memoryBytes": 536870912,
+    "memorySwapBytes": 536870912,
+    "nanoCpus": 100000000,
+    "oomKilled": false
+  },
+  "health": {
+    "status": "healthy",
+    "storage_mode": "local",
+    "spacy_model": "en_core_web_sm",
+    "server_persistence": false
+  },
+  "typicalParseSeconds": 0.395,
+  "typicalScoreSeconds": 0.895,
+  "typicalExports": [
+    {
+      "format": "pdf",
+      "bytes": 23065,
+      "seconds": 1.898,
+      "pages": 1
+    },
+    {
+      "format": "docx",
+      "bytes": 36929,
+      "seconds": 0.303
+    },
+    {
+      "format": "txt",
+      "bytes": 349,
+      "seconds": 0.081
+    },
+    {
+      "format": "json",
+      "bytes": 1927,
+      "seconds": 0.002
+    }
+  ],
+  "largeParse": {
+    "characters": 55000,
+    "seconds": 8.405
+  },
+  "largeExports": [
+    {
+      "format": "pdf",
+      "bytes": 31054,
+      "seconds": 2.098,
+      "pages": 13
+    },
+    {
+      "format": "docx",
+      "bytes": 37269,
+      "seconds": 0.397
+    },
+    {
+      "format": "txt",
+      "bytes": 55398,
+      "seconds": 0.093
+    },
+    {
+      "format": "json",
+      "bytes": 56988,
+      "seconds": 0.006
+    }
+  ],
+  "limitsAfter": {
+    "memoryBytes": 536870912,
+    "memorySwapBytes": 536870912,
+    "nanoCpus": 100000000,
+    "oomKilled": false
+  },
+  "modelProof": {
+    "startupLogNamesSmallModel": true,
+    "realPersonNer": true,
+    "secondModelProcessLoaded": false
+  },
+  "evidence": {
+    "source": "Native Codex PR check job log",
+    "revision": "af8b3caf8d920d885d1985a1decbb0247120e3f1",
+    "runId": 38801198972,
+    "jobId": 116650371150,
+    "url": "https://github.com/DocHarry22/resume-parser/actions/runs/38801198972",
+    "actualRenderDeployment": false
+  }
+}

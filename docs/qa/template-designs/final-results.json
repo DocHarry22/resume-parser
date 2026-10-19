@@ -1,0 +1,87 @@
+{
+  "completedAt": "2026-10-18T21:42:56.112Z",
+  "passed": true,
+  "browserChecks": 13,
+  "printCases": 11,
+  "unitTestsPassed": 30,
+  "runtimeErrors": [],
+  "previewUrl": "http://127.0.0.1:3100/templates",
+  "previewMode": "development",
+  "typeChecking": "passed",
+  "optimizedBuild": "Compilation, type checking and static generation completed; final tracing was interrupted. The development preview was verified.",
+  "designChecks": [
+    "All eight gallery designs and category filters work; card navigation carries the displayed color",
+    "Modern preserves all content, saves/reloads and prints",
+    "Classic preserves all content, saves/reloads and prints",
+    "Minimal preserves all content, saves/reloads and prints",
+    "Professional preserves all content, saves/reloads and prints",
+    "Creative preserves all content, saves/reloads and prints",
+    "Elegant preserves all content, saves/reloads and prints",
+    "Executive preserves all content, saves/reloads and prints",
+    "Technical preserves all content, saves/reloads and prints",
+    "The selector uses eight real previews; font overrides and section visibility work without printing thumbnails",
+    "Long documents print in sidebar, timeline and executive formats",
+    "Gallery and scaled builder preview fit a mobile viewport",
+    "All six cover letter thumbnails and real letterheads retain sender details on desktop and mobile"
+  ],
+  "printChecks": [
+    {
+      "template": "modern",
+      "pages": 1,
+      "all_sample_sections_present": true
+    },
+    {
+      "template": "classic",
+      "pages": 1,
+      "all_sample_sections_present": true
+    },
+    {
+      "template": "minimal",
+      "pages": 1,
+      "all_sample_sections_present": true
+    },
+    {
+      "template": "professional",
+      "pages": 1,
+      "all_sample_sections_present": true
+    },
+    {
+      "template": "creative",
+      "pages": 1,
+      "all_sample_sections_present": true
+    },
+    {
+      "template": "elegant",
+      "pages": 1,
+      "all_sample_sections_present": true
+    },
+    {
+      "template": "executive",
+      "pages": 1,
+      "all_sample_sections_present": true
+    },
+    {
+      "template": "technical",
+      "pages": 1,
+      "all_sample_sections_present": true
+    },
+    {
+      "template": "modern",
+      "pages": 3,
+      "last_paragraph_present": true,
+      "no_empty_pages": true
+    },
+    {
+      "template": "professional",
+      "pages": 2,
+      "last_paragraph_present": true,
+      "no_empty_pages": true
+    },
+    {
+      "template": "executive",
+      "pages": 3,
+      "last_paragraph_present": true,
+      "no_empty_pages": true
+    }
+  ]
+}

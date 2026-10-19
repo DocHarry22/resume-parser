@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "scope": "Independent local ZIP, manifest and static-file inspection; not a deployed-domain check",
+  "sourceCommit": "d64a76351d27ceea8d0decdde1df340d051f1762",
+  "archive": "careerforge-hostinger-static-d64a76351d27.zip",
+  "archiveBytes": 2592663,
+  "sha256": "3ccc05b51e19c59bf49afad79f448f25cb7ffe3a2529fa5618a757dcbdb35a9b",
+  "manifestSha256": "ea446fc55f083393491540802a5a2919f139cfd274af943b495e02aa8e207aae",
+  "files": 81,
+  "allFileHashesAndSizesMatch": true,
+  "rootIndexAndLocalFontsPresent": true,
+  "primaryBrowserLocalEdition": true,
+  "hostingWrites": false
+}

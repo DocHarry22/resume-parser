@@ -20,9 +20,9 @@ from app.models.resume_models import (
 
 
 @pytest.fixture
-def builder_service():
+def builder_service(tmp_path):
     """Fixture for builder service."""
-    return ResumeBuilderService()
+    return ResumeBuilderService(tmp_path)
 
 
 @pytest.fixture

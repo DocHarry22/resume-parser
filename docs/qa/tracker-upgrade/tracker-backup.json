@@ -1,0 +1,38 @@
+{
+  "version": 2,
+  "exportedAt": "2026-10-19T08:26:00.613Z",
+  "jobs": [
+    {
+      "company": "=SUM(1,1)",
+      "role": "Process Analyst",
+      "url": "",
+      "stage": "Saved",
+      "appliedOn": "",
+      "followUpOn": "",
+      "notes": "",
+      "location": "",
+      "salary": "",
+      "description": "",
+      "resumeId": "",
+      "letterId": "",
+      "id": "7e340bee-274d-4366-b158-e19d8bffaf3a",
+      "updatedAt": "2026-10-19T08:26:00.416Z"
+    },
+    {
+      "company": "Atlas Energy",
+      "role": "Chemical Engineer",
+      "url": "https://example.test/jobs/chemical-engineer",
+      "stage": "Interview",
+      "appliedOn": "2026-10-19",
+      "followUpOn": "",
+      "notes": "Contact the hiring team after submitting.",
+      "location": "Johannesburg · Hybrid",
+      "salary": "R55,000 / month",
+      "description": "Process engineering, plant safety and continuous improvement.",
+      "resumeId": "tracker-resume",
+      "letterId": "tracker-letter",
+      "id": "0239d56e-c277-4f30-98d5-73457b7ad8a3",
+      "updatedAt": "2026-10-19T08:26:00.280Z"
+    }
+  ]
+}

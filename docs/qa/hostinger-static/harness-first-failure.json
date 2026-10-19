@@ -1,0 +1,50 @@
+{
+  "scope": "LOCAL STATIC ARTIFACT at simulated canonical origin; NOT DEPLOYED",
+  "sourceCommit": "368088a3313a8263d8a94f1dbfa31c59ed24a011",
+  "artifactSha256": "15769e7019eda41f7f98854b353684f56572e0616ce7450b32086144f9bfd8d5",
+  "dist": "C:\\Users\\game\\OneDrive\\Desktop\\Personal\\webapps\\resume_parser\\.mission-work\\.runtime\\hostinger-release\\368088a3313a8263d8a94f1dbfa31c59ed24a011\\dist",
+  "simulatedBrowserOrigin": "https://resume.docheng.co.za",
+  "liveApiOrigin": "https://careerforge-resume-api-free.onrender.com",
+  "startedAt": "2026-10-15T20:53:43.242Z",
+  "canonicalNetworkPassThrough": null,
+  "checks": [
+    "A 2 MiB + 1 byte synthetic import is rejected before any live API fetch"
+  ],
+  "apiRequests": [],
+  "fetches": [
+    {
+      "url": "https://resume.docheng.co.za/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/tools/index.txt?view=templates&_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/resume-scanner/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/cover-letter/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/job-tracker/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/dashboard/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    }
+  ],
+  "apiResponses": [],
+  "pageErrors": [],
+  "violations": [],
+  "localResponses": 28,
+  "passed": false,
+  "error": "locator.inputValue: Timeout 35000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel(/^Full Name/)\u001b[22m\n\n    at main (C:\\Users\\game\\OneDrive\\Desktop\\Personal\\webapps\\resume_parser\\.mission-work\\scripts\\qa-hostinger-static.cjs:115:54)",
+  "finishedAt": "2026-10-15T20:54:22.611Z",
+  "transportAttemptStatus": "INCONCLUSIVE: intercepted directory redirect could escape subsequent request routing",
+  "originalConfiguredCanonicalPassThroughFlag": false,
+  "canonicalNetworkObservation": "Unverified for this failed first transport attempt; no live API requests were sent."
+}

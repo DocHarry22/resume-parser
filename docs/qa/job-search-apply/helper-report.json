@@ -1,0 +1,22 @@
+{
+  "startedAt": "2026-10-19T11:56:33.260Z",
+  "results": [
+    {
+      "name": "installed helper greenhouse: genuine file attachment, existing answers preserved, unanswered questions and consent left for review, zero submissions",
+      "status": "passed"
+    },
+    {
+      "name": "installed helper lever: genuine file attachment, existing answers preserved, unanswered questions and consent left for review, zero submissions",
+      "status": "passed"
+    },
+    {
+      "name": "installed app bridge handshake on approved loopback origin",
+      "status": "passed"
+    },
+    {
+      "name": "controlled employer-form interactions; no real applications or POST requests",
+      "status": "passed"
+    }
+  ],
+  "finishedAt": "2026-10-19T11:56:46.752Z"
+}

@@ -1,0 +1,47 @@
+{
+  "id": "79613b04-7520-478f-9096-c91dcb494c25",
+  "resume": {
+    "title": "Untitled resume",
+    "contact": {
+      "full_name": "Storage full candidate",
+      "email": ""
+    },
+    "summary": {
+      "summary": ""
+    },
+    "experience": [],
+    "education": [],
+    "skills": [],
+    "certifications": [],
+    "projects": [],
+    "achievements": [],
+    "languages": [],
+    "volunteer": [],
+    "publications": [],
+    "custom_sections": {}
+  },
+  "template": "modern",
+  "colorTheme": "blue",
+  "design": {
+    "font": "sans",
+    "fontSize": 12,
+    "lineHeight": 1.5,
+    "spacing": 24,
+    "pageSize": "A4",
+    "sectionOrder": [
+      "summary",
+      "experience",
+      "education",
+      "skills",
+      "projects",
+      "certifications",
+      "languages",
+      "achievements",
+      "volunteer",
+      "publications",
+      "custom"
+    ],
+    "hiddenSections": []
+  },
+  "updatedAt": "2026-10-18T20:34:29.640Z"
+}

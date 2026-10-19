@@ -1,0 +1,119 @@
+{
+  "id": "174a07da-12ca-4084-b06d-82258b1bb8d0",
+  "resume": {
+    "title": "Untitled resume",
+    "contact": {
+      "full_name": "Alex Morgan",
+      "email": "alex.morgan@example.test",
+      "phone": "",
+      "location": "",
+      "linkedin": "",
+      "github": "",
+      "website": "",
+      "photo": ""
+    },
+    "summary": {
+      "summary": "Software engineer building reliable systems with Python and TypeScript."
+    },
+    "experience": [
+      {
+        "company": "Example Company",
+        "position": "Software Engineer",
+        "location": "",
+        "start_date": "2020-01",
+        "end_date": "",
+        "current": false,
+        "description": [],
+        "achievements": []
+      }
+    ],
+    "education": [
+      {
+        "institution": "Example University",
+        "degree": "Bachelor of Science",
+        "field_of_study": "",
+        "location": "",
+        "start_date": "",
+        "end_date": "",
+        "honors": []
+      }
+    ],
+    "skills": [
+      {
+        "category": "General",
+        "skills": [
+          "Python"
+        ]
+      }
+    ],
+    "certifications": [
+      {
+        "name": "Quality Certificate",
+        "issuer": "Example Institute",
+        "issue_date": "",
+        "expiry_date": "",
+        "credential_id": "",
+        "credential_url": ""
+      }
+    ],
+    "projects": [
+      {
+        "name": "Accessible application",
+        "description": "Built a useful application.",
+        "technologies": [],
+        "url": "",
+        "github": "",
+        "start_date": "",
+        "end_date": "",
+        "highlights": []
+      }
+    ],
+    "achievements": [
+      "Improved delivery time by 20%."
+    ],
+    "languages": [
+      {
+        "language": "English",
+        "proficiency": "Intermediate"
+      }
+    ],
+    "volunteer": [
+      {
+        "description": "Community mentor"
+      }
+    ],
+    "publications": [
+      {
+        "description": "Practical engineering guide"
+      }
+    ],
+    "custom_sections": {
+      "Licences": "Current professional licence",
+      "Additional evidence": "A useful detail."
+    }
+  },
+  "template": "modern",
+  "colorTheme": "blue",
+  "design": {
+    "font": "sans",
+    "fontSize": 12,
+    "lineHeight": 1.5,
+    "spacing": 24,
+    "pageSize": "A4",
+    "sectionOrder": [
+      "summary",
+      "experience",
+      "education",
+      "skills",
+      "projects",
+      "certifications",
+      "languages",
+      "achievements",
+      "volunteer",
+      "publications",
+      "custom"
+    ],
+    "hiddenSections": []
+  },
+  "updatedAt": "2026-10-18T20:35:09.121Z"
+}

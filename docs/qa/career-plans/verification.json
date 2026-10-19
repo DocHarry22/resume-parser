@@ -1,0 +1,35 @@
+{
+  "verifiedAt": "2026-10-19T13:40:45.493Z",
+  "preview": "http://127.0.0.1:3103/career-plan",
+  "unitTests": 106,
+  "browserChecks": 6,
+  "build": {
+    "pages": 26,
+    "status": "passed",
+    "directory": ".next-career-plan",
+    "id": "tOXAB5ND3mFg-EmfB55Jt"
+  },
+  "smoke": [
+    {
+      "path": "/career-plan",
+      "status": 200
+    },
+    {
+      "path": "/salary-analyzer",
+      "status": 200
+    },
+    {
+      "path": "/job-tracker",
+      "status": 200
+    },
+    {
+      "path": "/jobs",
+      "status": 200
+    },
+    {
+      "path": "/auto-apply",
+      "status": 200
+    }
+  ],
+  "scope": "Local preview. Synthetic test data; plans stay in the browser. No notifications or external plan requests."
+}

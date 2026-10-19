@@ -33,10 +33,11 @@ export function RecipientInfoForm({ recipient, onChange, onNext, onPrevious }: R
             </label>
             <input
               type="text"
+              aria-label="name"
               value={recipient.name}
               onChange={(e) => handleChange('name', e.target.value)}
               placeholder="Jane Smith"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
             <p className="mt-1 text-xs text-gray-500">
               If unknown, leave blank and we'll use "Dear Hiring Manager"
@@ -49,10 +50,11 @@ export function RecipientInfoForm({ recipient, onChange, onNext, onPrevious }: R
             </label>
             <input
               type="text"
+              aria-label="title"
               value={recipient.title}
               onChange={(e) => handleChange('title', e.target.value)}
               placeholder="HR Director"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
         </div>
@@ -63,10 +65,11 @@ export function RecipientInfoForm({ recipient, onChange, onNext, onPrevious }: R
           </label>
           <input
             type="text"
+            aria-label="company"
             value={recipient.company}
             onChange={(e) => handleChange('company', e.target.value)}
             placeholder="Acme Corporation"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
 
@@ -76,10 +79,11 @@ export function RecipientInfoForm({ recipient, onChange, onNext, onPrevious }: R
           </label>
           <input
             type="text"
+            aria-label="department"
             value={recipient.department}
             onChange={(e) => handleChange('department', e.target.value)}
             placeholder="Human Resources"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
       </div>
@@ -97,10 +101,11 @@ export function RecipientInfoForm({ recipient, onChange, onNext, onPrevious }: R
           </label>
           <input
             type="text"
+            aria-label="address"
             value={recipient.address}
             onChange={(e) => handleChange('address', e.target.value)}
             placeholder="456 Corporate Blvd, Suite 100"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>
 
@@ -111,10 +116,11 @@ export function RecipientInfoForm({ recipient, onChange, onNext, onPrevious }: R
             </label>
             <input
               type="text"
+              aria-label="city"
               value={recipient.city}
               onChange={(e) => handleChange('city', e.target.value)}
               placeholder="New York"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
           <div>
@@ -123,10 +129,11 @@ export function RecipientInfoForm({ recipient, onChange, onNext, onPrevious }: R
             </label>
             <input
               type="text"
+              aria-label="state"
               value={recipient.state}
               onChange={(e) => handleChange('state', e.target.value)}
               placeholder="NY"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
         </div>
@@ -138,10 +145,11 @@ export function RecipientInfoForm({ recipient, onChange, onNext, onPrevious }: R
             </label>
             <input
               type="text"
+              aria-label="zip code"
               value={recipient.zip_code}
               onChange={(e) => handleChange('zip_code', e.target.value)}
               placeholder="10001"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
           <div>
@@ -150,10 +158,11 @@ export function RecipientInfoForm({ recipient, onChange, onNext, onPrevious }: R
             </label>
             <input
               type="text"
+              aria-label="country"
               value={recipient.country}
               onChange={(e) => handleChange('country', e.target.value)}
               placeholder="United States"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
         </div>
@@ -186,7 +195,7 @@ export function RecipientInfoForm({ recipient, onChange, onNext, onPrevious }: R
         </button>
         <button
           onClick={onNext}
-          className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 font-medium flex items-center gap-2"
+          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium flex items-center gap-2"
         >
           Continue
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

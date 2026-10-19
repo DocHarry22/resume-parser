@@ -1,0 +1,30 @@
+[
+  {
+    "name": "empty dashboard has truthful counts and real creation action",
+    "status": "passed"
+  },
+  {
+    "name": "dashboard actual completion, tabs, saved preview and follow-up",
+    "status": "passed"
+  },
+  {
+    "name": "documents rename duplicate search download delete survive reload",
+    "status": "passed"
+  },
+  {
+    "name": "mobile navigation traps focus, closes and has no page overflow",
+    "status": "passed"
+  },
+  {
+    "name": "corrupt data is preserved; public routes keep normal navigation",
+    "status": "passed"
+  },
+  {
+    "name": "interview notebook saves immediately, timer and export work",
+    "status": "passed"
+  },
+  {
+    "name": "interview notes preserve other tabs, unsaved drafts and invalid storage",
+    "status": "passed"
+  }
+]

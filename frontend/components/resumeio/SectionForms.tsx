@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useId, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { 
   User, Mail, Phone, MapPin, Linkedin, Globe, Github,
@@ -29,15 +29,16 @@ interface FormFieldProps {
 }
 
 function FormField({ label, required, children, hint, error }: FormFieldProps) {
+  const id = useId();
   return (
     <div className="space-y-1.5">
-      <label className="block text-sm font-medium text-gray-700">
+      <label htmlFor={id} className="block text-sm font-medium text-gray-700">
         {label}
         {required && <span className="text-red-500 ml-1">*</span>}
       </label>
-      {children}
-      {hint && !error && <p className="text-xs text-gray-400">{hint}</p>}
-      {error && <p className="text-xs text-red-500">{error}</p>}
+      {React.isValidElement(children) ? React.cloneElement(children as React.ReactElement<any>, { id, 'aria-describedby': hint || error ? `${id}-hint` : undefined, 'aria-invalid': error ? true : undefined }) : children}
+      {hint && !error && <p id={`${id}-hint`} className="text-xs text-gray-400">{hint}</p>}
+      {error && <p id={`${id}-hint`} className="text-xs text-red-500">{error}</p>}
     </div>
   );
 }
@@ -116,8 +117,8 @@ export function PersonalDetailsForm({ contact, onChange }: PersonalDetailsFormPr
     const file = e.target.files?.[0];
     if (file) {
       // Validate file type
-      if (!file.type.startsWith('image/')) {
-        alert('Please upload an image file');
+      if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+        alert('Please upload a JPG, PNG, or WebP image');
         return;
       }
       // Validate file size (max 2MB)
@@ -152,6 +153,7 @@ export function PersonalDetailsForm({ contact, onChange }: PersonalDetailsFormPr
                 className="w-24 h-24 rounded-xl object-cover border-2 border-gray-200"
               />
               <button
+                aria-label="Remove profile photo"
                 onClick={removePhoto}
                 className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
               >
@@ -164,7 +166,7 @@ export function PersonalDetailsForm({ contact, onChange }: PersonalDetailsFormPr
               <span className="text-xs text-gray-400 mt-1">Add Photo</span>
               <input
                 type="file"
-                accept="image/*"
+                accept="image/jpeg,image/png,image/webp"
                 onChange={handlePhotoUpload}
                 className="hidden"
               />
@@ -180,7 +182,7 @@ export function PersonalDetailsForm({ contact, onChange }: PersonalDetailsFormPr
               Change photo
               <input
                 type="file"
-                accept="image/*"
+                accept="image/jpeg,image/png,image/webp"
                 onChange={handlePhotoUpload}
                 className="hidden"
               />
@@ -402,7 +404,8 @@ export function ExperienceForm({ experience, onChange }: ExperienceFormProps) {
             <div className="grid grid-cols-2 gap-4">
               <FormField label="Start Date" required>
                 <Input
-                  type="month"
+                  type="text"
+                  placeholder="YYYY-MM or YYYY"
                   value={exp.start_date}
                   onChange={(e) => handleUpdate(index, { start_date: e.target.value })}
                   icon={<Calendar className="w-4 h-4" />}
@@ -411,7 +414,8 @@ export function ExperienceForm({ experience, onChange }: ExperienceFormProps) {
               <FormField label="End Date">
                 <div className="space-y-2">
                   <Input
-                    type="month"
+                    type="text"
+                    placeholder="YYYY-MM or YYYY"
                     value={exp.end_date}
                     onChange={(e) => handleUpdate(index, { end_date: e.target.value })}
                     disabled={exp.current}
@@ -553,7 +557,8 @@ export function EducationForm({ education, onChange }: EducationFormProps) {
             <div className="grid grid-cols-2 gap-4">
               <FormField label="Start Date">
                 <Input
-                  type="month"
+                  type="text"
+                  placeholder="YYYY-MM or YYYY"
                   value={edu.start_date || ''}
                   onChange={(e) => handleUpdate(index, { start_date: e.target.value })}
                   icon={<Calendar className="w-4 h-4" />}
@@ -561,7 +566,8 @@ export function EducationForm({ education, onChange }: EducationFormProps) {
               </FormField>
               <FormField label="End Date / Expected">
                 <Input
-                  type="month"
+                  type="text"
+                  placeholder="YYYY-MM or YYYY"
                   value={edu.end_date || ''}
                   onChange={(e) => handleUpdate(index, { end_date: e.target.value })}
                   icon={<Calendar className="w-4 h-4" />}
@@ -883,7 +889,8 @@ export function CertificationsForm({ certifications, onChange }: CertificationsF
             <div className="grid grid-cols-2 gap-4">
               <FormField label="Issue Date">
                 <Input
-                  type="month"
+                  type="text"
+                  placeholder="YYYY-MM or YYYY"
                   value={cert.issue_date || ''}
                   onChange={(e) => handleUpdate(index, { issue_date: e.target.value })}
                   icon={<Calendar className="w-4 h-4" />}
@@ -891,7 +898,8 @@ export function CertificationsForm({ certifications, onChange }: CertificationsF
               </FormField>
               <FormField label="Expiry Date" hint="Leave blank if no expiry">
                 <Input
-                  type="month"
+                  type="text"
+                  placeholder="YYYY-MM or YYYY"
                   value={cert.expiry_date || ''}
                   onChange={(e) => handleUpdate(index, { expiry_date: e.target.value })}
                   icon={<Calendar className="w-4 h-4" />}

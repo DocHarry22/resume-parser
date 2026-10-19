@@ -1,0 +1,63 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "template": "modern",
+      "pages": 1,
+      "all_sample_sections_present": true
+    },
+    {
+      "template": "classic",
+      "pages": 1,
+      "all_sample_sections_present": true
+    },
+    {
+      "template": "minimal",
+      "pages": 1,
+      "all_sample_sections_present": true
+    },
+    {
+      "template": "professional",
+      "pages": 1,
+      "all_sample_sections_present": true
+    },
+    {
+      "template": "creative",
+      "pages": 1,
+      "all_sample_sections_present": true
+    },
+    {
+      "template": "elegant",
+      "pages": 1,
+      "all_sample_sections_present": true
+    },
+    {
+      "template": "executive",
+      "pages": 1,
+      "all_sample_sections_present": true
+    },
+    {
+      "template": "technical",
+      "pages": 1,
+      "all_sample_sections_present": true
+    },
+    {
+      "template": "modern",
+      "pages": 3,
+      "last_paragraph_present": true,
+      "no_empty_pages": true
+    },
+    {
+      "template": "professional",
+      "pages": 2,
+      "last_paragraph_present": true,
+      "no_empty_pages": true
+    },
+    {
+      "template": "executive",
+      "pages": 3,
+      "last_paragraph_present": true,
+      "no_empty_pages": true
+    }
+  ]
+}

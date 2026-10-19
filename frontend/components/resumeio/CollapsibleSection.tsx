@@ -188,6 +188,10 @@ export function CollapsibleEntry({
       <div
         className="flex items-center gap-3 px-4 py-3 cursor-pointer"
         onClick={onToggle}
+        role="button"
+        tabIndex={0}
+        aria-expanded={isOpen}
+        onKeyDown={e => { if (e.target === e.currentTarget && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); onToggle(); } }}
       >
         {isDraggable && (
           <div
@@ -211,6 +215,7 @@ export function CollapsibleEntry({
         <div className="flex items-center gap-2">
           {onDelete && (
             <button
+              aria-label={`Delete ${title || 'entry'}`}
               onClick={(e) => {
                 e.stopPropagation();
                 onDelete();
@@ -235,6 +240,7 @@ export function CollapsibleEntry({
       <div
         className="overflow-hidden transition-all duration-300 ease-in-out"
         style={{ maxHeight: isOpen ? `${contentHeight + 50}px` : '0px' }}
+        hidden={!isOpen}
       >
         <div
           ref={contentRef}

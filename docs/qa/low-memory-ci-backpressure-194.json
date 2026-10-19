@@ -1,0 +1,56 @@
+{
+  "scope": "Original native CI failure retained before a probe-only backpressure correction; not a successful low-memory test",
+  "headRevision": "194f9e8798fb04c6ebe9bf4ffe0e940cf98bcea5",
+  "ciCheckoutMergeRevision": "961ecb9ce0a5e2fa1ec853d8e43cdec09e90e9e2",
+  "runId": 38806864877,
+  "jobId": 116669846026,
+  "jobUrl": "https://github.com/DocHarry22/resume-parser/actions/runs/38806864877/job/116669846026",
+  "nativeJobConclusion": "failure",
+  "localCorrectionVerification": {
+    "backendApplicationChanged": false,
+    "offlineRetryTests": "9 passed (stdlib unittest)",
+    "deterministicAdmissionTests": "3 passed, 20 deselected, 6 dependency warnings",
+    "syntaxCompilation": "passed for probe and both regression files",
+    "newLinuxResourceRun": "See current PR checks for follow-up; this frozen record preserves the original failed run"
+  },
+  "originalProbeResult": {
+    "status": "FAIL",
+    "scope": "Synthetic stateless behavior; Linux resource limit verified only when container supplied",
+    "containerResourceLimitVerified": true,
+    "memorySamples": [
+      {
+        "stage": "ready",
+        "currentBytes": 179781632,
+        "peakBytes": 179781632,
+        "smallModelVersion": "3.7.1",
+        "privateDataFileCount": 0
+      },
+      {
+        "stage": "final diagnostic",
+        "currentBytes": 173191168,
+        "peakBytes": 179781632,
+        "smallModelVersion": "3.7.1",
+        "privateDataFileCount": 0
+      }
+    ],
+    "checks": [
+      "local storage mode rejects server records and never sets guest cookies"
+    ],
+    "limits": {
+      "memoryBytes": 536870912,
+      "memorySwapBytes": 536870912,
+      "nanoCpus": 100000000,
+      "oomKilled": false
+    },
+    "health": {
+      "status": "healthy",
+      "storage_mode": "local",
+      "spacy_model": "en_core_web_sm",
+      "server_persistence": false
+    },
+    "typicalParseSeconds": 1.199,
+    "typicalScoreSeconds": 1.698,
+    "error": "POST /api/exports/resume/pdf: 429, expected 200: b'{\"detail\":\"The processor is busy. Please try again shortly.\"}'"
+  },
+  "diagnosis": "The admission slot remains held until the inner ASGI invocation returns, including cleanup after the response body. A sequential client can receive the body and send its next request before that finalization. Original evidence establishes the exact busy guard response, not the duration of contention or a permanent leak. A deterministic test exercises this interval and verifies recovery; bounded probe retries preserve persistent-failure detection."
+}

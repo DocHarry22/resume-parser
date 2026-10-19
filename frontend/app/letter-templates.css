@@ -1,0 +1,38 @@
+.letterhead { color: #26313c; margin: 0 0 28px; padding: 0 0 22px; border-bottom: 1px solid #d9dfe6; }
+.letterhead h1 { margin: 0; font-size: 28px; line-height: 1.2; font-weight: 600; letter-spacing: -.035em; }
+.letterhead-contact { display: flex; flex-wrap: wrap; gap: 5px 16px; margin-top: 12px; font-size: 11px; line-height: 1.55; }
+.letterhead-address { margin-top: 6px; font-size: 11px; line-height: 1.5; }
+.letterhead[data-letterhead='professional'] { text-align: center; border-top: 2px solid var(--letter-accent); border-bottom: 3px double var(--letter-accent); padding-top: 22px; }
+.letterhead[data-letterhead='professional'] h1 { text-transform: uppercase; letter-spacing: .09em; font-size: 25px; }
+.letterhead[data-letterhead='professional'] .letterhead-contact { justify-content: center; }
+.letterhead[data-letterhead='modern'] { border-left: 7px solid var(--letter-accent); padding: 5px 0 18px 20px; border-bottom: 0; }
+.letterhead[data-letterhead='modern'] h1 { color: var(--letter-accent); font-size: 34px; font-weight: 700; }
+.letterhead[data-letterhead='modern'] .letterhead-details { color: #647185; }
+.letterhead[data-letterhead='minimal'] { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding-bottom: 30px; border-color: #b5bfc0; }
+.letterhead[data-letterhead='minimal'] h1 { font-size: 24px; font-weight: 400; }
+.letterhead[data-letterhead='minimal'] .letterhead-details { text-align: right; color: #687578; }
+.letterhead[data-letterhead='minimal'] .letterhead-contact { margin-top: 0; display: grid; gap: 2px; }
+.letterhead[data-letterhead='creative'] { position: relative; margin: -32px -32px 30px; padding: 34px 104px 30px 32px; background: #f9e9df; border: 0; }
+.letterhead[data-letterhead='creative'] h1 { font-size: 37px; font-weight: 800; color: #71372d; }
+.letterhead[data-letterhead='creative'] .letterhead-monogram { position: absolute; top: 36px; right: 28px; display: flex; align-items: center; justify-content: center; width: 56px; height: 56px; background: var(--letter-accent); color: white; border-radius: 50% 50% 0 50%; font-size: 20px; font-weight: 700; }
+.letterhead[data-letterhead='executive'] { display: grid; grid-template-columns: 1.1fr 1fr; gap: 22px; margin: -32px -32px 30px; padding: 36px 32px 32px; background: #263445; color: #fff; border-bottom: 5px solid #b9a57a; }
+.letterhead[data-letterhead='executive'] h1 { font-size: 31px; font-weight: 400; letter-spacing: .015em; }
+.letterhead[data-letterhead='executive'] .letterhead-details { border-left: 1px solid #ffffff40; padding-left: 18px; }
+.letterhead[data-letterhead='executive'] .letterhead-contact { display: grid; margin-top: 0; color: #e0e6ef; }
+.letterhead[data-letterhead='tech'] { border: 1px solid #b3d1cc; border-top: 5px solid var(--letter-accent); padding: 20px; background: #f5faf9; }
+.letterhead[data-letterhead='tech'] .letterhead-overline { font-size: 9px; letter-spacing: .15em; color: var(--letter-accent); margin-bottom: 12px; }
+.letterhead[data-letterhead='tech'] h1 { color: #174b48; font-size: 28px; letter-spacing: -.06em; }
+.letterhead[data-letterhead='tech'] .letterhead-contact { font-size: 10px; gap: 6px 18px; }
+.letter-template-thumbnail { position: relative; width: 100%; aspect-ratio: 640 / 828; overflow: hidden; background: #fff; pointer-events: none; text-align: left; }
+.letter-template-thumbnail > .letter-document { position: absolute; left: 0; top: 0; font-size: 13px; line-height: 1.65; }
+.letter-template-thumbnail .letterhead[data-letterhead='creative'], .letter-template-thumbnail .letterhead[data-letterhead='executive'] { margin: -40px -40px 30px; padding-top: 40px; padding-left: 40px; padding-right: 40px; }
+.letter-thumbnail-copy p { margin-bottom: 22px; }
+.letter-document[data-letter-template='professional'] { line-height: 1.65; }
+.letter-document[data-letter-template='tech'] { font-size: 12px; }
+@media (max-width: 520px) {
+  .letterhead h1 { overflow-wrap: anywhere; }
+  .letterhead[data-letterhead='minimal'], .letterhead[data-letterhead='executive'] { grid-template-columns: 1fr; gap: 12px; }
+  .letterhead[data-letterhead='minimal'] .letterhead-details { text-align: left; }
+  .letterhead[data-letterhead='executive'] .letterhead-details { border-left: 0; padding-left: 0; }
+  .letter-template-thumbnail .letterhead[data-letterhead='minimal'], .letter-template-thumbnail .letterhead[data-letterhead='executive'] { grid-template-columns: 1fr 1fr; }
+}

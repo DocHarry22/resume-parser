@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "CareerForge Auto Apply — Review First",
+  "version": "1.0.1",
+  "description": "Fill reviewed contact details and documents on Greenhouse and Lever. Final submission stays with you.",
+  "minimum_chrome_version": "112",
+  "permissions": ["storage"],
+  "background": { "service_worker": "background.js" },
+  "action": { "default_popup": "popup.html", "default_title": "CareerForge application helper" },
+  "content_scripts": [
+    { "matches": ["http://127.0.0.1/*", "http://localhost/*", "https://resume.docheng.co.za/*", "https://docheng-careerforge.thletsholo2.chatgpt.site/*"], "js": ["bridge.js"], "run_at": "document_start" },
+    { "matches": ["https://boards.greenhouse.io/*", "https://job-boards.greenhouse.io/*", "https://boards.eu.greenhouse.io/*", "https://job-boards.eu.greenhouse.io/*", "https://jobs.lever.co/*", "https://jobs.eu.lever.co/*"], "js": ["shared.js", "fill.js", "content.js"], "all_frames": true, "run_at": "document_idle" }
+  ]
+}

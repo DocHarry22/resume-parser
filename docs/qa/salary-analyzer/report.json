@@ -1,0 +1,31 @@
+{
+  "baseUrl": "http://127.0.0.1:3106",
+  "startedAt": "2026-10-19T12:54:23.031Z",
+  "checks": [
+    {
+      "name": "tracker integration retains advertised range for review and saves a sourced South African take-home scenario without changing the job",
+      "status": "passed"
+    },
+    {
+      "name": "manual hourly scenarios annualize transparently and compare currencies independently",
+      "status": "passed"
+    },
+    {
+      "name": "saved scenarios persist, duplicate independently, update baselines, export accurate CSV and remove without touching source jobs",
+      "status": "passed"
+    },
+    {
+      "name": "a stale editor in another tab keeps unsaved work and cannot overwrite a newer salary scenario",
+      "status": "passed"
+    },
+    {
+      "name": "quota failure preserves the draft and saved scenarios; corrupt storage cannot be overwritten",
+      "status": "passed"
+    },
+    {
+      "name": "phone layouts, currency switching and gross-only unknown take-home remain accessible without page overflow",
+      "status": "passed"
+    }
+  ],
+  "finishedAt": "2026-10-19T12:54:45.077Z"
+}

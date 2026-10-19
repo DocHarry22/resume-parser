@@ -1,0 +1,50 @@
+[
+  {
+    "name": "builder new from current editor",
+    "status": "failed",
+    "error": "page.waitForFunction: Timeout 4000ms exceeded."
+  },
+  {
+    "name": "builder template navigation from current editor",
+    "status": "failed",
+    "error": "page.waitForFunction: Timeout 4000ms exceeded."
+  },
+  {
+    "name": "resume immediate navigation preserves last edit",
+    "status": "failed",
+    "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ ''\n- 'Immediate navigation candidate'\n"
+  },
+  {
+    "name": "cover letter immediate return preserves draft",
+    "status": "failed",
+    "error": "Expected values to be strictly equal:\n+ actual - expected\n\n+ ''\n- 'Immediate letter candidate'\n"
+  },
+  {
+    "name": "checker change file button is clickable",
+    "status": "failed",
+    "error": "locator.click: Timeout 4000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Choose a different file', exact: true })\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" class=\"mt-2 text-sm text-blue-600 hover:text-blue-800 underline\">Choose a different file</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <input type=\"file\" accept=\".pdf,.docx,.doc\" class=\"absolute inset-0 w-full h-full opacity-0 cursor-pointer\"/> intercepts pointer events\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - <input type=\"file\" accept=\".pdf,.docx,.doc\" class=\"absolute inset-0 w-full h-full opacity-0 cursor-pointer\"/> intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"home-nav-links\">…</div> from <header class=\"home-header\">…</header> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <input type=\"file\" accept=\".pdf,.docx,.doc\" class=\"absolute inset-0 w-full h-full opacity-0 cursor-pointer\"/> intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <div class=\"home-nav-links\">…</div> from <header class=\"home-header\">…</header> subtree intercepts pointer events\u001b[22m\n\u001b[2m  2 × retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\u001b[2m      - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is visible, enabled and stable\u001b[22m\n\u001b[2m      - scrolling into view if needed\u001b[22m\n\u001b[2m      - done scrolling\u001b[22m\n\u001b[2m      - <input type=\"file\" accept=\".pdf,.docx,.doc\" class=\"absolute inset-0 w-full h-full opacity-0 cursor-pointer\"/> intercepts pointer events\u001b[22m\n\u001b[2m  - retrying click action\u001b[22m\n\u001b[2m    - waiting 500ms\u001b[22m\n"
+  },
+  {
+    "name": "checker rejects unsupported DOC",
+    "status": "failed",
+    "error": "locator.waitFor: Timeout 4000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('Please upload a PDF or DOCX file', { exact: true }) to be visible\u001b[22m\n"
+  },
+  {
+    "name": "checker rejects mismatched file extension",
+    "status": "failed",
+    "error": "locator.waitFor: Timeout 4000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByText('Please upload a PDF or DOCX file', { exact: true }) to be visible\u001b[22m\n"
+  },
+  {
+    "name": "every template filter and preview works",
+    "status": "passed"
+  },
+  {
+    "name": "builder design toolbar help undo redo and print",
+    "status": "failed",
+    "error": "locator.selectOption: Timeout 7000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('Font', { exact: true })\u001b[22m\n"
+  },
+  {
+    "name": "homepage all controls and internal link targets",
+    "status": "passed"
+  }
+]

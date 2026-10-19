@@ -1,0 +1,343 @@
+{
+  "observedAtUtc": "2026-10-19 07:43:58 UTC",
+  "domain": "resume.docheng.co.za",
+  "account": "u836398163",
+  "siteRoot": "domains/docheng.co.za/public_html/resume",
+  "totalEntries": 120,
+  "files": [
+    {
+      "path": "_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "bytes": 174384
+    },
+    {
+      "path": "_next/static/chunks/247-c5f72daefdf06886.js",
+      "bytes": 8535
+    },
+    {
+      "path": "_next/static/chunks/353-257141dfb0056826.js",
+      "bytes": 83698
+    },
+    {
+      "path": "_next/static/chunks/396-7ec272baee43a0b1.js",
+      "bytes": 120940
+    },
+    {
+      "path": "_next/static/chunks/493-2290cf86616d50e0.js",
+      "bytes": 10574
+    },
+    {
+      "path": "_next/static/chunks/501.751f4a2792ed6108.js",
+      "bytes": 740
+    },
+    {
+      "path": "_next/static/chunks/656.9de8bca38b60e5af.js",
+      "bytes": 5444
+    },
+    {
+      "path": "_next/static/chunks/670-17c6af18c4621671.js",
+      "bytes": 27649
+    },
+    {
+      "path": "_next/static/chunks/683-94fbed09f680032b.js",
+      "bytes": 16325
+    },
+    {
+      "path": "_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "bytes": 173019
+    },
+    {
+      "path": "_next/static/chunks/app/_not-found/page-00815bc36caf7c9d.js",
+      "bytes": 2669
+    },
+    {
+      "path": "_next/static/chunks/app/builder/page-4580cf21df410467.js",
+      "bytes": 385
+    },
+    {
+      "path": "_next/static/chunks/app/cover-letter/page-03cf88c4ffe6efcc.js",
+      "bytes": 69727
+    },
+    {
+      "path": "_next/static/chunks/app/dashboard/page-4ac76036b3ec6be7.js",
+      "bytes": 29500
+    },
+    {
+      "path": "_next/static/chunks/app/job-tracker/page-e67147fb43957ea8.js",
+      "bytes": 16237
+    },
+    {
+      "path": "_next/static/chunks/app/layout-1a4da355f3ba21f3.js",
+      "bytes": 13447
+    },
+    {
+      "path": "_next/static/chunks/app/login/page-3842a28b574f88eb.js",
+      "bytes": 189
+    },
+    {
+      "path": "_next/static/chunks/app/page-105388d43ad529a2.js",
+      "bytes": 18211
+    },
+    {
+      "path": "_next/static/chunks/app/privacy/page-1763201071f2c416.js",
+      "bytes": 8430
+    },
+    {
+      "path": "_next/static/chunks/app/resources/guides/page-3842a28b574f88eb.js",
+      "bytes": 189
+    },
+    {
+      "path": "_next/static/chunks/app/resume-scanner/page-ab665ece8fa74885.js",
+      "bytes": 11112
+    },
+    {
+      "path": "_next/static/chunks/app/signup/page-3842a28b574f88eb.js",
+      "bytes": 189
+    },
+    {
+      "path": "_next/static/chunks/app/templates/page-7f321e70b5d628ff.js",
+      "bytes": 4941
+    },
+    {
+      "path": "_next/static/chunks/app/tools/builder/layout-02b073cb7a617f33.js",
+      "bytes": 128
+    },
+    {
+      "path": "_next/static/chunks/app/tools/builder/page-a32ef2fe65914d72.js",
+      "bytes": 883
+    },
+    {
+      "path": "_next/static/chunks/app/tools/page-3882c2cbb4783550.js",
+      "bytes": 6949
+    },
+    {
+      "path": "_next/static/chunks/framework-138d446469aa2b5b.js",
+      "bytes": 139834
+    },
+    {
+      "path": "_next/static/chunks/main-app-f717357ca60447a6.js",
+      "bytes": 554
+    },
+    {
+      "path": "_next/static/chunks/main-cfffce2932250552.js",
+      "bytes": 120336
+    },
+    {
+      "path": "_next/static/chunks/pages/_app-ba78c719f3a95b3f.js",
+      "bytes": 914
+    },
+    {
+      "path": "_next/static/chunks/pages/_error-0f3efd53be8b362b.js",
+      "bytes": 5650
+    },
+    {
+      "path": "_next/static/chunks/polyfills-42372ed130431b0a.js",
+      "bytes": 112594
+    },
+    {
+      "path": "_next/static/chunks/webpack-939dc94f710e1385.js",
+      "bytes": 3503
+    },
+    {
+      "path": "_next/static/css/071d3eb3c81a8859.css",
+      "bytes": 76149
+    },
+    {
+      "path": "_next/static/css/48bb57ae39ad011a.css",
+      "bytes": 14699
+    },
+    {
+      "path": "_next/static/css/d2637c66b4d79719.css",
+      "bytes": 31616
+    },
+    {
+      "path": "_next/static/Q3uIcxzCTw8WKaLu9Zg0Y/_buildManifest.js",
+      "bytes": 1006
+    },
+    {
+      "path": "_next/static/Q3uIcxzCTw8WKaLu9Zg0Y/_ssgManifest.js",
+      "bytes": 80
+    },
+    {
+      "path": ".htaccess",
+      "bytes": 280
+    },
+    {
+      "path": "404.html",
+      "bytes": 10584
+    },
+    {
+      "path": "404/index.html",
+      "bytes": 10584
+    },
+    {
+      "path": "builder/index.html",
+      "bytes": 10520
+    },
+    {
+      "path": "builder/index.txt",
+      "bytes": 4656
+    },
+    {
+      "path": "cover-letter/index.html",
+      "bytes": 12452
+    },
+    {
+      "path": "cover-letter/index.txt",
+      "bytes": 4709
+    },
+    {
+      "path": "dashboard/index.html",
+      "bytes": 17219
+    },
+    {
+      "path": "dashboard/index.txt",
+      "bytes": 4651
+    },
+    {
+      "path": "home/commons-medium.woff2",
+      "bytes": 47398
+    },
+    {
+      "path": "home/commons-regular.woff2",
+      "bytes": 21040
+    },
+    {
+      "path": "home/commons-semibold.woff2",
+      "bytes": 21180
+    },
+    {
+      "path": "home/features/cover-letter.png",
+      "bytes": 15061
+    },
+    {
+      "path": "home/features/job-match.png",
+      "bytes": 25362
+    },
+    {
+      "path": "home/features/step-by-step.png",
+      "bytes": 21757
+    },
+    {
+      "path": "home/features/summary.png",
+      "bytes": 15947
+    },
+    {
+      "path": "home/footer-resumes.png",
+      "bytes": 868142
+    },
+    {
+      "path": "home/resources/cover-letter.png",
+      "bytes": 697673
+    },
+    {
+      "path": "home/resources/resume.png",
+      "bytes": 245404
+    },
+    {
+      "path": "home/resume-hero-mobile.png",
+      "bytes": 18699
+    },
+    {
+      "path": "home/resume-hero.png",
+      "bytes": 67336
+    },
+    {
+      "path": "home/tools/resume-builder.png",
+      "bytes": 35232
+    },
+    {
+      "path": "icon.svg",
+      "bytes": 272
+    },
+    {
+      "path": "index.html",
+      "bytes": 104363
+    },
+    {
+      "path": "index.txt",
+      "bytes": 29713
+    },
+    {
+      "path": "job-tracker/index.html",
+      "bytes": 18479
+    },
+    {
+      "path": "job-tracker/index.txt",
+      "bytes": 4659
+    },
+    {
+      "path": "login/index.html",
+      "bytes": 11788
+    },
+    {
+      "path": "login/index.txt",
+      "bytes": 5488
+    },
+    {
+      "path": "privacy/index.html",
+      "bytes": 12330
+    },
+    {
+      "path": "privacy/index.txt",
+      "bytes": 4641
+    },
+    {
+      "path": "resources/guides/index.html",
+      "bytes": 21193
+    },
+    {
+      "path": "resources/guides/index.txt",
+      "bytes": 10726
+    },
+    {
+      "path": "resume-scanner/index.html",
+      "bytes": 17368
+    },
+    {
+      "path": "resume-scanner/index.txt",
+      "bytes": 4717
+    },
+    {
+      "path": "signup/index.html",
+      "bytes": 11793
+    },
+    {
+      "path": "signup/index.txt",
+      "bytes": 5492
+    },
+    {
+      "path": "templates/index.html",
+      "bytes": 50812
+    },
+    {
+      "path": "templates/index.txt",
+      "bytes": 7640
+    },
+    {
+      "path": "tools/builder/index.html",
+      "bytes": 11380
+    },
+    {
+      "path": "tools/builder/index.txt",
+      "bytes": 5289
+    },
+    {
+      "path": "tools/index.html",
+      "bytes": 10881
+    },
+    {
+      "path": "tools/index.txt",
+      "bytes": 4865
+    }
+  ],
+  "backupBasis": "User confirmed online Hostinger backups; download fails. No local archive or independent restore test.",
+  "nativeDeploymentResult": {
+    "content": [
+      {
+        "type": "text",
+        "text": "{\"message\":\"Request accepted\"}"
+      }
+    ],
+    "isError": false
+  }
+}

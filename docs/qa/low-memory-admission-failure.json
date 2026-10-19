@@ -1,0 +1,26 @@
+{
+  "status": "FAIL",
+  "scope": "Preserved diagnostic from automated Linux benchmark, not an actual Render failure",
+  "revision": "194f9e8798fb04c6ebe9bf4ffe0e940cf98bcea5",
+  "runId": 38806864877,
+  "jobId": 116669846026,
+  "url": "https://github.com/DocHarry22/resume-parser/actions/runs/38806864877/job/116669846026",
+  "failedRequest": {
+    "method": "POST",
+    "path": "/api/exports/resume/pdf",
+    "status": 429,
+    "detail": "The processor is busy. Please try again shortly.",
+    "expectedStatus": 200,
+    "retryAfterHeaderCaptured": false
+  },
+  "observations": {
+    "health": "healthy",
+    "storageMode": "local",
+    "smallModel": "en_core_web_sm",
+    "oomKilled": false,
+    "typicalParseSeconds": 1.199,
+    "typicalScoreSeconds": 1.698,
+    "backendSourceUnchangedFromPassedDeployedRevision": true
+  },
+  "followup": "Investigate transient admission during ASGI request finalization; do not remove concurrency limits or silently rerun until green. Any verifier retry must be bounded, respect observed Retry-After and record each retry."
+}

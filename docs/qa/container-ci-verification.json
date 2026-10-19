@@ -1,0 +1,71 @@
+{
+  "status": "success",
+  "headRevision": "6740b2ba1a935e85627c6b5b444a274cbb223479",
+  "runId": 38792993537,
+  "jobId": 116622070575,
+  "url": "https://github.com/DocHarry22/resume-parser/actions/runs/38792993537/job/116622070575",
+  "diagnosticsSource": "mcp__code_review__pull_requests_checks",
+  "scope": "Initial PR revision; a later workflow-only model-install fix requires a fresh CI run. This is not latest-head verification.",
+  "containerRestartVerified": true,
+  "checks": [
+    {
+      "name": "health",
+      "passed": true
+    },
+    {
+      "name": "separate signed HttpOnly guest cookies",
+      "passed": true
+    },
+    {
+      "name": "real TXT parsing with packaged NLP and taxonomies",
+      "passed": true
+    },
+    {
+      "name": "create, edit, save and list",
+      "passed": true
+    },
+    {
+      "name": "cross-cookie read/write/export/delete isolation and Origin rejection",
+      "passed": true
+    },
+    {
+      "name": "PDF, editable OOXML DOCX, TXT, JSON and workspace exports",
+      "passed": true
+    },
+    {
+      "name": "document and signing key survive container restart; isolation retained",
+      "passed": true
+    },
+    {
+      "name": "workspace deletion expires cookie and preserves the other guest; document deletion",
+      "passed": true
+    }
+  ],
+  "packagedModel": {
+    "name": "en_core_web_md",
+    "vectorsDimensions": 300,
+    "ner": true,
+    "passed": true
+  },
+  "imageBuilt": true,
+  "cleanup": {
+    "container": true,
+    "volume": true
+  },
+  "evidenceLines": [
+    "2026-10-15T19:20:37.5365051Z careerforge-ci-data-38792993537-1",
+    "2026-10-15T19:20:45.2966559Z   \"status\": \"PASS\",",
+    "2026-10-15T19:20:45.2966835Z   \"container_restart_verified\": true,",
+    "2026-10-15T19:20:45.2967293Z     \"health\",",
+    "2026-10-15T19:20:45.2967524Z     \"separate signed HttpOnly guest cookies\",",
+    "2026-10-15T19:20:45.2967872Z     \"real TXT parsing with packaged NLP and taxonomies\",",
+    "2026-10-15T19:20:45.2968196Z     \"create, edit, save and list\",",
+    "2026-10-15T19:20:45.2968568Z     \"cross-cookie read/write/export/delete isolation and Origin rejection\",",
+    "2026-10-15T19:20:45.2969018Z     \"PDF, editable OOXML DOCX, TXT, JSON and workspace exports\",",
+    "2026-10-15T19:20:45.2969458Z     \"document and signing key survive container restart; isolation retained\",",
+    "2026-10-15T19:20:45.2970001Z     \"workspace deletion expires cookie and preserves the other guest; document deletion\"",
+    "2026-10-15T19:20:47.7572927Z Packaged en_core_web_md loaded with vectors and NER",
+    "2026-10-15T19:20:49.0439000Z careerforge-ci-api-38792993537-1",
+    "2026-10-15T19:20:49.0734477Z careerforge-ci-data-38792993537-1"
+  ]
+}

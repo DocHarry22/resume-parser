@@ -1,0 +1,31 @@
+{
+  "baseUrl": "http://127.0.0.1:3107",
+  "startedAt": "2026-10-19T13:37:55.918Z",
+  "checks": [
+    {
+      "name": "guided milestones, saved opportunity, progress and date changes preserve actual task work and source jobs",
+      "status": "passed"
+    },
+    {
+      "name": "blank plans support custom tasks, transient invalid days, due/status filters, editing and explicit removal",
+      "status": "passed"
+    },
+    {
+      "name": "JSON and text exports preserve real progress; import copies plans and corrupt-data recovery requires explicit confirmation",
+      "status": "passed"
+    },
+    {
+      "name": "separate task edits merge across tabs, stale same-task edits are retained for review, and metadata saves preserve concurrent progress",
+      "status": "passed"
+    },
+    {
+      "name": "quota failures retain unsaved task text, while full-plan removal protects newer changes",
+      "status": "passed"
+    },
+    {
+      "name": "first-90-days starter and all task/dialog controls fit a 390px phone with keyboard-accessible navigation",
+      "status": "passed"
+    }
+  ],
+  "finishedAt": "2026-10-19T13:38:26.280Z"
+}

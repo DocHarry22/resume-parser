@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { ParseAndScoreResponse } from "@/lib/types";
+import { ParseAndScoreResponse, ScanMode } from "@/lib/types";
 import { parseAndScoreResume } from "@/lib/apiClient";
+import { DOCUMENT_UPLOAD_LIMIT_BYTES, DOCUMENT_UPLOAD_LIMIT_MB } from "@/lib/apiConfig";
 import { 
   compressFile, 
   formatFileSize, 
@@ -13,9 +14,12 @@ import {
 
 interface ResumeUploadFormProps {
   onResult: (data: ParseAndScoreResponse) => void;
+  mode?: ScanMode;
+  jobDescription?: string;
+  industry?: string;
 }
 
-export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
+export default function ResumeUploadForm({ onResult, mode = 'basic', jobDescription, industry }: ResumeUploadFormProps) {
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -29,35 +33,37 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
+    e.target.value = '';
     if (selectedFile) {
       validateAndSetFile(selectedFile);
     }
   };
 
   const validateAndSetFile = async (selectedFile: File) => {
+    if (loading || isCompressing) return;
     setError(null);
     setCompressionResult(null);
+    setFile(null);
     
     // Validate file type
-    const validTypes = [
-      'application/pdf',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      'application/msword'
-    ];
-    const validExtensions = ['.pdf', '.docx', '.doc'];
+    const validExtensions = ['.pdf', '.docx'];
     
     const hasValidExtension = validExtensions.some(ext => 
       selectedFile.name.toLowerCase().endsWith(ext)
     );
     
-    if (!validTypes.includes(selectedFile.type) && !hasValidExtension) {
+    if (!hasValidExtension) {
       setError('Please upload a PDF or DOCX file');
       return;
     }
 
-    // Validate file size (25MB limit)
-    const maxSize = 25 * 1024 * 1024;
-    const targetSize = 15 * 1024 * 1024; // Target size for compression
+    if (selectedFile.size === 0) {
+      setError('This file is empty. Please choose a resume with readable text.');
+      return;
+    }
+
+    const maxSize = DOCUMENT_UPLOAD_LIMIT_BYTES;
+    const targetSize = Math.min(15 * 1024 * 1024, maxSize);
     
     if (selectedFile.size > targetSize && isCompressionSupported(selectedFile)) {
       // Try to compress
@@ -71,7 +77,7 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
         if (result.wasCompressed && result.compressedFile.size <= maxSize) {
           setFile(result.compressedFile);
         } else if (result.compressedFile.size > maxSize) {
-          setError(`File is still too large after compression (${formatFileSize(result.compressedFile.size)}). Maximum is 25MB.`);
+          setError(`File is still too large after compression (${formatFileSize(result.compressedFile.size)}). Maximum is ${DOCUMENT_UPLOAD_LIMIT_MB} MB.`);
           setFile(null);
         } else {
           setFile(result.compressedFile);
@@ -84,7 +90,7 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
         setCompressionProgress(null);
       }
     } else if (selectedFile.size > maxSize) {
-      setError(`File size must be less than 25MB. Your file is ${formatFileSize(selectedFile.size)}`);
+      setError(`Choose a file no larger than ${DOCUMENT_UPLOAD_LIMIT_MB} MB. Your file is ${formatFileSize(selectedFile.size)}.`);
       return;
     } else {
       setFile(selectedFile);
@@ -124,7 +130,7 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
     setError(null);
 
     try {
-      const result = await parseAndScoreResume(file);
+      const result = await parseAndScoreResume(file, mode, jobDescription, industry);
       onResult(result);
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to scan resume';
@@ -166,7 +172,8 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
         <input
           ref={fileInputRef}
           type="file"
-          accept=".pdf,.docx,.doc"
+          accept=".pdf,.docx"
+          aria-label="Resume file"
           onChange={handleFileChange}
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
           disabled={loading || isCompressing}
@@ -217,7 +224,8 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
               <button
                 type="button"
                 onClick={handleReset}
-                className="mt-2 text-sm text-blue-600 hover:text-blue-800 underline"
+                disabled={loading || isCompressing}
+                className="relative z-10 mt-2 text-sm text-blue-600 hover:text-blue-800 underline disabled:opacity-50"
               >
                 Choose a different file
               </button>
@@ -232,7 +240,7 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
                 Supported formats: PDF, DOCX
               </p>
               <p className="text-xs text-gray-400 mt-1">
-                Large files will be automatically compressed
+                Maximum file size: {DOCUMENT_UPLOAD_LIMIT_MB} MB
               </p>
             </div>
           )}
@@ -241,7 +249,7 @@ export default function ResumeUploadForm({ onResult }: ResumeUploadFormProps) {
 
       {/* Error Message */}
       {error && (
-        <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+        <div role="alert" className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg">
           <div className="flex items-center">
             <svg className="w-5 h-5 text-red-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />

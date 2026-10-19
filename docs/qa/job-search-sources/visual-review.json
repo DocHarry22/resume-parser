@@ -1,0 +1,11 @@
+{
+  "baseUrl": "http://127.0.0.1:3105",
+  "startedAt": "2026-10-19T12:36:00.448Z",
+  "checks": [
+    {
+      "name": "five external engines receive literal keywords and location; saved filters and phone layout remain usable",
+      "status": "passed"
+    }
+  ],
+  "finishedAt": "2026-10-19T12:36:04.172Z"
+}

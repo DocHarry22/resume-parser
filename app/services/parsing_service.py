@@ -32,7 +32,7 @@ class ParsingService:
     
     def _load_dictionaries(self):
         """Load section headings and skills taxonomy from JSON files."""
-        data_dir = Path(settings.data_dir)
+        data_dir = Path(settings.taxonomy_dir or settings.data_dir)
         
         # Load section headings
         headings_file = data_dir / "section_headings.json"

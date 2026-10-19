@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "checkedAtUtc": "2026-10-15T19:55:50.2989013Z",
+  "candidate": "deploy/render.paid-proposal.yaml",
+  "applicationRevision": "ce44344cfcb43a7a3b9c3709f5949dcd3925e9e7",
+  "schemaUrl": "https://render.com/schema/render.yaml.json",
+  "schemaDialect": "https://json-schema.org/draft/2020-12/schema",
+  "schemaSha256": "8a3fb8da6b4f55fe686fbefa790e011d3dd7895f013f355953c572a21ab6494a",
+  "candidateSha256": "354bb0563778c5b5ddd9773a62cb8442b439185f7ec861cf4ec279a6a1a27258",
+  "validator": "PowerShell Test-Json",
+  "validatorVersion": "7.6.5",
+  "schemaValid": true,
+  "invalidPlanRejected": true,
+  "zeroSizeDiskRejected": true,
+  "applicationSettings": {
+    "status": "PASS",
+    "singleNewDockerService": true,
+    "exactCanonicalOrigin": true,
+    "secureLaxCookies": true,
+    "generatedSecretNoValueCommitted": true,
+    "durablePathMatchesMount": true,
+    "taxonomyPathSeparate": true,
+    "existingCommandPortMatches": true,
+    "noConfiguredPaidAI": true,
+    "automaticDeploysAndPreviewsOff": true
+  },
+  "pricing": {
+    "excludes": "tax, currency conversion, usage overages, existing workspace fees",
+    "incrementalBaseUsdPerMonth": 25.25,
+    "computeUsdPerMonth": 25,
+    "diskUsdPerGbMonth": 0.25,
+    "checkedSource": "https://render.com/pricing",
+    "diskGb": 1
+  },
+  "accountWritesPerformed": false,
+  "paidResourcesCreated": false,
+  "liveChecksPending": [
+    "Render Dashboard resource/price preview and fee approval",
+    "Actual disk ownership/writability under UID10001",
+    "Restart durability and separate guest isolation",
+    "Primary same-origin proxy/cookie and no-cache routing",
+    "Independent encrypted backup and restore test"
+  ],
+  "configurationUnchangedAfterMove": true,
+  "approvalStatus": "DECLINED",
+  "deploymentStatus": "NOT_ACTIVATED",
+  "archivedAtUtc": "2026-10-15T20:02:10.2081715Z"
+}

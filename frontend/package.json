@@ -6,19 +6,32 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "check": "next typegen && tsc --noEmit",
+    "test": "node --test tests/resume-document.test.cjs tests/local-export.test.cjs tests/api-config.test.cjs tests/local-cover-letters.test.cjs tests/scanner-render.test.cjs tests/tracker-validation.test.cjs tests/resume-tailoring.test.cjs tests/resume-history.test.cjs tests/application-letters.test.cjs tests/job-search-apply.test.cjs tests/salary-analyzer.test.cjs tests/career-plans.test.cjs && node scripts/test-career.cjs",
+    "prebuild": "node ../scripts/build-apply-helper.cjs",
+    "test:jobs": "node tests/job-search-apply-e2e.cjs",
+    "test:apply-helper": "node tests/apply-helper-e2e.cjs",
+    "test:letters": "node tests/application-letters-e2e.cjs",
+    "test:history": "node tests/resume-history-e2e.cjs",
+    "test:tailoring": "node tests/resume-tailoring-e2e.cjs",
+    "test:workspace": "node tests/workspace-upgrade-e2e.cjs",
+    "test:tracker": "node tests/tracker-upgrade-e2e.cjs",
+    "test:workflows": "node tests/workflow-regression-e2e.cjs",
+    "test:templates": "node tests/template-design-e2e.cjs",
+    "test:job-sources": "node tests/job-search-sources-e2e.cjs",
+    "test:salary": "node tests/salary-analyzer-e2e.cjs",
+    "test:plans": "node tests/career-plans-e2e.cjs"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/modifiers": "^9.0.0",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
-    "html2canvas": "^1.4.1",
     "immer": "^11.0.1",
-    "jspdf": "^3.0.4",
     "jszip": "^3.10.1",
     "lucide-react": "^0.561.0",
-    "next": "14.0.4",
+    "next": "15.5.28",
     "pdf-lib": "^1.17.1",
     "react": "^18",
     "react-dom": "^18",
@@ -31,9 +44,15 @@
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
-    "eslint-config-next": "14.0.4",
+    "eslint-config-next": "15.5.28",
+    "playwright": "1.62.1",
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
+  },
+  "overrides": {
+    "next": {
+      "postcss": "8.5.23"
+    }
   }
 }

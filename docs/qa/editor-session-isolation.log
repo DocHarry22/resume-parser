@@ -1,0 +1,6 @@
+PASS TXT A → JSON B → session save creates separate B and leaves A byte-for-byte unchanged
+PASS Duplicate is disabled while a server save is in flight
+PASS Duplicate resets the server pointer and saves to its own server document
+PASS Delete/new resets the pointer without overwriting the deleted local copy’s server document
+PASS Failed restore retains the active document and its correct server pointer
+PASS Privacy UI exports and deletes legacy duplicate data while preserving unrelated browser preferences

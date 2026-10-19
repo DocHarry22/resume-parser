@@ -3,7 +3,7 @@
  * Export all components for the modern resume builder
  */
 
-export { ResumeIOBuilder } from './ResumeIOBuilder';
+export { ResumeIOBuilder } from './StudioBuilder';
 export { TemplateSelector } from './TemplateSelector';
 export { LiveResumePreview } from './LiveResumePreview';
 export { CollapsibleSection, CollapsibleEntry, AddButton } from './CollapsibleSection';

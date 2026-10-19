@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "scope": "Actual PDF downloads from the live canonical website and stateless document service",
+  "files": [
+    {
+      "file": "resume-current.pdf",
+      "bytes": 22617,
+      "pages": 1,
+      "sha256": "fb2b4dad8f4be5093e3118438cd5023142c44304db63de077a5a1602a1696c2a",
+      "expectedCurrentContentPresent": true,
+      "allPagesHaveSelectableText": true
+    },
+    {
+      "file": "letter-current.pdf",
+      "bytes": 1769,
+      "pages": 1,
+      "sha256": "4c61420f569c40102ffa4d76f4db82e009de970e90a8549e4dbcf5f4354a0493",
+      "expectedCurrentContentPresent": true,
+      "allPagesHaveSelectableText": true
+    }
+  ]
+}

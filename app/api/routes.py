@@ -10,6 +10,8 @@ from app.models.scoring_models import ResumeScore, ScanMode
 from app.services.parsing_service import ParsingService
 from app.services.scoring_service import ScoringService, get_scoring_service
 from app.utils.document_loader import load_document
+from app.core.config import settings
+from starlette.concurrency import run_in_threadpool
 
 # Setup logging
 logger = logging.getLogger(__name__)
@@ -19,6 +21,24 @@ router = APIRouter()
 
 # Initialize services
 parsing_service = ParsingService()
+
+
+def _validate_job_description(text: Optional[str]):
+    if text and len(text) > settings.max_extracted_characters:
+        raise HTTPException(status_code=413, detail="The job description is too long. Use a shorter advertisement.")
+
+
+async def _parse_document(document):
+    if settings.storage_mode == "local":
+        return await run_in_threadpool(parsing_service.parse_resume, document)
+    return parsing_service.parse_resume(document)
+
+
+async def _score_document(**kwargs):
+    service = get_scoring_service()
+    if settings.storage_mode == "local":
+        return await run_in_threadpool(service.score_resume, **kwargs)
+    return service.score_resume(**kwargs)
 
 
 @router.get("/")
@@ -51,7 +71,8 @@ async def root():
 @router.get("/health")
 async def health_check():
     """Health check endpoint."""
-    return {"status": "healthy"}
+    return {"status": "healthy", "storage_mode": settings.storage_mode,
+            "spacy_model": settings.spacy_model, "server_persistence": settings.storage_mode == "guest"}
 
 
 @router.post("/parse-resume", response_model=Resume)
@@ -70,7 +91,7 @@ async def parse_resume(file: UploadFile = File(...)):
         document = await load_document(file)
         
         # Parse resume
-        resume = parsing_service.parse_resume(document)
+        resume = await _parse_document(document)
         
         logger.info(f"Successfully parsed resume: {file.filename}")
         return resume
@@ -80,7 +101,7 @@ async def parse_resume(file: UploadFile = File(...)):
         raise
     except Exception as e:
         logger.error(f"Error parsing resume: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Unable to process resume")
 
 
 @router.post("/score-resume")
@@ -113,15 +134,16 @@ async def score_resume(
     """
     try:
         # Load document (validates file type, size, etc.)
+        _validate_job_description(job_description)
         logger.info(f"Scoring resume: {file.filename} (mode: {mode.value})")
         document = await load_document(file)
         
         # Parse resume
-        resume = parsing_service.parse_resume(document)
+        resume = await _parse_document(document)
         
         # Score with specified mode
         scoring_service = get_scoring_service()
-        score = scoring_service.score_resume(
+        score = await _score_document(
             resume=resume,
             mode=mode,
             job_description=job_description,
@@ -147,7 +169,7 @@ async def score_resume(
         raise
     except Exception as e:
         logger.error(f"Error scoring resume: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Unable to process resume")
 
 
 @router.post("/parse-and-score")
@@ -191,16 +213,17 @@ async def parse_and_score(
     """
     try:
         # Load document (validates file type, size, etc.)
+        _validate_job_description(job_description)
         logger.info(f"Parsing and scoring resume: {file.filename} (mode: {mode.value})")
         document = await load_document(file)
         
         # Parse resume
-        resume = parsing_service.parse_resume(document)
+        resume = await _parse_document(document)
         
         # Score with specified mode
         # TODO: Consider async scoring for performance at scale
         scoring_service = get_scoring_service()
-        score = scoring_service.score_resume(
+        score = await _score_document(
             resume=resume,
             mode=mode,
             job_description=job_description,
@@ -219,7 +242,7 @@ async def parse_and_score(
         raise
     except Exception as e:
         logger.error(f"Error processing resume: {str(e)}", exc_info=True)
-        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Unable to process resume")
 
 
 @router.get("/scan-modes")

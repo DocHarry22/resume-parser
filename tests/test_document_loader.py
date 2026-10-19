@@ -16,10 +16,10 @@ class MockUploadFile:
     
     def __init__(self, filename: str, content: bytes):
         self.filename = filename
-        self.content = content
-    
-    async def read(self):
-        return self.content
+        self.stream = BytesIO(content)
+
+    async def read(self, size=-1):
+        return self.stream.read(size)
 
 
 @pytest.mark.asyncio
@@ -37,7 +37,7 @@ async def test_load_document_no_filename():
 @pytest.mark.asyncio
 async def test_load_document_unsupported_type():
     """Test error for unsupported file type."""
-    mock_file = MockUploadFile("document.txt", b"text content")
+    mock_file = MockUploadFile("document.exe", b"text content")
     
     with pytest.raises(HTTPException) as exc_info:
         await load_document(mock_file)
@@ -67,7 +67,7 @@ async def test_load_document_file_too_large():
     with pytest.raises(HTTPException) as exc_info:
         await load_document(mock_file)
     
-    assert exc_info.value.status_code == 400
+    assert exc_info.value.status_code == 413
     assert "too large" in str(exc_info.value.detail).lower()
 
 
@@ -129,7 +129,7 @@ def test_load_document_from_path_unsupported():
     """Test error for unsupported file type."""
     # Create a temp file with unsupported extension
     import tempfile
-    with tempfile.NamedTemporaryFile(suffix=".txt", delete=False) as f:
+    with tempfile.NamedTemporaryFile(suffix=".exe", delete=False) as f:
         f.write(b"test content")
         temp_path = f.name
     
@@ -144,7 +144,8 @@ def test_allowed_extensions():
     """Test that allowed extensions are properly defined."""
     assert ".pdf" in ALLOWED_EXTENSIONS
     assert ".docx" in ALLOWED_EXTENSIONS
-    assert ".doc" in ALLOWED_EXTENSIONS
+    assert ".txt" in ALLOWED_EXTENSIONS
+    assert ".doc" not in ALLOWED_EXTENSIONS
 
 
 def test_max_file_size():

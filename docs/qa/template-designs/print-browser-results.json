@@ -1,0 +1,19 @@
+{
+  "baseUrl": "http://127.0.0.1:3100",
+  "checks": [
+    "modern print rendered",
+    "classic print rendered",
+    "minimal print rendered",
+    "professional print rendered",
+    "creative print rendered",
+    "elegant print rendered",
+    "executive print rendered",
+    "technical print rendered",
+    "modern long print rendered",
+    "professional long print rendered",
+    "executive long print rendered"
+  ],
+  "pageErrors": [],
+  "passed": true,
+  "completedAt": "2026-10-18T21:32:48.290Z"
+}
