@@ -1,0 +1,19 @@
+{
+  "startedAt": "2026-10-19T16:34:19.873Z",
+  "checks": [
+    "Job tracker: add, edit, stage change, reload persistence, search and JSON export passed",
+    "Job tracker desktop: no horizontal overflow",
+    "Job modal desktop: no horizontal overflow",
+    "Dashboard desktop: no horizontal overflow",
+    "Job tracker tablet: no horizontal overflow",
+    "Job modal tablet: no horizontal overflow",
+    "Dashboard tablet: no horizontal overflow",
+    "Job tracker mobile: no horizontal overflow",
+    "Job modal mobile: no horizontal overflow",
+    "Dashboard mobile: no horizontal overflow",
+    "Job tracker: delete and backup restore passed"
+  ],
+  "browserErrors": [],
+  "finishedAt": "2026-10-19T16:34:28.827Z",
+  "passed": true
+}

@@ -1,0 +1,90 @@
+{
+  "baseUrl": "https://docheng-careerforge.thletsholo2.chatgpt.site",
+  "transport": "local static artifact",
+  "startedAt": "2026-10-19T16:18:42.918Z",
+  "routes": [
+    {
+      "route": "/dashboard/",
+      "status": 200,
+      "heading": "Welcome to your workspace.\n✦",
+      "mobileOverflow": false
+    },
+    {
+      "route": "/documents/",
+      "status": 200,
+      "heading": "Your documents",
+      "mobileOverflow": false
+    },
+    {
+      "route": "/tailor/",
+      "status": 200,
+      "heading": "Make your next application personal.",
+      "mobileOverflow": false
+    },
+    {
+      "route": "/history/",
+      "status": 200,
+      "heading": "Your story, saved along the way.",
+      "mobileOverflow": false
+    },
+    {
+      "route": "/letters/",
+      "status": 200,
+      "heading": "Your cover letters",
+      "mobileOverflow": false
+    },
+    {
+      "route": "/job-tracker/",
+      "status": 200,
+      "heading": "Job tracker\n0",
+      "mobileOverflow": false
+    },
+    {
+      "route": "/jobs/",
+      "status": 200,
+      "heading": "Find a role worth your next move.",
+      "mobileOverflow": false
+    },
+    {
+      "route": "/auto-apply/",
+      "status": 200,
+      "heading": "Your next application, ready for review.",
+      "mobileOverflow": false
+    },
+    {
+      "route": "/interview-prep/",
+      "status": 200,
+      "heading": "A little practice. A stronger conversation.",
+      "mobileOverflow": false
+    },
+    {
+      "route": "/salary-analyzer/",
+      "status": 200,
+      "heading": "A clearer view of your next offer.",
+      "mobileOverflow": false
+    },
+    {
+      "route": "/career-plan/",
+      "status": 200,
+      "heading": "Make room for your next 90 days.",
+      "mobileOverflow": false
+    }
+  ],
+  "checks": [
+    "Eleven career routes hydrate and fit desktop/mobile layouts",
+    "90-day plan creation, task completion and browser reload persist",
+    "Salary scenario saves supplied amounts and reloads",
+    "Builder downloads a genuine DOCX containing current supplied content",
+    "Downloadable review-first helper includes both hosted application origins"
+  ],
+  "pageErrors": [],
+  "failedResponses": [],
+  "processingRequests": [],
+  "helper": {
+    "version": "1.0.1",
+    "bytes": 9617,
+    "sha256": "93ec795cd91a543494e50747e5e160298784a123e0e750b9b8e6f345175d36d6"
+  },
+  "passed": true,
+  "finishedAt": "2026-10-19T16:19:08.846Z"
+}

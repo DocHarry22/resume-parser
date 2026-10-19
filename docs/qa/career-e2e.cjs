@@ -26,14 +26,14 @@ let browser, page;
   await page.getByLabel('Follow-up date').fill('2026-10-14');
   await page.getByLabel('Notes', { exact: true }).fill('Follow up with the recruiter. Unicode: Zoë.');
   await page.getByRole('button', { name: 'Save job', exact: true }).click();
-  await page.getByRole('heading', { name: 'Platform engineer QA', exact: true }).waitFor();
+  await page.locator('.tracker-card').getByRole('button', { name: 'Platform engineer QA', exact: true }).waitFor();
   await page.getByRole('combobox', { name: 'Stage for Platform engineer QA at Evidence Company' }).selectOption('Interview');
   await page.reload({ waitUntil: 'domcontentloaded' });
   assert.equal(await page.getByRole('combobox', { name: 'Stage for Platform engineer QA at Evidence Company' }).inputValue(), 'Interview');
   await page.getByRole('button', { name: 'Edit details', exact: true }).click();
   await page.getByLabel('Job title', { exact: true }).fill('Senior platform engineer QA');
   await page.getByRole('button', { name: 'Save job', exact: true }).click();
-  await page.getByRole('heading', { name: 'Senior platform engineer QA', exact: true }).waitFor();
+  await page.locator('.tracker-card').getByRole('button', { name: 'Senior platform engineer QA', exact: true }).waitFor();
   const backupEvent = page.waitForEvent('download'); await page.getByRole('button', { name: 'Export backup' }).click();
   const backup = await backupEvent; const backupPath = path.join(root, 'job-backup.json'); await backup.saveAs(backupPath);
   assert.equal(JSON.parse(fs.readFileSync(backupPath, 'utf8')).jobs[0].role, 'Senior platform engineer QA');
@@ -44,14 +44,15 @@ let browser, page;
   for (const [width, height, name] of [[1440,1000,'desktop'],[820,1180,'tablet'],[390,844,'mobile']]) {
     await page.setViewportSize({width,height}); await noOverflow('Job tracker '+name); await screenshot('job-tracker-'+name);
     await page.getByRole('button', { name: 'Add a job', exact: true }).click(); await noOverflow('Job modal '+name); await screenshot('job-dialog-'+name); await page.getByRole('button', {name:'Close job form'}).click();
-    await go('/dashboard'); await page.getByRole('heading', {name:'Make your next move.'}).waitFor(); await noOverflow('Dashboard '+name); await screenshot('dashboard-'+name);
+    await go('/dashboard'); await page.getByRole('heading', {name:/Welcome to your workspace/}).waitFor(); await noOverflow('Dashboard '+name); await screenshot('dashboard-'+name);
     await go('/job-tracker');
   }
-  page.once('dialog', dialog => dialog.accept()); await page.getByRole('button', {name:'Delete',exact:true}).click();
-  await page.getByRole('heading', {name:'Your next opportunity starts here'}).waitFor();
+  await page.locator('.tracker-card').getByRole('button', {name:'Senior platform engineer QA',exact:true}).click(); page.once('dialog', dialog => dialog.accept()); await page.getByRole('button', {name:'Delete job',exact:true}).click();
+  await page.getByRole('heading', {name:'Make your next move',exact:true}).waitFor();
   await page.getByLabel('Import job tracker backup').setInputFiles(backupPath);
-  await page.getByRole('heading', {name:'Senior platform engineer QA',exact:true}).waitFor();
+  await page.locator('.tracker-card').getByRole('button', {name:'Senior platform engineer QA',exact:true}).waitFor();
   note('Job tracker: delete and backup restore passed');
+  if(process.env.CAREER_SCOPE==='tracker'){result.finishedAt=new Date().toISOString();result.passed=true;fs.writeFileSync(path.join(root,'career-e2e-results.json'),JSON.stringify(result,null,2));await browser.close();return;}
   await page.setViewportSize({width:1440,height:1000});
   await go('/cover-letter');
   await page.getByRole('button', {name:'Create cover letter',exact:true}).click();

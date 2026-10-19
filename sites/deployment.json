@@ -8,13 +8,14 @@
     "NEXT_PUBLIC_SITE_MODE": "1"
   },
   "canonical_domain": "https://resume.docheng.co.za/",
-  "canonical_backend_verified": false,
+  "canonical_backend_verified": true,
   "shared_identity_verified": false,
   "published_url": "https://docheng-careerforge.thletsholo2.chatgpt.site",
   "audience": "owner-private",
-  "version_number": 2,
-  "version_id": "appgprj_6ad0d2b816bc8191b1964e7bc48c2f93~appgver_a9c82ecb50388191a02017eaefc46d70",
-  "deployment_id": "appgdep_6ad1266496808191955c920fff57e5d5",
+  "version_number": 4,
+  "version_id": "appgprj_6ad0d2b816bc8191b1964e7bc48c2f93~appgver_f246cfa8746c819192512f715807ef57",
+  "deployment_id": "appgdep_6ad644a6602081919ea8e56e53a2ffbd",
   "deployment_status": "succeeded",
-  "site_source_commit": "a907baefc954f86b9b3b95877d3df8cfaac7fd25"
+  "site_source_commit": "3db2fcfdeb84e8cffe5af183a8d2d32ff44a5fa1",
+  "primary_source_commit": "a8b47b6653fa21cdbc64407e00278d8449b93c65"
 }

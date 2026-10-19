@@ -1,0 +1,465 @@
+{
+  "domain": "resume.docheng.co.za",
+  "files": [
+    {
+      "path": "_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "bytes": 174384
+    },
+    {
+      "path": "_next/static/chunks/247-c5f72daefdf06886.js",
+      "bytes": 8535
+    },
+    {
+      "path": "_next/static/chunks/315-6fb18f02b2f66a81.js",
+      "bytes": 120751
+    },
+    {
+      "path": "_next/static/chunks/383-c0e08461b27ab319.js",
+      "bytes": 88150
+    },
+    {
+      "path": "_next/static/chunks/501.751f4a2792ed6108.js",
+      "bytes": 740
+    },
+    {
+      "path": "_next/static/chunks/552-a4687ceb9cd693d0.js",
+      "bytes": 8063
+    },
+    {
+      "path": "_next/static/chunks/656.9de8bca38b60e5af.js",
+      "bytes": 5444
+    },
+    {
+      "path": "_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "bytes": 173019
+    },
+    {
+      "path": "_next/static/chunks/810-f6036a1b0538759e.js",
+      "bytes": 27339
+    },
+    {
+      "path": "_next/static/chunks/811-117308b5a277f83f.js",
+      "bytes": 11328
+    },
+    {
+      "path": "_next/static/chunks/821-9672c1ce725233fa.js",
+      "bytes": 7967
+    },
+    {
+      "path": "_next/static/chunks/854-afe9533f6262bacc.js",
+      "bytes": 11763
+    },
+    {
+      "path": "_next/static/chunks/874-3f8bbae6376a04d4.js",
+      "bytes": 16298
+    },
+    {
+      "path": "_next/static/chunks/91-c27a68f399603ebb.js",
+      "bytes": 18800
+    },
+    {
+      "path": "_next/static/chunks/922-288a5ef379b94d6a.js",
+      "bytes": 21841
+    },
+    {
+      "path": "_next/static/chunks/app/_not-found/page-00815bc36caf7c9d.js",
+      "bytes": 2669
+    },
+    {
+      "path": "_next/static/chunks/app/auto-apply/page-453cc2ffdbba53a9.js",
+      "bytes": 37518
+    },
+    {
+      "path": "_next/static/chunks/app/builder/page-5d35c4045f72814a.js",
+      "bytes": 389
+    },
+    {
+      "path": "_next/static/chunks/app/career-plan/page-5efaaede218b34c1.js",
+      "bytes": 35232
+    },
+    {
+      "path": "_next/static/chunks/app/cover-letter/page-5be76f5a528e6a6e.js",
+      "bytes": 49752
+    },
+    {
+      "path": "_next/static/chunks/app/dashboard/page-290db355760b80a1.js",
+      "bytes": 13687
+    },
+    {
+      "path": "_next/static/chunks/app/documents/page-f512f635611e8f35.js",
+      "bytes": 10584
+    },
+    {
+      "path": "_next/static/chunks/app/history/page-ffd781f6ddee2884.js",
+      "bytes": 16954
+    },
+    {
+      "path": "_next/static/chunks/app/interview-prep/page-1e22a8c1a0abe026.js",
+      "bytes": 12795
+    },
+    {
+      "path": "_next/static/chunks/app/job-tracker/page-8ef26e1f10c18fb5.js",
+      "bytes": 39220
+    },
+    {
+      "path": "_next/static/chunks/app/jobs/page-b499149ad1dd4fd4.js",
+      "bytes": 23407
+    },
+    {
+      "path": "_next/static/chunks/app/layout-c40f22a70f0047b8.js",
+      "bytes": 15571
+    },
+    {
+      "path": "_next/static/chunks/app/letters/page-828993fc79d3ca37.js",
+      "bytes": 25387
+    },
+    {
+      "path": "_next/static/chunks/app/login/page-3842a28b574f88eb.js",
+      "bytes": 189
+    },
+    {
+      "path": "_next/static/chunks/app/page-4b307a2b73697cd2.js",
+      "bytes": 19681
+    },
+    {
+      "path": "_next/static/chunks/app/privacy/page-8310959f9237cbc3.js",
+      "bytes": 8430
+    },
+    {
+      "path": "_next/static/chunks/app/resources/guides/page-3842a28b574f88eb.js",
+      "bytes": 189
+    },
+    {
+      "path": "_next/static/chunks/app/resume-scanner/page-1a108b785da7be37.js",
+      "bytes": 4664
+    },
+    {
+      "path": "_next/static/chunks/app/salary-analyzer/page-eb04482527cbe462.js",
+      "bytes": 32710
+    },
+    {
+      "path": "_next/static/chunks/app/signup/page-3842a28b574f88eb.js",
+      "bytes": 189
+    },
+    {
+      "path": "_next/static/chunks/app/tailor/page-c209de5536e40091.js",
+      "bytes": 19352
+    },
+    {
+      "path": "_next/static/chunks/app/templates/page-3c6b2158d2a1abab.js",
+      "bytes": 6413
+    },
+    {
+      "path": "_next/static/chunks/app/tools/builder/layout-02b073cb7a617f33.js",
+      "bytes": 128
+    },
+    {
+      "path": "_next/static/chunks/app/tools/builder/page-cfac91d8c4e3bade.js",
+      "bytes": 887
+    },
+    {
+      "path": "_next/static/chunks/app/tools/page-2b5089cfddd8ef65.js",
+      "bytes": 6955
+    },
+    {
+      "path": "_next/static/chunks/framework-138d446469aa2b5b.js",
+      "bytes": 139834
+    },
+    {
+      "path": "_next/static/chunks/main-app-f717357ca60447a6.js",
+      "bytes": 554
+    },
+    {
+      "path": "_next/static/chunks/main-cfffce2932250552.js",
+      "bytes": 120336
+    },
+    {
+      "path": "_next/static/chunks/pages/_app-ba78c719f3a95b3f.js",
+      "bytes": 914
+    },
+    {
+      "path": "_next/static/chunks/pages/_error-0f3efd53be8b362b.js",
+      "bytes": 5650
+    },
+    {
+      "path": "_next/static/chunks/polyfills-42372ed130431b0a.js",
+      "bytes": 112594
+    },
+    {
+      "path": "_next/static/chunks/webpack-5eac3c924e1f63f5.js",
+      "bytes": 3513
+    },
+    {
+      "path": "_next/static/css/1b8db0b00b261248.css",
+      "bytes": 20059
+    },
+    {
+      "path": "_next/static/css/5351ea4f0e12d4d0.css",
+      "bytes": 85903
+    },
+    {
+      "path": "_next/static/css/5ba3d811cdeb3caa.css",
+      "bytes": 40846
+    },
+    {
+      "path": "_next/static/css/da52405608d8ce9d.css",
+      "bytes": 74635
+    },
+    {
+      "path": "_next/static/zA-GrPD9V563MgmNze35q/_buildManifest.js",
+      "bytes": 1352
+    },
+    {
+      "path": "_next/static/zA-GrPD9V563MgmNze35q/_ssgManifest.js",
+      "bytes": 80
+    },
+    {
+      "path": ".htaccess",
+      "bytes": 280
+    },
+    {
+      "path": "404.html",
+      "bytes": 11342
+    },
+    {
+      "path": "404/index.html",
+      "bytes": 11342
+    },
+    {
+      "path": "application-helper/careerforge-auto-apply.zip",
+      "bytes": 9617
+    },
+    {
+      "path": "auto-apply/index.html",
+      "bytes": 20245
+    },
+    {
+      "path": "auto-apply/index.txt",
+      "bytes": 5344
+    },
+    {
+      "path": "builder/index.html",
+      "bytes": 11328
+    },
+    {
+      "path": "builder/index.txt",
+      "bytes": 5253
+    },
+    {
+      "path": "career-plan/index.html",
+      "bytes": 21730
+    },
+    {
+      "path": "career-plan/index.txt",
+      "bytes": 5210
+    },
+    {
+      "path": "cover-letter/index.html",
+      "bytes": 13337
+    },
+    {
+      "path": "cover-letter/index.txt",
+      "bytes": 5306
+    },
+    {
+      "path": "dashboard/index.html",
+      "bytes": 32445
+    },
+    {
+      "path": "dashboard/index.txt",
+      "bytes": 5338
+    },
+    {
+      "path": "documents/index.html",
+      "bytes": 24128
+    },
+    {
+      "path": "documents/index.txt",
+      "bytes": 5338
+    },
+    {
+      "path": "history/index.html",
+      "bytes": 20232
+    },
+    {
+      "path": "history/index.txt",
+      "bytes": 5330
+    },
+    {
+      "path": "home/commons-medium.woff2",
+      "bytes": 47398
+    },
+    {
+      "path": "home/commons-regular.woff2",
+      "bytes": 21040
+    },
+    {
+      "path": "home/commons-semibold.woff2",
+      "bytes": 21180
+    },
+    {
+      "path": "home/features/cover-letter.png",
+      "bytes": 15061
+    },
+    {
+      "path": "home/features/job-match.png",
+      "bytes": 25362
+    },
+    {
+      "path": "home/features/step-by-step.png",
+      "bytes": 21757
+    },
+    {
+      "path": "home/features/summary.png",
+      "bytes": 15947
+    },
+    {
+      "path": "home/footer-resumes.png",
+      "bytes": 868142
+    },
+    {
+      "path": "home/resources/cover-letter.png",
+      "bytes": 697673
+    },
+    {
+      "path": "home/resources/resume.png",
+      "bytes": 245404
+    },
+    {
+      "path": "home/resume-hero-mobile.png",
+      "bytes": 18699
+    },
+    {
+      "path": "home/resume-hero.png",
+      "bytes": 67336
+    },
+    {
+      "path": "home/tools/resume-builder.png",
+      "bytes": 35232
+    },
+    {
+      "path": "icon.svg",
+      "bytes": 272
+    },
+    {
+      "path": "index.html",
+      "bytes": 105371
+    },
+    {
+      "path": "index.txt",
+      "bytes": 30494
+    },
+    {
+      "path": "interview-prep/index.html",
+      "bytes": 24878
+    },
+    {
+      "path": "interview-prep/index.txt",
+      "bytes": 5222
+    },
+    {
+      "path": "job-tracker/index.html",
+      "bytes": 28018
+    },
+    {
+      "path": "job-tracker/index.txt",
+      "bytes": 5461
+    },
+    {
+      "path": "jobs/index.html",
+      "bytes": 27408
+    },
+    {
+      "path": "jobs/index.txt",
+      "bytes": 5228
+    },
+    {
+      "path": "letters/index.html",
+      "bytes": 20238
+    },
+    {
+      "path": "letters/index.txt",
+      "bytes": 5332
+    },
+    {
+      "path": "login/index.html",
+      "bytes": 12546
+    },
+    {
+      "path": "login/index.txt",
+      "bytes": 6039
+    },
+    {
+      "path": "privacy/index.html",
+      "bytes": 13088
+    },
+    {
+      "path": "privacy/index.txt",
+      "bytes": 5192
+    },
+    {
+      "path": "resources/guides/index.html",
+      "bytes": 21951
+    },
+    {
+      "path": "resources/guides/index.txt",
+      "bytes": 11277
+    },
+    {
+      "path": "resume-scanner/index.html",
+      "bytes": 18176
+    },
+    {
+      "path": "resume-scanner/index.txt",
+      "bytes": 5314
+    },
+    {
+      "path": "salary-analyzer/index.html",
+      "bytes": 29178
+    },
+    {
+      "path": "salary-analyzer/index.txt",
+      "bytes": 5226
+    },
+    {
+      "path": "signup/index.html",
+      "bytes": 12551
+    },
+    {
+      "path": "signup/index.txt",
+      "bytes": 6043
+    },
+    {
+      "path": "tailor/index.html",
+      "bytes": 20228
+    },
+    {
+      "path": "tailor/index.txt",
+      "bytes": 5326
+    },
+    {
+      "path": "templates/index.html",
+      "bytes": 51683
+    },
+    {
+      "path": "templates/index.txt",
+      "bytes": 8293
+    },
+    {
+      "path": "tools/builder/index.html",
+      "bytes": 12188
+    },
+    {
+      "path": "tools/builder/index.txt",
+      "bytes": 5886
+    },
+    {
+      "path": "tools/index.html",
+      "bytes": 11689
+    },
+    {
+      "path": "tools/index.txt",
+      "bytes": 5462
+    }
+  ]
+}
