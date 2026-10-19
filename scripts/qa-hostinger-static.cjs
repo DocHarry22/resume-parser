@@ -59,7 +59,7 @@ async function main(argv = process.argv.slice(2)) {
   assert.ok(localFile(settings, '/builder/'));
   if (settings.check) { console.log(JSON.stringify({ check: 'passed', scope: 'LOCAL STATIC ARTIFACT ONLY', sourceCommit: settings.manifest.commit, dist: settings.dist, simulatedBrowserOrigin: canonical, liveApiOrigin: settings.api, networkCalls: false, browserStarted: false, hostingWrites: false }, null, 2)); return; }
   const { chromium, browserChannel } = require('./playwright-runtime.cjs');
-  const output = path.join(root, 'docs', 'qa', 'hostinger-static'); fs.mkdirSync(output, { recursive: true });
+  const output = path.resolve(process.env.QA_OUTPUT || path.join(root, 'docs', 'qa', 'hostinger-static')); fs.mkdirSync(output, { recursive: true });
   const report = { scope: 'LOCAL STATIC ARTIFACT at simulated canonical origin; NOT DEPLOYED', sourceCommit: settings.manifest.commit, artifactSha256: settings.manifest.artifact.sha256, dist: settings.dist, simulatedBrowserOrigin: canonical, liveApiOrigin: settings.api, startedAt: new Date().toISOString(), canonicalNetworkPassThrough: false, checks: [], apiRequests: [], fetches: [], apiResponses: [], pageErrors: [], violations: [], missingLocalPaths: [], canonicalResponses: [], localResponses: 0 };
   const note = value => { report.checks.push(value); console.log(value); };
   const permitted = new Set(['/api/exports/resume/pdf', '/api/exports/resume/import', '/api/exports/cover-letter/pdf', '/api/parse-and-score']);

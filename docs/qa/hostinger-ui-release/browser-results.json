@@ -1,0 +1,1591 @@
+{
+  "scope": "LOCAL STATIC ARTIFACT at simulated canonical origin; NOT DEPLOYED",
+  "sourceCommit": "d64a76351d27ceea8d0decdde1df340d051f1762",
+  "artifactSha256": "3ccc05b51e19c59bf49afad79f448f25cb7ffe3a2529fa5618a757dcbdb35a9b",
+  "dist": "C:\\Users\\game\\OneDrive\\Desktop\\Personal\\webapps\\resume_parser\\.mission-work\\.runtime\\hostinger-release\\d64a76351d27ceea8d0decdde1df340d051f1762\\dist",
+  "simulatedBrowserOrigin": "https://resume.docheng.co.za",
+  "liveApiOrigin": "https://careerforge-resume-api-free.onrender.com",
+  "startedAt": "2026-10-19T07:18:47.145Z",
+  "canonicalNetworkPassThrough": false,
+  "checks": [
+    "A 2 MiB + 1 byte synthetic import is rejected before any live API fetch",
+    "Local primary static artifact starts blank and saves/reloads in browser; current PDF uses the live Render API with canonical CORS",
+    "TXT import populates the editable browser document without a server identity",
+    "Scanner submits the small current PDF to the live service and renders feedback with no-store responses",
+    "Letters persist in browser storage; current PDF uses the stateless live service without a save/list/delete request",
+    "Gallery, dashboard, job tracker, letters and builder load entirely from local static files; mobile390 has no overflow",
+    "Four live processing calls use credentials omit; no workspace cookie, persisted server route, page error, or real canonical-host passthrough"
+  ],
+  "apiRequests": [
+    {
+      "path": "/api/exports/resume/pdf",
+      "method": "POST",
+      "cookieSent": false
+    },
+    {
+      "path": "/api/exports/resume/import",
+      "method": "POST",
+      "cookieSent": false
+    },
+    {
+      "path": "/api/parse-and-score",
+      "method": "POST",
+      "cookieSent": false
+    },
+    {
+      "path": "/api/exports/cover-letter/pdf",
+      "method": "POST",
+      "cookieSent": false
+    }
+  ],
+  "fetches": [
+    {
+      "url": "https://resume.docheng.co.za/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/dashboard/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/tools/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/dashboard/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/builder/index.txt?new=1&_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/tools/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://careerforge-resume-api-free.onrender.com/api/exports/resume/pdf?page_size=A4",
+      "credentials": "omit"
+    },
+    {
+      "url": "https://careerforge-resume-api-free.onrender.com/api/exports/resume/import",
+      "credentials": "omit"
+    },
+    {
+      "url": "https://resume.docheng.co.za/index.txt?_rsc=kzL7OEaZsqicjM2C",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/dashboard/index.txt?_rsc=kzL7OEaZsqicjM2C",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/builder/index.txt?new=1&_rsc=kzL7OEaZsqicjM2C",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/privacy/index.txt?_rsc=kzL7OEaZsqicjM2C",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://careerforge-resume-api-free.onrender.com/api/parse-and-score?mode=basic",
+      "credentials": "omit"
+    },
+    {
+      "url": "https://resume.docheng.co.za/index.txt?_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/dashboard/index.txt?_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/builder/index.txt?new=1&_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://careerforge-resume-api-free.onrender.com/api/exports/cover-letter/pdf",
+      "credentials": "omit"
+    },
+    {
+      "url": "https://resume.docheng.co.za/index.txt?_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/dashboard/index.txt?_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/builder/index.txt?new=1&_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/index.txt?_rsc=Uj5fJzh3oSqZfPD_",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/builder/index.txt?new=1&_rsc=Uj5fJzh3oSqZfPD_",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/cover-letter/index.txt?_rsc=Uj5fJzh3oSqZfPD_",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/job-tracker/index.txt?_rsc=Uj5fJzh3oSqZfPD_",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/resume-scanner/index.txt?_rsc=Uj5fJzh3oSqZfPD_",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/index.txt?_rsc=AnCSnrtqEzaXEcIi",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/dashboard/index.txt?_rsc=AnCSnrtqEzaXEcIi",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/builder/index.txt?new=1&_rsc=AnCSnrtqEzaXEcIi",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/index.txt?_rsc=hychSX8B7PZPqPM2",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/dashboard/index.txt?_rsc=hychSX8B7PZPqPM2",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/builder/index.txt?new=1&_rsc=hychSX8B7PZPqPM2",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/index.txt?_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/dashboard/index.txt?_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/builder/index.txt?new=1&_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/resources/guides/index.txt?_rsc=JS06DRIClnFOx4Ok",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/dashboard/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    },
+    {
+      "url": "https://resume.docheng.co.za/tools/index.txt?_rsc=t3zZx2G72l-uI2H-",
+      "credentials": "same-origin"
+    }
+  ],
+  "apiResponses": [
+    {
+      "path": "/api/exports/resume/pdf",
+      "status": 200,
+      "corsOrigin": "https://resume.docheng.co.za",
+      "cacheControl": "no-store",
+      "setCookie": false
+    },
+    {
+      "path": "/api/exports/resume/import",
+      "status": 200,
+      "corsOrigin": "https://resume.docheng.co.za",
+      "cacheControl": "no-store",
+      "setCookie": false
+    },
+    {
+      "path": "/api/parse-and-score",
+      "status": 200,
+      "corsOrigin": "https://resume.docheng.co.za",
+      "cacheControl": "no-store",
+      "setCookie": false
+    },
+    {
+      "path": "/api/exports/cover-letter/pdf",
+      "status": 200,
+      "corsOrigin": "https://resume.docheng.co.za",
+      "cacheControl": "no-store",
+      "setCookie": false
+    }
+  ],
+  "pageErrors": [],
+  "violations": [],
+  "missingLocalPaths": [],
+  "canonicalResponses": [
+    {
+      "path": "/builder/",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/d2637c66b4d79719.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/071d3eb3c81a8859.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/48bb57ae39ad011a.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/webpack-939dc94f710e1385.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/main-app-f717357ca60447a6.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/247-c5f72daefdf06886.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-1a4da355f3ba21f3.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/396-7ec272baee43a0b1.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/493-2290cf86616d50e0.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/683-94fbed09f680032b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/353-257141dfb0056826.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/builder/page-4580cf21df410467.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-semibold.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-regular.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/dashboard/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-medium.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/tools/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/page-105388d43ad529a2.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/dashboard/page-4ac76036b3ec6be7.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/670-17c6af18c4621671.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/tools/page-3882c2cbb4783550.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/builder",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/d2637c66b4d79719.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/071d3eb3c81a8859.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/48bb57ae39ad011a.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/webpack-939dc94f710e1385.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/main-app-f717357ca60447a6.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/247-c5f72daefdf06886.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-1a4da355f3ba21f3.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/493-2290cf86616d50e0.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/683-94fbed09f680032b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/builder/page-4580cf21df410467.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/353-257141dfb0056826.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/396-7ec272baee43a0b1.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-semibold.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-regular.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-medium.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/dashboard/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/builder/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/tools/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/page-105388d43ad529a2.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/dashboard/page-4ac76036b3ec6be7.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/670-17c6af18c4621671.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/tools/page-3882c2cbb4783550.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/resume-scanner/",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/d2637c66b4d79719.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/071d3eb3c81a8859.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/48bb57ae39ad011a.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/webpack-939dc94f710e1385.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/main-app-f717357ca60447a6.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/247-c5f72daefdf06886.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-1a4da355f3ba21f3.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/670-17c6af18c4621671.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/resume-scanner/page-ab665ece8fa74885.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-semibold.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-regular.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-medium.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/dashboard/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/builder/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/privacy/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/683-94fbed09f680032b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/page-105388d43ad529a2.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/dashboard/page-4ac76036b3ec6be7.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/493-2290cf86616d50e0.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/builder/page-4580cf21df410467.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/396-7ec272baee43a0b1.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/privacy/page-1763201071f2c416.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/353-257141dfb0056826.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/cover-letter/",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/features/cover-letter.png",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/d2637c66b4d79719.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/071d3eb3c81a8859.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/48bb57ae39ad011a.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/webpack-939dc94f710e1385.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/main-app-f717357ca60447a6.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/247-c5f72daefdf06886.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-1a4da355f3ba21f3.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/396-7ec272baee43a0b1.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/cover-letter/page-03cf88c4ffe6efcc.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-semibold.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-regular.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-medium.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/dashboard/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/builder/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/683-94fbed09f680032b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/page-105388d43ad529a2.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/dashboard/page-4ac76036b3ec6be7.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/493-2290cf86616d50e0.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/builder/page-4580cf21df410467.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/353-257141dfb0056826.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/cover-letter/",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/features/cover-letter.png",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/d2637c66b4d79719.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/071d3eb3c81a8859.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/48bb57ae39ad011a.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/webpack-939dc94f710e1385.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/main-app-f717357ca60447a6.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/247-c5f72daefdf06886.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-1a4da355f3ba21f3.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/396-7ec272baee43a0b1.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/cover-letter/page-03cf88c4ffe6efcc.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-semibold.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-regular.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-medium.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/dashboard/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/builder/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/683-94fbed09f680032b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/page-105388d43ad529a2.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/493-2290cf86616d50e0.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/dashboard/page-4ac76036b3ec6be7.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/builder/page-4580cf21df410467.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/353-257141dfb0056826.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/dashboard/",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/d2637c66b4d79719.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/071d3eb3c81a8859.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/48bb57ae39ad011a.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/webpack-939dc94f710e1385.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/main-app-f717357ca60447a6.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/247-c5f72daefdf06886.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-1a4da355f3ba21f3.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/dashboard/page-4ac76036b3ec6be7.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-semibold.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-regular.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-medium.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/builder/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/cover-letter/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/job-tracker/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/resume-scanner/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/683-94fbed09f680032b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/page-105388d43ad529a2.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/493-2290cf86616d50e0.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/builder/page-4580cf21df410467.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/353-257141dfb0056826.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/396-7ec272baee43a0b1.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/job-tracker/page-e67147fb43957ea8.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/cover-letter/page-03cf88c4ffe6efcc.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/670-17c6af18c4621671.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/resume-scanner/page-ab665ece8fa74885.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/job-tracker/",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/d2637c66b4d79719.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/071d3eb3c81a8859.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/48bb57ae39ad011a.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/webpack-939dc94f710e1385.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/main-app-f717357ca60447a6.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/247-c5f72daefdf06886.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-1a4da355f3ba21f3.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/job-tracker/page-e67147fb43957ea8.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-semibold.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-regular.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-medium.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/dashboard/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/builder/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/683-94fbed09f680032b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/page-105388d43ad529a2.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/dashboard/page-4ac76036b3ec6be7.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/493-2290cf86616d50e0.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/builder/page-4580cf21df410467.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/396-7ec272baee43a0b1.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/353-257141dfb0056826.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/templates/",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/d2637c66b4d79719.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/071d3eb3c81a8859.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/48bb57ae39ad011a.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/webpack-939dc94f710e1385.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/main-app-f717357ca60447a6.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-1a4da355f3ba21f3.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/247-c5f72daefdf06886.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/683-94fbed09f680032b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/templates/page-7f321e70b5d628ff.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-semibold.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-regular.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-medium.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/dashboard/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/builder/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/page-105388d43ad529a2.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/dashboard/page-4ac76036b3ec6be7.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/493-2290cf86616d50e0.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/builder/page-4580cf21df410467.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/353-257141dfb0056826.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/396-7ec272baee43a0b1.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/cover-letter/",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/features/cover-letter.png",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/d2637c66b4d79719.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/071d3eb3c81a8859.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/48bb57ae39ad011a.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/webpack-939dc94f710e1385.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/main-app-f717357ca60447a6.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/247-c5f72daefdf06886.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-1a4da355f3ba21f3.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/cover-letter/page-03cf88c4ffe6efcc.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/396-7ec272baee43a0b1.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-semibold.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-regular.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-medium.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/dashboard/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/builder/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/resources/guides/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/683-94fbed09f680032b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/page-105388d43ad529a2.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/dashboard/page-4ac76036b3ec6be7.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/493-2290cf86616d50e0.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/builder/page-4580cf21df410467.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/353-257141dfb0056826.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/resources/guides/page-3842a28b574f88eb.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/builder/",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/d2637c66b4d79719.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/071d3eb3c81a8859.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/css/48bb57ae39ad011a.css",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/webpack-939dc94f710e1385.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/main-app-f717357ca60447a6.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/layout-1a4da355f3ba21f3.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/247-c5f72daefdf06886.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/7d58b2a6-4d7a1b70e14085e8.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/493-2290cf86616d50e0.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/683-94fbed09f680032b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/17-84b161c9d0f1cc8b.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/builder/page-4580cf21df410467.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/396-7ec272baee43a0b1.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/353-257141dfb0056826.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-semibold.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-regular.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/dashboard/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/home/commons-medium.woff2",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/tools/index.txt",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/page-105388d43ad529a2.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/dashboard/page-4ac76036b3ec6be7.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/icon.svg",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/670-17c6af18c4621671.js",
+      "status": 200,
+      "localMarkerVerified": true
+    },
+    {
+      "path": "/_next/static/chunks/app/tools/page-3882c2cbb4783550.js",
+      "status": 200,
+      "localMarkerVerified": true
+    }
+  ],
+  "localResponses": 269,
+  "fixtureReloadUrl": "https://resume.docheng.co.za/builder?id=fbb2615e-f7ea-436c-ba73-8a8f7370121e",
+  "scanContract": {
+    "mode": "basic",
+    "detailedMetricGroups": [
+      "readability",
+      "layout",
+      "structure"
+    ]
+  },
+  "passed": true,
+  "finishedAt": "2026-10-19T07:19:11.080Z"
+}
