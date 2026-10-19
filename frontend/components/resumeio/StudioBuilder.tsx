@@ -28,7 +28,7 @@ const serviceError = (body: any, fallback: string) => typeof body?.detail === 's
   : fallback;
 
 export function ResumeIOBuilder() {
-  return <Suspense fallback={<div className="p-8 text-center text-slate-500">Opening your resume…</div>}><ResumeStudio /></Suspense>;
+  return <div data-editor-edition={SITE_MODE ? 'sites' : IS_LOCAL_STORAGE ? 'browser-local' : 'session'}><Suspense fallback={<div className="p-8 text-center text-slate-500">Opening your resume…</div>}><ResumeStudio /></Suspense></div>;
 }
 
 function ResumeStudio() {
