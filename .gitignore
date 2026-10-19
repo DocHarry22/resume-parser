@@ -27,6 +27,16 @@ wheels/
 node_modules/
 .next/
 .next-sites/
+.next-workspace/
+.next-tailoring/
+.next-history/
+.next-letters/
+.next-jobs/
+.next-jobs-release/
+.next-search-sources/
+.next-salary/
+.next-salary-release/
+.next-career-plan/
 out/
 .npm
 *.tsbuildinfo

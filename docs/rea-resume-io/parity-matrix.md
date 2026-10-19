@@ -16,8 +16,8 @@ PASS means verified by the specific current checks in docs/qa, not deployed prod
 | Section visibility/order/restore | PASS | Studio and export helpers |
 | Entry reordering | PARTIAL | Accessible move controls; no drag-and-drop in the primary studio |
 | Rich text, grammar/spelling service | PARTIAL | Plain text/bullets + browser spellcheck; no full rich-text grammar engine |
-| Version history | PARTIAL | Bounded session undo/redo; no persisted version timeline |
-| 30 distinct templates | FAIL | Six original layouts; no false claim of30 |
+| Version history | PASS (local) | 20 named checkpoints, comparisons, safety restores and JSON roundtrip; see RESUME_HISTORY.md |
+| 30 distinct templates | FAIL | Eight distinct layouts currently implemented; 22 more needed to reach30 |
 | Colors/fonts/size/spacing/paper | PARTIAL | Implemented; arbitrary margins/photo support remain limited |
 | Multi-page PDF/selectable text | PASS | Service PDF text/content/page regression checks |
 | Exact design in downloaded PDF | PARTIAL | Browser print preserves preview; service export uses readable layout |
@@ -29,10 +29,14 @@ PASS means verified by the specific current checks in docs/qa, not deployed prod
 | Real AI assistance | PARTIAL | Optional server provider + consent/accept/reject; live provider credentials absent |
 | No fabricated credentials/metrics | PARTIAL | Guided defaults repaired; provider rejects unsupported metrics; human review still necessary |
 | Explainable ATS/JD text analysis | PARTIAL | Existing scoring retained; no universal employer ATS claim |
-| Job URL/ad upload/tailored version automation | FAIL | JD text and manual duplicate available; URL/upload pipeline absent |
+| Job URL/ad upload/tailored version automation | PARTIAL | Greenhouse/Lever URLs and public boards, independent tailored copies and term checks; arbitrary job-ad upload and universal URL extraction remain |
+| Public job search | PASS (local) | Jobicy, Arbeitnow and Remotive feeds; selected Greenhouse/Lever boards; local filters and duplicate-safe tracker saves. LinkedIn, Indeed, Pnet, Careerjet and Google Jobs open as search shortcuts |
+| Saved job searches | PASS (local) | Up to 30 named searches retain source and filters, survive reload, synchronize across tabs, and restore on demand; no background alerts |
+| Salary Analyzer | PARTIAL (local) | Saved personal scenarios, pay-period normalization, same-currency comparisons, manual deductions, optional SARS 2026/27 tax/UIF estimate and CSV; market benchmarks and exchange conversion remain |
+| Review-first Auto Apply | PASS (local, selected scope) | Installed Greenhouse/Lever helper fills recognized contact/document fields and stops for user review/final submission; custom questions remain manual. See JOB_SEARCH_AUTO_APPLY.md |
 | Cover-letter editor/preview/storage/export | PARTIAL | Implemented and tested; matching designs not pixel-identical to all resume layouts |
-| Dashboard/job tracker | PARTIAL | Real local jobs/statuses/dates/notes/backup; no calendar view or account sync |
-| Interview/STAR/90-day/pathway/share tools | FAIL | Not implemented |
+| Dashboard/job tracker | PARTIAL | Local dashboard plus board/list/calendar, follow-ups, documents and backups; account sync remains |
+| Interview/STAR/90-day/pathway/share tools | PARTIAL | Local question prompts, STAR notes and rehearsal timer; editable 90-day plans with milestones, tasks, due dates and backups; advanced feedback, pathways and sharing remain |
 | South African application contexts | PARTIAL | Guidance + custom qualifications/registration fields; no verified localization/public-sector service |
 | Secure registration/login/reset/verification | FAIL | Guest workflow only |
 | PostgreSQL/account row-level authorization | FAIL | Guest isolation implemented; account database not provisioned |

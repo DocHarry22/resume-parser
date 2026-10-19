@@ -1,0 +1,31 @@
+{
+  "baseUrl": "http://127.0.0.1:3104",
+  "startedAt": "2026-10-19T09:44:32.151Z",
+  "results": [
+    {
+      "name": "tracked job to independent tailored copy, linked application and edited coverage",
+      "status": "passed"
+    },
+    {
+      "name": "builder shortcut flushes current edits and supports a pasted target",
+      "status": "passed"
+    },
+    {
+      "name": "storage failures preserve the original and linking failure keeps the saved copy",
+      "status": "passed"
+    },
+    {
+      "name": "conflicting target edits in two tabs are detected without discarding newer content",
+      "status": "passed"
+    },
+    {
+      "name": "mobile tailoring and section shortcut fit the viewport",
+      "status": "passed"
+    },
+    {
+      "name": "empty and unreadable libraries have useful recovery paths without writes",
+      "status": "passed"
+    }
+  ],
+  "finishedAt": "2026-10-19T09:44:52.342Z"
+}

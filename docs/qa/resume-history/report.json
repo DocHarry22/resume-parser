@@ -1,0 +1,31 @@
+{
+  "baseUrl": "http://127.0.0.1:3104",
+  "startedAt": "2026-10-19T10:44:26.152Z",
+  "results": [
+    {
+      "name": "editor checkpoint, content and design diff, safe restore and undo restore",
+      "status": "passed"
+    },
+    {
+      "name": "JSON download restores history independently and checkpoint copy/delete keep current draft",
+      "status": "passed"
+    },
+    {
+      "name": "two tabs preserve checkpoints and clean editors adopt restores",
+      "status": "passed"
+    },
+    {
+      "name": "dirty editor conflict can be backed up before loading latest saved version",
+      "status": "passed"
+    },
+    {
+      "name": "restore quota failure is atomic and invalid history cannot be overwritten",
+      "status": "passed"
+    },
+    {
+      "name": "history at 390px and empty library fit the viewport",
+      "status": "passed"
+    }
+  ],
+  "finishedAt": "2026-10-19T10:44:50.893Z"
+}

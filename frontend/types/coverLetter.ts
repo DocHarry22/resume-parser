@@ -66,6 +66,8 @@ export interface CoverLetter {
   created_at?: string;
   updated_at?: string;
   linked_resume_id?: string;
+  /** Browser workspace references, independent from server document IDs. */
+  workspace_context?: { resumeId: string; jobId: string };
 }
 
 export interface CoverLetterTemplate {

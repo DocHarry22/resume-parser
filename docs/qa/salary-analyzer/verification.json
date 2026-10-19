@@ -1,0 +1,32 @@
+{
+  "verifiedAt": "2026-10-19T12:56:17.549Z",
+  "preview": "http://127.0.0.1:3103/salary-analyzer",
+  "unitTests": 93,
+  "build": {
+    "pages": 25,
+    "status": "passed",
+    "directory": ".next-salary-release"
+  },
+  "browserChecks": 6,
+  "trackerChecks": 8,
+  "trackerPageErrors": [],
+  "smoke": [
+    {
+      "path": "/salary-analyzer",
+      "status": 200
+    },
+    {
+      "path": "/job-tracker",
+      "status": 200
+    },
+    {
+      "path": "/jobs",
+      "status": 200
+    },
+    {
+      "path": "/auto-apply",
+      "status": 200
+    }
+  ],
+  "scope": "Local only. Synthetic browser data; no salary data sent to external services."
+}

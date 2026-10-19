@@ -4,9 +4,18 @@ import "./homepage.css";
 import "./app-theme.css";
 import "./resume-templates.css";
 import "./letter-templates.css";
+import "./workspace.css";
+import "./tailor/tailor.css";
+import "./history/history.css";
+import "./letters/letters.css";
+import "./jobs/jobs.css";
+import "./auto-apply/auto-apply.css";
+import "./salary-analyzer/salary.css";
+import "./career-plan/plan.css";
 import MainNavbar from "./components/MainNavbar";
 import StorageNotice from "./components/StorageNotice";
 import SiteFooter from "./components/SiteFooter";
+import WorkspaceFrame from "@/components/workspace/WorkspaceFrame";
 
 export const metadata: Metadata = {
   title: "CareerForge | DoCHEng Resume Studio",
@@ -21,10 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="career-theme">
-        <MainNavbar />
-        <StorageNotice />
-        {children}
-        <SiteFooter />
+        <WorkspaceFrame publicHeader={<><MainNavbar /><StorageNotice /></>} publicFooter={<SiteFooter />}>{children}</WorkspaceFrame>
       </body>
     </html>
   );

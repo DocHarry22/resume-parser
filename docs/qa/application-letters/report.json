@@ -1,0 +1,35 @@
+{
+  "baseUrl": "http://127.0.0.1:3104",
+  "startedAt": "2026-10-19T10:43:21.486Z",
+  "results": [
+    {
+      "name": "tracked application to independent letter, editor save, preview and linked documents",
+      "status": "passed"
+    },
+    {
+      "name": "resume editor shortcut flushes edits and manual letters can opt out of copied summary",
+      "status": "passed"
+    },
+    {
+      "name": "JSON backup/import, independent copy, search and attachment removal retain original documents",
+      "status": "passed"
+    },
+    {
+      "name": "replacement cancellation and stale attachment confirmation preserve the other tab’s selection",
+      "status": "passed"
+    },
+    {
+      "name": "quota and corrupt libraries prevent partial saves or losing an already saved letter",
+      "status": "passed"
+    },
+    {
+      "name": "all six letter styles and the linked editor fit a 390px viewport",
+      "status": "passed"
+    },
+    {
+      "name": "empty workspace can start a manual letter and removed letter links stay recoverable",
+      "status": "passed"
+    }
+  ],
+  "finishedAt": "2026-10-19T10:44:00.693Z"
+}

@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  distDir: process.env.STATIC_EXPORT === '1' ? '.next-sites' : '.next',
+  distDir: process.env.NEXT_DIST_DIR || (process.env.STATIC_EXPORT === '1' ? '.next-sites' : '.next'),
   ...(process.env.STATIC_EXPORT === '1' ? { output: 'export', trailingSlash: true, images: { unoptimized: true } } : {}),
   // Enable experimental features if needed
   experimental: {},

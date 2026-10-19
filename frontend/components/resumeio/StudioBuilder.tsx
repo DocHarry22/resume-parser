@@ -3,7 +3,7 @@
 import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { ArrowLeft, ArrowDown, ArrowUp, Download, Eye, FileText, HelpCircle, Loader2, Palette, Redo2, Save, Settings2, Undo2, Upload, X } from 'lucide-react';
+import { ArrowLeft, ArrowDown, ArrowRight, ArrowUp, Download, Eye, FileText, HelpCircle, History, Loader2, Palette, Redo2, Save, Settings2, Target, Undo2, Upload, X } from 'lucide-react';
 import { apiFetch, IS_LOCAL_STORAGE, DOCUMENT_UPLOAD_LIMIT_BYTES } from '@/lib/apiConfig';
 import { ResumeBuilder } from '@/types/builder';
 import { TemplateSelector } from './TemplateSelector';
@@ -13,7 +13,7 @@ import { StudioPreview } from './StudioPreview';
 import { SummaryAssistant } from './SummaryAssistant';
 import { CustomSectionForm } from './CustomSectionForm';
 import { localDocx, localText } from './localExport';
-import { ContentSection, createDocument, normalizeDocument, normalizeResume, readDocuments, ResumeDesign, SavedResume, saveDocument, SECTION_LABELS, STORAGE_KEY, THEME_COLORS } from './resumeDocument';
+import { ContentSection, createDocument, normalizeDocument, normalizeResume, readDocuments, ResumeDesign, resumeStateKey, SavedResume, saveDocument, SECTION_LABELS, STORAGE_KEY, THEME_COLORS } from './resumeDocument';
 
 const button = 'inline-flex items-center justify-center gap-2 rounded border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors';
 const primaryButton = 'inline-flex items-center justify-center gap-2 rounded border border-[#1a91f0] bg-[#1a91f0] px-4 py-2 text-sm font-medium text-white hover:bg-[#1170cd] disabled:opacity-40 disabled:cursor-not-allowed transition-colors';
@@ -35,6 +35,8 @@ function ResumeStudio() {
   const handledQuery = useRef<string | null>(null);
   const [doc, setDoc] = useState<SavedResume | null>(null);
   const current = useRef<SavedResume | null>(null);
+  const persistedState = useRef<string | null>(null);
+  const [externalConflict, setExternalConflict] = useState(false);
   const past = useRef<SavedResume[]>([]);
   const future = useRef<SavedResume[]>([]);
   const [, setHistoryVersion] = useState(0);
@@ -105,14 +107,18 @@ function ResumeStudio() {
     const params = new URLSearchParams(query);
     const id = params.get('id');
     handledQuery.current = query;
+    const section = params.get('section');
+    if (section && (section === 'personal' || Object.hasOwn(SECTION_LABELS, section))) { setActive(section as 'personal' | ContentSection); setTab('content'); setMobilePreview(false); }
     // Replacing an action URL with the document ID must not reopen the editor.
     if (current.current?.id === id && !params.has('new') && !params.has('template') && !params.has('import')) return;
     try {
-      if (current.current) saveDocument(current.current);
+      if (current.current && !save()) return;
       setError('');
       setNotice('');
       const all = readDocuments();
       let initial = params.has('new') ? createDocument() : id ? all.find(d => d.id === id) : current.current || all[0];
+      const stored = all.find(document => document.id === initial?.id);
+      persistedState.current = stored ? resumeStateKey(stored) : null;
       if (id && !initial) setError('This browser does not have that resume. A new document has been opened.');
       if (!initial && !params.has('new') && !id) {
         const legacy = localStorage.getItem('resume_draft');
@@ -151,18 +157,36 @@ function ResumeStudio() {
   const save = useCallback(() => {
     if (!current.current) return false;
     try {
-      const saved = saveDocument(current.current);
-      current.current = { ...current.current, updatedAt: saved.updatedAt };
+      const latest = readDocuments().find(document => document.id === current.current!.id);
+      if (latest && persistedState.current && resumeStateKey(latest) !== persistedState.current && resumeStateKey(current.current) === persistedState.current) {
+        current.current = latest; persistedState.current = resumeStateKey(latest); past.current = []; future.current = []; setDoc(latest); setHistoryVersion(value => value + 1); setExternalConflict(false); setSaveState('saved'); setSavedAt(latest.updatedAt); setNotice('The newer saved version from another tab has been loaded.'); setError(previous => previous.startsWith('Browser save failed:') ? '' : previous); return true;
+      }
+      const saved = saveDocument(current.current, { expectedState: persistedState.current ?? undefined });
+      current.current = saved; persistedState.current = resumeStateKey(saved); setExternalConflict(false);
       setSavedAt(saved.updatedAt);
       setSaveState('saved');
       setError(previous => previous.startsWith('Browser save failed:') ? '' : previous);
       return true;
     } catch (e) {
+      setExternalConflict(errorText(e).includes('another tab'));
       setSaveState('failed');
       setError(`Browser save failed: ${errorText(e)} Download a JSON backup to keep your work.`);
       return false;
     }
   }, []);
+  const loadLatest = () => {
+    if (!current.current) return;
+    if (persistedState.current && resumeStateKey(current.current) !== persistedState.current && !window.confirm('Load the latest saved resume? Unsaved changes in this tab will be replaced. Download a JSON backup first if you need them.')) return;
+    try { const latest = readDocuments().find(document => document.id === current.current!.id); if (!latest) throw new Error('That resume is no longer saved.'); current.current = latest; persistedState.current = resumeStateKey(latest); past.current = []; future.current = []; setDoc(latest); setHistoryVersion(value => value + 1); setExternalConflict(false); setSaveState('saved'); setError(''); setNotice('The latest saved resume has been loaded.'); }
+    catch (failure) { setError(errorText(failure)); }
+  };
+  useEffect(() => {
+    const changed = (event: StorageEvent) => {
+      if (event.key !== STORAGE_KEY || !current.current || !persistedState.current) return;
+      try { const latest = readDocuments().find(document => document.id === current.current!.id); if (latest && resumeStateKey(latest) !== persistedState.current) save(); } catch { /* Save/export retains the current draft and reports read failures. */ }
+    };
+    window.addEventListener('storage', changed); return () => window.removeEventListener('storage', changed);
+  }, [save]);
   useEffect(() => {
     if (!doc) return;
     const timeout = window.setTimeout(save, 700);
@@ -183,7 +207,7 @@ function ResumeStudio() {
       window.removeEventListener('beforeunload', onClose);
       document.removeEventListener('click', onNavigate, true);
       // Flush edits when client navigation unmounts the editor before autosave.
-      if (current.current) { try { saveDocument(current.current); } catch {} }
+      if (current.current) save();
     };
   }, [save]);
 
@@ -237,8 +261,10 @@ function ResumeStudio() {
       return;
     }
     if (format === 'json') {
-      downloadBlob(new Blob([JSON.stringify(doc, null, 2)], { type: 'application/json' }), 'json');
-      setNotice('JSON backup downloaded. Import it here to restore content and design.');
+      let backup = current.current || doc;
+      try { const latest = readDocuments().find(document => document.id === backup.id); if (latest?.versions !== undefined) backup = { ...backup, versions: latest.versions }; setNotice('JSON backup downloaded, including saved checkpoints.'); }
+      catch { setNotice('Current draft backup downloaded. Stored history could not be read, so this file may not contain every checkpoint.'); }
+      downloadBlob(new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' }), 'json');
       return;
     }
     setBusy(`export-${format}`);
@@ -292,7 +318,7 @@ function ResumeStudio() {
   };
   const duplicate = () => {
     if (!doc || busy || !save()) return;
-    const copy = { ...clone(doc), id: crypto.randomUUID(), resume: { ...clone(doc.resume), title: `${doc.resume.title} (copy)` } };
+    const copy = { ...clone(doc), id: crypto.randomUUID(), versions: [], resume: { ...clone(doc.resume), title: `${doc.resume.title} (copy)` } };
     past.current = []; future.current = []; setCloudId(null);
     replace(copy, false);
     window.history.replaceState(null, '', `/builder?id=${copy.id}`);
@@ -369,8 +395,10 @@ function ResumeStudio() {
     <div className="no-print cf-editor-tools flex flex-wrap gap-2 items-center px-4 sm:px-6 py-3 border-b bg-white">
       <input ref={fileInput} aria-label="Import resume" className="hidden" type="file" accept={SITE_MODE ? '.json' : '.pdf,.docx,.txt,.json'} onChange={e => importFile(e.target.files?.[0])} />
       <button className={button} disabled={Boolean(busy)} onClick={() => fileInput.current?.click()}>{busy === 'import' ? <Loader2 className="animate-spin" size={16} /> : <Upload size={16} />} {SITE_MODE ? 'Restore JSON backup' : 'Import resume'}</button>
-      <button className={button} disabled={Boolean(busy)} onClick={duplicate}>Duplicate</button><button className={button} onClick={() => exportFile('json')}>JSON backup</button><button className={button} disabled={Boolean(busy)} onClick={() => exportFile('docx')}>DOCX</button><button className={button} disabled={Boolean(busy)} onClick={() => exportFile('txt')}>TXT</button><button className={button} onClick={() => window.print()}>Print / Save PDF</button>{!IS_LOCAL_STORAGE && <button className={button} disabled={Boolean(busy)} onClick={sync}>{SITE_MODE ? 'Open primary workspace' : 'Save session copy'}</button>}<button className={`${button} ml-auto`} aria-label="Editor help" onClick={() => setShowHelp(true)}><HelpCircle size={16} /></button>
+      <Link className={button} href={`/history?resume=${encodeURIComponent(doc.id)}`}><History size={16} />Version history</Link><Link className={button} href={`/letters?resume=${encodeURIComponent(doc.id)}${doc.tailoring?.jobId ? `&job=${encodeURIComponent(doc.tailoring.jobId)}` : ""}`}><FileText size={16} />Write cover letter</Link><Link className={button} href={`/tailor?resume=${encodeURIComponent(doc.id)}`}><Target size={16} />Tailor for a job</Link><button className={button} disabled={Boolean(busy)} onClick={duplicate}>Duplicate</button><button className={button} onClick={() => exportFile('json')}>JSON backup</button><button className={button} disabled={Boolean(busy)} onClick={() => exportFile('docx')}>DOCX</button><button className={button} disabled={Boolean(busy)} onClick={() => exportFile('txt')}>TXT</button><button className={button} onClick={() => window.print()}>Print / Save PDF</button>{!IS_LOCAL_STORAGE && <button className={button} disabled={Boolean(busy)} onClick={sync}>{SITE_MODE ? 'Open primary workspace' : 'Save session copy'}</button>}<button className={`${button} ml-auto`} aria-label="Editor help" onClick={() => setShowHelp(true)}><HelpCircle size={16} /></button>
     </div>
+    {doc.tailoring && <div className="no-print studio-tailoring-banner"><div><Target size={16} /><span>Tailored for</span><strong>{doc.tailoring.role}{doc.tailoring.company ? ` · ${doc.tailoring.company}` : ''}</strong></div><Link href={`/tailor?resume=${encodeURIComponent(doc.id)}`}>Review term coverage<ArrowRight size={14} /></Link></div>}
+    {externalConflict && <div className="no-print studio-conflict-reload"><span>Your unsaved draft has been kept in this tab. Back it up before loading the newer saved version.</span><button onClick={loadLatest}>Load latest saved version</button></div>}
     {IS_LOCAL_STORAGE && <p className="no-print border-b bg-teal-50 px-4 py-3 text-sm text-teal-950 sm:px-6">Saved only in this browser on this device. Download JSON backups before clearing browser data. Imports and PDF / DOCX exports send your document for processing without saving a server copy.</p>}
     {(notice || error) && <div className={`no-print px-6 py-3 text-sm flex items-center justify-between gap-3 ${error ? 'bg-red-50 text-red-800' : 'bg-emerald-50 text-emerald-800'}`} role={error ? 'alert' : 'status'}><span>{error || notice}</span><button aria-label="Dismiss message" onClick={() => { setError(''); setNotice(''); }}><X size={16} /></button></div>}
     <div className="no-print lg:hidden flex p-3 gap-2 bg-white border-b"><button className={`${button} flex-1 ${!mobilePreview ? 'border-blue-500 text-blue-600' : ''}`} onClick={() => setMobilePreview(false)}><FileText size={16} /> Edit</button><button className={`${button} flex-1 ${mobilePreview ? 'border-blue-500 text-blue-600' : ''}`} onClick={() => setMobilePreview(true)}><Eye size={16} /> Preview</button></div>

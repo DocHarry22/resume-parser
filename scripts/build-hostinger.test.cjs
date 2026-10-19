@@ -22,6 +22,8 @@ test('check-only needs no API origin; explicit origin and environment fallback a
 test('curated source excludes Sites identity, environment, private uploads, old PDFs, dependencies, and test fixtures', () => {
   for (const filename of ['frontend/app/page.tsx', 'frontend/lib/apiConfig.ts', 'frontend/components/resumeio/StudioBuilder.tsx', 'frontend/public/icon.svg', 'frontend/next.config.js', 'frontend/public/home/commons-regular.woff2', 'frontend/public/home/resume-hero.png']) assert.ok(selectSource(filename), filename);
   assert.equal(selectSource('frontend/public/home/README.md'), null);
+  assert.ok(selectSource('frontend/public/application-helper/careerforge-auto-apply.zip'));
+  assert.throws(() => selectSource('frontend/public/unknown.zip'), /unsupported frontend/);
   for (const filename of ['sites/careerforge/.openai/hosting.json', 'frontend/.env.production', 'frontend/lib/.env.local', 'frontend/public/old-resume.pdf', 'frontend/public/sample.docx', 'frontend/public/uploads/private.png', 'frontend/node_modules/secret.js', 'frontend/.next/private.js', 'frontend/tempss/old.ts', 'frontend/tests/fixture.ts', 'data/resumes/private.json']) assert.equal(selectSource(filename), null, filename);
   assert.throws(() => selectSource('frontend/lib/id_rsa'), /Private or secret/);
   assert.throws(() => selectSource('frontend/app/../escape.tsx'), /Nonportable/);
@@ -50,6 +52,9 @@ test('static inventory requires real routes/assets and refuses private or source
   for (const name of ['index.html', '.htaccess', 'builder/index.html', 'cover-letter/index.html', 'dashboard/index.html', 'job-tracker/index.html', 'privacy/index.html', '_next/static/chunk.js']) put(name);
   const result = inventory(directory);
   assert.equal(result.files.length, 8); assert.ok(result.files.every(file => /^[a-f0-9]{64}$/.test(file.sha256)));
+  put('application-helper/careerforge-auto-apply.zip', Buffer.from('PK reviewed helper fixture'));
+  assert.equal(inventory(directory).files.length, 9);
+  put('unknown.zip'); assert.throws(() => inventory(directory), /Unexpected static/); fs.unlinkSync(path.join(directory, 'unknown.zip'));
   put('legacy.pdf'); assert.throws(() => inventory(directory), /Unexpected static/); fs.unlinkSync(path.join(directory, 'legacy.pdf'));
   put('.env'); assert.throws(() => inventory(directory), /Private or secret/); fs.unlinkSync(path.join(directory, '.env'));
   fs.unlinkSync(path.join(directory, 'builder/index.html')); assert.throws(() => inventory(directory), /Missing static/);

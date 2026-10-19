@@ -2,7 +2,7 @@ import { CoverLetter, defaultCoverLetter } from '@/types/coverLetter';
 
 export const LETTER_STORAGE_KEY = 'resume-studio.letters.v1';
 
-function validate(value: unknown): CoverLetter {
+export function validateLocalLetter(value: unknown): CoverLetter {
   const letter = value as CoverLetter;
   if (!letter || typeof letter !== 'object' || typeof letter.id !== 'string' || typeof letter.title !== 'string') throw new Error('The browser cover-letter library is unreadable. Your stored data has not been changed.');
   for (const group of ['sender', 'recipient', 'job_details', 'content', 'settings'] as const) {
@@ -15,6 +15,10 @@ function validate(value: unknown): CoverLetter {
       }
     }
   }
+  if (letter.workspace_context !== undefined) {
+    const context = letter.workspace_context;
+    if (!context || typeof context !== 'object' || Array.isArray(context) || ['resumeId', 'jobId'].some(key => typeof context[key as keyof typeof context] !== 'string' || context[key as keyof typeof context].length > 200)) throw new Error('The cover letter contains unreadable application references. Your stored data has not been changed.');
+  }
   return letter;
 }
 
@@ -24,7 +28,7 @@ export function readLocalLetters(): CoverLetter[] {
   let parsed: unknown;
   try { parsed = JSON.parse(raw); } catch { throw new Error('The browser cover-letter library is unreadable. Your stored data has not been changed.'); }
   if (!Array.isArray(parsed)) throw new Error('The browser cover-letter library is unreadable. Your stored data has not been changed.');
-  const letters = parsed.map(validate);
+  const letters = parsed.map(validateLocalLetter);
   if (letters.some((letter, index) => !letter.id || letters.findIndex(other => other.id === letter.id) !== index)) throw new Error('The browser cover-letter library has invalid document IDs. Your stored data has not been changed.');
   return letters;
 }
@@ -44,7 +48,7 @@ export function getLocalLetter(id: string): CoverLetter {
 export function createLocalLetter(value: string | Partial<CoverLetter> = 'My Cover Letter', template = 'professional'): CoverLetter {
   const initial = structuredClone(defaultCoverLetter);
   const now = new Date().toISOString();
-  const letter = validate({ ...initial, ...(typeof value === 'string' ? { title: value, settings: { ...initial.settings, template } } : value), id: crypto.randomUUID(), created_at: now, updated_at: now });
+  const letter = validateLocalLetter({ ...initial, ...(typeof value === 'string' ? { title: value, settings: { ...initial.settings, template } } : value), id: crypto.randomUUID(), created_at: now, updated_at: now });
   delete letter.linked_resume_id;
   const letters = readLocalLetters();
   write([letter, ...letters]);
@@ -55,7 +59,7 @@ export function updateLocalLetter(id: string, data: Partial<CoverLetter>): Cover
   const letters = readLocalLetters();
   const previous = letters.find(letter => letter.id === id);
   if (!previous) throw new Error('This browser does not have that cover letter.');
-  const letter = validate({ ...previous, ...data, id, created_at: previous.created_at, updated_at: new Date().toISOString() });
+  const letter = validateLocalLetter({ ...previous, ...data, id, created_at: previous.created_at, updated_at: new Date().toISOString() });
   delete letter.linked_resume_id;
   write([letter, ...letters.filter(item => item.id !== id)]);
   return letter;
@@ -71,6 +75,23 @@ export function deleteLocalLetter(id: string): void {
 export function duplicateLocalLetter(id: string): CoverLetter {
   const letter = getLocalLetter(id);
   return createLocalLetter({ ...letter, title: `${letter.title} (copy)` });
+}
+
+/** Validate the complete backup before one write; imports never replace existing IDs. */
+export function importLocalLetters(value: unknown): CoverLetter[] {
+  const envelope = value as { format?: string; version?: number; letters?: unknown } | null;
+  const items = envelope?.format === 'careerforge.cover-letters' && envelope.version === 1 ? envelope.letters : [value];
+  if (!Array.isArray(items) || !items.length || items.length > 5000) throw new Error('Choose a cover-letter JSON backup with 1 to 5,000 letters.');
+  const originals = items.map(validateLocalLetter);
+  const now = new Date().toISOString();
+  const imported = originals.map(original => {
+    const copy = { ...structuredClone(original), id: crypto.randomUUID(), title: `${original.title} (imported)`, created_at: now, updated_at: now };
+    delete copy.linked_resume_id;
+    return copy;
+  });
+  const current = readLocalLetters();
+  write([...imported, ...current]);
+  return imported;
 }
 
 export function localLetterText(letter: CoverLetter): string {

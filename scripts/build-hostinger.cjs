@@ -71,7 +71,7 @@ function inventory(directory) {
       rejectPrivatePath(name);
       if (entry.isSymbolicLink() || fs.lstatSync(absolute).isSymbolicLink()) throw new Error('Static export contains a symlink: ' + name);
       if (entry.isDirectory()) { if (OMIT.has(entry.name.toLowerCase())) throw new Error('Unexpected static directory: ' + name); walk(absolute, name + '/'); continue; }
-      if (!entry.isFile() || (name !== '.htaccess' && !STATIC_EXTENSIONS.has(path.extname(name).toLowerCase()))) throw new Error('Unexpected static export file: ' + name);
+      if (!entry.isFile() || (name !== '.htaccess' && name !== 'application-helper/careerforge-auto-apply.zip' && !STATIC_EXTENSIONS.has(path.extname(name).toLowerCase()))) throw new Error('Unexpected static export file: ' + name);
       const folded = name.toLowerCase(); if (seen.has(folded)) throw new Error('Case-colliding static path: ' + name); seen.add(folded);
       const content = fs.readFileSync(absolute); total += content.length;
       if (total >= LIMIT) throw new Error('Static export exceeds the 50,000,000-byte limit.');

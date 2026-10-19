@@ -1,0 +1,31 @@
+{
+  "baseUrl": "http://127.0.0.1:3105",
+  "startedAt": "2026-10-19T12:33:57.084Z",
+  "checks": [
+    {
+      "name": "three feeds aggregate real-shaped listings, filter, preserve country restrictions, and save duplicate-safe tracker entries",
+      "status": "passed"
+    },
+    {
+      "name": "one failed provider leaves other feed results available with an explicit source warning",
+      "status": "passed"
+    },
+    {
+      "name": "named saved searches survive reload, restore exact criteria, update without duplicates, and synchronize across tabs",
+      "status": "passed"
+    },
+    {
+      "name": "saved-search storage failures retain saved filters and jobs and do not overwrite corrupt data",
+      "status": "passed"
+    },
+    {
+      "name": "five external engines receive literal keywords and location; saved filters and phone layout remain usable",
+      "status": "passed"
+    },
+    {
+      "name": "Jobicy and Arbeitnow load actual public data in the browser with credential-free GET requests",
+      "status": "passed"
+    }
+  ],
+  "finishedAt": "2026-10-19T12:34:20.499Z"
+}

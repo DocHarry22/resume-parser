@@ -19,6 +19,7 @@ import { RecipientInfoForm } from './forms/RecipientInfoForm';
 import { ContentEditor } from './forms/ContentEditor';
 import { CoverLetterPreview } from './CoverLetterPreview';
 import { IS_LOCAL_STORAGE } from '@/lib/apiConfig';
+import { downloadBlob } from '@/lib/coverLetterApi';
 
 interface CoverLetterBuilderProps {
   initialData?: CoverLetter;
@@ -293,6 +294,7 @@ export function CoverLetterBuilder({ initialData, onSave }: CoverLetterBuilderPr
               />
             </div>
             <div className="flex items-center gap-3">
+              {IS_LOCAL_STORAGE && <button type="button" onClick={() => downloadBlob(new Blob([JSON.stringify(latestLetter.current, null, 2)], { type: 'application/json' }), `${coverLetter.title || 'cover-letter'}.json`)} className="px-3 py-2 text-sm text-slate-600 rounded-lg border border-slate-200">JSON backup</button>}
               <button
                 onClick={() => setShowPreviewPanel(!showPreviewPanel)}
                 className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg"

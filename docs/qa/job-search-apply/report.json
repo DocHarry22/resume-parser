@@ -1,0 +1,31 @@
+{
+  "baseUrl": "http://127.0.0.1:3104",
+  "startedAt": "2026-10-19T11:54:27.740Z",
+  "results": [
+    {
+      "name": "remote feed search, location filtering, source credit and duplicate-safe tracker saves",
+      "status": "passed"
+    },
+    {
+      "name": "company board to reviewed packet with real DOCX files and explicit submission confirmation",
+      "status": "passed"
+    },
+    {
+      "name": "stale queue changes in two tabs cannot remove a newer preparation",
+      "status": "passed"
+    },
+    {
+      "name": "quota, corrupt data and provider failures preserve saved applications",
+      "status": "passed"
+    },
+    {
+      "name": "390px search and application workspace fit and the helper ZIP is a real installable package",
+      "status": "passed"
+    },
+    {
+      "name": "actual public Greenhouse feed loads in the browser with GET requests only",
+      "status": "passed"
+    }
+  ],
+  "finishedAt": "2026-10-19T11:54:54.410Z"
+}

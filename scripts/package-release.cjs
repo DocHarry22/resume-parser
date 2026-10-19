@@ -53,7 +53,7 @@ function classify(filename, target) {
     if (relative.startsWith('public/') && /\.pdf$/i.test(relative)) return null;
     if (!FRONTEND_ROOT_FILES.has(relative) && !FRONTEND_DIRS.has(parts[0])) return null;
     validatePath(filename); rejectPrivatePath(filename);
-    if (!FRONTEND_ROOT_FILES.has(relative) && !FRONTEND_EXTENSIONS.has(path.posix.extname(relative).toLowerCase())) throw new Error(`Review unsupported frontend source before release: ${filename}`);
+    if (relative !== 'public/application-helper/careerforge-auto-apply.zip' && !FRONTEND_ROOT_FILES.has(relative) && !FRONTEND_EXTENSIONS.has(path.posix.extname(relative).toLowerCase())) throw new Error(`Review unsupported frontend source before release: ${filename}`);
     return { destination: relative };
   }
   if (filename.startsWith('app/')) {

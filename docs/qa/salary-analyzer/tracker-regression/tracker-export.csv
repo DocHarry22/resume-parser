@@ -1,0 +1,3 @@
+﻿"Company","Role","Stage","Location","Salary","Applied on","Follow up on","Job URL","Notes","Description","Resume ID","Cover letter ID"
+"'=SUM(1,1)","Process Analyst","Saved","","","","","","","","",""
+"Atlas Energy","Chemical Engineer","Interview","Johannesburg · Hybrid","R55,000 / month","2026-10-19","","https://example.test/jobs/chemical-engineer","Contact the hiring team after submitting.","Process engineering, plant safety and continuous improvement.","tracker-resume","tracker-letter"

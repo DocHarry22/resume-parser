@@ -1,0 +1,16 @@
+{
+  "baseUrl": "http://127.0.0.1:3104",
+  "startedAt": "2026-10-19T12:06:43.591Z",
+  "checks": [
+    "Create stores job description, location, salary, notes, due date and linked local documents; links open the right editor.",
+    "List stage menus and board drag/drop persist transitions; first Applied transition records its date.",
+    "Calendar and follow-up agenda complete reminders and reschedule them by seven days.",
+    "Description search, stage counts and filters work; JSON preserves metadata and CSV prevents spreadsheet formulas.",
+    "Backup recovery round trips all metadata, keeps existing IDs, and rejects impossible dates without changing storage.",
+    "Corrupt storage stays untouched until explicit backup recovery; quota failure retains the draft and Escape restores focus.",
+    "A concurrent tracker change is detected before save and preserved instead of being overwritten.",
+    "Desktop and 390 px board/list/calendar fit the viewport, delete preserves other jobs, and no browser errors occur."
+  ],
+  "pageErrors": [],
+  "finishedAt": "2026-10-19T12:06:56.190Z"
+}
